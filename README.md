@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # miniprogram-to-uniapp 转换说明
 
 ## 0x00 转换模式
