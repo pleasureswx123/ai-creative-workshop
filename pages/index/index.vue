@@ -121,11 +121,14 @@
 		box-sizing: border-box;
 		text-align: center;
 		position: relative;
-		height: 350rpx; /* 高度可以根据需求进行调整 */
+		height: 390rpx; /* 高度可以根据需求进行调整 */
 		.bannerBg{
+			width: 100%;
+			height: 100%!important;
 			position: absolute;
 			left: 0;
 			top: 0;
+			z-index: -1;
 		}
 		
 		.banner{
