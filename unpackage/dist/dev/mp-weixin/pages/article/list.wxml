@@ -1,0 +1,1 @@
+<view><view class="list"><block wx:for="{{list}}" wx:for-item="item" wx:for-index="index"><view class="item" data-id="{{item.id}}" data-event-opts="{{[['tap',[['toArticle',['$event']]]]]}}" bindtap="__e">{{index+1+"、"+item.title}}</view></block></view></view>

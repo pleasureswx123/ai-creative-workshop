@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "draw-loading": "/components/message/drawLoading"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "sendsms": "/components/sendsms/index"
+  }
+}

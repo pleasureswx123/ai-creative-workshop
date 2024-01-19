@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "text-component": "/components/message/text",
+    "welcome": "/components/welcome/index2"
+  }
+}

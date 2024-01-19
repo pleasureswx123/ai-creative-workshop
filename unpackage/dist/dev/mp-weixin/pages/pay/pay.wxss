@@ -1,0 +1,102 @@
+
+page {
+	margin: 0;
+	padding: 0;
+	background: #f7f7f8;
+	font-family: '微软雅黑';
+	padding-bottom: 30rpx;
+	text-align: center;
+}
+.mod-title {
+	height: 120rpx;
+	line-height: 120rpx;
+	text-align: center;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.mod-title image {
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 16rpx
+}
+.mod-title text {
+	font-size: 40rpx;
+	color: #333;
+	font-weight: normal;
+	vertical-align: middle
+}
+.mod-ct {
+	width: 750rpx;
+	margin: 0 auto;
+	text-align: center;
+	color: #333;
+	background: #fff;
+}
+.mod-ct .amount {
+	font-size: 88rpx;
+	padding-top: 60rpx;
+}
+.mod-ct .amount .unit {
+	font-size: 64rpx;
+}
+.mod-ct .qr-image {
+	width: 400rpx;
+	height: 400rpx;
+	background: #f7f7f8;
+	overflow: hidden;
+	margin: 60rpx auto 0 auto;
+	border-radius: 20rpx;
+}
+.mod-ct .qr-image image {
+	width: 400rpx;
+	height: 400rpx;
+}
+.mod-ct .tips {
+	margin-top: 40px;
+	border-top: 1px dashed #e5e5e5;
+	padding: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.mod-ct .tips .ic_scan {
+	width: 110rpx;
+	height: 110rpx;
+}
+.mod-ct .tips .ic_scan image {
+	width: 100%;
+	height: 100%;
+}
+.mod-ct .tips .text {
+	text-align: left;
+	font-size: 32rpx;
+	line-height: 56rpx;
+	color: #666;
+	margin-left: 30rpx;
+}
+.wave1 {
+	width: 100%;
+	height: 38rpx;
+	position: relative;
+	top: 4rpx;
+	margin-top: 30rpx;
+}
+.wave1 image {
+	width: 100%;
+	height: 30rpx;
+}
+.wave {
+	width: 100%;
+	height: 38rpx;
+	position: relative;
+	top: -4rpx;
+}
+.wave image {
+	width: 100%;
+	height: 30rpx;
+	-webkit-transform: rotate(180deg);
+	        transform: rotate(180deg);
+}
+

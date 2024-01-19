@@ -1,0 +1,1 @@
+<view class="loading"><view class="fox-spinner"><view class="spinner-inner" style="{{('color:'+color)}}"><view class="spinner-line"></view><view class="spinner-line"></view><view class="spinner-line"></view><view class="spinner-circle">●</view></view></view><block wx:if="{{title}}"><view class="title">{{title}}</view></block></view>

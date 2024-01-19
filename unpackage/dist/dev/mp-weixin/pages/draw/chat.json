@@ -1,0 +1,9 @@
+{
+  "navigationBarBackgroundColor": "#04BABE",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "text-component": "/components/message/text",
+    "image-component": "/components/message/image"
+  }
+}
