@@ -13,7 +13,6 @@
     <QmInput :value.sync="targetElementText" placeholder="例如：黑色的毛线帽"></QmInput>
     
     <StartBtn :disabled="false" @start="handleStart"></StartBtn>
-  
   </view>
 </template>
 
@@ -43,19 +42,5 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   padding: 0 30rpx 160rpx;
-}
-.tips {
-  padding: 10rpx 0;
-  color: #000;
-  font-size: 24rpx;
-}
-.tips-img {
-  margin: 20rpx 0;
-  width: 60%;
-  aspect-ratio: 4 / 3;
-  image {
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>

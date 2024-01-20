@@ -3,7 +3,7 @@
   <view class="page-container">
     <PicHeader title="选择图片工具" />
     <view class="grid-box">
-      <view class="card-box" v-for="item in list" :key="item.id" @tap="handleClick(item)">
+      <view class="card-box" v-for="item in list" :key="item.type" @tap="handleClick(item)">
         <view class="img-box">
           <image :src="`/static/images/imgTool/${item.imgName}`"></image>
         </view>
@@ -20,22 +20,20 @@ export default {
   data() {
     return {
       list: [
-        {title: '智能换脸', imgName: '1.png', id: 1},
-        {title: '高清重绘', imgName: '2.png', id: 2},
-        {title: '去除背景', imgName: '3.png', id: 3},
-        {title: '更换背景', imgName: '4.png', id: 4},
-        {title: '智能扩图', imgName: '5.png', id: 5},
-        {title: '局部重绘', imgName: '6.jpg', id: 6},
+        {title: '智能换脸', imgName: '1.png', type: 'ai-face'},
+        {title: '高清重绘', imgName: '2.png', type: 'hd-redraw'},
+        {title: '去除背景', imgName: '3.png', type: 'remove-bg'},
+        {title: '更换背景', imgName: '4.png', type: 'replace-bg'},
+        {title: '智能扩图', imgName: '5.png', type: 'ai-expand'},
+        {title: '局部重绘', imgName: '6.jpg', type: 'part-redraw'},
       ]
     }
   },
   components: { PicHeader },
   methods: {
-    handleClick({id}) {
-      const routeName = ['ai-face', 'hd-redraw', 'remove-bg', 'replace-bg', 'ai-expand', 'part-redraw'];
-      const name = routeName[id - 1] || '';
-      name && uni.$u.route({
-        url: `pages/picture/${name}`
+    handleClick({type}) {
+      uni.$u.route({
+        url: `pages/picture/${type}`
       })
     }
   }

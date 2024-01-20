@@ -65,7 +65,7 @@ export default {
 <style lang="scss" scoped>
 .btn-upload {
   width: 100%;
-  height: 200rpx;
+  height: 300rpx;
   border-radius: 6rpx;
   margin-bottom: 16rpx;
   position: relative;

@@ -57,30 +57,20 @@ export default {
       showVideo: false,
       title:'标题',
       list: [
-        {
-          name:'高清重绘'
-        },
-        {
-          name: '去除背景'
-        },
-        {
-          name: '更换背景'
-        },
-        {
-          name: '局部重绘'
-        },
-        {
-          name: '智能扩图'
-        },
-        {
-          name: '智能换脸'
-        }
+        {name: '智能换脸', type: 'ai-face'},
+        {name: '高清重绘', type: 'hd-redraw'},
+        {name: '去除背景', type: 'remove-bg'},
+        {name: '更换背景', type: 'replace-bg'},
+        {name: '智能扩图', type: 'ai-expand'},
+        {name: '局部重绘', type: 'part-redraw'},
       ],
     }
   },
   methods: {
-    selectClick(index){
-      console.log(index)
+    selectClick({type}){
+      uni.$u.route({
+        url: `pages/picture/${type}`
+      })
     },
     close() {
       this.show = false;

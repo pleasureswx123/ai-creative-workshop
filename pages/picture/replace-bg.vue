@@ -9,14 +9,6 @@
     <TitleCell title="把背景更换为" :isShowRight="false" />
     <QmTextarea :value.sync="describe"></QmTextarea>
     
-<!--    <view class="tips">
-      <text>将"源图片"中的脸部特征识别出来，替换到"目标图片"的人物脸上，达到换脸的效果。</text>
-    </view>
-    
-    <view class="tips-img">
-      <image src="/static/images/imgTool/4.png"></image>
-    </view>-->
-    
     <StartBtn @start="handleStart"></StartBtn>
   
   </view>
@@ -47,19 +39,5 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   padding: 0 30rpx 160rpx;
-}
-.tips {
-  padding: 10rpx 0;
-  color: #000;
-  font-size: 24rpx;
-}
-.tips-img {
-  margin: 20rpx 0;
-  width: 60%;
-  aspect-ratio: 4 / 3;
-  image {
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>

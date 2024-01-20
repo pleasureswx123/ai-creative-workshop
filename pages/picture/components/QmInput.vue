@@ -1,6 +1,8 @@
 <template>
   <view>
     <u--input
+        :clearable="true"
+        class="input-el"
         :placeholder="placeholder"
         border="surround"
         v-model="currentVal"
@@ -34,4 +36,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.input-el {
+  /deep/ {
+    .u-input__content__field-wrapper__field {
+      font-size: 24rpx!important;
+    }
+    .uni-input-placeholder {
+      //font-size: 24rpx;
+    }
+  }
+}
 </style>

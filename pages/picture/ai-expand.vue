@@ -39,18 +39,4 @@ export default {
 .page-container {
   padding: 0 30rpx 160rpx;
 }
-.tips {
-  padding: 10rpx 0;
-  color: #000;
-  font-size: 24rpx;
-}
-.tips-img {
-  margin: 20rpx 0;
-  width: 60%;
-  aspect-ratio: 4 / 3;
-  image {
-    width: 100%;
-    height: 100%;
-  }
-}
 </style>
