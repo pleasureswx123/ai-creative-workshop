@@ -118,7 +118,22 @@
 		}
 	};
 </script>
-<style>
+<style lang="scss">
+@import "@/uni_modules/uview-ui/index.scss";
+image {
+  vertical-align: middle;
+}
+.ellipsis {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+page {
+  min-height: calc(100vh - var(--window-bottom) - var(--window-top));
+  background: #f7f7f8;
+  font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+}
 	button::after {
 		display: none;
 	}

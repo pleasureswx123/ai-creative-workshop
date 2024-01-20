@@ -7,6 +7,63 @@
 			}
 		},
 		{
+			"path": "pages/picture/index",
+			"style": {
+				"navigationBarTitleText": "我的创作",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/picture/tool",
+			"style": {
+				"navigationBarTitleText": "图片处理",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/ai-face",
+			"style": {
+				"navigationBarTitleText": "智能换脸",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/hd-redraw",
+			"style": {
+				"navigationBarTitleText": "高清重绘",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/remove-bg",
+			"style": {
+				"navigationBarTitleText": "去除背景",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/replace-bg",
+			"style": {
+				"navigationBarTitleText": "更换背景",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/ai-expand",
+			"style": {
+				"navigationBarTitleText": "智能扩图",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/picture/part-redraw",
+			"style": {
+				"navigationBarTitleText": "局部重绘",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": ""
