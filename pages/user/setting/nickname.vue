@@ -81,18 +81,20 @@ page {
 
 .btn-submit {
     position: fixed;
-    width: 70%;
-    height: 80rpx;
-    left: 15%;
-    bottom: 200rpx;
-    background: #04babe;
+	width: 280rpx;
+	height: 80rpx;
+    left: 50%;
+	transform: translate(-50%,0);
+    bottom: 60rpx;
+    background: #3c9cff;
     color: #fff;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 40rpx;
+    border-radius: 10rpx;
     box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.05);
+	font-size: 28rpx;
 }
 
 .btn-submit text {

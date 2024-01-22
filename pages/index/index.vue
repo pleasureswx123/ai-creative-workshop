@@ -14,8 +14,31 @@
 		</view>
 		<view class="aiType">
 			<view class="item" v-for="(item,index) in makeList" :key="index">
-				<image :src="item.img" mode="widthFix"></image>
-				<view class="">{{item.title}}</view>
+				<image :src="item.img" mode="widthFix" v-if="item.img"></image>
+				<view class="aiTitle">{{item.title}} ></view>
+			</view>
+		</view>
+		<view class="aiList">
+			<u-tabs :list="aiList" :current="current" @change="change"
+			 :activeStyle="{
+				color: '#303133',
+				fontWeight: 'bold',
+				transform: 'scale(1.05)',
+				fontSize:'14px'
+			}"
+			:inactiveStyle="{
+				color: '#606266',
+				transform: 'scale(1)',
+				fontSize:'14px'
+			}"></u-tabs>
+			<view class="aiWaterfall">
+				<view class="fallItem" v-for="(item,index) in feedList" :key="index">
+					<image :src="item.task_info.img_url" mode="widthFix" v-if="item.task_info.img_url"></image>
+					<view class="fallTitle">{{item.task_info.model_info}}</view>
+				</view>
+				<view class="load-more" @click="feedClick()">
+					<u-loadmore :status="status" :nomore-text="nomoreText" @loadmore="getfeedList" />
+				</view>
 			</view>
 		</view>
 		<!-- 导航弹出 -->
@@ -32,7 +55,7 @@
 				</view>
 				<view class="integral">
 					<view class="inteNum">
-						积分：
+						积分
 						<text>555</text>
 					</view>
 					<view class="inteBtn">兑换</view>
@@ -84,11 +107,22 @@
 			return {
 				bannerImg:'',
 				navShow:false,
-				makeList:[]
+				makeList:[],
+				aiList:[],
+				current: 0,
+				feedList:[],
+				status: 'loadmore',
+				nomoreText: '没有更多了',
+				loading: true,
+				model_subclass_id:'',
+				page:1,
+				pagesize:10
 			}
 		},
 		onLoad() {
 			this.getmakeList()
+			this.getaiList()
+			this.getfeedList()
 		},
 		methods: {
 			open() {
@@ -98,17 +132,61 @@
 				this.navShow = false
 			},
 			getmakeList() {
-			   app.globalData.util
-			   	.request({
+			   app.globalData.util.request({
 			   		url: '/Home/Index',
 			   	})
 			   	.then((res) => {
-					this.setData({
-					    makeList:res.data.channel,
-						bannerImg:res.data.slogan_img				
-					});
-			   		
-			   	}); 
+					this.makeList  = res.data.channel
+					this.bannerImg = res.data.slogan_img
+			   	});
+			},
+			getaiList() {
+				app.globalData.util.request({
+					url: '/Home/FeedsTab'
+				})
+				.then((res) => {
+					const aiList = res.data
+					this.aiList = aiList.map((item) => ({
+						name: item.title,
+						current:item.model_subclass_id
+					}));
+				});
+			},
+			change(index) {
+				this.current = index.index;
+				this.model_subclass_id = index.current
+				this.getfeedList()
+				this.page = 1
+				this.feedList = []
+			},
+			getfeedList(){
+				this.status = 'loading'
+				app.globalData.util.request({
+					url: '/Home/FeedsList',
+					data:{
+						page:this.page,
+						pagesize:this.pagesize,
+						model_subclass_id:this.model_subclass_id
+					}
+				})
+				.then((res) => {
+					this.loading = false
+					if (res.data.list && res.data.list.length) {
+					  this.status = 'loadmore'
+					  this.feedList = [...this.feedList, ...res.data.list]
+					  if (res.data.list.length < this.pagesize) {
+					    this.status = 'nomore'
+					  }
+					} else {
+						
+					}
+				});
+			},
+			feedClick(){
+				if(this.page == 1 && this.status == 'loadmore'){
+					this.page += 1
+					this.getfeedList()
+				}
 			}
 		}
 	}
@@ -130,7 +208,6 @@
 			top: 0;
 			z-index: -1;
 		}
-		
 		.banner{
 			display: flex;
 			display: -webkit-flex;
@@ -194,7 +271,7 @@
 		.integral{
 			width: 100%;
 			padding: 20rpx 20rpx 20rpx 28rpx;
-			background-color: #edf2f6;
+			background-color: #d8dcdf;
 			border-radius: 10rpx;
 			display: flex;
 			display: -webkit-flex;
@@ -207,7 +284,7 @@
 				font-size: 24rpx;
 				text{
 					font-weight: 700;
-					
+					margin-left: 10rpx;
 				}
 			}
 			.inteBtn{
@@ -244,10 +321,77 @@
 		justify-content: space-between;
 		flex-wrap: wrap;
 		align-items: center;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0 40rpx ;
+		margin: 30rpx 0;
 		.item{
-			width: 48%;
+			width: 320rpx;
+			height: 196rpx;
+			overflow: hidden;
 			height: 200rpx;
-			background-color: #333;
+			margin-bottom: 20rpx;
+			position: relative;
+			text-align: center;
+			line-height: 200rpx;
+			image{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%!important;
+				z-index: -1;
+			}
+			.aiTitle{
+				color: #fff;
+				font-size: 30rpx;
+			}
+		}
+	}
+	.aiList{
+		box-sizing: border-box;
+		padding: 0 30rpx;
+	}
+	.aiWaterfall{
+		display: flex;
+		display: -webkit-flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		margin: 20rpx 0;
+		.fallItem{
+			width: 330rpx;
+			height: 490rpx;
+			border-radius: 16rpx;
+			overflow: hidden;
+			position: relative;
+			margin-bottom: 25rpx;
+			image{
+				width: 100%;
+				height: 100%!important;
+			}
+			.fallTitle{
+				position: absolute;
+				bottom: 20rpx;
+				left: 30rpx;
+				color: #fff;
+				font-size: 24rpx;
+			}
+		}
+		.load-more{
+			border: 1px solid #999;
+			border-radius: 10rpx;
+			color: #fff;
+			margin:20rpx auto;
+			.u-loadmore{
+				margin: 0!important;
+				width: 350rpx;
+				height: 60rpx!important;
+				/deep/.u-loadmore__content__text{
+					font-size: 24rpx!important;
+					font-weight: 700;
+				}
+			}
 		}
 	}
 </style>

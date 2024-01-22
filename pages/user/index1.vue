@@ -8,51 +8,97 @@
                 <view class="info" @tap="toSetting">
                     <view class="nickname">{{ userinfo.nickname || $lang('未设置昵称') }}</view>
                     <view class="mid" style="padding-left: 2rpx">MID: {{ userinfo.user_id }}</view>
+                    <!-- <button class="phone" @tap="toSetting">
+                        <image src="/static/images/user/ic_phone.png"></image>
+                        <text>{{ userinfo.phone || '未绑定手机号' }}</text>
+                    </button> -->
                 </view>
             </view>
 			<view class="btn-setting" @tap="toSetting">
 				<image src="/static/images/user/ic_setting.png"></image>
 			</view>
         </view>
-		<view class="wallet" v-if="drawIsOpen">
-			<view class="inteNum">
-				积分余额
-				<text>555</text>
-			</view>
-			<view class="inteBtn" @click="integralShow = true">兑换</view>
-		</view>
-        <view class="menus">
-            <view class="item" data-url="/pages/article/list?type=help" @tap="linkto">
-                <text class="text-grey">{{ '图片创作' | lang }}</text>
-				<view class="arrow">21</view>
-            </view>
-            <view class="item" data-url="/pages/user/feedback" @tap="linkto">
-                <text class="text-grey">{{ '视频创作' | lang }}</text>
-				<view class="arrow">5</view>
-            </view>
-            <view class="item" data-url="/pages/article/article?type=about" @tap="linkto">
-                <text class="text-grey">{{ '手机号' | lang }}</text>
-				<view class="arrow">13252147859</view>
+        <view class="box-vip">
+            <image class="bg" src="/static/images/user/bg-vip.png"></image>
+            <view class="body">
+                <view style="display: flex; align-items: center">
+                    <image class="icon" src="/static/images/user/ic_vip.png"></image>
+                    <text>{{ 'VIP会员' | lang }}</text>
+                    <view class="line"></view>
+                    <text style="font-size: 24rpx" v-if="userinfo.vip_expire_time">{{ userinfo.vip_expire_time }} {{ '到期' | lang }}</text>
+                    <text style="font-size: 24rpx" v-else>{{ '享无限对话特权' | lang }}</text>
+                </view>
+                <view>
+                    <button class="btn-vip" @tap="toPay('vip')" v-if="userinfo.vip_expire_time" style="width: 92rpx">{{ '续费' | lang }}</button>
+                    <button class="btn-vip" @tap="toPay('vip')" v-else>{{ '立即开通' | lang }}</button>
+                </view>
             </view>
         </view>
-		<!-- 兑换积分弹窗 -->
-		<view class="popup">
-			<u-popup :show="integralShow" mode="center" @close="close" @open="open" closeIconPos="top-right">
-				<text class="title">兑换积分</text>
-				<text class="text">可以使用兑换码来获取平台积分，若您已拥有兑换码，可直接进行兑换。若尚未获得兑换码，可联系我们客服进行购买。</text>
-				<u--input
-				    placeholder="输入或粘贴兑换码"
-				    border="surround"
-				    v-model="value"
-				    @change="change"
-					placeholderStyle="fontSize:14px"
-				  ></u--input>
-				  <view class="operateBtn">
-					  <view class="btn cancel" @click="integralShow = false">取消</view>
-					  <view class="btn sure" @click="exchange">确认兑换</view>
-				  </view>
-			</u-popup>
+		<view class="wallet" v-if="drawIsOpen">
+			<view class="item" @tap="toPay('chat')">
+				<view>
+					<text class="num">{{ userinfo.balance }}</text>
+					<text class="unit">{{ '条' | lang }}</text>
+				</view>
+				<view class="label">{{ '对话余额' | lang }}</view>
+			</view>
+			<view class="item" @tap="toPay('draw')">
+				<view>
+					<text class="num">{{ userinfo.balance_draw }}</text>
+					<text class="unit">{{ '张' | lang }}</text>
+				</view>
+				<view class="label">{{ '绘画余额' | lang }}</view>
+			</view>
 		</view>
+        <view class="menus">
+            <view class="item" @tap="toPay('chat')" v-if="!drawIsOpen">
+                <text class="text-grey">{{ '对话余额' | lang }}</text>
+				<view>
+					<text class="value">{{userinfo.balance}} 条</text>
+					<image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+				</view>
+            </view>
+            <view class="item" data-url="/pages/user/card" @tap="linkto">
+                <text class="text-grey">{{ '卡密兑换' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/task/index" @tap="linkto">
+                <text class="text-grey">{{ '每日任务' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+        </view>
+        <view class="menus">
+            <view class="item" data-url="/pages/commission/index" @tap="linkto" v-if="userinfo.is_commission">
+                <text class="text-grey">{{ '推广中心' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/commission/apply" @tap="linkto" v-if="userinfo.commission_is_open && !userinfo.is_commission">
+                <text class="text-grey">{{ '申请推广员' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/commission/share" @tap="linkto">
+                <text class="text-grey">{{ '邀请好友' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+        </view>
+        <view class="menus" style="margin-bottom: 30rpx;">
+            <view class="item" data-url="/pages/article/list?type=help" @tap="linkto">
+                <text class="text-grey">{{ '使用教程' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/user/feedback" @tap="linkto">
+                <text class="text-grey">{{ '意见反馈' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/article/article?type=about" @tap="linkto">
+                <text class="text-grey">{{ '关于我们' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+            <view class="item" data-url="/pages/article/article?type=kefu" @tap="linkto">
+                <text class="text-grey">{{ '联系客服' | lang }}</text>
+                <image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+            </view>
+        </view>
     </view>
 </template>
 
@@ -67,10 +113,7 @@ export default {
 				balance: 0,
 				balance_draw: 0
 			},
-			drawIsOpen: false,
-			integralShow:false,
-			value: '',
-			code:''
+			drawIsOpen: false
         };
     },
     onShow() {
@@ -105,7 +148,27 @@ export default {
 
         getUserProfile() {
 			window.location.href = app.globalData.siteroot + '/h5/getProfile'
-            
+            // uni.getUserProfile({
+            //     desc: '使用微信登录'
+            // })
+            //     .then((e) => {
+            //         if (!(e.errMsg.indexOf('fail') > 0)) {
+            //             app.globalData.util
+            //                 .request({
+            //                     url: '/user/setUserAvatar',
+            //                     data: {
+            //                         encryptedData: e.encryptedData,
+            //                         iv: e.iv
+            //                     }
+            //                 })
+            //                 .then((res) => {
+            //                     this.getUserInfo();
+            //                 });
+            //         } else {
+            //             app.globalData.util.message('授权失败', 'error');
+            //         }
+            //     })
+            //     .catch(() => {});
         },
 
         getUserPhone(e) {
@@ -126,12 +189,11 @@ export default {
                     }
                 })
                 .then((res) => {
-                    this.getUserInfo();  
+                    this.getUserInfo();
                 });
         },
 
         linkto(e) {
-			console.log(e)
 			if (!this.isLogin) {
 				app.globalData.util.toLogin('请登录')
 				return
@@ -168,31 +230,11 @@ export default {
             uni.navigateTo({
                 url: '/pages/user/setting/index'
             });
-        },
-		open() {
-			this.integralShow = true
-		  },
-		close() {
-			this.integralShow = false
-		},
-		change(e) {
-			this.code = e
-		},
-		exchange(){
-			app.globalData.util.request({
-				url: '/user/bindCard',
-				data:{
-					code:this.code
-				}
-			})
-			.then((res) => {
-				app.globalData.util.message(res.message)
-			});
-		}
+        }
     }
 };
 </script>
-<style lang="scss">
+<style>
 page {
     box-sizing: border-box;
     background: #f7f7f8;
@@ -207,8 +249,8 @@ page {
     width: 100%;
     left: 0;
     top: 0px;
-    background: #3c9cff;
-    height: 200rpx;
+    background: #04babe;
+    height: 300rpx;
     box-sizing: content-box;
     z-index: 1;
 }
@@ -383,29 +425,6 @@ page {
 	align-items: center;
 	overflow: hidden;
 	margin: 30rpx;
-	background-color: #d8dcdf;
-	border-radius:20rpx;
-	display: flex;
-	display: -webkit-flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	align-items: center;
-	box-sizing: border-box;
-	padding: 30rpx 20rpx 30rpx 50rpx;
-	.inteNum{
-		font-size: 28rpx;
-		text{
-			font-weight: 700;
-			margin-left: 10rpx;
-		}
-	}
-	.inteBtn{
-		background-color: #4b5d77;
-		border-radius: 8rpx;
-		padding: 10rpx 40rpx;
-		font-size: 24rpx;
-		color: #fff;
-	}
 }
 
 .wallet .item {
@@ -446,8 +465,8 @@ page {
 .menus {
     background: #fff;
     border-radius: 20rpx;
-    padding:0 20rpx;
-    margin: 30rpx;
+    padding: 20rpx;
+    margin: 30rpx 30rpx 0 30rpx;
 }
 
 .menus .item {
@@ -457,7 +476,7 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 28rpx;
+    font-size: 32rpx;
     color: #444;
     box-sizing: border-box;
 }
@@ -469,7 +488,9 @@ page {
 }
 
 .menus .item .arrow {
-	color: $uni-color-primary;
+    width: 24rpx;
+    height: 24rpx;
+    opacity: 0.8;
 }
 
 .menus .item.button {
@@ -496,51 +517,5 @@ page {
 
 .text-grey {
     color: #666;
-}
-.popup{
-	width: 80%;
-	.title{
-		font-size: 32rpx;
-		text-align: center;
-		font-weight: 700;
-	}
-	.text{
-		font-size: 28rpx;
-		text-align: center;
-		margin: 20rpx 0;
-	}
-	/deep/.u-popup__content{
-		width: 80%;
-		border-radius: 20rpx;
-		box-sizing: border-box;
-		padding: 80rpx 40rpx;
-	}
-	/deep/.u-input{
-		border: 1px solid #f5f5f5;
-		background-color: #f5f5f5;
-		margin: 30rpx 0;
-	}
-	.operateBtn{
-		display: flex;
-		display: -webkit-flex;
-		justify-content: right;
-		flex-wrap: wrap;
-		align-items: center;
-		.btn{
-			width: 200rpx;
-			height: 50rpx;
-			line-height: 50rpx;
-			border: 1px solid #495b74;
-			border-radius: 8rpx;
-			display: inline-block;
-			text-align: center;
-			font-size: 28rpx;
-		}
-		.sure{
-			margin-left: 20rpx;
-			background-color: #495b74;
-			color: #fff;
-		}
-	}
 }
 </style>

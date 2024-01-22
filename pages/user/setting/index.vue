@@ -171,12 +171,13 @@
 	}
 
 	.logout .btn-logout {
-		width: 240rpx;
-		height: 100rpx;
-		line-height: 100rpx;
+		width: 280rpx;
+		height: 80rpx;
+		line-height: 80rpx;
 		text-align: center;
 		border-radius: 10rpx;
-		font-size: 32rpx;
+		font-size: 28rpx;
+		background-color: #3c9cff;
 	}
 
 	.form {
@@ -207,7 +208,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		font-size: 32rpx;
+		font-size: 28rpx;
 		color: #333;
 	}
 
@@ -232,10 +233,10 @@
 	}
 
 	.text-primary {
-		color: #04BABE;
+		color: #3c9cff;
 	}
 
 	.text-danger {
-		color: #F56C6C;
+		color: #fff;
 	}
 </style>

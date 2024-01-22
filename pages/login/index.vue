@@ -30,7 +30,7 @@
 				<view class="form-item">
 					<button class="btn btn-submit" @tap="doLogin">{{ '确定登录' | lang }}</button>
 				</view>
-				<view class="form-item" style="justify-content: space-between; color: #04babe; padding:0 36rpx;font-size: 28rpx;">
+				<view class="form-item" style="justify-content: space-between; color: #3c9cff; padding:0 36rpx;font-size: 28rpx;">
 					<text @tap="toReg">{{ '注册账号' | lang }}</text>
 					<text @tap="toReset">{{ '忘记密码' | lang }}</text>
 				</view>
@@ -205,7 +205,7 @@
 		margin-top: 200rpx;
 	}
 	.btn {
-		background: #04babe;
+		background: #3c9cff;
 		border-radius: 10rpx;
 		width: 100%;
 		height: 98rpx;
@@ -238,6 +238,7 @@
 	.btn-submit {
 		height: 88rpx;
 		margin-top: 40rpx;
+		font-size: 32rpx;
 	}
 	
 	.agree {
@@ -253,7 +254,7 @@
 		padding: 20rpx 0 50rpx 0;
 	}
 	.agree text {
-		color: #04babe;
+		color: #3c9cff;
 	}
 	
 	.container {
