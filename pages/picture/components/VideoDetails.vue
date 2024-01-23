@@ -9,11 +9,11 @@
   >
     <view :style="{borderRadius: `${round}px`}" class="pop-container" v-if="show">
       <view class="main-con">
-<!--        <video class="video-box"
+        <video class="video-box"
             object-fit="contain"
             src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4"
-            controls />-->
-        <view class="pic-box">
+            controls />
+<!--        <view class="pic-box">
           <u-swiper
               height="100px"
               bgColor="transparent"
@@ -22,7 +22,7 @@
               indicatorMode="line"
               circular
           />
-        </view>
+        </view>-->
       </view>
       <view class="ft">
         <view class="title">{{info.prompt}}</view>

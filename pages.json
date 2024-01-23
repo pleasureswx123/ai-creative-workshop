@@ -64,6 +64,13 @@
 			}
 		},
 		{
+			"path": "pages/sound/index",
+			"style": {
+				"navigationBarTitleText": "生成配音",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -308,7 +315,7 @@
 				"selectedIconPath": "static/images/tabbar/ic_draw_active.png"
 			},
 			{
-				"pagePath": "pages/user/index",
+				"pagePath": "pages/picture/index",
 				"text": "我的",
 				"iconPath": "static/images/tabbar/ic_user.png",
 				"selectedIconPath": "static/images/tabbar/ic_user_active.png"

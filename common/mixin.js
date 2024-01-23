@@ -1,5 +1,46 @@
 export default {
   methods: {
+    loadImageAndReadFile(url) {
+      return new Promise((resolve, reject) => {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.responseType = 'blob';
+          xhr.onload = function() {
+            debugger
+            if (xhr.status === 200) {
+              try {
+                const blob = xhr.response;
+                const fileName = `${Date.now()}_image.jpg`;
+                const file = new File([blob], fileName, { type: blob.type });
+                const fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                  const fileContent = e.target.result;
+                  resolve(fileContent);
+                };
+                fileReader.onerror = () => {
+                  reject()
+                };
+                fileReader.readAsText(file);
+              } catch (e) {
+                reject()
+              }
+            } else {
+              reject()
+            }
+          };
+          xhr.onerror = function(err) {
+            console.log(err)
+            debugger
+            reject()
+          };
+          xhr.send();
+        } catch (e) {
+          reject()
+        }
+      })
+      // getFileInfo getImageInfo
+    },
     downLoadVideoOrImgFile({src, fileType}) { // fileType: image || video
       // #ifdef H5
       const xhr = new XMLHttpRequest();

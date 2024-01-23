@@ -7,9 +7,13 @@
     <UploadImg :value.sync="sourceImg"></UploadImg>
     
     <TitleCell title="把背景更换为" :isShowRight="false" />
-    <QmTextarea :value.sync="describe"></QmTextarea>
+    <QmTextarea :value.sync.trim="describe"></QmTextarea>
+  
+    <TipsHelp>
+      <image src="/static/images/imgTool/4.png"></image>
+    </TipsHelp>
     
-    <StartBtn @start="handleStart"></StartBtn>
+    <StartBtn :disabled="disabled" @start="handleStart"></StartBtn>
   
   </view>
 </template>
@@ -19,13 +23,19 @@ import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import UploadImg from './components/UploadImg.vue';
 import QmTextarea from './components/QmTextarea.vue';
+import TipsHelp from './components/TipsHelp.vue';
 import StartBtn from './components/StartBtn.vue';
 export default {
-  components: { PicHeader, TitleCell, UploadImg, QmTextarea, StartBtn },
+  components: { PicHeader, TitleCell, UploadImg, QmTextarea,TipsHelp,  StartBtn },
   data() {
     return {
       sourceImg: '',
       describe: '',
+    }
+  },
+  computed: {
+    disabled() {
+      return !(this.sourceImg && !!((this.describe || '').trim().length))
     }
   },
   methods: {

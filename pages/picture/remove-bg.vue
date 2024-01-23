@@ -6,13 +6,11 @@
     <TitleCell title="选择图片" />
     <UploadImg :value.sync="sourceImg"></UploadImg>
   
-    <TipsTxt></TipsTxt>
-    
-    <view class="tips-img">
+    <TipsHelp>
       <image src="/static/images/imgTool/3.png"></image>
-    </view>
+    </TipsHelp>
     
-    <StartBtn @start="handleStart"></StartBtn>
+    <StartBtn :disabled="disabled" @start="handleStart"></StartBtn>
   
   </view>
 </template>
@@ -21,14 +19,19 @@
 import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import UploadImg from './components/UploadImg.vue';
-import TipsTxt from './components/TipsTxt.vue';
+import TipsHelp from './components/TipsHelp.vue';
 import StartBtn from './components/StartBtn.vue';
 
 export default {
-  components: { PicHeader, TitleCell, UploadImg, TipsTxt, StartBtn },
+  components: { PicHeader, TitleCell, UploadImg, TipsHelp, StartBtn },
   data() {
     return {
       sourceImg: '',
+    }
+  },
+  computed: {
+    disabled() {
+      return !this.sourceImg
     }
   },
   methods: {

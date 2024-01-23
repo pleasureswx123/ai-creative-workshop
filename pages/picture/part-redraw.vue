@@ -11,8 +11,12 @@
     
     <TitleCell title="你想把它换成什么" :isShowRight="false" />
     <QmInput :value.sync="targetElementText" placeholder="例如：黑色的毛线帽"></QmInput>
+  
+    <TipsHelp>
+      <image src="/static/images/imgTool/6.jpg"></image>
+    </TipsHelp>
     
-    <StartBtn :disabled="false" @start="handleStart"></StartBtn>
+    <StartBtn :disabled="disabled" @start="handleStart"></StartBtn>
   </view>
 </template>
 
@@ -21,14 +25,22 @@ import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import UploadImg from './components/UploadImg.vue';
 import QmInput from './components/QmInput.vue';
+import TipsHelp from './components/TipsHelp.vue';
 import StartBtn from './components/StartBtn.vue';
 export default {
-  components: { PicHeader, TitleCell, UploadImg, QmInput, StartBtn },
+  components: { PicHeader, TitleCell, UploadImg, QmInput, TipsHelp, StartBtn },
   data() {
     return {
       sourceImg: '',
       sourceElementText: '',
       targetElementText: '',
+    }
+  },
+  computed: {
+    disabled() {
+      const isSourceTxt = !!((this.sourceElementText || '').trim().length);
+      const isTargetTxt = !!((this.targetElementText || '').trim().length);
+      return !(this.sourceImg && isSourceTxt && isTargetTxt)
     }
   },
   methods: {

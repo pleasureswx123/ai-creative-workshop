@@ -3,7 +3,7 @@
   <div class="page-container">
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in list" :key="index">
-        <CreationItem :info="item" />
+        <CreationItem :info="item" :type="index" />
       </u-list-item>
     </u-list>
   </div>

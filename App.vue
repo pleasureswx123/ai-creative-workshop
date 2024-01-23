@@ -120,6 +120,8 @@
 </script>
 <style lang="scss">
 @import "@/uni_modules/uview-ui/index.scss";
+@import "@/static/iconfont/iconfont.css";
+
 image {
   vertical-align: middle;
 }

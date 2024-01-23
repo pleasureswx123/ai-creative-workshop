@@ -8,14 +8,12 @@
     
     <TitleCell title="换脸目标图片" />
     <UploadImg :value.sync="targetImg"></UploadImg>
-    
-    <TipsTxt></TipsTxt>
-    
-    <view class="tips-img">
-      <image src="/static/images/imgTool/1.png"></image>
-    </view>
   
-    <StartBtn @start="handleStart"></StartBtn>
+    <TipsHelp>
+      <image src="/static/images/imgTool/1.png"></image>
+    </TipsHelp>
+  
+    <StartBtn :disabled="disabled" @start="handleStart"></StartBtn>
     
   </view>
 </template>
@@ -24,14 +22,19 @@
 import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import UploadImg from './components/UploadImg.vue';
-import TipsTxt from './components/TipsTxt.vue';
+import TipsHelp from './components/TipsHelp.vue';
 import StartBtn from './components/StartBtn.vue';
 export default {
-  components: { PicHeader, TitleCell, UploadImg, TipsTxt, StartBtn },
+  components: { PicHeader, TitleCell, UploadImg, TipsHelp, StartBtn },
   data() {
     return {
       sourceImg: '',
       targetImg: '',
+    }
+  },
+  computed: {
+    disabled() {
+      return !(this.sourceImg && this.targetImg)
     }
   },
   methods: {
@@ -45,14 +48,5 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   padding: 0 30rpx 160rpx;
-}
-.tips-img {
-  margin: 20rpx 0;
-  width: 60%;
-  aspect-ratio: 4 / 3;
-  image {
-    width: 100%;
-    height: 100%;
-  }
 }
 </style>

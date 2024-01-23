@@ -1,6 +1,6 @@
 <template>
   <view class="btn-container">
-    <view class="start-btn" :class="{disabled: disabled}" @tap="handleStart">
+    <view class="start-btn" :class="{disabled: disabled}" @tap="$u.debounce(handleStart, 500)">
       <text>开始生成</text>
       <text class="txt">消耗10</text>
     </view>
@@ -12,7 +12,7 @@ export default {
   props: {
     disabled: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
   text-align: center;
   margin: 0 auto;
   position: relative;
-  background: #5ac726;
+  background: #0030DA;
   color: #fff;
   &.disabled {
     background: #EBEBEB;
