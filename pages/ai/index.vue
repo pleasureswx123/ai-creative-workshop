@@ -7,7 +7,7 @@
   
     <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
     
-    <view>1231111</view>
+    <view>2424</view>
     
     
   
