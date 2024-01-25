@@ -1,6 +1,6 @@
 <template>
   <view class="cell-box">
-    <view>{{title}}</view>
+    <view class="label" v-html="title"></view>
     <view class="rt" v-if="isShowRight">
       <text>从创作历史选择</text>
       <u-icon name="arrow-right" size="24rpx" color="#0B5EFF"></u-icon>
@@ -29,6 +29,13 @@ export default {
   height: 80rpx;
   display: flex;
   align-items: center;
+  .label {
+    /deep/ em {
+      font-style: normal;
+      color: red;
+      font-weight: bold;
+    }
+  }
   .rt {
     font-size: 24rpx;
     margin-left: auto;

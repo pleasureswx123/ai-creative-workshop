@@ -66,6 +66,7 @@ export default {
   gap: 20rpx;
 }
 .label-row {
+  min-width: 0;
   display: flex;
   align-items: center;
   height: 80rpx;

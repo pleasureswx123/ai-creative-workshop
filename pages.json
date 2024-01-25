@@ -64,6 +64,13 @@
 			}
 		},
 		{
+			"path": "pages/picture/replace-bg-txt",
+			"style": {
+				"navigationBarTitleText": "更换背景(语义)",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
 			"path": "pages/sound/index",
 			"style": {
 				"navigationBarTitleText": "生成配音",

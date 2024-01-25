@@ -6,7 +6,7 @@
     <TitleCell title="选择图片" />
     <UploadImg :value.sync="sourceImg"></UploadImg>
     
-    <TitleCell title="描述你想要更换的元素" :isShowRight="false" />
+    <TitleCell title="描述你想要<em>更换</em>的元素" :isShowRight="false" />
     <QmInput :value.sync="sourceElementText" placeholder="例如：红色的鸭舌帽"></QmInput>
     
     <TitleCell title="你想把它换成什么" :isShowRight="false" />

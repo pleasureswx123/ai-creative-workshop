@@ -26,6 +26,7 @@ export default {
         {title: '更换背景', imgName: '4.png', type: 'replace-bg'},
         {title: '智能扩图', imgName: '5.png', type: 'ai-expand'},
         {title: '局部重绘', imgName: '6.jpg', type: 'part-redraw'},
+        {title: '更换背景(语义)', imgName: '7.png', type: 'replace-bg-txt'},
       ]
     }
   },
@@ -42,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  padding: 0 40rpx;
+  padding: 0 40rpx 100rpx;
 }
 .grid-box {
   display: grid;

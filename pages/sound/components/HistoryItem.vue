@@ -9,7 +9,7 @@
         <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="18" />
         <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="20" />
       </view>
-      <view class="duration" v-if="duration">{{duration}}</view>
+      <view class="duration">{{duration}}</view>
       <uni-icons @tap="playAudio" custom-prefix="iconfont-qm" type="icon-qm-play1" color="#0830d9" size="22" />
       <uni-icons @tap="downloadAudio" custom-prefix="iconfont-qm" type="icon-qm-download11" color="#0830d9" size="22" />
     </view>
