@@ -10,7 +10,6 @@
     <view>1231111</view>
     
     
-    <SwipeScrollList :list="topicList"></SwipeScrollList>
   
     
     
@@ -23,11 +22,10 @@
 <script>
 import QmNavTabs from './components/QmNavTabs.vue';
 import QmSubTabs from './components/QmSubTabs.vue';
-import SwipeScrollList from './components/SwipeScrollList.vue';
 import {userApi} from "@/api";
 
 export default {
-  components: { QmNavTabs, QmSubTabs, SwipeScrollList },
+  components: { QmNavTabs, QmSubTabs },
   data() {
     return {
       topicList: [],
