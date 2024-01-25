@@ -1,8 +1,8 @@
 <template>
   <view class="radio-container">
-    <view class="item" :class="{active: currentVal === item.value}"
+    <view class="item" v-for="(item, index) in list" :key="`${index}-${item.value}`" :class="{active: currentVal === item.value}"
           @tap="currentVal = item.value"
-          v-for="item in list" :key="item.value">{{item.label}}</view>
+          >{{item.label}}</view>
   </view>
 </template>
 

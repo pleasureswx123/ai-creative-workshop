@@ -3,7 +3,7 @@
   <view class="page-container">
     <PicHeader title="选择图片工具" />
     <view class="grid-box">
-      <view class="card-box" v-for="item in list" :key="item.type" @tap="handleClick(item)">
+      <view class="card-box" v-for="(item, index) in list" :key="`${index}-${item.type}`" @tap="handleClick(item)">
         <view class="img-box">
           <image :src="`/static/images/imgTool/${item.imgName}`"></image>
         </view>

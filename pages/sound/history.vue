@@ -1,7 +1,7 @@
 <template>
   <page-meta page-style="background: #fff" />
   <view class="page-container">
-    <HistoryItem v-for="item in 10" @playAudio="handlePlayAudio"></HistoryItem>
+    <HistoryItem v-for="item in 10" :key="item" @playAudio="handlePlayAudio"></HistoryItem>
   </view>
 </template>
 

@@ -5,7 +5,7 @@
 		</view>
 		<view v-else-if="item.state === 1">
 			<view :class="'item' + (item.response.length > 1 ? ' item4' : ' item1')">
-				<image v-for="(image, index) in item.response" class="image" :src="image" mode="widthFix" @tap="previewImage(image)"></image>
+				<image v-for="(image, index) in item.response" :key="index" class="image" :src="image" mode="widthFix" @tap="previewImage(image)"></image>
 			</view>
 		</view>
 		<view v-else-if="item.state === 2" class="writing fail">

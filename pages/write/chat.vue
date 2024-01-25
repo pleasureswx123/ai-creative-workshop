@@ -68,7 +68,7 @@
 
 			<view class="box-input" :style="'bottom: ' + (inputShow ? '0' : '-204rpx') + ';'">
 				<view class="tools">
-					<view v-for="(item, index) in langs" class="item" :class="{active: item === lang}"
+					<view v-for="(item, index) in langs" :key="index" class="item" :class="{active: item === lang}"
 						@click="changeLang(item)">
 						<text>{{item}}</text>
 						<image class="ic_sj" src="/static/images/write/ic_sj.png"></image>

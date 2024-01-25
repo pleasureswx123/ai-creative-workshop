@@ -16,7 +16,7 @@
             <view class="title">{{ '我的海报' | lang }}</view>
             <view class="pannel">
                 <swiper class="poster-list" @change="swiperChange" :indicator-dots="true" :current="currentHaibao" :circular="true" :autoplay="false" previous-margin="-10rpx" next-margin="-10rpx">
-                    <swiper-item class="item" v-for="item in share.haibaoArr">
+                    <swiper-item class="item" v-for="(item, index) in share.haibaoArr" :key="index">
                         <view class="poster" :style="'width: ' + (item.bg_w * item.scale) + 'rpx; height: ' + (item.bg_h * item.scale) + 'rpx;'">
                             <image :src="item.bg" style="width: 100%; height: 100%;"></image>
                             <image :src="share.qrcode" :style="'left: '+ (item.hole_x * item.scale) + 'rpx; top: ' + (item.hole_y * item.scale) + 'rpx; width: ' + (item.hole_w * item.scale) + 'rpx; height:' + (item.hole_h * item.scale) + 'rpx;'"></image>
