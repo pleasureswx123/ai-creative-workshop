@@ -52,7 +52,7 @@ export default {
 .tabs-container {
   background: #fff;
   border-bottom: 1rpx solid #dadada;
-  margin: 0 0 10rpx;
+  //margin: 0 0 10rpx;
   /deep/ {
     .u-tabs__wrapper__nav__item {
       height: 35px!important;

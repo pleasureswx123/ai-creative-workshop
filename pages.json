@@ -81,6 +81,21 @@
 			"path": "pages/ai/index",
 			"style": {
 				"navigationBarTitleText": "智能对话",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/ai/digit-chat",
+			"style": {
+				"navigationBarTitleText": "对话",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path": "pages/ai/assistant-chat",
+			"style": {
+				"navigationBarTitleText": "创作助手",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
 		},

@@ -121,7 +121,6 @@
 <style lang="scss">
 @import "@/uni_modules/uview-ui/index.scss";
 @import "@/static/iconfont/iconfont.css";
-
 image {
   vertical-align: middle;
 }
@@ -130,6 +129,10 @@ image {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.flex1 {
+  flex: 1;
+  min-width: 0;
 }
 page {
   min-height: calc(100vh - var(--window-bottom) - var(--window-top));
