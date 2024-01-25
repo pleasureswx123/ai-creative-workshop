@@ -1,7 +1,7 @@
 <template>
     <view>
         <view class="list">
-            <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view>
+            <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view>
         </view>
     </view>
 
