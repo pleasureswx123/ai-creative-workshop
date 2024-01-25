@@ -1,1 +1,0 @@
-<view class="pages"><text data-event-opts="{{[['tap',[['doPrev',['$event']]]]]}}" class="prev" bindtap="__e">{{$root.f0}}</text><text data-event-opts="{{[['tap',[['showPageInputFun',['$event']]]]]}}" class="current" bindtap="__e">{{page+" / "+pageMax}}</text><text data-event-opts="{{[['tap',[['doNext',['$event']]]]]}}" class="next" bindtap="__e">{{$root.f1}}</text></view>

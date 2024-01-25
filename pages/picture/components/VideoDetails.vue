@@ -72,11 +72,11 @@ export default {
   },
   methods: {
     handleDownImageOrVideo() {
-      this.downLoadVideoOrImgFile({
+      this.downLoadVideoOrImgOrAudioFile({
         src: 'https://web-assets.dcloud.net.cn/unidoc/zh/uni-app.png',
-        fileType: 'img'
+        fileType: 'image'
       });
-      // this.downLoadVideoOrImgFile({
+      // this.downLoadVideoOrImgOrAudioFile({
       //   src: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4',
       //   fileType: 'video'
       // });

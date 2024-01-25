@@ -1,12 +1,12 @@
 <template>
   <page-meta page-style="background: #f6f8fe" />
-  <div class="page-container">
+  <view class="page-container">
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in list" :key="index">
         <CreationItem :info="item" :type="index" />
       </u-list-item>
     </u-list>
-  </div>
+  </view>
 </template>
 
 <script>

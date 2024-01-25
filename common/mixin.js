@@ -41,7 +41,8 @@ export default {
       })
       // getFileInfo getImageInfo
     },
-    downLoadVideoOrImgFile({src, fileType}) { // fileType: image || video
+
+    downLoadVideoOrImgOrAudioFile({src, fileType}) { // fileType: image || video || audio
       // #ifdef H5
       const xhr = new XMLHttpRequest();
       xhr.open('GET', `${src}?_t=${Date.now()}`, true);
@@ -70,8 +71,13 @@ export default {
         url: src,
         success: (res) => {
           if (res.statusCode === 200) {
-            const keyName = fileType === 'video' ? 'saveVideoToPhotosAlbum' : 'saveImageToPhotosAlbum';
-            uni[keyName]({
+            const temp = {
+              video: 'saveVideoToPhotosAlbum',
+              image: 'saveImageToPhotosAlbum',
+              audio: 'saveAudioToAlbum'
+            };
+            const keyName = temp[fileType] || '';
+            keyName && uni[keyName]({
               filePath: res.tempFilePath,
               success: () => {
                 uni.$u.toast('保存成功')

@@ -4,7 +4,7 @@
       :confirmType="null" v-model="current"
       placeholderStyle="color: red;"
       placeholder="描述文字以短句、短语为佳，支持中、英文输入" count
-      maxlength="300" height="140"></u--textarea>
+      maxlength="500" height="140"></u--textarea>
 </template>
 
 <script>

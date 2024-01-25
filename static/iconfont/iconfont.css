@@ -11,6 +11,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-qm-speaker2:before {
+  content: "\e69d";
+}
+
+.icon-qm-wave2:before {
+  content: "\e6af";
+}
+
+.icon-qm-speaker1:before {
+  content: "\e6b0";
+}
+
+.icon-qm-speaker:before {
+  content: "\e6b1";
+}
+
+.icon-qm-wave:before {
+  content: "\e6b2";
+}
+
 .icon-qm-send:before {
   content: "\e6ae";
 }

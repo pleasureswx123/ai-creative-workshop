@@ -1,8 +1,0 @@
-
-button::after {
-	display: none;
-}
-.uni-tabbar .uni-tabbar__item {
-	display: none;
-}
-
