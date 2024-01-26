@@ -44,6 +44,9 @@
 		<view v-if="promptList && promptCount > pagesize" style="padding: 30rpx 0 30rpx 0; width: 100%">
 			<pages :count="promptCount" :pagesize="pagesize" :page="page" @change="pageChange"></pages>
 		</view>
+		<u-button @click="onClick">文生图</u-button>
+		<u-button @click="onClicks">设置</u-button>
+		<u-button @click="onHotos">填写</u-button>
 	</view>
 </template>
 
@@ -89,6 +92,24 @@
 			})
 		},
 		methods: {
+			onHotos(){
+				uni.navigateTo({
+					// url: '/pages/photos/controinet/controinet'
+					// url: '/pages/photos/model/model'
+					// url: '/pages/photos/lora/lora'
+					url:'/pages/photos/user/user'
+				});
+			},
+			onClicks(){
+				uni.navigateTo({
+					url: '/pages/photos/lora/lora'
+				});
+			},
+			onClick(){
+				uni.navigateTo({
+					url: '/pages/photos/photos'
+				});
+			},
 			switchTopic: function(e) {
 				let topic_id = e.currentTarget.dataset.topic;
 				if (topic_id == 'vote' && !this.isLogin) {

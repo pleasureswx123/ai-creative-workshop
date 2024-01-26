@@ -218,7 +218,72 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path" : "pages/photos/photos",
+			"style" : 
+			{
+				"navigationBarTitleText" : "生成图片",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/controinet/controinet",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/lora/lora",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/operate/operate",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/model/model",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/user/user",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/sstyle/sstyle",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/create/create",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
+		
 	],
 	"tabBar": {
 		"color": "#666666",
@@ -261,8 +326,9 @@
 	"globalStyle": {
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#04BABE",
-		"navigationBarTextStyle": "white",
-		"navigationStyle": "custom"
+		"navigationBarTextStyle": "white"
+		// "navigationStyle": "custom"
+		// "navigationStyle": ""
 	},
 	"subPackages": []
 }
