@@ -1,34 +1,46 @@
 <template>
 	<view class="content">
 		<view class="banner-cont">
-			<view class="banner">
-				<image :src="bannerImg" mode="widthFix" class="bannerBg"></image>
-				<view class="logo">
-					<image src="../../static/images/index/logo2.png" mode="widthFix"></image>
-				</view>
+			<view class="navList">
 				<view class="nav">
 					<u-icon name="list" color="#fff" size="24" @click="navShow = true"></u-icon>
 				</view>
+				<view class="head" @click="goUser">
+					<image :src="userinfo.avatar" v-if="userinfo.avatar"></image>
+				</view>
 			</view>
-			<text>让创作变的轻松独特</text>
+			<view class="banner">
+				<view class="bannerBg">
+					<video id="myVideo" :src="banner.url" :autoplay="true" :loop="true" :controls="false" :muted="true" object-fit="cover"></video>
+				</view>
+				<view class="bannerText">
+					<text class="eng">{{banner.slogan_en}}</text>
+					<view>
+						<text class="cn">{{slogan_cn}}</text>
+						<text class="cnmain">{{banner.slogan_mark}}</text>
+						<text class="cn">{{slogan_cnEng}}</text>
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="aiType">
-			<view class="item" v-for="(item,index) in makeList" :key="index">
+			<view class="item" v-for="(item,index) in makeList" :key="index" @click="goDary">
+				<text class="aiTitle">{{item.title}}</text>
+				<text class="aiSubtitle">{{item.content}}</text>
 				<image :src="item.img" mode="widthFix" v-if="item.img"></image>
-				<view class="aiTitle">{{item.title}} ></view>
 			</view>
 		</view>
 		<view class="aiList">
 			<u-tabs :list="aiList" :current="current" @change="change"
 			 :activeStyle="{
-				color: '#303133',
+				color: '#F60652',
 				fontWeight: 'bold',
 				transform: 'scale(1.05)',
 				fontSize:'14px'
 			}"
 			:inactiveStyle="{
 				color: '#606266',
-				transform: 'scale(1)',
+				transform: 'scale(1)', 
 				fontSize:'14px'
 			}"></u-tabs>
 			<view class="aiWaterfall">
@@ -41,61 +53,104 @@
 				</view>
 			</view>
 		</view>
+		<view class="footer">
+			<view class="flex">
+				<view class="logo">
+					<image src="../../static/images/index/logo.png" mode=""></image>
+					<text class="primaryColor">超级语言AI</text>
+				</view>
+				<view class="contact">联系我们</view>
+			</view>
+			<text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
+			<view class="">
+				<text>用户协议和</text><text>隐私政策</text>
+			</view>
+			<text @click="goMiit">京ICP备2023009914号-5</text>
+			<view class="">
+				<image src="../../static/images/index/semi.png" mode="aspectFill" class="semi"></image>
+				<text @click="goMps">京公网安备11011102002471号</text>
+			</view>
+		</view>
 		<!-- 导航弹出 -->
 		<view class="popup">
-			<u-popup :show="navShow" mode="right"  @close="close" @open="open" closeIconPos="top-right">
-				<view class="user">
+			<u-popup :show="navShow" mode="left"  @close="close" @open="open" closeIconPos="top-right">
+				<view class="user" @click="goUser">
 					<view class="userAvater">
-						<image src="" mode="aspectFit"></image>
+						<image :src="userinfo.avatar" v-if="userinfo.avatar"></image>
 					</view>
 					<view class="Infor">
-						<view class="userName">用户昵称1</view>
-						<view class="userId">yyyddoe</view>
+						<!-- <view class="userName">{{userinfo.nickname}}</view> -->
+						<view class="userName">{{userinfo.nickname || $lang('未设置昵称') }}</view>
+						<view class="userId">MID:{{userinfo.user_id}}</view>
 					</view>
 				</view>
 				<view class="integral">
 					<view class="inteNum">
 						积分
-						<text>555</text>
+						<text>{{userinfo.balance}}</text>
 					</view>
-					<view class="inteBtn">兑换</view>
+					<view class="inteBtn" @click="blChange">兑换</view>
 				</view>
 				<view class="navList">
-					<view class="item">
-						<u-icon name="account" size="22"></u-icon>个人中心
+					<view class="item" @click="goUser">
+						<u-icon name="account" size="22" color="#f5f5f5"></u-icon>个人中心
 					</view>
 					<view class="item">
-						<u-icon name="grid" size="22"></u-icon>我的创作
-					</view>
-					<view class="navSelmg"></view>
-					<view class="item">
-						<u-icon name="chat" size="22"></u-icon>智能对话
-					</view>
-					<view class="item">
-						<u-icon name="camera" size="22"></u-icon>生成图片
-					</view>
-					<view class="item">
-						<u-icon name="photo" size="22"></u-icon>图片处理
-					</view>
-					<view class="item">
-						<u-icon name="play-right" size="22"></u-icon>生成视频
+						<u-icon name="grid" size="22" color="#f5f5f5"></u-icon>我的创作
 					</view>
 					<view class="navSelmg"></view>
 					<view class="item">
-						<u-icon name="file-text" size="22"></u-icon>使用教程
+						<u-icon name="chat" size="22" color="#f5f5f5"></u-icon>智能对话
 					</view>
 					<view class="item">
-						<u-icon name="kefu-ermai" size="22"></u-icon>联系我们
+						<u-icon name="camera" size="22" color="#f5f5f5"></u-icon>生成图片
 					</view>
 					<view class="item">
-						<u-icon name="info-circle" size="20"></u-icon>服务和隐私条款
+						<u-icon name="photo" size="22" color="#f5f5f5"></u-icon>图片处理
+					</view>
+					<view class="item">
+						<u-icon name="play-right" size="22" color="#f5f5f5"></u-icon>生成视频
 					</view>
 					<view class="navSelmg"></view>
+					<view class="item" data-url="/pages/article/list?type=help" @click="goUse">
+						<u-icon name="file-text" size="22" color="#f5f5f5"></u-icon>使用教程
+					</view>
 					<view class="item">
-						<u-icon name="minus-square-fill" size="22"></u-icon>退出登录
+						<u-icon name="kefu-ermai" size="22" color="#f5f5f5"></u-icon>联系我们
+					</view>
+					<view class="item" @click="toDoc('service')">
+						<u-icon name="order" size="20" color="#f5f5f5"></u-icon>服务条款
+					</view>
+					<view class="item" @click="toDoc('privacy')">
+						<u-icon name="info-circle" size="20" color="#f5f5f5"></u-icon>隐私协议
+					</view>
+					<view class="navSelmg"></view>
+					<view class="item" @click="doLogout">
+						<u-icon name="minus-square-fill" size="22" color="#f5f5f5"></u-icon>退出登录
 					</view>
 				</view>
 			</u-popup>
+		</view>
+		<!-- 兑换积分弹窗 -->
+		<view class="inpopup">
+			<u-popup :show="integralShow" mode="center" @close="inClose" @open="inOpen" closeIconPos="top-right">
+				<text class="title">兑换积分</text>
+				<text class="text">可以使用兑换码来获取平台积分，若您已拥有兑换码，可直接进行兑换。若尚未获得兑换码，可联系我们客服进行购买。</text>
+				<u--input
+				    placeholder="输入或粘贴兑换码"
+				    border="surround"
+				    v-model="value"
+				    @change="inChange"
+					placeholderStyle="fontSize:14px"
+				  ></u--input>
+				  <view class="operateBtn">
+					  <view class="btn cancel" @click="integralShow = false">取消</view>
+					  <view class="btn sure" @click="exchange">确认兑换</view>
+				  </view>
+			</u-popup>
+		</view>
+		<view class="waterfalls">
+			<!-- <custom-waterfalls-flow :value="data.list"></custom-waterfalls-flow> -->
 		</view>
 	</view>
 </template>
@@ -105,7 +160,7 @@
 	export default {
 		data() {
 			return {
-				bannerImg:'',
+				banner:{},
 				navShow:false,
 				makeList:[],
 				aiList:[],
@@ -113,18 +168,47 @@
 				feedList:[],
 				status: 'loadmore',
 				nomoreText: '没有更多了',
-				loading: true,
+				loading: true, 
 				model_subclass_id:'',
 				page:1,
-				pagesize:10
+				pagesize:10,
+				isLogin: false,
+				userinfo: {
+					user_id: 0,
+					balance: 0,
+					balance_draw: 0
+				},
+				integralShow:false,
+				value: '',
+				code:'',
+				slogan_cn:'',
+				slogan_cnEng:''
 			}
 		},
 		onLoad() {
 			this.getmakeList()
 			this.getaiList()
 			this.getfeedList()
+			this.getUserInfo()
 		},
 		methods: {
+			getUserInfo() {
+			    app.globalData.util
+			        .request({
+			            url: '/user/info'
+			        })
+			        .then((res) => {
+			            this.setData({
+			                userinfo: res.data,
+							isLogin: true,
+							// balance:res.data.balance
+			            });
+			        }).catch(res => {
+						if(res.errno == 403) {
+							app.globalData.util.toLogin('请登录')
+						}
+					})
+			},
 			open() {
 				// console.log('open');
 			  },
@@ -137,7 +221,9 @@
 			   	})
 			   	.then((res) => {
 					this.makeList  = res.data.channel
-					this.bannerImg = res.data.slogan_img
+					this.banner = res.data.banner
+					this.slogan_cn = res.data.banner.slogan_cn.slice(0, -3)
+					this.slogan_cnEng = res.data.banner.slogan_cn.slice(-1)
 			   	});
 			},
 			getaiList() {
@@ -148,7 +234,7 @@
 					const aiList = res.data
 					this.aiList = aiList.map((item) => ({
 						name: item.title,
-						current:item.model_subclass_id
+						current:item.model_subclass_id 
 					}));
 				});
 			},
@@ -181,65 +267,182 @@
 						
 					}
 				});
-			},
+			},      
 			feedClick(){
 				if(this.page == 1 && this.status == 'loadmore'){
 					this.page += 1
 					this.getfeedList()
 				}
-			}
+			},
+			inOpen() {
+				// console.log('open');
+			},
+			inClose() {
+				this.integralShow = false
+			},
+			blChange(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				this.navShow = false
+				this.integralShow = true
+				this.value = '';
+			},
+			exchange(){
+				app.globalData.util.request({
+					url: '/user/bindCard',
+					data:{
+						code:this.code
+					}
+				})
+				.then((res) => {
+					app.globalData.util.message(res.message)
+					this.integralShow = false
+					this.getUserInfo();
+				});
+			},
+			inChange(e) {
+			   // console.log('change', e);
+			},
+			doLogout() {
+				app.globalData.util.request({
+					url: '/user/logout'
+				}).then((res) => {
+					uni.reLaunch({
+						url: '/pages/index/index'
+					})
+				})
+			},
+			goMiit(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				window.open('https://beian.miit.gov.cn/')
+			},
+			goMps(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011102002471')
+			},
+			goDary(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+			},
+			goUser(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				uni.switchTab({
+					url: '/pages/user/index'
+				})
+			},
+			goUse(e){
+				console.log(e)
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				const url = e.currentTarget.dataset.url;
+				uni.navigateTo({
+				    url: url
+				});
+			},
+			toDoc(type) {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				uni.navigateTo({
+					url: '/pages/article/article?type=' + type
+				})
+			},
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	page {
+		background: #0D0D0D;
+	}
+	uni-video{
+		width: 100%;
+		height: 100%;
+	}
 	.banner-cont{
 		width: 100%;
 		padding:30rpx 40rpx 0;
 		box-sizing: border-box;
-		text-align: center;
 		position: relative;
-		height: 390rpx; /* 高度可以根据需求进行调整 */
-		.bannerBg{
-			width: 100%;
-			height: 100%!important;
-			position: absolute;
-			left: 0;
-			top: 0;
-			z-index: -1;
-		}
-		.banner{
+		.navList{
 			display: flex;
 			display: -webkit-flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
 			align-items: center;
-			.logo{
-				width: 250rpx;
+			.head{
+				width: 60rpx;
+				height: 60rpx;
+				overflow: hidden;
+				border-radius: 50%;
+				background-color: rgb(255, 173, 8);
 				image{
 					width: 100%;
+					height: 100%;
 				}
 			}
 		}
-		text{
-			font-size: 50rpx;
-			color: #fff;
-			padding-top: 100rpx;
-			display: inline-block;
+		.banner{
+			border-radius: 10rpx;
+			height: 344rpx;
 			width: 100%;
+			overflow: hidden;
+			margin: 30rpx 0;
+			position: relative;
+			.bannerBg{
+				width: 100%;
+				height: 100%!important;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 1;
+			}
+			.bannerText{
+				color: #fff;
+				position: relative;
+				z-index: 2;
+				box-sizing: border-box;
+				padding:60rpx 0 0 30rpx ;
+				text{
+					display:inline-block;
+				}
+				.eng{
+					font-size: 28rpx;
+				}
+				.cn{
+					font-size: 60rpx;
+				}
+				.cnmain{
+					color: #F60652;
+					font-weight: 700;
+					font-size: 60rpx;
+				}
+			}
 		}
-		
 	}
 	.popup {
 		width: 100%;
-		/deep/.u-popup__wrapper {
-		    width: 70% !important;
-		}
 		::v-deep .u-popup__content{
 			width: 100%;
 			box-sizing: border-box;
 			padding: 30rpx 20rpx;
-			// height: ;
+			background-color: #0D0D0D;
 		}
 		.user{
 			display: flex;
@@ -248,8 +451,9 @@
 			.userAvater{
 				height: 68rpx;
 				width: 68rpx;
-				background-color: #f0f0f0;
+				background-color: #ffad08;
 				border-radius: 50%;
+				overflow:hidden;
 				margin-right: 20rpx;
 				image{
 					height: 100%;
@@ -259,19 +463,20 @@
 			.Infor{
 				.userName{
 					font-size: 24rpx;
-					color: #000;
+					color: #fff;
 					font-weight: 700;
 				}
 				.userId{
 					font-size: 24rpx;
 					margin-top: 6rpx;
+					color: #818181;
 				}
 			}
 		}
 		.integral{
-			width: 100%;
+			width: 420rpx;
 			padding: 20rpx 20rpx 20rpx 28rpx;
-			background-color: #d8dcdf;
+			background-color: #1D1E23;
 			border-radius: 10rpx;
 			display: flex;
 			display: -webkit-flex;
@@ -282,13 +487,13 @@
 			box-sizing: border-box;
 			.inteNum{
 				font-size: 24rpx;
+				color: #B2B2B2;
 				text{
-					font-weight: 700;
 					margin-left: 10rpx;
 				}
 			}
 			.inteBtn{
-				background-color: #4b5d77;
+				background-color: #F60652;
 				border-radius: 8rpx;
 				padding: 8rpx 16rpx;
 				font-size: 24rpx;
@@ -302,6 +507,7 @@
 				margin: 0 0 30rpx;
 				font-size: 28rpx;
 				display: flex;
+				color: #f5f5f5;
 				.u-icon{
 					display: inline-block;
 					margin-right: 12rpx;
@@ -326,31 +532,87 @@
 		padding: 0 40rpx ;
 		margin: 30rpx 0;
 		.item{
-			width: 320rpx;
-			height: 196rpx;
+			width: 100%;
 			overflow: hidden;
-			height: 200rpx;
+			background-color: #1D1E23;
 			margin-bottom: 20rpx;
 			position: relative;
-			text-align: center;
-			line-height: 200rpx;
+			box-sizing: border-box;
+			padding: 20rpx 30rpx;
+			border-radius: 10rpx;
 			image{
 				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%!important;
-				z-index: -1;
+				top: 30rpx;
+				right: 30rpx;
+				width: 48rpx;
+				height: 48rpx!important;
+			}
+			text{
+				color: #fff;
+				display: block;
 			}
 			.aiTitle{
-				color: #fff;
-				font-size: 30rpx;
+				font-size: 28rpx;
+				margin-bottom: 6rpx;
+			}
+			.aiSubtitle{
+				color: #77787B;
+				font-size: 26rpx;
 			}
 		}
 	}
 	.aiList{
 		box-sizing: border-box;
 		padding: 0 30rpx;
+		/deep/.u-tabs__wrapper__nav__line{
+			background: #F60652!important;
+		}
+	}
+	.inpopup{
+		width: 80%;
+		.title{
+			font-size: 32rpx;
+			text-align: center;
+			font-weight: 700;
+		}
+		.text{
+			font-size: 28rpx;
+			text-align: center;
+			margin: 20rpx 0;
+		}
+		/deep/.u-popup__content{
+			width: 80%;
+			border-radius: 20rpx;
+			box-sizing: border-box;
+			padding: 80rpx 40rpx;
+		}
+		/deep/.u-input{
+			border: 1px solid #f5f5f5;
+			background-color: #f5f5f5;
+			margin: 30rpx 0;
+		}
+		.operateBtn{
+			display: flex;
+			display: -webkit-flex;
+			justify-content: right;
+			flex-wrap: wrap;
+			align-items: center;
+			.btn{
+				width: 200rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+				border: 1px solid #F60652;
+				border-radius: 8rpx;
+				display: inline-block;
+				text-align: center;
+				font-size: 28rpx;
+			}
+			.sure{
+				margin-left: 20rpx;
+				background-color: #F60652;
+				color: #fff;
+			}
+		}
 	}
 	.aiWaterfall{
 		display: flex;
@@ -392,6 +654,46 @@
 					font-weight: 700;
 				}
 			}
+		}
+	}
+	.footer{
+		border-top: 1px solid #4A4A4A;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 20rpx 30rpx;
+		.flex{
+			display: flex;
+			display: -webkit-flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			align-items: center;
+			.logo{
+				image{
+					width: 46rpx;
+					height: 44rpx;
+					vertical-align: middle;
+					margin-right: 10rpx;
+				}
+				text{
+					font-size: 24rpx;
+				}
+			}
+			.contact{
+				color: #C0C0C0;
+				font-size: 24rpx;
+			}
+		}
+		.primaryColor{
+			color: #F60652;
+		}
+		text{
+			color: #555555;
+			font-size: 24rpx;
+		}
+		.semi{
+			width: 18rpx;
+			height: 20rpx;
+			margin-right: 10rpx;
 		}
 	}
 </style>

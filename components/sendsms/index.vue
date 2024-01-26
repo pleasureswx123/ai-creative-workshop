@@ -58,7 +58,7 @@ export default {
 		},
 		getCaptcha() {
 			app.globalData.util.request({
-				url: '/login/getCaptcha',
+				url: '/Login/getCaptcha',
 				loading: false
 			}).then(res => {
 				this.captcha = res.data.image
@@ -72,13 +72,13 @@ export default {
 				return
 			}
 			app.globalData.util.request({
-				url: '/login/sendSms',
+				url: '/Login/sendSms',
 				data: {
 					type: this.type,
 					phone: this.phone,
 					code: this.code,
 					token: this.token,
-					sitecode: this.sitecode
+					// sitecode: this.sitecode
 				}
 			}).then(res => {
 				app.globalData.util.message(res.message)
@@ -88,7 +88,6 @@ export default {
 		doCancel() {
 			this.$emit('close')
 		}
-        
     }
 };
 </script>
@@ -144,7 +143,7 @@ export default {
 } */
 .title {
 	width: 100%;
-	font-size: 40rpx;
+	font-size: 32rpx;
 	text-align: center;
 	margin-top: 30rpx;
 	color: #999;
@@ -162,14 +161,14 @@ export default {
 }
 .form-item .input {
 	width: 220rpx;
-	height: 88rpx;
-	line-height: 88rpx;
+	height: 80rpx;
+	line-height: 80rpx;
 	padding: 0 10rpx;
 	border: 1px solid #ddd;
 	box-sizing: border-box;
 	border-radius: 10rpx;
 	text-align: center;
-	font-size: 32rpx;
+	font-size: 28rpx;
 }
 
 .form-item .captcha {
@@ -199,11 +198,11 @@ export default {
 }
 
 .footer .btn {
-	background: #04babe;
+	background: #3c9cff;
 	border-radius: 10rpx;
 	width: 240rpx;
 	height: 72rpx;
-	font-size: 36rpx;
+	font-size: 32rpx;
 	margin: 0 auto;
 	letter-spacing: 2rpx;
 	display: flex;
@@ -216,8 +215,8 @@ export default {
 }
 
 .footer .btn-cancel {
-	color: #04babe;
+	color: #3c9cff;
 	background: #fff;
-	border: 2rpx solid #04babe;
+	border: 2rpx solid #3c9cff;
 }
 </style>

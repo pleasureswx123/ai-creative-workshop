@@ -11,15 +11,16 @@
                 </view>
             </view>
 			<view class="btn-setting" @tap="toSetting">
-				<image src="/static/images/user/ic_setting.png"></image>
+				<!-- <image src="/static/images/user/ic_setting.png"></image> -->
+				编辑
 			</view>
         </view>
 		<view class="wallet" v-if="drawIsOpen">
 			<view class="inteNum">
 				积分余额
-				<text>555</text>
+				<text>{{userinfo.balance}}</text>
 			</view>
-			<view class="inteBtn" @click="integralShow = true">兑换</view>
+			<view class="inteBtn" @click="blChange">兑换</view>
 		</view>
         <view class="menus">
             <view class="item" data-url="/pages/article/list?type=help" @tap="linkto">
@@ -30,7 +31,7 @@
                 <text class="text-grey">{{ '视频创作' | lang }}</text>
 				<view class="arrow">5</view>
             </view>
-            <view class="item" data-url="/pages/article/article?type=about" @tap="linkto">
+            <view class="item">
                 <text class="text-grey">{{ '手机号' | lang }}</text>
 				<view class="arrow">13252147859</view>
             </view>
@@ -70,7 +71,7 @@ export default {
 			drawIsOpen: false,
 			integralShow:false,
 			value: '',
-			code:''
+			code:'',
         };
     },
     onShow() {
@@ -94,7 +95,8 @@ export default {
                 .then((res) => {
                     this.setData({
                         userinfo: res.data,
-						isLogin: true
+						isLogin: true,
+						// balance:res.data.balance
                     });
                 }).catch(res => {
 					if(res.errno == 403) {
@@ -131,7 +133,7 @@ export default {
         },
 
         linkto(e) {
-			console.log(e)
+			// console.log(e)
 			if (!this.isLogin) {
 				app.globalData.util.toLogin('请登录')
 				return
@@ -178,6 +180,14 @@ export default {
 		change(e) {
 			this.code = e
 		},
+		blChange(){
+			if (!this.isLogin) {
+				app.globalData.util.toLogin('请登录')
+				return
+			}
+			this.integralShow = true
+			this.value = '';
+		},
 		exchange(){
 			app.globalData.util.request({
 				url: '/user/bindCard',
@@ -187,6 +197,8 @@ export default {
 			})
 			.then((res) => {
 				app.globalData.util.message(res.message)
+				this.integralShow = false
+				this.getUserInfo();
 			});
 		}
     }
@@ -195,7 +207,7 @@ export default {
 <style lang="scss">
 page {
     box-sizing: border-box;
-    background: #f7f7f8;
+    background: #0D0D0D;
 }
 
 .page {
@@ -207,7 +219,6 @@ page {
     width: 100%;
     left: 0;
     top: 0px;
-    background: #3c9cff;
     height: 200rpx;
     box-sizing: content-box;
     z-index: 1;
@@ -215,14 +226,14 @@ page {
 
 .userinfo {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: 50rpx 0 0 60rpx;
 }
 
 .userinfo .avatar {
     width: 108rpx;
     height: 108rpx;
-    border-radius: 10rpx;
+    border-radius: 50%;
     overflow: hidden;
     background-color: #f8f8f8;
 }
@@ -239,15 +250,15 @@ page {
 }
 
 .userinfo .info .nickname {
-    font-size: 30rpx;
+    font-size: 28rpx;
     font-weight: bold;
     color: #fff;
 }
 
 .userinfo .info .mid {
     font-size: 24rpx;
-    color: #fff;
-    line-height: 52rpx;
+    color: #868686;
+    // line-height: 52rpx;
 }
 
 .userinfo .info .phone {
@@ -273,10 +284,12 @@ page {
 	position: absolute;
 	right: 40rpx;
 	top: 70rpx;
-	width: 56rpx;
-	height: 56rpx;
+	// width: 56rpx;
+	// height: 56rpx;
 	padding: 10rpx;
 	border-radius: 20rpx;
+	color: #F60652;
+	font-size: 28rpx;
 }
 .bg-user .btn-setting image {
 	width: 100%;
@@ -383,7 +396,7 @@ page {
 	align-items: center;
 	overflow: hidden;
 	margin: 30rpx;
-	background-color: #d8dcdf;
+	background-color: #1D1E23;
 	border-radius:20rpx;
 	display: flex;
 	display: -webkit-flex;
@@ -394,13 +407,14 @@ page {
 	padding: 30rpx 20rpx 30rpx 50rpx;
 	.inteNum{
 		font-size: 28rpx;
+		color: #B2B2B2;
 		text{
 			font-weight: 700;
 			margin-left: 10rpx;
 		}
 	}
 	.inteBtn{
-		background-color: #4b5d77;
+		background-color: #F60652;
 		border-radius: 8rpx;
 		padding: 10rpx 40rpx;
 		font-size: 24rpx;
@@ -444,7 +458,7 @@ page {
 }
 
 .menus {
-    background: #fff;
+    // background: #fff;
     border-radius: 20rpx;
     padding:0 20rpx;
     margin: 30rpx;
@@ -453,7 +467,7 @@ page {
 .menus .item {
     width: 100%;
     padding: 24rpx 20rpx 24rpx 30rpx;
-    border-bottom: 1px solid #f3f6f9;
+    border-bottom: 1px solid #555555;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -469,7 +483,7 @@ page {
 }
 
 .menus .item .arrow {
-	color: $uni-color-primary;
+	color: #F60652;
 }
 
 .menus .item.button {
@@ -490,12 +504,9 @@ page {
     background: #fafafa;
 }
 
-.menus .item:last-child {
-    border-bottom: 0;
-}
 
 .text-grey {
-    color: #666;
+    color: #fff;
 }
 .popup{
 	width: 80%;
@@ -530,7 +541,7 @@ page {
 			width: 200rpx;
 			height: 50rpx;
 			line-height: 50rpx;
-			border: 1px solid #495b74;
+			border: 1px solid #F60652;
 			border-radius: 8rpx;
 			display: inline-block;
 			text-align: center;
@@ -538,7 +549,7 @@ page {
 		}
 		.sure{
 			margin-left: 20rpx;
-			background-color: #495b74;
+			background-color: #F60652;
 			color: #fff;
 		}
 	}

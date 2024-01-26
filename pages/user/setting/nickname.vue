@@ -5,7 +5,7 @@
             <input type="text" class="input" v-model="nickname" :placeholder="'请输入昵称' | lang" />
         </view>
         <view>
-            <button class="btn-submit" @tap="doSubmit">{{ '确 定' | lang }}</button>
+            <view class="btn-submit" @tap="doSubmit">{{ '确 定' | lang }}</view>
         </view>
     </view>
 </template>
@@ -44,7 +44,6 @@ export default {
 				app.globalData.util.message(res.message);
 				uni.navigateBack()
 			})
-            
         }
     }
 };
@@ -86,7 +85,7 @@ page {
     left: 50%;
 	transform: translate(-50%,0);
     bottom: 60rpx;
-    background: #3c9cff;
+    background: #F60652;
     color: #fff;
     text-align: center;
     display: flex;
@@ -104,7 +103,7 @@ page {
 .btn-submit::after {
     border: none;
 }
-.btn-submit:active {
+/* .btn-submit:active {
     transform: scale(0.95);
-}
+} */
 </style>
