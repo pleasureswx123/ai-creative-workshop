@@ -211,7 +211,7 @@
 			},
 			open() {
 				// console.log('open');
-			  },
+			},
 			close() {
 				this.navShow = false
 			},
