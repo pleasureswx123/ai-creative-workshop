@@ -9,16 +9,18 @@ module.exports = (vm) => {
     // const token = vm.$store.state.GlobalInfo.token;
     config.data = config.data || {}
     if(config?.custom?.auth) {
-      config.header.x_token = ``
+      // config.header.x_token = ``
     }
     // if (config?.custom?.formUrl) {
     //   config.header['Content-Type'] = `application/x-www-form-urlencoded;charset=UTF-8`
     // }
+    debugger
     return config
   }, config => {
     return Promise.reject(config)
   })
   uni.$u.http.interceptors.response.use((response) => {
+    debugger
     const data = response.data
     const custom = response.config?.custom
     if (+data.errno !== 0) {

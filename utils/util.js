@@ -29,7 +29,7 @@ util.request = function (option) {
             dataType: 'json',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Site': uni.getStorageSync('sitecode')
+                // 'X-Site': uni.getStorageSync('sitecode')
             },
             timeout: option.timeout ? option.timeout : 60000,
             success: function (res) {

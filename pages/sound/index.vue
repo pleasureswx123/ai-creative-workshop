@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import TryListen from './components/TryListen.vue';
@@ -44,7 +45,11 @@ export default {
       return !(this.describe && this.timbre && !!this.speed && !!this.volume)
     }
   },
+  mounted() {
+    this.getDubList({page: 1, pagesize: 20})
+  },
   methods: {
+    ...mapActions('SoundInfo', ['getDubList']),
     handleGenerate(cb) {
       setTimeout(() => {
         // to do ... 生成的逻辑
