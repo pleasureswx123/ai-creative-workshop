@@ -48,7 +48,7 @@ export default {
         },
         speed: {
           txt: '语速',
-          tips: ['', '很慢', '稍慢', '正常', '稍快', '很快']
+          tips: ['', '很慢', '稍慢', '正常', '稍快', '快']
         },
       }
       const {txt, tips} = res?.[this.type] || {};

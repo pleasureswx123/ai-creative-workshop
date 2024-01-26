@@ -3,9 +3,9 @@
   <view class="page-container">
     <PicHeader title="选择图片工具" />
     <view class="grid-box">
-      <view class="card-box" v-for="(item, index) in list" :key="`${index}-${item.type}`" @tap="handleClick(item)">
+      <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
         <view class="img-box">
-          <image :src="`/static/images/imgTool/${item.imgName}`"></image>
+          <image :src="item.url"></image>
         </view>
         <view class="title">{{item.title}}</view>
       </view>
@@ -14,27 +14,39 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 import PicHeader from './components/PicHeader.vue';
 
 export default {
   data() {
     return {
-      list: [
-        {title: '智能换脸', imgName: '1.png', type: 'ai-face'},
-        {title: '高清重绘', imgName: '2.png', type: 'hd-redraw'},
-        {title: '去除背景', imgName: '3.png', type: 'remove-bg'},
-        {title: '更换背景', imgName: '4.png', type: 'replace-bg'},
-        {title: '智能扩图', imgName: '5.png', type: 'ai-expand'},
-        {title: '局部重绘', imgName: '6.jpg', type: 'part-redraw'},
-        {title: '更换背景(语义)', imgName: '7.png', type: 'replace-bg-txt'},
-      ]
+      // list: [
+      //   {title: '智能换脸', imgName: '1.png', type: 'ai-face'},
+      //   {title: '高清重绘', imgName: '2.png', type: 'hd-redraw'},
+      //   {title: '去除背景', imgName: '3.png', type: 'remove-bg'},
+      //   {title: '更换背景', imgName: '4.png', type: 'replace-bg'},
+      //   {title: '智能扩图', imgName: '5.png', type: 'ai-expand'},
+      //   {title: '局部重绘', imgName: '6.jpg', type: 'part-redraw'},
+      //   {title: '更换背景(语义)', imgName: '7.png', type: 'replace-bg-txt'},
+      // ]
     }
   },
+  computed: {
+    ...mapState('PictureInfo', ['toolsList']),
+  },
   components: { PicHeader },
+  onShow() {
+    this.getToolsList({page:1, pagesize: 20});
+  },
   methods: {
-    handleClick({type}) {
+    ...mapActions('PictureInfo', ['getToolsList']),
+    handleClick(item) {
+      const {type, id} = item || {}
       uni.$u.route({
-        url: `pages/picture/${type}`
+        url: `pages/picture/${type}`,
+        params: {
+          type: id
+        }
       })
     }
   }

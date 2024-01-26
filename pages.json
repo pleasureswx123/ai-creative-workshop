@@ -81,7 +81,8 @@
 			"path": "pages/sound/history",
 			"style": {
 				"navigationBarTitleText": "历史配音",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -351,7 +352,7 @@
 				"selectedIconPath": "static/images/tabbar/ic_draw_active.png"
 			},
 			{
-				"pagePath": "pages/picture/index",
+				"pagePath": "pages/user/index",
 				"text": "我的",
 				"iconPath": "static/images/tabbar/ic_user.png",
 				"selectedIconPath": "static/images/tabbar/ic_user_active.png"

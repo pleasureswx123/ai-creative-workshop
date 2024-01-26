@@ -1,8 +1,8 @@
 <template>
   <view class="radio-container">
-    <view class="item" v-for="(item, index) in list" :key="`${index}-${item.value}`" :class="{active: currentVal === item.value}"
-          @tap="currentVal = item.value"
-          >{{item.label}}</view>
+    <view class="item" v-for="(item, index) in list" :key="`${index}-${item.id}`" :class="{active: currentVal === item.id}"
+          @tap="currentVal = item.id"
+          >{{item.name}}</view>
   </view>
 </template>
 
@@ -10,20 +10,12 @@
 export default {
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
-    }
-  },
-  data() {
-    return {
-      list: [
-        { label: '能用男声', value: '1'},
-        { label: '解说小帅', value: '2'},
-        { label: '沉稳男声', value: '3'},
-        { label: '通用女声', value: '4'},
-        { label: '解说小美', value: '5'},
-        { label: '文艺女声', value: '6'},
-      ]
+    },
+    list: {
+      type: Array,
+      required: true
     }
   },
   computed: {

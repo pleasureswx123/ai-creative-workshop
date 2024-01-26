@@ -1,14 +1,22 @@
 <template>
   <view class="tips-box">
     <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="#909399" size="20" />
-    <view>将"源图片"中的脸部特征识别出来，替换到"目标图片"的人物脸上，达到换脸的效果。</view>
-    <view class="tips-img" v-if="$slots.default">
-      <slot></slot>
+    <view>{{info.content}}</view>
+    <view class="tips-img">
+      <image :src="info.img_url"></image>
     </view>
   </view>
 </template>
 
 <script>
+export default {
+  props: {
+    info: {
+      type: Object,
+      required: true,
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

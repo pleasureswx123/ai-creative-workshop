@@ -6,7 +6,7 @@ export default {
       list: [],
       page: 1,
       pagesize: 10,
-      loadStatus: '', // loadmore/loading/nomore
+      loadStatus: '', // more/loading/noMore
     }
   },
   computed: {
@@ -55,7 +55,7 @@ export default {
       this.loadStatus = '';
     },
     loadMore() {
-      if(this.loadStatus === 'nomore') {
+      if(this.loadStatus === 'noMore') {
         return;
       }
       this.loadStatus = 'loading';
@@ -63,7 +63,7 @@ export default {
         debugger
         const {list = []} = res || {};
         this.list = [...this.list, ...(list || [])];
-        this.loadStatus = list.length < this.pagesize ? 'nomore' : 'loadmore';
+        this.loadStatus = list.length < this.pagesize ? 'noMore' : 'more';
       }).catch(err => {
         const list = [
             {
@@ -209,7 +209,7 @@ export default {
           }
           ]
         this.list = list;
-        this.loadStatus = 'nomore'
+        this.loadStatus = 'noMore'
       });
     },
   }

@@ -1,12 +1,8 @@
 <template>
-  <u-loadmore
+  <uni-load-more
       :status="status"
-      :line="true"
-      marginTop="60rpx"
-      marginBottom="60rpx"
-      :loading-text="loadingText"
-      :loadmore-text="loadMoreText"
-      :nomore-text="noMoreText"/>
+      :contentText="contentText"
+  ></uni-load-more>
 </template>
 
 <script>
@@ -14,14 +10,16 @@ export default {
   props: {
     status: {
       type: String,
-      default: '' //  loadmore || loading || nomore
+      default: '' //  more/loading/noMore
     }
   },
   data() {
     return {
-      loadingText: '努力加载中',
-      loadMoreText: '加载更多数据',
-      noMoreText: '没有更多数据'
+      contentText: {
+        contentdown: '上拉显示更多',
+        contentrefresh: '正在加载...',
+        contentnomore: '没有更多数据了',
+      }
     }
   }
 }

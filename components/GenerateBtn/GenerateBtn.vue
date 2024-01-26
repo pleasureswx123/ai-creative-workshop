@@ -1,11 +1,14 @@
 <template>
   <view class="btn-container">
     <view class="btn-box" :class="{disabled: disabled}" @tap="$u.debounce(handleStart, 500)">
-      <text v-if="!loading">立即合成</text>
+      <text v-if="!loading">{{btnInfo.btnTxt}}</text>
       <template v-else>
-        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="#fff" size="14" />
-        <view class="txt">正在合成...</view>
+        <view class="rotate-box">
+          <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="#fff" size="14" />
+        </view>
+        <view>{{btnInfo.loadingBtnTxt}}</view>
       </template>
+      <text class="tips-txt">{{btnInfo.tipTxt}}</text>
     </view>
   </view>
 </template>
@@ -13,6 +16,14 @@
 <script>
 export default {
   props: {
+    btnInfo: {
+      type: Object,
+      default: () => ({
+        btnTxt: '立即合成',
+        loadingBtnTxt: '正在合成...',
+        tipTxt: ''
+      })
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -37,6 +48,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .btn-container {
   position: fixed;
   bottom: 0;
@@ -67,6 +86,23 @@ export default {
   &.disabled {
     background: #EBEBEB;
     color: #A0A0A0;
+  }
+  .tips-txt {
+    font-size: 24rpx;
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+  }
+  .rotate-box {
+    width: 60rpx;
+    height: 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rotate {
+    animation: rotate 3s linear infinite;
   }
 }
 </style>

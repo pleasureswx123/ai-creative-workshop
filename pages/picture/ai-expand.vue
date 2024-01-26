@@ -8,47 +8,52 @@
     
     <TitleCell title="选择图片" />
     <UploadImg :generating="generating" :value.sync="sourceImg"></UploadImg>
-    
-    <TitleCell title="选择扩图方向" :isShowRight="false" />
-    <QmRadio :value.sync="direction"></QmRadio>
   
-    <TipsHelp>
-      <image src="/static/images/imgTool/5.png"></image>
-    </TipsHelp>
+    <template v-if="!generating">
+      <TitleCell title="选择扩图方向" :isShowRight="false" />
+      <QmRadio :value.sync="direction"></QmRadio>
+      <TipsHelp :info="taskDetail" />
+    </template>
     
-    <StartBtn :disabled="disabled" @start="handleStart"></StartBtn>
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate"
+                 :btnInfo="{btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'}" />
+    
   </view>
 </template>
 
 <script>
+import PicMixins from './mixin';
 import PicHeader from './components/PicHeader.vue';
 import TitleCell from './components/TitleCell.vue';
 import UploadImg from './components/UploadImg.vue';
 import QmRadio from './components/QmRadio.vue';
 import TipsHelp from './components/TipsHelp.vue';
-import StartBtn from './components/StartBtn.vue';
+
 export default {
-  components: { PicHeader, TitleCell, UploadImg, QmRadio, TipsHelp, StartBtn },
+  mixins: [PicMixins],
+  components: { PicHeader, TitleCell, UploadImg, QmRadio, TipsHelp },
   data() {
     return {
       sourceImg: '',
       direction: '',
-      generating: false,
     }
   },
   computed: {
     disabled() {
       return !(this.sourceImg && this.direction)
-    }
-  },
-  methods: {
-    handleStart() {
-      if (!this.generating) {
-        this.generating = true
-        // to do ...
+    },
+    params() {
+      return {
+        // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
+        task_type: 6,
+        reference_image: this.sourceImg,
+        upper: this.direction === 'top' ? 1 : 0,
+        below: this.direction === 'down' ? 1 : 0,
+        left: this.direction === 'left' ? 1 : 0,
+        right: this.direction === 'right' ? 1 : 0,
       }
     }
-  }
+  },
 }
 </script>
 

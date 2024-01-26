@@ -1,12 +1,5 @@
-// const mockInit = require('./mock/index.js')
-
 module.exports = {
   productionSourceMap: false,
-  // devServer: {
-  //   before(app) {
-  //     // mockInit(app);
-  //   }
-  // },
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.warnings = false

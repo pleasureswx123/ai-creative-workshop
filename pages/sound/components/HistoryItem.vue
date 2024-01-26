@@ -1,7 +1,7 @@
 <template>
   <view class="container">
-    <view class="date">2024-4-15   21:02</view>
-    <view class="content">在一个安静的小镇上，人们都在忙碌地过着自己的生活。其中一个普通的小酒馆里，一个神秘而迷人的陌生人走进了门口。他身穿一件古老的黑色外套，看起来异常与众不同。随着他的步伐，所有人都停下手中的动作，目光集中在他身上。</view>
+    <view class="date">{{info.create_time}}</view>
+    <view class="content">{{info.content}}</view>
     <view class="voice-container">
       <uni-icons custom-prefix="iconfont-qm" type="icon-qm-speaker1" color="#5d5d5d" size="20" />
       <view class="wave-box">
@@ -9,7 +9,7 @@
         <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="18" />
         <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="20" />
       </view>
-      <view class="duration">{{duration}}</view>
+      <view class="duration">{{info.dub_duration}}</view>
       <uni-icons @tap="playAudio" custom-prefix="iconfont-qm" type="icon-qm-play1" color="#0830d9" size="22" />
       <uni-icons @tap="downloadAudio" custom-prefix="iconfont-qm" type="icon-qm-download11" color="#0830d9" size="22" />
     </view>
@@ -17,21 +17,20 @@
 </template>
 
 <script>
+const demo = {
+  "task_id": 4,
+  "content": "sfdsf",
+  "dub_url": "https://aigc.chaojiyuyan.com/upload/dub/4/4_1706257621_26327.mp3",
+  "dub_duration": "1.8秒",
+  "state": 1,
+  "create_time": "2024-01-26 16:26"
+}
+
 export default {
-  data() {
-    return {
-      audioUrl: 'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3',
-      audioContext: null,
-      currentTime: 0,
-      duration: ''
-    }
-  },
-  mounted() {
-    this.getDuration();
-  },
-  beforeDestroy() {
-    if (this.audioContext) {
-      this.audioContext.destroy();
+  props: {
+    info: {
+      type: Object,
+      required: true
     }
   },
   methods: {
@@ -57,12 +56,12 @@ export default {
       // });
       // return
       this.downLoadVideoOrImgOrAudioFile({
-        src: this.audioUrl,
+        src: this.info.dub_url,
         fileType: 'audio'
       });
     },
     playAudio() {
-      this.$emit('playAudio', this.audioContext)
+      this.$emit('playAudio', this.info)
     }
   }
 }

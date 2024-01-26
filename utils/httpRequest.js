@@ -21,21 +21,41 @@ module.exports = (vm) => {
   })
   uni.$u.http.interceptors.response.use((response) => {
     debugger
-    const data = response.data
-    const custom = response.config?.custom
-    if (+data.errno !== 0) {
-      if (custom.toast !== false) {
-        uni.$u.toast(data.message || data.msg || 'error')
-      }
-      return Promise.reject(data)
-      // if (custom?.catch) {
-      //   return Promise.reject(data)
-      // } else {
-      //   return new Promise(() => { })
-      // }
+    const {config, data, header, errMsg, statusCode} = response || {};
+    const {url, custom: {auth, hideToast} } = config || {};
+    if (statusCode !== 200) {
+      return Promise.reject(response);
     }
-    return Promise.resolve(data.data === undefined ? {} : data.data)
+    if (data?.errno !== 0) {
+      if(data?.errno === 403) {
+        if(url !== '/user/checkLogin') {
+          uni.showModal({
+            title: '提示',
+            content: data?.message || '请登录',
+            confirmText: '去登录',
+            cancelText: '取消',
+            success: function (res) {
+              if (res.confirm) {
+                uni.$u.route({
+                  url: `pages/login/index`,
+                  params: {
+                    // backurl  encodeURIComponent
+                  }
+                })
+              }
+            }
+          })
+        }
+        return Promise.reject(data);
+      };
+      if (data.message && !hideToast) {
+        uni.$u.toast(data.message || 'error')
+      }
+      return Promise.reject(data);
+    }
+    return Promise.resolve(data?.data || {});
   }, (response) => {
+    debugger
     if (response.statusCode === 401 && response.data.code === 1002) {
       vm.$store.commit('GlobalInfo/clearToken');
       uni.navigateTo({

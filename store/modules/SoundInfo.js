@@ -10,16 +10,32 @@ const getters = {
 const actions = {
   getDubList({dispatch, commit}, params = {}) {
     return soundApi.getDubList(params).then(res => {
-      debugger
-      commit('setDubList', res || [])
+      commit('setDubList', res?.list || [])
       return Promise.resolve(res);
     })
-  }
+  },
+  createTask({dispatch, commit}, params = {}) {
+    return soundApi.createTask(params).then(res => {
+      debugger
+      return Promise.resolve(res);
+    })
+  },
+  getTaskList({dispatch, commit}, params = {}) {
+    return soundApi.getTaskList(params).then(res => {
+      debugger
+      return Promise.resolve(res);
+    })
+  },
 };
 
 const mutations = {
   setDubList(state, info = []) {
-    state.dubList = info
+    state.dubList = info.map(item => {
+      const {dub_id: id, dub_name: name, url} = item || {};
+      return {
+        id, name, url
+      }
+    })
   },
 }
 

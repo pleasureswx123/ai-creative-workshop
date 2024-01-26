@@ -6,7 +6,7 @@
       <uni-icons v-if="isShowClose" custom-prefix="iconfont-qm" type="icon-qm-close" color="#878787" size="20" @tap="() => {!generating && $emit('del')}" />
     </view>
     <view class="img-el">
-      <image :src="src" mode="aspectFit" @load="handleLoad" />
+      <image :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
       <view class="generating-box" v-if="generating">
         <view>
           <view class="icon-box">
@@ -46,6 +46,11 @@ export default {
     }
   },
   methods: {
+    previewImage() {
+      uni.previewImage({
+        urls: [this.src]
+      });
+    },
     handleLoad(res) {
       const {width, height} = res.detail || {};
       this.width = width;

@@ -1,7 +1,8 @@
 <template>
   <page-meta page-style="background: #fff" />
   <view class="page-container">
-    <HistoryItem v-for="item in 10" :key="item" @playAudio="handlePlayAudio"></HistoryItem>
+    <HistoryItem v-for="item in list" :info="item" :key="item.task_id" @playAudio="handlePlayAudio"></HistoryItem>
+    <QmLoadMore :status="loadStatus"></QmLoadMore>
     <view class="btn-container">
       <view class="btn-box" @tap="jump">新的合成</view>
     </view>
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 import HistoryItem from './components/HistoryItem.vue';
 export default {
   components: {
@@ -16,19 +18,61 @@ export default {
   },
   data() {
     return {
-      audioContext: null
+      audioContext: null,
+      list: [],
+      page: 1,
+      pagesize: 10,
+      loadStatus: '', // more/loading/noMore
     }
   },
+  onShow() {
+    this.initParams();
+    this.loadMore();
+  },
+  onPullDownRefresh() {
+    this.initParams();
+    this.loadMore().then(() => {
+      uni.stopPullDownRefresh();
+    });
+  },
+  onReachBottom() {
+    this.page += 1;
+    this.loadMore();
+  },
+  beforeDestroy() {
+    this.destroyAudio();
+  },
+  onHide() {
+    this.destroyAudio();
+  },
   methods: {
+    ...mapActions('SoundInfo', ['getTaskList']),
+    initParams() {
+      this.list = [];
+      this.page = 1;
+      this.pagesize = 10;
+      this.loadStatus = '';
+    },
+    loadMore() {
+      if(this.loadStatus === 'noMore') {
+        return;
+      }
+      this.loadStatus = 'loading';
+      return this.getTaskList({page: this.page, pagesize: this.pagesize}).then(res => {
+        const {list = []} = res || {};
+        this.list = [...this.list, ...(list || [])];
+        this.loadStatus = list.length < this.pagesize ? 'noMore' : 'more';
+      })
+    },
     jump() {
       uni.$u.route({
         url: 'pages/sound/index'
       })
     },
-    handlePlayAudio(context) {
-      this.pauseAudio();
-      this.stopAudio();
-      this.audioContext =  context;
+    handlePlayAudio(info) {
+      this.destroyAudio();
+      this.audioContext = uni.createInnerAudioContext();
+      this.audioContext.src = info.dub_url;
       this.playAudio();
     },
     playAudio() {
@@ -46,6 +90,13 @@ export default {
         this.audioContext.stop();
       }
     },
+    destroyAudio() {
+      this.pauseAudio();
+      this.stopAudio();
+      if (this.audioContext) {
+        this.audioContext.destroy();
+      }
+    },
     updateTime() {
       if (this.audioContext) {
         this.audioContext.onTimeUpdate(() => {
@@ -59,9 +110,8 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  padding-top: 36rpx;
-  padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(200rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(200rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
 }
 .btn-container {
@@ -73,7 +123,7 @@ export default {
   box-sizing: border-box;
   height: 140rpx;
   padding-top: 20rpx;
-  background: rgba(255,255,255,.1);
+  background: rgba(0,0,0,.1);
 }
 .btn-box {
   width: 50%;

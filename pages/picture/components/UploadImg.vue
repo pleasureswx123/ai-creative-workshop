@@ -9,14 +9,14 @@
         <view class="icon-box">
           <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#878787" size="40" />
         </view>
-        <view class="tips">支持png, jpg, jpeg格式，不超过20M</view>
+        <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
       <view v-else class="upload-box" @tap="chooseImage">
         <view class="title">点击上传</view>
         <view class="icon-box">
           <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="#878787" size="50" />
         </view>
-        <view class="tips">支持png, jpg, jpeg格式，不超过20M</view>
+        <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
     </view>
   </view>
@@ -63,7 +63,6 @@ export default {
         sourceType: ['album', 'camera'],
         sizeType: ['original', 'compressed'],
         success: async (res) => {
-          // image/png
           const {path: filePath, size} = res.tempFiles?.[0] || {};
           this.size = size;
           this.loading = true;
@@ -78,6 +77,7 @@ export default {
           });
         },
         fail(...args) {
+          debugger
           console.log(args)
         }
       });

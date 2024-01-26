@@ -63,6 +63,9 @@ export default {
           }, 100);
         }
       };
+      xhr.onerror = (err) => {
+        console.error(err)
+      }
       xhr.send();
       // #endif
 
