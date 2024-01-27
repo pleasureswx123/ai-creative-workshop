@@ -63,6 +63,12 @@
 			}
 		},
 		{
+			"path": "pages/user/integral",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/article/article",
 			"style": {
 				"navigationBarTitleText": ""

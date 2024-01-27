@@ -31,6 +31,10 @@
                 <text class="text-grey">{{ '视频创作' | lang }}</text>
 				<view class="arrow">5</view>
             </view>
+			<view class="item" data-url="/pages/user/integral" @tap="linkto">
+			    <text class="text-grey">{{ '积分明细' | lang }}</text>
+				<view class="arrow">查看详情</view>
+			</view>
             <view class="item">
                 <text class="text-grey">{{ '手机号' | lang }}</text>
 				<view class="arrow">13252147859</view>
