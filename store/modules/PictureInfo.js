@@ -22,7 +22,6 @@ const actions = {
   },
   getMaterial({dispatch, commit}, params = {}) {
     return pictureApi.getMaterial(params).then(res => {
-      debugger
       commit('setTaskDetail', res || {})
       return Promise.resolve(res);
     })
@@ -47,6 +46,7 @@ const mutations = {
       return {
         ...item,
         url: item.img_url,
+        name: item.title,
         ...({type: temp[item.id] || 'replace-bg-txt'})
       }
     });

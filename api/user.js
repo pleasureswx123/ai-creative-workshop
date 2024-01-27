@@ -1,4 +1,18 @@
 export default {
+  getAiDetailsInfo(params) {
+    return uni.$u.http.post(`/AiDraw/GetInfo`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getDrawDetailsInfo(params) {
+    return uni.$u.http.post(`/DrawTools/GetInfo`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   uploadImg({filePath, name = 'image'}) {
     return uni.$u.http.upload(`/upload/image`, {
       fileType: 'image', filePath, name, timeout: 600000,
@@ -6,7 +20,7 @@ export default {
     })
   },
   getMyCreation(params = {}) {
-    return uni.$u.http.get(`/User/MyCreation`, { params,
+    return uni.$u.http.post(`/User/MyCreation`, params, {
       custom: {
         auth: true,
       }

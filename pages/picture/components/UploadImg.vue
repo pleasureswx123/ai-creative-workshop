@@ -1,7 +1,7 @@
 <template>
   <view>
     <template v-if="imgVal">
-      <ImgInfo :src="imgVal" :generating="generating" :size="size" @del="handleDel"></ImgInfo>
+      <ImgInfo :size="size" :src="imgVal" :generating="generating" @del="handleDel"></ImgInfo>
     </template>
     <view class="upload-container" v-else>
       <view class="loading-box" v-if="loading">

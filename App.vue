@@ -134,6 +134,9 @@ image {
   flex: 1;
   min-width: 0;
 }
+.uni-system-preview-image {
+  z-index: 20500;
+}
 page {
   min-height: calc(100vh - var(--window-bottom) - var(--window-top));
   background: #f7f7f8;

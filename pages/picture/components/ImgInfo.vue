@@ -2,8 +2,14 @@
   <view class="upload-img-container">
     <view class="img-header" v-if="imgInfo">
       <view>{{imgInfo.width}}*{{imgInfo.height}}</view>
-      <view>{{imgInfo.size}}</view>
-      <uni-icons v-if="isShowClose" custom-prefix="iconfont-qm" type="icon-qm-close" color="#878787" size="20" @tap="() => {!generating && $emit('del')}" />
+      <view v-if="imgInfo.sizeStr">{{imgInfo.sizeStr}}</view>
+      <template v-if="showDownload">
+        <view class="down-box" @tap="handleDownload">
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="#878787" size="20" />
+          <text>下载</text>
+        </view>
+      </template>
+      <uni-icons v-if="!showDownload && !generating" custom-prefix="iconfont-qm" type="icon-qm-close" color="#878787" size="20" @tap="$emit('del')" />
     </view>
     <view class="img-el">
       <image :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
@@ -30,9 +36,9 @@ export default {
       type: Boolean,
       default: false
     },
-    isShowClose: {
+    showDownload: {
       type: Boolean,
-      default: true
+      default: false
     },
     size: {
       type: Number,
@@ -42,7 +48,8 @@ export default {
   data() {
     return {
       width: '',
-      height: ''
+      height: '',
+      info: {}
     }
   },
   methods: {
@@ -55,21 +62,38 @@ export default {
       const {width, height} = res.detail || {};
       this.width = width;
       this.height = height;
+      debugger
+      this.downLoadVideoOrImgOrAudioFile({src: this.src, fileType: 'image'}).then(res => {
+        this.info = res;
+      })
     }
   },
   computed: {
+    handleDownload() {
+      if(this.info.size) {
+        this.saveToLocal(this.info);
+      } else {
+        this.downLoadVideoOrImgOrAudioFile({
+          src: this.src,
+          fileType: 'image'
+        }).then(res => {
+          this.saveToLocal(res);
+        });
+      }
+    },
     imgInfo() {
-      const fileSizeInBytes = +this.size || 0;
+      const {size = 0} = this.info || {};
+      const fileSizeInBytes = +(size || this.size) || 0;
       const fileSizeInKB = fileSizeInBytes / 1024;
       const fileSizeInMB = fileSizeInKB / 1024;
       // console.log(`File size: ${fileSizeInBytes} bytes`);
       // console.log(`File size: ${fileSizeInKB} KB`);
       // console.log(`File size: ${fileSizeInMB} MB`);
-      const size = fileSizeInBytes < 1024 ? `${fileSizeInBytes.toFixed(2)}b` : (fileSizeInKB < 1024 ? `${fileSizeInKB.toFixed(2)}kb` : `${fileSizeInMB.toFixed(2)}mb`)
+      const sizeStr = !!fileSizeInBytes && (fileSizeInBytes < 1024 ? `${fileSizeInBytes.toFixed(2)}b` : (fileSizeInKB < 1024 ? `${fileSizeInKB.toFixed(2)}kb` : `${fileSizeInMB.toFixed(2)}mb`))
       return {
         width: this.width,
         height: this.height,
-        size
+        sizeStr
       }
     }
   }
@@ -143,5 +167,12 @@ export default {
       }
     }
   }
+}
+.down-box {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  font-size: 24rpx;
 }
 </style>

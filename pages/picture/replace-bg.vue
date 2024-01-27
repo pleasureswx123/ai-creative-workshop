@@ -4,30 +4,24 @@
     <PicHeader title="更换背景" />
     
     <TitleCell title="选择图片" />
-    <UploadImg :generating="generating" :value.sync="sourceImg"></UploadImg>
+    <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
+    <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
   
-    <template v-if="!generating">
+    <template v-if="generateState === 1">
       <TitleCell title="把背景更换为" :isShowRight="false" />
       <QmTextarea :value.sync.trim="describe"></QmTextarea>
     
       <TipsHelp :info="taskDetail" />
     </template>
   
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate"
-                 :btnInfo="{btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'}" />
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
   </view>
 </template>
 
 <script>
 import PicMixins from './mixin';
-import PicHeader from './components/PicHeader.vue';
-import TitleCell from './components/TitleCell.vue';
-import UploadImg from './components/UploadImg.vue';
-import QmTextarea from './components/QmTextarea.vue';
-import TipsHelp from './components/TipsHelp.vue';
 export default {
   mixins: [PicMixins],
-  components: { PicHeader, TitleCell, UploadImg, QmTextarea,TipsHelp },
   data() {
     return {
       sourceImg: '',

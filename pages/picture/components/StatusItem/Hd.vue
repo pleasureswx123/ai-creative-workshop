@@ -1,9 +1,8 @@
 <template>
   <view class="hd">
     <view class="title">{{info.task_type_title}}</view>
-    <!--      <view class="btn disabled">图像处理 &gt;</view>-->
-    <view class="btn">
-      <u-button :disabled="disabled" type="info" size="small" @tap="$emit('cb')" :text="btnTxt"></u-button>
+    <view class="btn" @tap.stop>
+      <u-button :disabled="disabled" type="info" size="small" @tap="$emit('cb')" :text="btnTxt" />
     </view>
   </view>
 </template>
@@ -22,7 +21,7 @@ export default {
   },
   computed: {
     btnTxt() {
-      return this.info.type === 'video' ? '播放' : '图像处理';
+      return +this.info.task_type === 2 ? '播放' : '图像处理';
     }
   }
 }

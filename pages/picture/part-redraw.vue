@@ -4,9 +4,10 @@
     <PicHeader title="局部重绘(语义检测)" />
     
     <TitleCell title="选择图片" />
-    <UploadImg :generating="generating" :value.sync="sourceImg"></UploadImg>
+    <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
+    <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
   
-    <template v-if="!generating">
+    <template v-if="generateState === 1">
       <TitleCell title="描述你想要<em>更换</em>的元素" :isShowRight="false" />
       <QmInput :value.sync="sourceElementText" placeholder="例如：红色的鸭舌帽"></QmInput>
       
@@ -16,22 +17,15 @@
       <TipsHelp :info="taskDetail" />
     </template>
     
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate"
-                 :btnInfo="{btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'}" />
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
   </view>
 </template>
 
 <script>
 import PicMixins from './mixin';
-import PicHeader from './components/PicHeader.vue';
-import TitleCell from './components/TitleCell.vue';
-import UploadImg from './components/UploadImg.vue';
-import QmInput from './components/QmInput.vue';
-import TipsHelp from './components/TipsHelp.vue';
 
 export default {
   mixins: [PicMixins],
-  components: { PicHeader, TitleCell, UploadImg, QmInput, TipsHelp },
   data() {
     return {
       sourceImg: '',

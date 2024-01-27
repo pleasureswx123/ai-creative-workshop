@@ -1,23 +1,19 @@
 <template>
-  <Layout :info="info" @cb="clickRightBtnEvent" @toDetails="toDetails">
-    <view class="pictrue-box">
-      <u-swiper height="300" :current="current" :list="imgUrls" imgMode="aspectFit"
-          :autoplay="false" @change="change" @click="handleClick">
-        <template v-if="isShowIndicator">
-          <view slot="indicator" class="indicator">
-            <view class="indicator__dot" v-for="(item, index) in imgUrls" :key="index"
-                  :class="[index === current && 'indicator__dot--active']">
-            </view>
+  <view class="pictrue-box">
+    <u-swiper height="500" :current="current" :list="imgUrls" imgMode="aspectFit"
+              :autoplay="false" @change="change" @click="handleClick">
+      <template v-if="isShowIndicator">
+        <view slot="indicator" class="indicator">
+          <view class="indicator__dot" v-for="(item, index) in imgUrls" :key="index"
+                :class="[index === current && 'indicator__dot--active']">
           </view>
-        </template>
-      </u-swiper>
-    </view>
-  </Layout>
+        </view>
+      </template>
+    </u-swiper>
+  </view>
 </template>
 
 <script>
-import Layout from './Layout.vue';
-
 export default {
   props: {
     info: {
@@ -25,7 +21,6 @@ export default {
       default: () => ({})
     },
   },
-  components: { Layout },
   data() {
     return {
       current: 0
@@ -44,18 +39,9 @@ export default {
   },
   methods: {
     handleClick() {
-      // uni.previewImage({
-      //   urls: this.imgUrls
-      // });
-    },
-    clickRightBtnEvent() {
-      this.$emit('showToolAction', Object.assign({},{currentImg: this.currentImg}))
-    },
-    toDetails() {
-      const {class_type, task_id} = this.info || {};
-      this.$emit('toDetails', {
-        class_type, task_id
-      })
+      uni.previewImage({
+        urls: this.imgUrls
+      });
     },
     change({current}) {
       this.current = current || 0;

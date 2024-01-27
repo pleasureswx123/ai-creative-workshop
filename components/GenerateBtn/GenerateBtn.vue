@@ -27,20 +27,16 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
-  },
-  data() {
-    return {
-      loading: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     handleStart() {
       if (!this.disabled && !this.loading) {
-        this.loading = true;
-        this.$emit('cb', () => {
-          this.loading = false;
-        })
+        this.$emit('cb');
       }
     }
   }

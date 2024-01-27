@@ -18,19 +18,6 @@ import {mapState, mapActions} from 'vuex';
 import PicHeader from './components/PicHeader.vue';
 
 export default {
-  data() {
-    return {
-      // list: [
-      //   {title: '智能换脸', imgName: '1.png', type: 'ai-face'},
-      //   {title: '高清重绘', imgName: '2.png', type: 'hd-redraw'},
-      //   {title: '去除背景', imgName: '3.png', type: 'remove-bg'},
-      //   {title: '更换背景', imgName: '4.png', type: 'replace-bg'},
-      //   {title: '智能扩图', imgName: '5.png', type: 'ai-expand'},
-      //   {title: '局部重绘', imgName: '6.jpg', type: 'part-redraw'},
-      //   {title: '更换背景(语义)', imgName: '7.png', type: 'replace-bg-txt'},
-      // ]
-    }
-  },
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
   },

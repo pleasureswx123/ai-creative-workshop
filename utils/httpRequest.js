@@ -14,13 +14,11 @@ module.exports = (vm) => {
     // if (config?.custom?.formUrl) {
     //   config.header['Content-Type'] = `application/x-www-form-urlencoded;charset=UTF-8`
     // }
-    debugger
     return config
   }, config => {
     return Promise.reject(config)
   })
   uni.$u.http.interceptors.response.use((response) => {
-    debugger
     const {config, data, header, errMsg, statusCode} = response || {};
     const {url, custom: {auth, hideToast} } = config || {};
     if (statusCode !== 200) {
@@ -55,7 +53,6 @@ module.exports = (vm) => {
     }
     return Promise.resolve(data?.data || {});
   }, (response) => {
-    debugger
     if (response.statusCode === 401 && response.data.code === 1002) {
       vm.$store.commit('GlobalInfo/clearToken');
       uni.navigateTo({

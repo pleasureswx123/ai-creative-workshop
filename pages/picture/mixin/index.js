@@ -1,21 +1,42 @@
 import {pictureApi} from "@/api";
 import {mapState, mapActions} from 'vuex';
+import PicHeader from '../components/PicHeader.vue';
+import TitleCell from '../components/TitleCell.vue';
+import UploadImg from '../components/UploadImg.vue';
+import QmRadio from '../components/QmRadio.vue';
+import TipsHelp from '../components/TipsHelp.vue';
+import QmInput from '../components/QmInput.vue';
+import QmTextarea from '../components/QmTextarea.vue';
+import ImgInfo from '../components/ImgInfo.vue';
 
 export default {
+  components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo },
   data() {
     return {
-      generating: false,
+      generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
+      finalUrl: '',
     }
   },
   computed: {
     ...mapState('PictureInfo', ['taskDetail']),
+    generating() {
+      return this.generateState === 2
+    },
+    btnInfo() {
+      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'};
+      return this.generateState === 3 ? {btnTxt: '重新生成'} : temp;
+    },
   },
   onHide() {
     this.clearTimer();
   },
   onLoad({type}) {
-    debugger
-    this.getMaterial({task_type: type})
+    const eventChannel = this.getOpenerEventChannel();
+    eventChannel.on('acceptData', ({data}) => {
+      const { currentImg } = data || {};
+      this.sourceImg = currentImg;
+    })
+    this.getMaterial({task_type: type});
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),
@@ -25,35 +46,37 @@ export default {
         this.timer = null;
       }
     },
-    handleGenerate(cb) {
+    handleGenerate() {
+      if(this.generateState === 3) {
+        this.generateState = 1;
+        return;
+      }
       this.createTask(this.params).then(({task_id}) => {
-        this.generating = true;
+        this.generateState = 2;
         const func = () => {
-          pictureApi.getTaskstate({task_id}).then(({state}) => {
+          pictureApi.getTaskstate({task_id}).then((res) => {
+            const {state, url} = res || {};
             if(state === 2) { // 生成失败
-              this.generating = true;
-              cb && cb();
+              this.generateState = 1;
               this.clearTimer();
               uni.$u.toast('生成任务失败');
               return
             }
             if(state === 1) { // 生成成功
-              this.generating = true;
-              cb && cb();
+              this.generateState = 3;
               this.clearTimer();
-              uni.$u.route({
-                url: `pages/picture/index`
-              });
+              this.finalUrl = url;
               return;
             }
+          }).catch(() => {
+            this.generateState = 1;
+            this.clearTimer();
           })
         }
         this.timer = setInterval(() => {
           func();
         }, 5000);
-      }).catch(err => {
-        cb && cb();
-      });
+      })
     }
   }
 }

@@ -80,6 +80,22 @@
                     "pathRewrite": {
                         "^/web.php": "/"
                     }
+                },
+                "/h5/imgPath": {
+                    "target": "http://aigc.chaojiyuyan.cn",
+                    "changeOrigin": true,
+                    "secure": false,
+                    "pathRewrite": {
+                        "^/h5/imgPath": ""
+                    }
+                },
+                "/imgPath": {
+                    "target": "http://aigc.chaojiyuyan.cn",
+                    "changeOrigin": true,
+                    "secure": false,
+                    "pathRewrite": {
+                        "^/imgPath": ""
+                    }
                 }
             }
         },

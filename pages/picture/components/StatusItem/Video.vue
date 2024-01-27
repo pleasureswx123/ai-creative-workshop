@@ -1,19 +1,34 @@
 <template>
-  <view class="pictrue-box">
-    <video class="video-box"
-           object-fit="contain"
-           :src="src"
-    />
-  </view>
+  <Layout :info="info" @cb="clickRightBtnEvent" @toDetails="toDetails">
+    <view class="pictrue-box">
+      <image class="video-box" :src="info.video_cover_img" imgMode="aspectFit"></image>
+<!--      <video class="video-box" object-fit="contain"
+             :src="info.video_url" :poster="info.video_cover_img" />-->
+    </view>
+  </Layout>
 </template>
 
 <script>
+import Layout from './Layout.vue';
+
 export default {
   props: {
-    src: {
-      type: String,
-      required: true
-    }
+    info: {
+      type: Object,
+      default: () => ({})
+    },
+  },
+  components: { Layout },
+  methods: {
+    clickRightBtnEvent() {
+      this.toDetails();
+    },
+    toDetails() {
+      const {class_type, task_id} = this.info || {};
+      this.$emit('toDetails', {
+        class_type, task_id
+      })
+    },
   }
 }
 </script>

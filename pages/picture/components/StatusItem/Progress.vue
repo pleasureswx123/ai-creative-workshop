@@ -1,21 +1,30 @@
 <template>
-  <view class="pictrue-box">
-    <view class="progress-box">
-      <view class="progress-bar">
-        <u-line-progress :showText="false" :percentage="percentage"></u-line-progress>
+  <Layout :info="info" :disabled="true">
+    <view class="pictrue-box">
+      <view class="progress-box">
+        <view class="progress-bar">
+          <u-line-progress :showText="false" :percentage="percentage" />
+        </view>
       </view>
     </view>
-  </view>
+  </Layout>
 </template>
 
 <script>
+import Layout from './Layout.vue';
+
 export default {
   props: {
+    info: {
+      type: Object,
+      default: () => ({})
+    },
     percentage: {
       type: Number,
       default: 50
     }
-  }
+  },
+  components: { Layout },
 }
 </script>
 

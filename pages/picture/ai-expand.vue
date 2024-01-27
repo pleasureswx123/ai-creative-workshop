@@ -2,36 +2,28 @@
   <page-meta page-style="background: #ffffff" />
   <view class="page-container">
     <PicHeader title="智能扩图" />
-  
-<!--    <ImgInfo src="https://aigc.chaojiyuyan.com/upload/image/65ae1eb2a6807.png"
-        :generating="true" :isShowClose="false"></ImgInfo>-->
     
     <TitleCell title="选择图片" />
-    <UploadImg :generating="generating" :value.sync="sourceImg"></UploadImg>
+    
+    <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
+    <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
   
-    <template v-if="!generating">
+    <template v-if="generateState === 1">
       <TitleCell title="选择扩图方向" :isShowRight="false" />
       <QmRadio :value.sync="direction"></QmRadio>
       <TipsHelp :info="taskDetail" />
     </template>
     
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate"
-                 :btnInfo="{btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'}" />
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     
   </view>
 </template>
 
 <script>
 import PicMixins from './mixin';
-import PicHeader from './components/PicHeader.vue';
-import TitleCell from './components/TitleCell.vue';
-import UploadImg from './components/UploadImg.vue';
-import QmRadio from './components/QmRadio.vue';
-import TipsHelp from './components/TipsHelp.vue';
 
 export default {
   mixins: [PicMixins],
-  components: { PicHeader, TitleCell, UploadImg, QmRadio, TipsHelp },
   data() {
     return {
       sourceImg: '',
