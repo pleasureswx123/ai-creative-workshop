@@ -15,12 +15,13 @@
 					<image class="arrow" src="/static/images/ic_arrow_r.png"></image>
 				</view>
 			</view>
-			<view class="a-item" @tap="toBindPhone">
+			<view class="a-item">
+			<!-- <view class="a-item" @tap="toBindPhone"> -->
 				<view class="label">{{ '手机账号' | lang }}</view>
 				<view class="value">
 					<text class="text-primary" v-if="phone">{{ phone.substr(0,3) + "****" + phone.substr(7) }}</text>
 					<text class="text-danger" v-else>{{ '未绑定' | lang }}</text>
-					<image class="arrow" src="/static/images/ic_arrow_r.png"></image>
+					<!-- <image class="arrow" src="/static/images/ic_arrow_r.png"></image> -->
 				</view>
 			</view>
 			<!-- <view class="a-item" @tap="toBindWechat">
@@ -85,7 +86,7 @@
 							title: '正在上传'
 						});
 						app.globalData.util.upload({
-							url: '/upload/image',
+							url: '/Upload/image',
 							filePath: res.tempFilePaths[0]
 						}).then((res) => {
 							var avatar = res.data.path;
@@ -171,12 +172,13 @@
 	}
 
 	.logout .btn-logout {
-		width: 240rpx;
-		height: 100rpx;
-		line-height: 100rpx;
+		width: 280rpx;
+		height: 80rpx;
+		line-height: 80rpx;
 		text-align: center;
 		border-radius: 10rpx;
-		font-size: 32rpx;
+		font-size: 28rpx;
+		background-color: #F60652;
 	}
 
 	.form {
@@ -207,7 +209,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		font-size: 32rpx;
+		font-size: 28rpx;
 		color: #333;
 	}
 
@@ -232,10 +234,10 @@
 	}
 
 	.text-primary {
-		color: #04BABE;
+		color: #F60652;
 	}
 
 	.text-danger {
-		color: #F56C6C;
+		color: #fff;
 	}
 </style>

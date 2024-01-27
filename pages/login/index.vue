@@ -30,7 +30,7 @@
 				<view class="form-item">
 					<button class="btn btn-submit" @tap="doLogin">{{ '确定登录' | lang }}</button>
 				</view>
-				<view class="form-item" style="justify-content: space-between; color: #04babe; padding:0 36rpx;font-size: 28rpx;">
+				<view class="form-item" style="justify-content: space-between; color: #555555; font-size: 28rpx;">
 					<text @tap="toReg">{{ '注册账号' | lang }}</text>
 					<text @tap="toReset">{{ '忘记密码' | lang }}</text>
 				</view>
@@ -107,7 +107,7 @@
 					return
 				}
 				app.globalData.util.request({
-					url: '/login/login',
+					url: '/Login/login',
 					data: {
 						phone: phone,
 						password: password,
@@ -129,7 +129,6 @@
 					})
 				})
 			},
-
 			wxLogin() {
 				var sitecode = this.sitecode
 				var tuid = uni.getStorageSync('tuid')
@@ -205,7 +204,7 @@
 		margin-top: 200rpx;
 	}
 	.btn {
-		background: #04babe;
+		background: #F60652;
 		border-radius: 10rpx;
 		width: 100%;
 		height: 98rpx;
@@ -227,9 +226,9 @@
 	}
 	
 	.btn-phone {
-		color: #04babe;
+		color: #F60652;
 		background: #fff;
-		border: 2rpx solid #04babe;
+		border: 2rpx solid #F60652;
 		margin-top: 50rpx;
 		box-sizing: border-box;
 		height: 92rpx;
@@ -238,6 +237,7 @@
 	.btn-submit {
 		height: 88rpx;
 		margin-top: 40rpx;
+		font-size: 32rpx;
 	}
 	
 	.agree {
@@ -253,7 +253,7 @@
 		padding: 20rpx 0 50rpx 0;
 	}
 	.agree text {
-		color: #04babe;
+		color: #000;
 	}
 	
 	.container {

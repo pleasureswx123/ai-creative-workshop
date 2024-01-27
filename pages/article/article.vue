@@ -1,7 +1,9 @@
 <template>
     <view class="panel">
         <view class="content">
-            <view v-if="content" v-html="content"></view>
+			<view class="title">{{title}}</view>
+            <!-- <view v-if="content" v-html="content"></view> -->
+			<u-parse v-if="content" :content="content"></u-parse>
             <view v-else style="text-align: center; text-indent: 0; margin-top: 100rpx; color: #ccc">{{ '暂无内容' | lang }}</view>
         </view>
     </view>
@@ -12,7 +14,8 @@ const app = getApp();
 export default {
     data() {
         return {
-            content: ''
+            content: '',
+			title:''
         };
     },
     onLoad(options) {
@@ -62,14 +65,15 @@ export default {
 					})
 				}
                 this.setData({
-                    content: res.data.content
+                    content: res.data.content,
+					title:res.data.title
                 });
             });
     },
     methods: {}
 };
 </script>
-<style>
+<style lang="scss" scoped>
 page {
     box-sizing: border-box;
     background: #f7f7f8;
@@ -80,15 +84,20 @@ page {
     background: #fff;
     border-radius: 20rpx;
 }
-.title {
-    font-size: 32rpx;
-    margin-bottom: 30rpx;
-    text-align: center;
-    color: #aaa;
-}
 .content {
     line-height: 1.6;
     color: #666;
+	.title{
+		font-weight: 700;
+		color: #333;
+		font-size: 28rpx;
+		margin-bottom: 30rpx;
+	}
+	// img{
+	// 	width: 100%;
+	// 	min-width: 100%;
+	// 	max-width: 100%;
+	// }
 }
 .content view {
     margin-bottom: 20rpx;

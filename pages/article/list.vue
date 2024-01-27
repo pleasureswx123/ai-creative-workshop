@@ -1,7 +1,14 @@
 <template>
     <view>
         <view class="list">
-            <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view>
+            <!-- <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view> -->
+            <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">
+				<view class="text-cut">{{item.title}}</view>
+				<view class="flex">
+					<image :src="item.icon" v-if="item.icon" mode=""></image>
+					<text>{{item.content_introduce}}</text>
+				</view>
+			</view>
         </view>
     </view>
 
@@ -47,23 +54,43 @@ export default {
 	}
 };
 </script>
-<style>
+<style lang="scss" scoped>
 page {
     background: #f7f7f8;
 }
 .list {
-    background: #fff;
     margin: 30rpx;
     border-radius: 20rpx;
     overflow: hidden;
 }
 .item {
-    line-height: 40rpx;
-    padding: 40rpx 40rpx;
+    padding: 30rpx;
     font-size: 32rpx;
+	background-color: #fff;
     color: #333;
     border-radius: 10rpx;
-    border-bottom: 1px solid #f2f2f2;
+	margin-bottom: 30rpx;
+	.text-cut{
+		font-size: 28rpx;
+		font-weight: 700;
+		margin-bottom: 20rpx;
+	}
+	.flex{
+		display: flex;
+		display: -webkit-flex;
+		justify-content: normal;
+		flex-wrap: wrap;
+		align-items: normal;
+		image{
+			width: 240rpx;
+			height: 180rpx;
+		}
+		text{
+			margin-left: 20rpx;
+			color: #888;
+			font-size: 28rpx;
+		}
+	}
 }
 .item:active {
     background: #f3f3f4;
@@ -71,4 +98,5 @@ page {
 .item:last-child {
     border-bottom: none;
 }
+
 </style>

@@ -132,7 +132,7 @@
 					return
 				}
 				app.globalData.util.request({
-					url: '/login/reg',
+					url: '/Login/reg',
 					data: {
 						phone: phone,
 						password: password,
@@ -145,8 +145,6 @@
 					this.toBack()
 				})
 			},
-
-
 			toBack() {
 				uni.navigateBack({
 					fail: function() {
@@ -210,11 +208,11 @@
 	}
 
 	.btn {
-		background: #04babe;
+		background: #F60652;
 		border-radius: 10rpx;
 		width: 100%;
 		height: 100rpx;
-		font-size: 36rpx;
+		font-size: 32rpx;
 		margin: 0 auto;
 		letter-spacing: 2rpx;
 		display: flex;
@@ -234,9 +232,9 @@
 	}
 
 	.btn-phone {
-		color: #04babe;
+		color: #F60652;
 		background: #fff;
-		border: 2rpx solid #04babe;
+		border: 2rpx solid #F60652;
 		margin-top: 50rpx;
 	}
 
@@ -259,7 +257,7 @@
 	}
 
 	.agree text {
-		color: #04babe;
+		color: #000;
 	}
 
 	.container {
@@ -333,5 +331,8 @@
 		right: 30rpx;
 		top: 26rpx;
 		z-index: 10;
+	}
+	.form .form-item text{
+		color: #F60652;
 	}
 </style>

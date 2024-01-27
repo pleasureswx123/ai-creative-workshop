@@ -187,11 +187,11 @@
 	}
 
 	.btn {
-		background: #04babe;
+		background: #3c9cff;
 		border-radius: 10rpx;
 		width: 100%;
 		height: 100rpx;
-		font-size: 36rpx;
+		font-size: 32rpx;
 		margin: 0 auto;
 		letter-spacing: 2rpx;
 		display: flex;

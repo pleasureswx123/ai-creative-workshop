@@ -149,4 +149,7 @@ page {
 	.uni-tabbar .uni-tabbar__item {
 		display: none;
 	}
+	uni-modal {
+	  z-index: 999999 !important;
+	}
 </style>
