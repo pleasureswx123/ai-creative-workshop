@@ -43,14 +43,51 @@
 				transform: 'scale(1)', 
 				fontSize:'14px'
 			}"></u-tabs>
-			<view class="aiWaterfall">
-				<view class="fallItem" v-for="(item,index) in feedList" :key="index">
-					<image :src="item.task_info.img_url" mode="widthFix" v-if="item.task_info.img_url"></image>
-					<view class="fallTitle">{{item.task_info.model_info}}</view>
-				</view>
-				<view class="load-more" @click="feedClick()">
-					<u-loadmore :status="status" :nomore-text="nomoreText" @loadmore="getfeedList" />
-				</view>
+			<view class="waterfall">
+				<uv-waterfall ref="waterfall"
+					v-model="list"
+					:add-time="10"
+					:left-gap="leftGap"
+					:right-gap="rightGap"
+					:column-gap="columnGap"
+					@changeList="changeList">
+					<!-- 第一列数据 -->
+					<template v-slot:list1>
+						<!-- 为了磨平部分平台的BUG，必须套一层view -->
+						<view>
+							<view v-for="(item, index) in list1"
+								:key="item.id"
+								class="waterfall-item">
+								<view class="waterfall-item__image" :style="[imageStyle(item)]">
+									<image :src="item.img_url" mode="widthFix"></image>
+								</view>
+								<view class="waterfall-item__ft">
+									<view class="waterfall-item__ft__title">
+										<text class="value">{{item.model_info}}</text>
+									</view>
+								</view>
+							</view>
+						</view>
+					</template>
+					<!-- 第二列数据 -->
+					<template v-slot:list2>
+						<!-- 为了磨平部分平台的BUG，必须套一层view -->
+						<view>
+							<view v-for="(item, index) in list2"
+								:key="item.id"
+								class="waterfall-item">
+								<view class="waterfall-item__image" :style="[imageStyle(item)]">
+									<image :src="item.img_url" mode="widthFix"></image>
+								</view>
+								<view class="waterfall-item__ft">
+									<view class="waterfall-item__ft__title">
+										<text class="value">{{item.model_info}}</text>
+									</view>
+								</view>
+							</view>
+						</view>
+					</template>
+				</uv-waterfall>
 			</view>
 		</view>
 		<view class="footer">
@@ -149,13 +186,12 @@
 				  </view>
 			</u-popup>
 		</view>
-		<view class="waterfalls">
-			<!-- <custom-waterfalls-flow :value="data.list"></custom-waterfalls-flow> -->
-		</view>
+		<!-- 瀑布流弹窗 -->
 	</view>
 </template>
 
 <script>
+	import { guid } from '@/uni_modules/uv-ui-tools/libs/function/index.js'
 	const app = getApp();
 	export default {
 		data() {
@@ -182,26 +218,73 @@
 				value: '',
 				code:'',
 				slogan_cn:'',
-				slogan_cnEng:''
+				slogan_cnEng:'',
+				list: [],// 瀑布流全部数据
+				list1: [],// 瀑布流第一列数据
+				list2: [],// 瀑布流第二列数据
+				leftGap: 10,
+				rightGap: 10,
+				columnGap: 10
 			}
 		},
-		onLoad() {
+		computed: {
+			imageStyle(item) {
+				console.log(item)
+				return item=>{
+					const v = uni.upx2px(750) - this.leftGap - this.rightGap - this.columnGap;
+					const w = v/2;
+					const rate = w / item.img_width;
+					const h = rate* item.img_height;
+					console.log(w,h)
+					return {
+						width: w + 'px',
+						height: h + 'px'
+					}
+				}
+			}
+		},
+		async onLoad() {
 			this.getmakeList()
 			this.getaiList()
 			this.getfeedList()
 			this.getUserInfo()
+			const { data } = await this.getData();
+			this.list = data;
 		},
 		methods: {
+			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
+			changeList(e){
+				this[e.name].push(e.value);
+			},
+			// 模拟的后端数据
+			getData() {
+				return new Promise((resolve)=>{
+					app.globalData.util.request({
+						url:'/Home/FeedsList',
+						data: {
+							page:this.page,
+							pagesize:this.pagesize,
+							model_subclass_id:1
+						}
+					})
+					.then((res) => {
+						this.imgs = res.data.list
+						const imgs = this.imgs
+						this.list = this.imgs.map(item =>{
+							return {...item.task_info}
+						})
+					})
+					let list = [];
+				})
+			},
 			getUserInfo() {
-			    app.globalData.util
-			        .request({
+			    app.globalData.util.request({
 			            url: '/user/info'
 			        })
 			        .then((res) => {
 			            this.setData({
 			                userinfo: res.data,
 							isLogin: true,
-							// balance:res.data.balance
 			            });
 			        }).catch(res => {
 						if(res.errno == 403) {
@@ -374,6 +457,50 @@
 	uni-video{
 		width: 100%;
 		height: 100%;
+	}
+	$show-lines: 1;
+	@import '@/uni_modules/uv-ui-tools/libs/css/variable.scss';
+	.waterfall{
+		/deep/.uv-waterfall__gap_left{
+			width: 0!important;
+		}
+		/deep/.uv-waterfall__gap_right{
+			width: 0!important;
+		}
+	}
+	.waterfall-item {
+		overflow: hidden;
+		margin-top: 10px;
+		border-radius: 6px;
+		position: relative;
+		.waterfall-item__image{
+			image{
+				width: 100%!important;
+				height: 100%!important;
+			}
+		}
+	}
+	
+	.waterfall-item__ft {
+		position: absolute;
+		bottom: 20rpx;
+		left: 50%;
+		transform: translate(-50%,0);
+		&__title {
+			text-align: center;
+			font-weight: 700;
+			.value {
+				font-size: 28rpx;
+				color: #fff;
+			}
+		}
+		&__desc .value {
+			font-size: 28rpx;
+			color: #606266;
+		}
+		&__btn {
+			padding: 10px 0;
+		}
 	}
 	.banner-cont{
 		width: 100%;
