@@ -77,6 +77,7 @@
 			async onshowPopup(){
 					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
+					console.log(res)
 					this.photosPopupList = [...this.photosPopupList,...res.data.list]
 					this.total	= res.data.count
 			},

@@ -6,13 +6,26 @@
 				<view  class="create-list">
 					 <u--text text="选择要处理的图片" align="center" size="18" lineHeight="70"></u--text>
 					 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
-					 <view class="create-content">
+					 <!-- <view class="create-content">
 						<view >
 							<view   :style="`height:${item.img_height/2}rpx`" :class="['content-image',photosCreateNumber === index?'photos-active':'']" @click="onPhotosLoraPopup(index)" v-for="(item,index) in photosCreateList" :key="index">
 														 <image :showLoading="true" :src="item.img_url"   class="image"></image>
 							</view>
 						</view>
+					 </view> -->
+					 <view class="container">
+					   <view
+					     class="cont-box"
+					     :style="{ '--layout-width': 100 / flowData.column - flowData.columnSpace + '%' }"
+					     v-for="(numVal, index) in flowData.column"
+					     :key="numVal"
+					   >
+					     <view class="item-box" v-for="(item, j) in flowData[`column_${index + 1}`]" :key="j" @click="onPhotosLoraPopup(item)">
+					       <image :class="['img-tip',photosCreateImg === item.img_url?'photos-active':'']" :src="item.img_url" mode="widthFix" lazy-load />
+					     </view>
+					   </view>
 					 </view>
+					 
 					 	<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了...</view>
 					</scroll-view> 
 					 
@@ -28,6 +41,12 @@
 	export default {
 		data() {
 			return {
+				photosCreateImg:'',
+				flowData: {
+				  list: [], // 数据值
+				  column: 2, // 瀑布列数
+				  columnSpace: 2 // 瀑布列宽间距
+				},
 				photosCreateNumber:0,//控制风格弹框中的index
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosCreateList:[],
@@ -55,21 +74,41 @@
 				},
 			//创建弹框中确认事件
 			onPhotosLoraConfig(){
-					let photosCreateInfo =  this.photosCreateList[this.photosCreateNumber]
+					// let photosCreateInfo =  this.photosCreateList[this.photosCreateNumber]
+					let photosCreateInfo = {img_url:this.photosCreateImg}	
 					this.photosCreateShow = false
 					this.$emit('createlist',photosCreateInfo)
 			},
 			//创建弹框中选择每一项
-			onPhotosLoraPopup(index){
-				this.photosCreateNumber = index
+			onPhotosLoraPopup(img){
+				// console.log(img)
+				this.photosCreateImg = img.img_url
 			},
 			//请求创建数据
 			async	onloraList(){
 				const res = await	util.request({url: '/AiDraw/getHistory'})
-				// console.log(res)
-					// this.photosCreateList = res.data.list
-					this.photosCreateList  = [...this.photosCreateList ,...res.data.list]
+					this.photosCreateImg = res.data.list[0].img_url
 					this.total	= res.data.count
+					this.flowData.list = [...this.flowData.list,...res.data.list]
+					this.initData();
+			},
+			/* 数据初始化 */
+			initData() {
+			  const groupList = this.dynamicGrouping(this.flowData.list, this.flowData.column); // 数据动态分组
+			  groupList.forEach((item, i) => (this.flowData[`column_${i + 1}`] = item));
+			},
+			   
+			dynamicGrouping(data, i) {
+			  if (i <= 0) return "分组数必须大于0";
+			  const groups = [];
+			  for (let j = 0; j < i; j++) {
+			    groups.push([]);
+			  }
+			  for (let k = 0; k < data.length; k++) {
+			    const groupIndex = k % i;
+			    groups[groupIndex].push(data[k]);
+			  }
+			  return groups;
 			},
 		},
 		onLoad() {
@@ -77,6 +116,10 @@
 		},
 		created(){
 			 this.onloraList()
+			 /* 初始化每一列的数据 */
+			 for (let i = 1; i <= this.flowData.column; i++) {
+			   this.$set(this.flowData, `column_${i}`, []);
+			 }
 		}
 	}
 </script>
@@ -87,7 +130,7 @@
 		.create-list{
 			width: 95%;
 			margin: auto;
-			height: 650px;
+			height: 1300rpx;
 			position: relative;
 			// overflow: hidden;
 			.create-popup-list{
@@ -125,6 +168,28 @@
 					}
 				}
 			}
+		.container {
+		  display: flex;
+		      justify-content: space-around;
+			  // justify-content: space-evenly;
+		  // padding: 20rpx;
+		  $borderRadius: 12rpx;
+		  .cont-box {
+		    width: var(--layout-width);
+		    .item-box {
+				margin-top: 5rpx;
+		      width: 100%;
+		      // padding-bottom: 20rpx;
+		      margin-bottom: 5rpx;
+		      border-radius: $borderRadius;
+		      // box-shadow: 0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08);
+		      .img-tip {
+		        width: 100%;
+				border-radius: 15rpx;
+		      }
+		    }
+		  }
+		}
 		}
 	}
 	

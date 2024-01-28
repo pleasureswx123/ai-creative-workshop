@@ -52,6 +52,9 @@
 		<u-col span="3">
 		<view class="demo-layout bg-purple-light">
 			<u--image :showLoading="true" :src="photosControinetInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+			<!-- <view class="col-image" style="width: 100rpx;height: 100rpx;background: #e5e5e5;margin: 10px 10px;"> -->
+			<!-- <u--image :showLoading="true" :src="photosControinetInfo.url" ></u--image>	 -->
+			<!-- </view> -->
 		</view>
 		</u-col>
 	    <u-col span="8">
@@ -139,7 +142,6 @@
 			<u-col span="3">
 			<view class="demo-layout bg-purple-light">
 				<u--image :showLoading="true" :src="photosUploadInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
-				<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
 			</view>
 			</u-col>
 		    <u-col span="8" >

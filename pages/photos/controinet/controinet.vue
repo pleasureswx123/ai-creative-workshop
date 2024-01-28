@@ -123,8 +123,8 @@
 				this.photosControinetShow = false
 				this.photosControinetInfoShow = true
 					let info = this.photosControinetPopupList[this.controinetPopupNumber]
-						info['img'] = this.photosControinetUploadSrc
-						info['url'] = this.photosControinetSrc
+						info['img'] = this.photosControinetSrc
+						info['url'] = this.photosControinetUploadSrc
 						info['value'] = 0.8
 					this.$emit('controninetlist',info)
 					this.photosControinetUploadSrc = ''
@@ -153,6 +153,7 @@
 				try{
 					let data = {img_url:this.photosControinetSrc,type_id:this.photosControinetPopupList[this.controinetPopupNumber].id}
 					const res = await	util.request({url: '/AiDraw/ControlNetDetect',data})
+						console.log(res)
 					this.photosControinetUploadSrc	= res.data.img_url
 				}catch(e){
 					console.log(e)
