@@ -3,22 +3,23 @@
 		<!-- 模型选择弹框 -->
 		<u-popup :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" >
 			<view class="photos-popup" >
-			 <view class="popup-up">选择XL模型</view>
-				<text class="popup-op">基于SD1.5训拣或微调的各种大模型，对名种面风Lora的兼容表現更好，兼顾出图质量和速度。</text>
-				<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList">
+			 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+				<text class="popup-op">{{photosModelInfo.content}}</text>
+				<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
 				 <view class="popup-row">
 					<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
-					 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image>
+					 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
+					 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="src"></u-image>
 						<view class="popup-rol">
 							<view class="popup-rol-text">{{item.title}}</view>
 								<view class="popup-rol-test">{{item.content}}</view>
 							</view>
 						</view>
 							</view>
-						<view v-if="showMoreData" style="text-align: center;height: 50rpx;">没有数据...</view>
+						<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了...</view>
 						   	   
 				</scroll-view>
-					<u-button style="background: #000;color: #fff;" @click="onPopupConfirm" class="popup-but">确认</u-button>	
+					<u-button  @click="onPopupConfirm" class="popup-but">确认</u-button>	
 					</view>	
 		</u-popup>	
 	</view>
@@ -30,6 +31,8 @@
 		props:{id:{type:Number}},
 		data() {
 			return {
+				photosModelInfo:{},
+				photosSubseCtionList:[],
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosPopupNumber:0,//弹框选择模型的index
 				photosModeleShow:false,//模型选择的显示和隐藏
@@ -44,16 +47,17 @@
 		methods: {
 			open() {
 					this.photosModeleShow = true 
-					this.onshowPopup()
+					// this.onshowPopup()
+					this.onshowList()
 				},
 			//触底加载数据
 			onPhotosModelList(){
 				// 判断是否还有下一页数据
-				// if (page * pageSize >= total) return showMoreData=true
+				if (this.page * this.pageSize >= this.total) return this.showMoreData = true
 				// 让页码值自增 +1
-				// Page +=1
+					this.page +=1
 				// 重新获取列表数据
-				// this.onshowPopup()
+				this.onshowPopup()
 			},
 			//关闭弹框
 			onPotosPopupClose(){
@@ -73,21 +77,39 @@
 			async onshowPopup(){
 					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
-					console.log(res)
-					this.photosPopupList = res.data.list
-			}
+					this.photosPopupList = [...this.photosPopupList,...res.data.list]
+					this.total	= res.data.count
+			},
+			//请求请求导航数据事件
+			async	onshowList(){
+				const res = await	util.request({url: '/AiDraw/ModelClass'})
+					// console.log(res)
+					if(this.id === 1){
+							this.photosModelInfo = res.data[0]
+					}else if(this.id === 2){
+						this.photosModelInfo = res.data[1]
+					}else{
+						this.photosModelInfo = res.data[2]
+					}
+					this.photosSubseCtionList = res.data
+					},
 		},
 		onLoad() {
 			// this.onshowPopup()
+		},
+		created(){
+			this.onshowPopup()
+			
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 .model{
+		
 	.photos-popup{
 			width: 95%;
-			height: 1340rpx;
+			height: 1300rpx;
 			margin: auto;
 			position: relative;
 			.popup-up{
@@ -98,7 +120,7 @@
 			}
 			.popup-op{
 				font-size: 22rpx;
-				
+				// margin-bottom: 20rpx;
 			}
 			
 			.popup-row{
@@ -116,21 +138,28 @@
 						margin: auto;
 						height: 120rpx;
 					.popup-rol-text{
-						font-size: 22rpx;
+						font-size: 26rpx;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
 					}
 					.popup-rol-test{
 						margin-top: 10rpx;
 						font-size: 20rpx;
+						color:#ccc;
 					}	
 					}
 				}
 			}
 			.popup-but{
+				background: #000;
+				color: #fff;
 				position: absolute;
 				bottom: 50rpx;
 			}
 	}	
 	.photos-active{
+				// outline: 2rpx solid #000;
 				border: 2rpx #000 solid;
 				border-radius: 15rpx;
 		}

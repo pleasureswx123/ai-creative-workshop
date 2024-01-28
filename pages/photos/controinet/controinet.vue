@@ -123,7 +123,8 @@
 				this.photosControinetShow = false
 				this.photosControinetInfoShow = true
 					let info = this.photosControinetPopupList[this.controinetPopupNumber]
-						info['url'] = this.photosControinetUploadSrc
+						info['img'] = this.photosControinetUploadSrc
+						info['url'] = this.photosControinetSrc
 						info['value'] = 0.8
 					this.$emit('controninetlist',info)
 					this.photosControinetUploadSrc = ''
@@ -155,6 +156,7 @@
 					this.photosControinetUploadSrc	= res.data.img_url
 				}catch(e){
 					console.log(e)
+					if(e.statusCode === 500)return util.confirm('生成失败，请稍后从试')
 				}
 
 			}

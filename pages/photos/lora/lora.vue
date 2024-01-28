@@ -7,7 +7,7 @@
 					 <u--text text="选择Lora模型" align="center" size="18" lineHeight="70"></u--text>
 					 <view class="lora-popup-list">
 					 	<view :class="['popup-list',photosLoraNumber === index?'photos-active':'']" v-for="(item,index) in photosLoraList" :key="index" @click="onPhotosLoraPopup(index)">
-					 		<u--image :showLoading="true" :src="src" width="100%" height="130px" radius="5"></u--image>
+					 		<u--image :showLoading="true" :src="src" width="100%" height="130px" radius="8"></u--image>
 					 		<!-- <u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="5"></u--image> -->
 							<view class="popup-list-text">
 								<u--text :text="item.title" size="12" lineHeight="20"></u--text>
@@ -37,7 +37,7 @@
 		methods: {
 			open() {
 					this.photosLoraShow = true 
-					this.onloraList()
+					// this.onloraList()
 				},
 			//关闭弹框
 			onPotosPopupClose(){
@@ -65,13 +65,16 @@
 			async	onloraList(){
 					let data = {page:1,pagesize:10,class_id:this.id}
 				const res = await	util.request({url: '/AiDraw/LoraList',data})
-					console.log(res.data.list)
+					// console.log(res.data.list)
 					this.photosLoraList = res.data.list
 			},
 		},
-		onLoad() {
-			// this.onloraList()
+		created() {
+			this.onloraList()
 		}
+		// onLoad() {
+		// 	// this.onloraList()
+		// }
 	}
 </script>
 
@@ -112,7 +115,8 @@
 	
 	
 .photos-active{
-			border: 2rpx #000 solid;
+			outline: 2rpx solid #000;
+			// border: 2rpx #000 solid;
 			border-radius: 15rpx;
 	}
 }

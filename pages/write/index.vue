@@ -47,6 +47,7 @@
 		<u-button @click="onClick">文生图</u-button>
 		<u-button @click="onClicks">设置</u-button>
 		<u-button @click="onHotos">填写</u-button>
+		<u-button @click="onHo">一件同款</u-button>
 	</view>
 </template>
 
@@ -92,6 +93,11 @@
 			})
 		},
 		methods: {
+			onHo(){
+				uni.navigateTo({
+				                    url: '/pages/photos/photos?task_id=' + 1
+				                })
+			},
 			onHotos(){
 				uni.navigateTo({
 					// url: '/pages/photos/controinet/controinet'

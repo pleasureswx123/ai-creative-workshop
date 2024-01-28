@@ -56,7 +56,7 @@
 		</u-col>
 	    <u-col span="8">
 		<view class="demo-layout bg-purple">
-		<u--text :text="photosControinetInfo.title"></u--text>
+		<u--text :text="photosControinetInfo.title" style="line-height: 60rpx;"></u--text>
 		<u-slider max="1" :showValue="true" v-model="photosControinetInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
 		</view>
 		</u-col>
@@ -76,13 +76,13 @@
 			   <u-row customStyle="margin-bottom: 10px">
 			 	<u-col span="3">
 			 	<view class="demo-layout bg-purple-light">
-			 		<!-- <u--image :showLoading="true" :src="photosLoraInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
-			 		<u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+			 		<u--image :showLoading="true" :src="photosLoraInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+			 		<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
 			 	</view>
 			 	</u-col>
 			     <u-col span="8">
 			 	<view class="demo-layout bg-purple">
-			 	<u--text :text="photosLoraInfo.title"></u--text>
+			 	<u--text :text="photosLoraInfo.title" style="line-height: 60rpx;"></u--text>
 			 	<u-slider max="1" :showValue="true" v-model="photosLoraInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
 			 	</view>
 			 	</u-col>
@@ -102,14 +102,14 @@
 			  <u-row customStyle="margin-bottom: 10px">
 				<u-col span="3">
 				<view class="demo-layout bg-purple-light">
-					<!-- <u--image :showLoading="true" :src="photosStyleInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
-					<u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+					<u--image :showLoading="true" :src="photosStyleInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+					<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
 				</view>
 				</u-col>
 			    <u-col span="8">
 				<view class="demo-layout bg-purple">
 				<u--text :text="photosStyleInfo.title"></u--text>
-				<u--text :text="photosStyleInfo.prompt" color="#ccc" style="margin-top: 10rpx;"></u--text>
+				<u--text :text="photosStyleInfo.en_title" color="#ccc" style="margin-top: 10rpx;"></u--text>
 				
 				</view>
 				</u-col>
@@ -142,11 +142,11 @@
 				<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
 			</view>
 			</u-col>
-		    <u-col span="8">
-			<view class="demo-layout bg-purple">
-			<u--text :text="photosUploadInfo.name" style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"></u--text>
-			<!-- <u--text >1024*1024 &nbsp;{{photosUploadInfo.size}}</u--text> -->
-				<view style="font-size: 15px;color: #909193; ">1024*1024 &nbsp;&nbsp;{{(photosUploadInfo.size / (1024 * 1024)).toFixed(2)}}MB</view>
+		    <u-col span="8" >
+			<view class="demo-layout bg-purple" >
+			<!-- <u--text style="display:block;" :text="photosUploadInfo.name"  class="photos-upload-space"></u--text> -->
+			<view class="photos-upload-space">{{ photosUploadInfo.name }}</view>
+			<u-slider max="1" :showValue="true" v-model="photosUploadInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
 			</view>
 			</u-col>
 			<u-col span="1">
@@ -169,9 +169,7 @@
 				</view>
 			</view>
 		</view>	
-	</view>
-
-		
+	</view>	
 		<!-- 负面描述词 -->
 		<view class="photos-negative">
 			<view class="negative-text">
@@ -183,8 +181,9 @@
 		<view class="photos-plot">
 			<view class="plot-text"><u--text text="出图比例"></u--text></view>
 			<view class="photos">
-			<view  :class="['photos-proportion',photosPlotNumber === index?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(index)">
-					<view class="proportion-num">{{item.scale}}</view>
+			<view  :class="['photos-proportion',photosPlotNumber === item.id?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(item.id)">
+					<view class="proportion-num">
+					<view :class="[photosPlotNumber === item.id?'plot-lists-active':'']">{{item.scale}}</view></view>
 					<view class="proportion-list">	{{item.title}}</view>
 			</view>	
 			</view>
@@ -198,7 +197,7 @@
 	<view class="photps-generate" >
 	         <view class="generate">
 	         <u-button  class="generate-but" @click="onPhotoSselect"><view >{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-right"></u-icon></u-button>
-	         <u-button class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view >消耗10</view></u-button>
+	         <u-button class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but">消耗{{this.photosSelectNumber}}万</view></u-button>
 	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
 	</view>	
@@ -206,7 +205,7 @@
 	<controinet  ref="secludedcontroinet" @controninetlist="ontroninetlist"/>
 	<model ref="secludedmodel" @modelist="modelist" :id="photosSubseCtionCurrent+1"/>
 	<sstyle ref="secludedstyle" @stylelist="stylelist" :id="photosSubseCtionCurrent+1" :isLogin="isLogin"/>
-	<create ref="secludcreate"/>
+	<create ref="secludcreate" @createlist="createlist"/>
 	</view>
 </template>
 
@@ -220,7 +219,7 @@ import sstyle from './sstyle/sstyle.vue'
 import create from './create/create.vue'
 	const app = getApp()
 	export default {
-		components: {	lora,controinet,model,sstyle,create	},
+		components: {lora,controinet,model,sstyle,create	},
 		data() {
 			return {
 				isLogin:false,
@@ -234,7 +233,7 @@ import create from './create/create.vue'
 				photosUploadInfo:{},//上传图片之后展示图片
 				photosUploadInfoShow:false,//上传图片的显示图片
 				photosPlotList:[],//出图比例的数据
-				photosPlotNumber:0,//出图比例，出图的切换index
+				photosPlotNumber:5,//出图比例，出图的切换index
 				photosSelectNumber:1,//选择张数的
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosStyleInfoShow:false,//样式的显示和隐藏
@@ -250,6 +249,7 @@ import create from './create/create.vue'
 				photosSubseCtionList:[],//	导航的数据
 				photosSubseCtionCurrent: 0,//切换导航的index
 				photosTastNumber:0,//任务展示排队
+				photosTaskId:'',//一件同款的数据接受
 			}
 		},
 		methods: {
@@ -259,30 +259,49 @@ import create from './create/create.vue'
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				// if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
-				// if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
-				// if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
-				// if(Object.keys(this.photosStyleInfo).length==0)return util.confirm('请添加样式')
-				// if(this.photosUploadInfoShow === false)return util.confirm('请添加上传图片')
-				// if(this.photosTextareaNegativeValue === '')return util.confirm('请输入负面描述词')
+				if(this.photosTextareaValue.length>5)return util.confirm('字符数超出数量，无法提交')
+				if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
+				if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
+				if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
+				if(Object.keys(this.photosStyleInfo).length==0)return util.confirm('请添加样式')
+				if(this.photosUploadInfoShow === false)return util.confirm('请添加上传图片')
+				if(this.photosTextareaNegativeValue === '')return util.confirm('请输入负面描述词')
 					let data = {
 						task_type:1,// 	任务类型
+						model_parentclass_id:this.photosSubseCtionCurrent+1,//模型所属分类 模型分类接口获取的id
 						model_style_id:this.photosPopupLora.model_style_id,// 模型ID
 						prompt:this.photosTextareaValue,// 正向提示词
 						negative_prompt:this.photosTextareaNegativeValue,// 反向提示词
 						controlnet_type_id:this.photosControinetInfo.id,// 控制类型 id
-						controlnet_img:this.photosControinetInfo.url,// 控制垫图
+						controlnet_img:this.photosControinetInfo.img,//控制参考图
+						controlnet_img_detect:this.photosControinetInfo.url,// 控制垫图
 						controlnet_weight:this.photosControinetInfo.value,// 控制权重
 						lora_id:this.photosLoraInfo.lora_id,// Loraid
-						lora_weight:	this.photosLoraInfo.value,//	lora 权重
+						lora_weight:this.photosLoraInfo.value,//	lora 权重
 						reference_image:this.photosUploadInfo.url,//参考图
+						reference_image_weight:this.photosUploadInfo.value,//参考图权重值 
 						img_style_id:this.photosStyleInfo.img_style_id,//图片样式 id
-						img_scale:this.photosPlotList[this.photosPlotNumber].scale,//	图片比例
+						img_scale:this.photosPlotList[this.photosPlotNumber].id,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
-				// 	console.log(data)
-				// const res = await  util.request({url: '/AiDraw/CreateTask',data})
-				// 	console.log(res)
+				const res = await  util.request({url: '/AiDraw/CreateTask',data})
+					console.log(res)
+					if(res.data.task_id !== ''){
+					uni.navigateTo({
+						url:'/pages/index/index'
+					});
+						return;
+					}else{
+						util.confirm('生成失败请从新生成')
+					}
+					//清空
+					// this.photosTextareaValue = ''
+					// this.photosTextareaNegativeValue = ''
+					// this.photosControinetInfo = {}
+					// this.photosLoraInfo = {}
+					// this.photosUploadInfo = {}
+					// this.photosStyleInfo = {}
+					
 			},
 			//画面描述词的没有登陆提示
 			onPhotoTextareaFocus(){
@@ -316,6 +335,13 @@ import create from './create/create.vue'
 				this.photosUploadInfo = {}
 				this.photosUploadInfoShow = false
 			},
+			//从创作历史选择中拿去
+			createlist(info){
+				this.photosUploadInfo.url = info.img_url
+				this.photosUploadInfo["value"] = 0.8
+				this.photosUploadInfo["name"] = info.img_url.slice(43, 53)
+				this.photosUploadInfoShow = true
+			},
 			//上传图片
 			onPhotosUploadAvatar(){
 				const _this = this;
@@ -337,6 +363,7 @@ import create from './create/create.vue'
 				        .then(data=>{
 				            uni.hideLoading(); 
 							_this.photosUploadInfo["url"] = data.data.path
+							_this.photosUploadInfo["value"] = 0.8
 							_this.photosUploadInfoShow = true
 							// _this.photosUploadInfo = {name}
 							// _this.photosUploadInfo['name'] = res.tempFilePaths[0].name
@@ -356,9 +383,10 @@ import create from './create/create.vue'
 			},
 			//图片比例
 			onPhotosLiist(index){
+					console.log(index)
 				this.photosPlotNumber = index
-				let info = this.photosPlotList[this.photosPlotNumber]
-				console.log(info)
+				// let info = this.photosPlotList[this.photosPlotNumber]
+				// console.log(info)
 			},
 			//选择张数
 			onPhotosSelect(){
@@ -385,6 +413,7 @@ import create from './create/create.vue'
 			},
 			//控制网展示数据
 			ontroninetlist(info){
+				// console.log(info)
 				this.photosControinetInfoShow = true
 				this.photosControinetInfo = info
 			},
@@ -439,9 +468,7 @@ import create from './create/create.vue'
 			//请求模型选择数据
 			async onshowPopup(){
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList'})
-					// console.log(res)
 						this.photosPopupLora  = res.data.list[0]
-					// this.photosPopupLora = {title:'超级语言通用1.5',content:'使用各种应用的全面文生國的模型，可配合多种ControlNet和Lora使用',img_url:'https://cdn.uviewui.com/uview/album/1.jpg'}
 			},
 			//请求任务进行中展示 
 			async onshowTask(){
@@ -459,13 +486,51 @@ import create from './create/create.vue'
 					let data = {class_id:this.photosSubseCtionCurrent+1}
 					const res = await  util.request({url: '/AiDraw/GetImgScale',data})
 					this.photosPlotList = res.data.list
+			},
+			//请求一键同款数据
+			 async onshowDate(id){
+				 let data = {task_id:id}
+				const res = await  util.request({url: '/AiDraw/GetSameModel',data})
+					// console.log(res)
+					//模型分类
+					this.photosSubseCtionCurrent = res.data.model_parentclass_id-1
+					//模型选择
+					this.photosPopupLora = {img_url:res.data.model_style_img,content:res.data.model_style_content,model_style_id:res.data.model_style_id,title:res.data.model_style_title}
+					//画面生成
+					this.photosTextareaValue = res.data.prompt
+					//控制网
+					this.photosControinetInfo = {id:res.data.controlnet_type_id,title:'',url:res.data.controlnet_img_detect,img:res.data.controlnet_img,value:res.data.controlnet_weight}
+					this.photosControinetInfoShow = true
+					//lora
+					this.photosLoraInfo = {lora_id:res.data.lora_id,title:res.data.lora_title,content:res.data.lora_content,img_url:res.data.lora_img,value:res.data.lora_weight}
+					this.photosLoraInfoShow = true
+					//参考图
+					this.photosUploadInfo = {url:res.data.reference_image,value:res.data.reference_image_weight,name:'home.jpg'}
+					this.photosUploadInfoShow = true
+					//样式
+					this.photosStyleInfo = {img_style_id:res.data.img_style_id,title:res.data.img_style_title,en_title:res.data.img_style_content,img_url:res.data.img_style_img,}
+					this.photosStyleInfoShow = true
+					//负面词
+					this.photosTextareaNegativeValue = res.data.negative_prompt
+					//比例
+					this.photosPlotNumber = res.data.img_scale
+					//张数
+					this.photosSelectNumber  = res.data.batch_size
+
 			}
 		},
-		onLoad(){	
-					this.onshowPlot()
-					this.onshowList()
+		onLoad(options){
+				// console.log(options.task_id)
+				this.photosTaskId = options.task_id
+				if(options.task_id){
+						this.onshowDate(options.task_id)
+				}else{
 					this.onshowPopup()
-					this.onshowTask()
+				}
+				this.onshowPlot()
+				this.onshowList()
+				this.onshowTask()
+		
 				}
 	}
 </script>
@@ -611,8 +676,17 @@ import create from './create/create.vue'
 	.photos-upload-row{
 		width: 100%;
 		height: 160rpx;
-		background: #e5e5e5;
+		background: #f7f7f7;
 		margin-top: 20rpx;
+		
+		.photos-upload-space{
+			width: 200rpx;
+			white-space: nowrap; 
+			overflow: hidden;
+			text-overflow: ellipsis; 
+			line-height: 60rpx;
+			
+		}
 	}
 	.photos-negative{
 		margin-top: 40rpx;
@@ -624,7 +698,7 @@ import create from './create/create.vue'
 		height: 800rpx;
 		margin-top: 40rpx;
 		.plot-text{
-			margin-bottom: 20rpx;
+			margin-bottom: 10rpx;
 		}
 	 .photos{
 	 		width: 100%;
@@ -635,8 +709,8 @@ import create from './create/create.vue'
 	 		align-items: center;
 			font-size: 25rpx;
 	 	.photos-proportion:nth-child(1){
-	 		width: 100px;
-	 		height: 100px;
+	 		width: 200rpx;
+	 		height: 200rpx;
 	 		background: #f7f7f7;
 	 		margin-bottom: 20rpx;
 	 		/* text-align: center; */
@@ -657,8 +731,8 @@ import create from './create/create.vue'
 	 		}
 	 		}
 	 		.photos-proportion:nth-child(2){
-	 			width: 100px;
-	 			height: 100px;
+	 			width: 200rpx;
+	 			height: 200rpx;
 	 			background: #f7f7f7;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
@@ -680,8 +754,8 @@ import create from './create/create.vue'
 	 			}
 	 			}
 	 		.photos-proportion:nth-child(3){
-	 			width: 100px;
-	 			height: 100px;
+	 		width: 200rpx;
+	 		height: 200rpx;
 	 			background: #f7f7f7;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
@@ -701,8 +775,8 @@ import create from './create/create.vue'
 	 			}
 	 			}
 	 			.photos-proportion:nth-child(4){
-	 				width: 100px;
-	 				height: 100px;
+	 				width: 200rpx;
+	 				height: 200rpx;
 	 				background: #f7f7f7;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
@@ -722,8 +796,8 @@ import create from './create/create.vue'
 	 				}
 	 				}
 	 			.photos-proportion:nth-child(5){
-	 				width: 100px;
-	 				height: 100px;
+	 				width: 200rpx;
+	 				height: 200rpx;
 	 				background: #f7f7f7;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
@@ -744,8 +818,8 @@ import create from './create/create.vue'
 	 				}
 	 				}
 	 				.photos-proportion:nth-child(6){
-	 					width: 100px;
-	 					height: 100px;
+	 					width: 200rpx;
+	 					height: 200rpx;
 	 					background: #f7f7f7;
 	 					margin-bottom: 20rpx;
 	 					.proportion-num{
@@ -808,12 +882,15 @@ import create from './create/create.vue'
 			margin-right: 20rpx;
         }
         .generate-buts{
-            width: 530rpx;
+            // width: 530rpx;
             margin-top: 40rpx;
             background: #000;
             color: #fff;
             .butts{
-                width: 80%;
+                width: 78%;
+				// but{
+				// 	width:100rpx;
+				// }
             }
         }
         
