@@ -164,4 +164,7 @@ page {
 	uni-modal {
 	  z-index: 999999 !important;
 	}
+	uni-modal {
+	  z-index: 999999 !important;
+	}
 </style>

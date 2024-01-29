@@ -11,7 +11,6 @@ util.request = function (option) {
     if (!url) {
         return false;
     }
-
     // 是否显示loading
     option.loading = typeof option.loading != 'undefined' ? option.loading : true;
     if (option.loading) {

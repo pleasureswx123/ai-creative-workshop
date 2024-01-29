@@ -1,0 +1,169 @@
+<template>
+	<view class="model">
+		<!-- 模型选择弹框 -->
+		<u-popup :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" >
+			<view class="photos-popup" >
+			 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+				<text class="popup-op">{{photosModelInfo.content}}</text>
+				<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
+				 <view class="popup-row">
+					<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
+					 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
+					 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="src"></u-image>
+						<view class="popup-rol">
+							<view class="popup-rol-text">{{item.title}}</view>
+								<view class="popup-rol-test">{{item.content}}</view>
+							</view>
+						</view>
+							</view>
+						<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了...</view>
+						   	   
+				</scroll-view>
+					<u-button  @click="onPopupConfirm" class="popup-but">确认</u-button>	
+					</view>	
+		</u-popup>	
+	</view>
+</template>
+
+<script>
+	import util from '@/utils/util.js'
+	export default {
+		props:{id:{type:Number}},
+		data() {
+			return {
+				photosModelInfo:{},
+				photosSubseCtionList:[],
+				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
+				photosPopupNumber:0,//弹框选择模型的index
+				photosModeleShow:false,//模型选择的显示和隐藏
+				photosPopupList:[],//模型选择的数据
+				listData: [], // 列表数据
+				page: 1, // 当前页码
+				pageSize: 10, // 每页数据量
+				total:0,//总数量
+				showMoreData:false,//显示和隐藏没有数据了
+			}
+		},
+		methods: {
+			open() {
+					this.photosModeleShow = true 
+					// this.onshowPopup()
+					this.onshowList()
+				},
+			//触底加载数据
+			onPhotosModelList(){
+				// 判断是否还有下一页数据
+				if (this.page * this.pageSize >= this.total) return this.showMoreData = true
+				// 让页码值自增 +1
+					this.page +=1
+				// 重新获取列表数据
+				this.onshowPopup()
+			},
+			//关闭弹框
+			onPotosPopupClose(){
+				this.photosModeleShow = false
+				},
+			//弹框模型选择确认事件
+			onPopupConfirm(){
+				let info = this.photosPopupList[this.photosPopupNumber]
+				this.$emit('modelist',info)
+				this.photosModeleShow = false	
+				},
+			//点击选择模型弹框中的一项事件
+			onPopupNumber(num){
+				this.photosPopupNumber = num
+				},
+			//请求模型选择数据
+			async onshowPopup(){
+					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
+				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
+					console.log(res)
+					this.photosPopupList = [...this.photosPopupList,...res.data.list]
+					this.total	= res.data.count
+			},
+			//请求请求导航数据事件
+			async	onshowList(){
+				const res = await	util.request({url: '/AiDraw/ModelClass'})
+					// console.log(res)
+					if(this.id === 1){
+							this.photosModelInfo = res.data[0]
+					}else if(this.id === 2){
+						this.photosModelInfo = res.data[1]
+					}else{
+						this.photosModelInfo = res.data[2]
+					}
+					this.photosSubseCtionList = res.data
+					},
+		},
+		onLoad() {
+			// this.onshowPopup()
+		},
+		created(){
+			this.onshowPopup()
+			
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+.model{
+		
+	.photos-popup{
+			width: 95%;
+			height: 1300rpx;
+			margin: auto;
+			position: relative;
+			.popup-up{
+				height: 160rpx;
+				text-align: center;
+				font-size: 50rpx;
+				line-height: 160rpx;
+			}
+			.popup-op{
+				font-size: 22rpx;
+				// margin-bottom: 20rpx;
+			}
+			
+			.popup-row{
+				margin-top: 20rpx;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				.popup-col{
+					width: 230rpx;
+					height: 420rpx;
+					background: #f7f7f7;
+					margin-bottom: 20rpx;
+					.popup-rol{
+						width: 90%;
+						margin: auto;
+						height: 120rpx;
+					.popup-rol-text{
+						font-size: 26rpx;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+					}
+					.popup-rol-test{
+						margin-top: 10rpx;
+						font-size: 20rpx;
+						color:#ccc;
+					}	
+					}
+				}
+			}
+			.popup-but{
+				background: #000;
+				color: #fff;
+				position: absolute;
+				bottom: 50rpx;
+			}
+	}	
+	.photos-active{
+				// outline: 2rpx solid #000;
+				border: 2rpx #000 solid;
+				border-radius: 15rpx;
+		}
+	
+}
+</style>

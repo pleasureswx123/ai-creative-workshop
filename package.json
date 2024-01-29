@@ -9,11 +9,12 @@
   "author": "",
   "dependencies": {
     "@traptitech/markdown-it-katex": "^3.6.0",
+    "canvas": "^2.9.3",
     "highlight.js": "^11.7.0",
     "katex": "^0.16.4",
     "markdown-it": "^13.0.1",
-    "weixin-js-sdk": "^1.6.0",
-    "vue-qr": "^3.2.2"
+    "vue-qr": "^3.2.2",
+    "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
     "@types/katex": "^0.16.0",
