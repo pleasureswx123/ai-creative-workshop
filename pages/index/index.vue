@@ -139,7 +139,7 @@
 					<view class="item" @click="goAi">
 						<u-icon name="chat" size="22" color="#f5f5f5"></u-icon>智能对话
 					</view>
-					<view class="item">
+					<view class="item" @click="goGenerateImg">
 						<u-icon name="camera" size="22" color="#f5f5f5"></u-icon>生成图片
 					</view>
 					<view class="item" @click="goImgTool">
@@ -270,6 +270,11 @@
 			goSound() {
 				uni.navigateTo({
 					url: '/pages/sound/index'
+				})
+			},
+			goGenerateImg() {
+				uni.navigateTo({
+					url: '/pages/photos/photos'
 				})
 			},
 			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
@@ -441,11 +446,13 @@
 						this.goAi();
 						break;
 					case '2':
+						this.goGenerateImg();
 						break;
 					case '3':
 						this.goImgTool();
 						break;
 					case '4':
+						console.log('生成视频');
 						break;
 					case '5':
 						this.goSound();
