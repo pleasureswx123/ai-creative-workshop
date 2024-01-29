@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="aiType">
-			<view class="item" v-for="(item,index) in makeList" :key="index" @click="goDary">
+			<view class="item" v-for="(item,index) in makeList" :key="index" @click="goDary(item.channel_id)">
 				<text class="aiTitle">{{item.title}}</text>
 				<text class="aiSubtitle">{{item.content}}</text>
 				<image :src="item.img" mode="widthFix" v-if="item.img"></image>
@@ -132,17 +132,17 @@
 					<view class="item" @click="goUser">
 						<u-icon name="account" size="22" color="#f5f5f5"></u-icon>个人中心
 					</view>
-					<view class="item">
+					<view class="item" @click="goMyCreate">
 						<u-icon name="grid" size="22" color="#f5f5f5"></u-icon>我的创作
 					</view>
 					<view class="navSelmg"></view>
-					<view class="item">
+					<view class="item" @click="goAi">
 						<u-icon name="chat" size="22" color="#f5f5f5"></u-icon>智能对话
 					</view>
 					<view class="item">
 						<u-icon name="camera" size="22" color="#f5f5f5"></u-icon>生成图片
 					</view>
-					<view class="item">
+					<view class="item" @click="goImgTool">
 						<u-icon name="photo" size="22" color="#f5f5f5"></u-icon>图片处理
 					</view>
 					<view class="item">
@@ -252,6 +252,26 @@
 			this.list = data;
 		},
 		methods: {
+			goMyCreate() {
+				uni.navigateTo({
+					url: '/pages/picture/index'
+				})
+			},
+			goAi() {
+				uni.navigateTo({
+					url: '/pages/ai/index'
+				})
+			},
+			goImgTool() {
+				uni.navigateTo({
+					url: '/pages/picture/tool'
+				})
+			},
+			goSound() {
+				uni.navigateTo({
+					url: '/pages/sound/index'
+				})
+			},
 			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
 			changeList(e){
 				this[e.name].push(e.value);
@@ -411,10 +431,27 @@
 				}
 				window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011102002471')
 			},
-			goDary(){
+			goDary(id){
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
+				}
+				switch (id) {
+					case '1':
+						this.goAi();
+						break;
+					case '2':
+						break;
+					case '3':
+						this.goImgTool();
+						break;
+					case '4':
+						break;
+					case '5':
+						this.goSound();
+						break;
+					default:
+						console.log(id)
 				}
 			},
 			goUser(){
