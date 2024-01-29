@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  background-color: #fff;
+  background-color: var(--bg-color2);
   margin-bottom: 20rpx;
 }
 </style>

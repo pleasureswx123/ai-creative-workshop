@@ -17,7 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .pictrue-box {
-  background-color: #E0D4C9;
+  background-color: var(--txt-color5);
   aspect-ratio: 16 / 9;
   .video-box {
     display: block;

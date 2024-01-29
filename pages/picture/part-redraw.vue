@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #ffffff" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <PicHeader title="局部重绘(语义检测)" />
     
@@ -54,6 +54,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
+  background: var(--bg-color1);
   padding: 0 30rpx 160rpx;
 }
 </style>

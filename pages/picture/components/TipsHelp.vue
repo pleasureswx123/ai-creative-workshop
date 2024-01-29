@@ -1,6 +1,6 @@
 <template>
   <view class="tips-box">
-    <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="#909399" size="20" />
+    <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="var(--txt-color2)" size="20" />
     <view>{{info.content}}</view>
     <view class="tips-img">
       <image :src="info.img_url"></image>
@@ -23,11 +23,11 @@ export default {
 .tips-box {
   margin-top: 48rpx;
   padding: 40rpx 80rpx;
-  color: #000;
+  color: var(--txt-color2);
   font-size: 26rpx;
   border-radius: 20rpx;
-  border: 1rpx solid #EFEFEF;
-  background: #F5F7FA;
+  border: 1rpx solid var(--txt-color3);
+  background: var(--bg-color2);
   .icon-qm-tips {
     position: absolute;
     transform: translate3d(-50rpx, 2rpx, 0);

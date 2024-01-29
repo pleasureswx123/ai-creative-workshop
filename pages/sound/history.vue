@@ -110,6 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
+  background: var(--bg-color1);
   padding-bottom: calc(200rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(200rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
@@ -123,7 +124,7 @@ export default {
   box-sizing: border-box;
   height: 140rpx;
   padding-top: 20rpx;
-  background: rgba(0,0,0,.1);
+  //background: var(--txt-color2);
 }
 .btn-box {
   width: 50%;
@@ -137,8 +138,8 @@ export default {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  background: #0030DA;
-  color: #fff;
+  background: var(--bg-color3);
+  color: var(--txt-color4);
   gap: 4rpx;
 }
 </style>

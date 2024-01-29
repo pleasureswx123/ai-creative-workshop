@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #ffffff" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <PicHeader title="去除背景" />
     
@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
+  background: var(--bg-color1);
   padding: 0 30rpx 160rpx;
 }
 .tips-img {

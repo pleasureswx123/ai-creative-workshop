@@ -7,16 +7,28 @@
 			return {};
 		},
     onShow() {
-      let isDarkMode = false;
+      let isDarkMode = true;
       const root = document.documentElement;
       const bgColor1 = isDarkMode ? '--bg-color1-dark' : '--bg-color1-light';
       const bgColor2 = isDarkMode ? '--bg-color2-dark' : '--bg-color2-light';
+      const bgColor3 = isDarkMode ? '--bg-color3-dark' : '--bg-color3-light';
       const txtColor1 = isDarkMode ? '--txt-color1-dark' : '--txt-color1-light';
       const txtColor2 = isDarkMode ? '--txt-color2-dark' : '--txt-color2-light';
+      const txtColor3 = isDarkMode ? '--txt-color3-dark' : '--txt-color3-light';
+      const txtColor4 = isDarkMode ? '--txt-color4-dark' : '--txt-color4-light';
+      const txtColor5 = isDarkMode ? '--txt-color5-dark' : '--txt-color5-light';
+      const txtColor6 = isDarkMode ? '--txt-color6-dark' : '--txt-color6-light';
+      const txtColor7 = isDarkMode ? '--txt-color7-dark' : '--txt-color7-light';
       root.style.setProperty('--bg-color1', `var(${bgColor1})`);
       root.style.setProperty('--bg-color2', `var(${bgColor2})`);
+      root.style.setProperty('--bg-color3', `var(${bgColor3})`);
       root.style.setProperty('--txt-color1', `var(${txtColor1})`);
       root.style.setProperty('--txt-color2', `var(${txtColor2})`);
+      root.style.setProperty('--txt-color3', `var(${txtColor3})`);
+      root.style.setProperty('--txt-color4', `var(${txtColor4})`);
+      root.style.setProperty('--txt-color5', `var(${txtColor5})`);
+      root.style.setProperty('--txt-color6', `var(${txtColor6})`);
+      root.style.setProperty('--txt-color7', `var(${txtColor7})`);
     },
 		onLaunch: function() {
 			this.globalData.siteroot = siteinfo.host + '/web.php';

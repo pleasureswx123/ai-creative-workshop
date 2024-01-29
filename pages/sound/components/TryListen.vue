@@ -1,6 +1,6 @@
 <template>
   <view class="try-listen" @tap="play">
-    <uni-icons custom-prefix="iconfont-qm" type="icon-qm-volume" color="#616161" size="20" />
+    <uni-icons custom-prefix="iconfont-qm" type="icon-qm-volume" color="var(--txt-color2)" size="20" />
     <text>试听</text>
   </view>
 </template>
@@ -55,6 +55,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 4rpx;
-  color: #616161;
+  color: var(--txt-color2);
 }
 </style>

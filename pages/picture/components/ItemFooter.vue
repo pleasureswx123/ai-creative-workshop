@@ -1,13 +1,13 @@
 <template>
   <view class="ft">
     <view class="title" v-if="info.prompt">{{info.prompt}}</view>
-    <u-gap v-else height="30" bgColor="#000"></u-gap>
-    <view class="info">{{info.model_style_name}}</view>
-    <view class="info">{{info.lora_name}}</view>
-    <view class="info">{{info.controlnet_type}}</view>
-    <view class="info">{{info.scale}}</view>
-    <view class="info">生成时间{{info.create_time}}</view>
-    <view class="info">{{info.jifen_consume}}</view>
+    <u-gap v-else height="30"></u-gap>
+    <view class="info" v-if="info.model_style_name">{{info.model_style_name}}</view>
+    <view class="info" v-if="info.lora_name">{{info.lora_name}}</view>
+    <view class="info" v-if="info.controlnet_type">{{info.controlnet_type}}</view>
+    <view class="info" v-if="info.scale">{{info.scale}}</view>
+    <view class="info" v-if="info.create_time">生成时间 {{info.create_time}}</view>
+    <view class="info" v-if="info.jifen_consume">{{info.jifen_consume}}</view>
   </view>
 </template>
 
@@ -25,17 +25,19 @@ export default {
 <style lang="scss" scoped>
 .ft {
   padding: 0 30rpx 10rpx;
-  color: #fff;
+  color: var(--txt-color1);
   .title {
+    color: var(--txt-color1);
     font-size: 24rpx;
     padding: 20rpx 0;
     line-height: 1.8;
-    border-bottom: 1px solid rgba(255,255,255,.5);
+    border-bottom: 1rpx solid var(--txt-color3);
     margin-bottom: 30rpx;
   }
   .info {
     display: inline-block;
     margin: 0 15rpx 15rpx 0;
+    color: var(--txt-color2);
   }
 }
 </style>

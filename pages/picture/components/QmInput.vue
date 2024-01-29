@@ -37,12 +37,17 @@ export default {
 
 <style lang="scss" scoped>
 .input-el {
+  border: 1px dashed var(--txt-color3)!important;
+  background: var(--bg-color2)!important;
   /deep/ {
     .u-input__content__field-wrapper__field {
       font-size: 24rpx!important;
     }
+    .uni-input-wrapper {
+      color: var(--txt-color1)!important;
+    }
     .uni-input-placeholder {
-      //font-size: 24rpx;
+      color: var(--txt-color2)!important;
     }
   }
 }

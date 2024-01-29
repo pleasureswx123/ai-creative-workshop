@@ -30,7 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 .pictrue-box {
-  background-color: #FEEDEE;
+  background-color: var(--txt-color5);
   .progress-box {
     height: 300rpx;
     display: flex;

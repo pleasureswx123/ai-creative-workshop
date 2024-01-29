@@ -24,12 +24,13 @@ export default {
   height: 80rpx;
   display: flex;
   align-items: center;
+  color: var(--txt-color1);
   .rt {
     font-size: 24rpx;
     margin-left: auto;
     display: flex;
     align-items: center;
-    color: #0B5EFF;
+    color: var(--txt-color2);
   }
 }
 </style>

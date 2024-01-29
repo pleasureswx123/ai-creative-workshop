@@ -4,7 +4,7 @@
       <text v-if="!loading">{{btnInfo.btnTxt}}</text>
       <template v-else>
         <view class="rotate-box">
-          <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="#fff" size="14" />
+          <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="var(--txt-color4)" size="14" />
         </view>
         <view>{{btnInfo.loadingBtnTxt}}</view>
       </template>
@@ -61,7 +61,7 @@ export default {
   box-sizing: border-box;
   height: 140rpx;
   padding-top: 20rpx;
-  background: #fff;
+  background: var(--bg-color1);
   box-shadow: 0 0 6rpx rgba(0,0,0,.1);
 }
 .btn-box {
@@ -76,12 +76,12 @@ export default {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  background: #0030DA;
-  color: #fff;
+  background: var(--bg-color3);
+  color: var(--txt-color4);
   gap: 4rpx;
   &.disabled {
-    background: #EBEBEB;
-    color: #A0A0A0;
+    background: var(--bg-color2);
+    color: var(--txt-color2);
   }
   .tips-txt {
     font-size: 24rpx;

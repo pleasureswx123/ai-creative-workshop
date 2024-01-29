@@ -3,7 +3,7 @@
     <view class="label" v-html="title"></view>
     <view class="rt" v-if="isShowRight" @tap="handleToHistory">
       <text>从创作历史选择</text>
-      <u-icon name="arrow-right" size="24rpx" color="#0B5EFF"></u-icon>
+      <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
     </view>
   </view>
 </template>
@@ -37,6 +37,7 @@ export default {
   display: flex;
   align-items: center;
   .label {
+    color: var(--txt-color1);
     /deep/ em {
       font-style: normal;
       color: red;
@@ -48,7 +49,7 @@ export default {
     margin-left: auto;
     display: flex;
     align-items: center;
-    color: #0B5EFF;
+    color: var(--txt-color2);
   }
 }
 </style>

@@ -38,11 +38,22 @@ export default {
 
 <style lang="scss" scoped>
 .qm-textarea {
-  background: #fafbfc;
-  border-color: #e3e3e3!important;
+  color: red;
+  background: var(--bg-color2);
+  border-color: var(--txt-color3)!important;
   /deep/ {
     .u-textarea__field {
       font-size: 24rpx;
+    }
+    .uni-textarea-placeholder {
+      color: var(--txt-color2)!important;
+    }
+    .uni-textarea-wrapper {
+      color: var(--txt-color1)!important;
+    }
+    .u-textarea__count {
+      color: var(--txt-color2)!important;
+      background: var(--bg-color1)!important;
     }
   }
 }

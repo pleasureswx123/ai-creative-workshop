@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 .hd {
-  color: #000;
+  color: var(--txt-color2);
   text-align: center;
   font-size: 28rpx;
   padding: 60rpx 0;

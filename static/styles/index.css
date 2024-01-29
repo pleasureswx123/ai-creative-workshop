@@ -1,11 +1,24 @@
 :root {
   --bg-color1-light: #ffffff;
-  --bg-color2-light: #f6f6f6;
-  --txt-color1-light: #acacac;
-  --txt-color2-light: #000000;
+  --bg-color2-light: rgba(0,0,0,.1);
+  --bg-color3-light: #F00;
+  --txt-color1-light: rgba(0,0,0,.9);
+  --txt-color2-light: rgba(0,0,0,.5);
+  --txt-color3-light: rgba(0,0,0,.2);
+  --txt-color4-light: rgba(255,255,255,.9);
+  --txt-color5-light: rgba(255,255,255,.1);
+  --txt-color6-light: rgba(0,0,0,1);
+  --txt-color7-light: rgba(255,255,255,.5);
+
 
   --bg-color1-dark: #0D0D0D;
   --bg-color2-dark: #1D1E23;
-  --txt-color1-dark: #77787B;
-  --txt-color2-dark: #ffffff;
+  --bg-color3-dark: #F00;
+  --txt-color1-dark: rgba(255,255,255,.9);
+  --txt-color2-dark: rgba(255,255,255,.5);
+  --txt-color3-dark: rgba(255,255,255,.2);
+  --txt-color4-dark: rgba(255,255,255,.9);
+  --txt-color5-dark: rgba(0,0,0,.9);
+  --txt-color6-dark: rgba(255,255,255,1);
+  --txt-color7-dark: rgba(0,0,0,.5);
 }

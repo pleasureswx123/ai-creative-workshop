@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #f6f8fe" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <TipsTxt></TipsTxt>
     <CreationItem
@@ -73,7 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  background: #f6f8fe;
+  background: var(--bg-color1);
   padding-bottom: calc(10rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;

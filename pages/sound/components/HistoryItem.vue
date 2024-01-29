@@ -3,15 +3,15 @@
     <view class="date">{{info.create_time}}</view>
     <view class="content">{{info.content}}</view>
     <view class="voice-container">
-      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-speaker1" color="#5d5d5d" size="20" />
+      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-speaker1" color="var(--txt-color2)" size="20" />
       <view class="wave-box">
-        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="20" />
-        <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="18" />
-        <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="#5d5d5d" size="20" />
+        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="var(--txt-color2)" size="20" />
+        <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="var(--txt-color2)" size="18" />
+        <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="var(--txt-color2)" size="20" />
       </view>
       <view class="duration">{{info.dub_duration}}</view>
-      <uni-icons @tap="playAudio" custom-prefix="iconfont-qm" type="icon-qm-play1" color="#0830d9" size="22" />
-      <uni-icons @tap="downloadAudio" custom-prefix="iconfont-qm" type="icon-qm-download11" color="#0830d9" size="22" />
+      <uni-icons @tap="playAudio" custom-prefix="iconfont-qm" type="icon-qm-play1" color="var(--txt-color1)" size="22" />
+      <uni-icons @tap="downloadAudio" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="22" />
     </view>
   </view>
 </template>
@@ -69,28 +69,28 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  background: #fbfbfb;
+  background: var(--bg-color2);
   padding: 20rpx 50rpx 30rpx;
-  border-top: 1rpx solid #f2f2f2;
-  border-bottom: 1rpx solid #f2f2f2;
+  //border-top: 1rpx solid var(--txt-color2);
+  //border-bottom: 1rpx solid var(--txt-color2);
   margin-bottom: 30rpx;
-  box-shadow: 0 0 10rpx #f2f2f2;
+  box-shadow: 0 0 5rpx var(--txt-color2);
 }
 .date {
-  color: #000;
+  color: var(--txt-color1);
   font-size: 28rpx;
   padding-bottom: 20rpx;
 }
 .content {
-  color: #646060;
+  color: var(--txt-color2);
   font-size: 28rpx;
   padding-bottom: 40rpx;
 }
 .voice-container {
   height: 85rpx;
   border-radius: 100rpx;
-  border: 1rpx solid #EBEBEB;
-  background: #FDFDFD;
+  border: 1rpx solid var(--txt-color3);
+  background: var(--txt-color7);
   display: flex;
   align-items: center;
   padding: 0 40rpx;
@@ -105,7 +105,7 @@ export default {
   }
   .duration {
     margin-right: auto;
-    color: #7a7a7a;
+    color: var(--txt-color2);
     font-size: 24rpx;
   }
 }

@@ -7,14 +7,14 @@
       <view class="loading-box" v-if="loading">
         <view class="title">图片正在上传中</view>
         <view class="icon-box">
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#878787" size="40" />
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="40" />
         </view>
         <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
       <view v-else class="upload-box" @tap="chooseImage">
         <view class="title">点击上传</view>
         <view class="icon-box">
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="#878787" size="50" />
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="var(--txt-color2)" size="50" />
         </view>
         <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
@@ -101,8 +101,8 @@ export default {
   margin-bottom: 16rpx;
   position: relative;
   overflow: hidden;
-  border: 1px dashed #ccc;
-  background: #f6f6f6;
+  border: 1px dashed var(--txt-color3);
+  background: var(--bg-color2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,12 +112,11 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: var(--txt-color2);
     .title {
-      color: #939393;
       font-size: 28rpx;
     }
     .tips {
-      color: #acacac;
       font-size: 20rpx;
     }
     .icon-box {

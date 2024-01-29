@@ -1,8 +1,8 @@
 <template>
   <view class="hd">
     <view class="title">{{info.task_type_title}}</view>
-    <view class="btn" @tap.stop>
-      <u-button :disabled="disabled" type="info" size="small" @tap="$emit('cb')" :text="btnTxt" />
+    <view @tap.stop>
+      <u-button class="btn" :disabled="disabled" type="info" size="small" @tap="$emit('cb')" :text="btnTxt" />
     </view>
   </view>
 </template>
@@ -34,13 +34,16 @@ export default {
   height: 80rpx;
   padding: 0 30rpx;
   .title {
-    color: #000;
-    font-size: torpx(16);
+    color: var(--txt-color1);
+    font-size: 28rpx;
     flex: 1;
     min-width: 0;
   }
   .btn {
+    color: var(--txt-color2);
+    background-color: var(--bg-color2);
     font-size: 60rpx;
+    border: 1px solid var(--txt-color3);
     //font-size: torpx(14);
     //border: 1px solid rgba(0,0,0,1);
     //color: rgba(0,0,0,1);

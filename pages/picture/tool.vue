@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #ffffff" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <PicHeader title="选择图片工具" />
     <view class="grid-box">
@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
+  background: var(--bg-color1);
   padding: 0 40rpx 100rpx;
 }
 .grid-box {
@@ -52,12 +53,12 @@ export default {
   .card-box {
     min-width: 0;
     border-radius: 20rpx;
-    background-color: #fff;
+    background-color: var(--bg-color2);
     overflow: hidden;
     box-shadow: 0 0 20rpx rgba(0,0,0,.1);
     .title {
       font-size: 24rpx;
-      color: #4A4A4A;
+      color: var(--txt-color1);
       text-align: center;
       line-height: 80rpx;
     }

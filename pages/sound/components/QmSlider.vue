@@ -5,10 +5,10 @@
       <u-slider
           v-model="currentValue"
           step="20" min="0" max="100"
-          activeColor="#606060"
-          inactiveColor="#eaeaea"
+          activeColor="var(--txt-color1)"
+          inactiveColor="var(--txt-color5)"
           block-size="16"
-          block-color="#616161"></u-slider>
+          block-color="var(--txt-color6)"></u-slider>
     </view>
     <view class="tips">{{tipsInfo.tips}}</view>
   </view>
@@ -65,9 +65,8 @@ export default {
 .slider-container {
   display: flex;
   align-items: center;
-  //background: red;
   font-size: 28rpx;
-  color: #3E3939;
+  color: var(--txt-color1);
   margin: 20rpx 0;
   .slider-box {
     flex: 1;

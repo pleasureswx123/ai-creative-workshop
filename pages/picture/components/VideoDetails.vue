@@ -1,9 +1,9 @@
 <template>
   <u-popup :show="showPop" mode="bottom" @close="showPop = false"
       :safeAreaInsetBottom="safeAreaInsetBottom"
-      :round="round" bgColor="#000">
+      :round="round" bgColor="var(--bg-color1)">
     <view :style="{borderRadius: `${round}px`}" class="pop-container" v-if="info">
-      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="#fff" size="20" />
+      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color2)" size="20" />
       <view class="main-con">
         <template v-if="info.task_type === 2">
           <VideoItem :info="info"></VideoItem>
@@ -111,7 +111,8 @@ export default {
   overflow: hidden;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   padding-bottom: 60rpx;
-  color: #fff;
+  color: var(--txt-color1);
+  background: var(--bg-color1);
   max-height: 90vh;
   overflow-y: auto;
   .close-btn {
@@ -122,13 +123,13 @@ export default {
   }
   .main-con {
     padding: 70rpx 0 20rpx;
-    color: #fff;
+    color: var(--txt-color1);
   }
 }
 .btn-box {
   margin: 20rpx 60rpx 0;
-  background-color: #fff;
-  color: #333;
+  background-color: var(--txt-color1);
+  color: var(--bg-color1);
   font-size: 24rpx;
   height: 60rpx;
   border-radius: 60rpx;

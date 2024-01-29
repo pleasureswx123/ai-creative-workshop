@@ -5,18 +5,18 @@
       <view v-if="imgInfo.sizeStr">{{imgInfo.sizeStr}}</view>
       <template v-if="showDownload">
         <view class="down-box" @tap="handleDownload">
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="#878787" size="20" />
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="var(--txt-color2)" size="20" />
           <text>下载</text>
         </view>
       </template>
-      <uni-icons v-if="!showDownload && !generating" custom-prefix="iconfont-qm" type="icon-qm-close" color="#878787" size="20" @tap="$emit('del')" />
+      <uni-icons v-if="!showDownload && !generating" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color2)" size="20" @tap="$emit('del')" />
     </view>
     <view class="img-el">
       <image :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
       <view class="generating-box" v-if="generating">
         <view>
           <view class="icon-box">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#878787" size="40" />
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="40" />
           </view>
           <view>正在生成中</view>
         </view>
@@ -114,8 +114,8 @@ export default {
   margin-bottom: 16rpx;
   position: relative;
   overflow: hidden;
-  border: 1px dashed #ccc;
-  background: #f6f6f6;
+  border: 1px dashed var(--txt-color3);
+  background: var(--bg-color2);
   box-sizing: border-box;
   padding: 4rpx 30rpx 30rpx;
   .img-header {
@@ -124,7 +124,7 @@ export default {
     align-items: center;
     gap: 50rpx;
     font-size: 24rpx;
-    color: #7b7b7b;
+    color: var(--txt-color2);
     .icon-qm-close {
       margin-left: auto;
     }
@@ -137,7 +137,7 @@ export default {
       display: block;
       max-width: 100%;
       margin: 0 auto;
-      background: #fff;
+      background: var(--bg-color2);
     }
     .generating-box {
       position: absolute;
@@ -153,7 +153,7 @@ export default {
       text-align: center;
       color: #9a9a9a;
       font-size: 30rpx;
-      background: rgba(0,0,0,.5);
+      background: var(--bg-color2);
       .icon-box {
         width: 100%;
         height: 100rpx;

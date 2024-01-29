@@ -12,5 +12,6 @@
   padding: 20rpx 30rpx;
   line-height: 1.5;
   font-size: 24rpx;
+  margin: 0 0 20rpx;
 }
 </style>

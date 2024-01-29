@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #ffffff" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <PicHeader title="智能换脸" />
   
@@ -47,6 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
+  background: var(--bg-color1);
   padding: 0 30rpx 160rpx;
 }
 </style>

@@ -70,14 +70,15 @@ export default {
   display: flex;
   align-items: center;
   height: 80rpx;
-  background: #fafbfc;
   padding: 0 20rpx;
-  border: 1rpx solid #e3e3e3;
+  border: 1rpx dashed var(--txt-color3);
+  background: var(--bg-color2);
+  color: var(--txt-color2);
   border-radius: 10rpx;
   font-size: 28rpx;
   &.active {
-    background: #fff;
-    color: #007aff;
+    background: var(--bg-color1);
+    color: var(--txt-color1);
   }
 }
 </style>

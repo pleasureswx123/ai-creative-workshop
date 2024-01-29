@@ -38,19 +38,18 @@ export default {
   gap: 20rpx;
   .item {
     min-width: 0;
-    color: #bbb;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 72rpx;
     border-radius: 16rpx;
-    border: 1px solid #B9B9B9;
-    background: #fdfdfd;
+    border: 1px dashed var(--txt-color3);
+    background: var(--bg-color2);
+    color: var(--txt-color2);
     font-size: 28rpx;
     &.active {
-      background: #fff;
-      border-color: #545454;
-      color: #606060;
+      background: var(--bg-color1);
+      color: var(--txt-color1);
     }
   }
 }
