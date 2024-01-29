@@ -145,7 +145,7 @@
 					<view class="item" @click="goImgTool">
 						<u-icon name="photo" size="22" color="#f5f5f5"></u-icon>图片处理
 					</view>
-					<view class="item">
+					<view class="item" @click="goImgToVideo">
 						<u-icon name="play-right" size="22" color="#f5f5f5"></u-icon>生成视频
 					</view>
 					<view class="navSelmg"></view>
@@ -270,6 +270,11 @@
 			goSound() {
 				uni.navigateTo({
 					url: '/pages/sound/index'
+				})
+			},
+			goImgToVideo() {
+				uni.navigateTo({
+					url: '/pages/picture/img-to-video'
 				})
 			},
 			goGenerateImg() {
@@ -452,7 +457,7 @@
 						this.goImgTool();
 						break;
 					case '4':
-						console.log('生成视频');
+						this.goImgToVideo();
 						break;
 					case '5':
 						this.goSound();
