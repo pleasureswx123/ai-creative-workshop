@@ -48,6 +48,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40rpx;
+  margin-top: 30rpx;
   .card-box {
     min-width: 0;
     border-radius: 20rpx;

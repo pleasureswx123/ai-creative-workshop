@@ -1,5 +1,4 @@
 <template>
-  <page-meta page-style="background: #f6f8fe" />
   <view class="page-container" @click="hideCopyBtn">
     <view class="page-content">
       <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
@@ -9,7 +8,7 @@
             <block v-for="(item, index) in lists" :key="index">
               <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
                 <view class="avatar">
-                  <img mode="widthFix" src="/static/img/ic_ai.png" />
+                  <img mode="widthFix" src="/static/images/ic_ai.png" />
                 </view>
                 <view class="text markdown-body">
                   <textComponent :text="item.message"></textComponent>
@@ -40,7 +39,7 @@
             </block>
             <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
               <view class="avatar">
-                <img src="/static/img/ic_ai.png" />
+                <img src="/static/images/ic_ai.png" />
               </view>
               <view class="text markdown-body">
                 <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
@@ -152,11 +151,12 @@ export default {
       if(this.userinfo && this.userinfo.avatar) {
         return this.userinfo.avatar
       } else {
-        return '/static/img/ic_user.png'
+        return '/static/images/avatar.jpg'
       }
     }
   },
   onLoad(options) {
+    debugger
     if (options.sid) {
       // 分享id
       uni.setStorageSync('sid', options.sid);
@@ -245,7 +245,8 @@ export default {
       const data = {
         prompt_id: this.prompt_id,
         message: message,
-        lang: this.lang
+        lang: this.lang,
+        ai: this.modelId
       }
       fetchCtrl = new AbortController()
       const response = await fetch(url, {
@@ -267,7 +268,7 @@ export default {
       textOutputSi = setInterval(() => {
         if (textStacks.length > 0) {
           this.writingText += textStacks.shift();
-          this.scrollBottom()
+          this.scrollToBottom()
         } else if (!this.writing) {
           clearInterval(textOutputSi)
           textOutputSi = 0
@@ -356,7 +357,7 @@ export default {
     showInput() {
       this.inputShow = !this.inputShow
       setTimeout(() => {
-        this.scrollBottom()
+        this.scrollToBottom()
       }, 300)
     },
     changeLang(lang) {

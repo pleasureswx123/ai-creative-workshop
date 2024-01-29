@@ -1,5 +1,4 @@
 <template>
-  <page-meta page-style="background: #f6f8fe" />
   <view class="page-content" @click="hideCopyBtn">
     <view class="page" :class="{gold: model === 'model4'}">
       <view class="tab-model" v-if="hasModel4">
@@ -14,7 +13,7 @@
           <block v-for="(item, index) in lists" :key="index">
             <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
               <view class="avatar">
-                <img src="/static/img/ic_ai.png" />
+                <img src="/static/images/ic_ai.png" />
               </view>
               <view class="text markdown-body">
                 <textComponent :text="item.message"></textComponent>
@@ -38,7 +37,7 @@
             
             <view class="message" v-else style="background: #fff">
               <view class="avatar" style="background: #9aa37e">
-                <img src="/static/img/ic_user.png" />
+                <img src="/static/images/avatar.jpg" />
               </view>
               <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
                 <textComponent :text="item.message"></textComponent>
@@ -47,7 +46,7 @@
           </block>
           <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
             <view class="avatar">
-              <img src="/static/img/ic_ai.png" />
+              <img src="/static/images/ic_ai.png" />
             </view>
             <view class="text markdown-body">
               <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
@@ -105,6 +104,12 @@ var textOutputSi = 0
 var fetchCtrl = null
 
 export default {
+  props: {
+    modelId: {
+      type: String,
+      default: '',
+    }
+  },
   components: {
     TextComponent,
     Welcome
@@ -148,7 +153,7 @@ export default {
       return this.chatSetting.tips
     }
   },
-  onLoad(options) {
+  created() {
     let tuid = 0
     let search = window.location.search
     if (search && search.indexOf('tuid=') != -1) {
@@ -182,12 +187,12 @@ export default {
     }, 300)
   },
   onShow() {
-    uni.setNavigationBarTitle({
-      title: app.globalData.page_title
-    })
-    this.setData({
-      page_title: app.globalData.page_title
-    })
+    // uni.setNavigationBarTitle({
+    //   title: app.globalData.page_title
+    // })
+    // this.setData({
+    //   page_title: app.globalData.page_title
+    // })
   },
   methods: {
     inputFocus() {
@@ -231,7 +236,8 @@ export default {
       const url = this.siteroot + '/web.php/chat/sendText'
       const data = {
         message: message,
-        model: this.model
+        model: this.model,
+        ai: this.modelId
       }
       fetchCtrl = new AbortController()
       const response = await fetch(url, {
@@ -375,7 +381,8 @@ export default {
           .request({
             url: '/chat/getHistoryMsg',
             data: {
-              model: this.model
+              model: this.model,
+              ai: this.modelId
             }
           })
           .then((res) => {

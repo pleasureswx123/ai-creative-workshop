@@ -1,7 +1,7 @@
 <template>
   <view class="cell-box">
     <view class="label" v-html="title"></view>
-    <view class="rt" v-if="isShowRight">
+    <view class="rt" v-if="isShowRight" @tap="handleToHistory">
       <text>从创作历史选择</text>
       <u-icon name="arrow-right" size="24rpx" color="#0B5EFF"></u-icon>
     </view>
@@ -18,6 +18,13 @@ export default {
     isShowRight: {
       type: Boolean,
       default: true
+    }
+  },
+  methods: {
+    handleToHistory() {
+      uni.$u.route({
+        url: 'pages/picture/index'
+      })
     }
   }
 }

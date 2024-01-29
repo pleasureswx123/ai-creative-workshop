@@ -7,7 +7,7 @@
     </u-sticky>
     
     <view class="chat-main" v-if="navType === 'chat'">
-      <QmChat></QmChat>
+      <QmChat :modelId="modelId"></QmChat>
     </view>
     
     <view v-if="navType === 'assistant'">
@@ -36,8 +36,8 @@ export default {
   components: { QmNavTabs, QmSubTabs, QmAssistant, QmRoles, QmChat },
   data() {
     return {
-      topicId: '',
-      navType: '', // chat || assistant || digit
+      topicId: 'all',
+      navType: 'chat', // chat || assistant || digit
       modelId: '',
     }
   },
@@ -63,11 +63,12 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  padding-bottom: calc(10rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(0rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(0rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
   min-height: 100vh;
   box-sizing: border-box;
+  background: #fff;
   &.chat {
     height: 100vh;
     overflow: hidden;

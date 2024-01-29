@@ -195,7 +195,8 @@ export default {
       const url = this.siteroot + '/web.php/chat/sendText'
       const data = {
         role_id: this.role_id,
-        message: message
+        message: message,
+        ai: this.modelId
       }
       fetchCtrl = new AbortController()
       const response = await fetch(url, {
