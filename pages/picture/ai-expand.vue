@@ -10,7 +10,8 @@
   
     <template v-if="generateState === 1">
       <TitleCell title="选择扩图方向" :isShowRight="false" />
-      <QmRadio :value.sync="direction"></QmRadio>
+      <QmCheckbox :value.sync="directions"></QmCheckbox>
+<!--      <QmRadio :value.sync="direction"></QmRadio>-->
       <TipsHelp :info="taskDetail" />
     </template>
     
@@ -27,22 +28,23 @@ export default {
   data() {
     return {
       sourceImg: '',
+      directions: [],
       direction: '',
     }
   },
   computed: {
     disabled() {
-      return !(this.sourceImg && this.direction)
+      return !(this.sourceImg && !!this.directions.length)
     },
     params() {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 6,
         reference_image: this.sourceImg,
-        upper: this.direction === 'top' ? 1 : 0,
-        below: this.direction === 'down' ? 1 : 0,
-        left: this.direction === 'left' ? 1 : 0,
-        right: this.direction === 'right' ? 1 : 0,
+        upper: this.directions.includes('top') ? 1 : 0,
+        below: this.directions.includes('down') ? 1 : 0,
+        left: this.directions.includes('left') ? 1 : 0,
+        right: this.directions.includes('right') ? 1 : 0,
       }
     }
   },

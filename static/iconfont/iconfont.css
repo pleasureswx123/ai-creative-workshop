@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont-qm";
-  src: url('@/static/iconfont/iconfont.ttf?t=1705925390514') format('truetype');
+  src: url('@/static/iconfont/iconfont.ttf?t=1706522061797') format('truetype');
 }
 
 .iconfont-qm {
@@ -9,6 +9,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qm-check:before {
+  content: "\e6b4";
+}
+
+.icon-qm-checked:before {
+  content: "\e6b3";
 }
 
 .icon-qm-speaker2:before {

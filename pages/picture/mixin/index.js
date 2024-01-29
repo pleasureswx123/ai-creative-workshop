@@ -4,13 +4,14 @@ import PicHeader from '../components/PicHeader.vue';
 import TitleCell from '../components/TitleCell.vue';
 import UploadImg from '../components/UploadImg.vue';
 import QmRadio from '../components/QmRadio.vue';
+import QmCheckbox from '../components/QmCheckbox.vue';
 import TipsHelp from '../components/TipsHelp.vue';
 import QmInput from '../components/QmInput.vue';
 import QmTextarea from '../components/QmTextarea.vue';
 import ImgInfo from '../components/ImgInfo.vue';
 
 export default {
-  components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo },
+  components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
   data() {
     return {
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
