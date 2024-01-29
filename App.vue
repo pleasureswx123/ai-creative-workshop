@@ -6,6 +6,18 @@
 		data() {
 			return {};
 		},
+    onShow() {
+      let isDarkMode = false;
+      const root = document.documentElement;
+      const bgColor1 = isDarkMode ? '--bg-color1-dark' : '--bg-color1-light';
+      const bgColor2 = isDarkMode ? '--bg-color2-dark' : '--bg-color2-light';
+      const txtColor1 = isDarkMode ? '--txt-color1-dark' : '--txt-color1-light';
+      const txtColor2 = isDarkMode ? '--txt-color2-dark' : '--txt-color2-light';
+      root.style.setProperty('--bg-color1', `var(${bgColor1})`);
+      root.style.setProperty('--bg-color2', `var(${bgColor2})`);
+      root.style.setProperty('--txt-color1', `var(${txtColor1})`);
+      root.style.setProperty('--txt-color2', `var(${txtColor2})`);
+    },
 		onLaunch: function() {
 			this.globalData.siteroot = siteinfo.host + '/web.php';
 			const system = uni.getSystemInfoSync().system.toLowerCase();

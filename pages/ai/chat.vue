@@ -1,4 +1,5 @@
 <template>
+  <page-meta page-style="background: #f6f8fe" />
   <view class="page-content" @click="hideCopyBtn">
     <view class="page" :class="{gold: model === 'model4'}">
       <view class="tab-model" v-if="hasModel4">
@@ -577,9 +578,6 @@ export default {
 };
 </script>
 <style>
-page {
-  background: #f7f7f8;
-}
 .page-content {
   position: relative;
   height: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #fff" />
+  <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <PicHeader title="欢迎使用文字转语音功能，你的智能配音助手！" />
     <TitleCell title="配音文案">

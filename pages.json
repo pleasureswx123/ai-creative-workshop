@@ -327,44 +327,6 @@
 			}
 		}
 	],
-	"tabBar": {
-		"color": "#666666",
-		"selectedColor": "#04BABE",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"text": "对话",
-				"iconPath": "static/images/tabbar/ic_chat.png",
-				"selectedIconPath": "static/images/tabbar/ic_chat_active.png"
-			},
-			{
-				"pagePath": "pages/write/index",
-				"text": "创作",
-				"iconPath": "static/images/tabbar/ic_write.png",
-				"selectedIconPath": "static/images/tabbar/ic_write_active.png"
-			},
-			{
-				"pagePath": "pages/cosplay/index",
-				"text": "模拟",
-				"iconPath": "static/images/tabbar/ic_cosplay.png",
-				"selectedIconPath": "static/images/tabbar/ic_cosplay_active.png"
-			},
-			{
-				"pagePath": "pages/draw/chat",
-				"text": "绘画",
-				"iconPath": "static/images/tabbar/ic_draw.png",
-				"selectedIconPath": "static/images/tabbar/ic_draw_active.png"
-			},
-			{
-				"pagePath": "pages/user/index",
-				"text": "我的",
-				"iconPath": "static/images/tabbar/ic_user.png",
-				"selectedIconPath": "static/images/tabbar/ic_user_active.png"
-			}
-		]
-	},
 	"globalStyle": {
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#04BABE",

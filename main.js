@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App';
 import store from './store'
 import uView from '@/uni_modules/uview-ui'
+import '@/static/styles/index.css'
 	
 // 全局mixins，用于实现setData等功能，请勿删除！';
 import zpMixins from '@/uni_modules/zp-mixins/index.js';

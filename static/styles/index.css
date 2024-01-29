@@ -1,0 +1,11 @@
+:root {
+  --bg-color1-light: #ffffff;
+  --bg-color2-light: #f6f6f6;
+  --txt-color1-light: #acacac;
+  --txt-color2-light: #000000;
+
+  --bg-color1-dark: #0D0D0D;
+  --bg-color2-dark: #1D1E23;
+  --txt-color1-dark: #77787B;
+  --txt-color2-dark: #ffffff;
+}
