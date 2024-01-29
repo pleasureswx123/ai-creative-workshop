@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: #f6f8fe" />
+  <page-meta page-style="background: #ffffff" />
   <view class="page-container" @click="hideCopyBtn">
     <view class="page-content">
       <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
@@ -400,6 +400,7 @@ export default {
 <style>
 .page-container {
   height: 100vh;
+  background: #fff;
 }
 .page-content {
   width: 100vw;
