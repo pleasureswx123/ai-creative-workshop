@@ -385,7 +385,7 @@
 		
 	],
 	"globalStyle": {
-		"backgroundColor": "#00000",
+		"backgroundColor": "black",
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"navigationBarTextStyle": "black",
