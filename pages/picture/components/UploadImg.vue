@@ -11,12 +11,14 @@
         </view>
         <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
-      <view v-else class="upload-box" @tap="chooseImage">
-        <view class="title">点击上传</view>
-        <view class="icon-box">
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="var(--txt-color2)" size="50" />
+      <view v-else class="upload-box-container" @tap="chooseImage">
+        <view class="upload-box">
+          <view class="title">点击上传</view>
+          <view class="icon-box">
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="var(--txt-color2)" size="50" />
+          </view>
+          <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
         </view>
-        <view class="tips">支持jpg/png/gif格式的图片，不超过20M</view>
       </view>
     </view>
   </view>
@@ -107,6 +109,13 @@ export default {
   justify-content: center;
   align-items: center;
   height: 300rpx;
+  .upload-box-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .upload-box, .loading-box {
     text-align: center;
     display: flex;

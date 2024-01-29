@@ -3,7 +3,7 @@
   <view class="page-container">
     <PicHeader title="图生视频" />
     
-    <TitleCell title="选择图片" />
+    <TitleCell title="选择图片" :isShowRight="false" />
     <VideoInfo v-if="generateState === 3" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
     

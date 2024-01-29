@@ -22,9 +22,10 @@ export default {
   },
   methods: {
     handleToHistory() {
-      uni.$u.route({
-        url: 'pages/picture/index'
-      })
+      uni.$u.toast('跳转到选择图片')
+      // uni.$u.route({
+      //   url: 'pages/photos/create/create'
+      // })
     }
   }
 }
