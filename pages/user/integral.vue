@@ -10,7 +10,7 @@
 						<text>生成时间：{{item.create_time}}</text>
 					</view>
 				</view>
-				<view :class="[item.jifen_type == 1 ? 'num' : 'numAdd']">{{item.jifen_val}}</view>
+				<view :class="[item.jifen_consume_type == 1 ? 'num' : 'numAdd']">{{item.jifen_val}}</view>
 			</view>
 			<view v-show="isLoadMore" class="isLoadMore">
 				<u-loadmore :status="status" />

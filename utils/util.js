@@ -40,7 +40,7 @@ util.request = function (option) {
                 if (res.data.errno > 0) {
                     if (res.data.errno === 403) {
 						if (option.url != '/user/checkLogin') {
-							util.toLogin(res.data.message)
+							// util.toLogin(res.data.message)
 						}
 					} else {
                         if (res.data.message) {
