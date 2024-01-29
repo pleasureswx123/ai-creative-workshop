@@ -35,7 +35,7 @@ export default {
     
     currentValue: {
       get() {
-        return this.list.findIndex(item => item.type === this.value) || 0;
+        return this.list.findIndex(item => item?.type === this.value) || 0;
       },
       set(sn) {
         const type = this.list?.[sn]?.type || '';
