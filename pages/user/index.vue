@@ -23,11 +23,11 @@
 			<view class="inteBtn" @click="blChange">兑换</view>
 		</view>
         <view class="menus">
-            <view class="item" data-url="/pages/article/list?type=help" @tap="linkto">
+            <view class="item" @tap="linkto">
                 <text class="text-grey">{{ '图片创作' | lang }}</text>
 				<view class="arrow">21</view>
             </view>
-            <view class="item" data-url="/pages/user/feedback" @tap="linkto">
+            <view class="item" @tap="linkto">
                 <text class="text-grey">{{ '视频创作' | lang }}</text>
 				<view class="arrow">5</view>
             </view>
