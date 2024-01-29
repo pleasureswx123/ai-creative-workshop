@@ -126,7 +126,7 @@
 				</view>
 				<view class="navList">
 					<view class="item" @click="goUser">
-						<u-icon name="account" size="22" color="#f5f5f5" @click="goUser"></u-icon>个人中心
+						<u-icon name="account" size="22" color="#f5f5f5"></u-icon>个人中心
 					</view>
 					<view class="item" @click="goMyCreate">
 						<u-icon name="grid" size="22" color="#f5f5f5"></u-icon>我的创作
@@ -180,7 +180,7 @@
 		<!-- 瀑布流弹窗 -->
 		<view class="wallPopup">
 			<u-popup :show="wallShow" mode="center" @close="wallClose" @open="wallOpen" closeable closeIconPos="top-right">
-				<u-swiper height="600" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
+				<u-swiper height="500" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
 					<view slot="indicator" class="indicator-num">
 						<text class="indicator-num__text">{{ currentNum + 1 }}/{{ wallList.length }}</text>
 					</view>
@@ -501,7 +501,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				uni.switchTab({
+				uni.navigateTo({
 					url: '/pages/user/index'
 				})
 			},
@@ -785,6 +785,10 @@
 				.u-icon {
 					display: inline-block;
 					margin-right: 12rpx;
+					
+				}
+				/deep/.u-icon__icon{
+					font-size: 24px!important;
 				}
 			}
 
