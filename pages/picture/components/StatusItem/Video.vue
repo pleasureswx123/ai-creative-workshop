@@ -1,7 +1,7 @@
 <template>
   <Layout :info="info" @cb="clickRightBtnEvent" @toDetails="toDetails">
     <view class="pictrue-box">
-      <image class="video-box" :src="info.video_cover_img" imgMode="aspectFit"></image>
+      <image class="video-box" :src="info.video_cover_img" mode="aspectFit"></image>
 <!--      <video class="video-box" object-fit="contain"
              :src="info.video_url" :poster="info.video_cover_img" />-->
     </view>

@@ -70,31 +70,31 @@
         "devServer" : {
             "https" : false,
             "disableHostCheck" : true,
-            "open": true,
-            "port": 8099,
+            "open" : true,
+            "port" : 8099,
             "proxy" : {
-                "/web.php": {
-                    "target": "http://aigc.chaojiyuyan.cn/web.php",
-                    "changeOrigin": true,
-                    "secure": false,
-                    "pathRewrite": {
-                        "^/web.php": "/"
+                "/web.php" : {
+                    "target" : "http://aigc.chaojiyuyan.cn/web.php",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/web.php" : "/"
                     }
                 },
-                "/h5/imgPath": {
-                    "target": "http://aigc.chaojiyuyan.cn",
-                    "changeOrigin": true,
-                    "secure": false,
-                    "pathRewrite": {
-                        "^/h5/imgPath": ""
+                "/h5/imgPath" : {
+                    "target" : "http://aigc.chaojiyuyan.cn",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/h5/imgPath" : ""
                     }
                 },
-                "/imgPath": {
-                    "target": "http://aigc.chaojiyuyan.cn",
-                    "changeOrigin": true,
-                    "secure": false,
-                    "pathRewrite": {
-                        "^/imgPath": ""
+                "/imgPath" : {
+                    "target" : "http://aigc.chaojiyuyan.cn",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/imgPath" : ""
                     }
                 }
             }
@@ -108,7 +108,7 @@
             "timeout" : 200000
         },
         "router" : {
-            "base" : "/h5/",
+            "base" : "./",
             "mode" : "hash"
         },
         "template" : "tpl_h5.html",

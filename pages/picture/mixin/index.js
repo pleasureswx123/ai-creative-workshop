@@ -36,7 +36,7 @@ export default {
       const { currentImg } = data || {};
       this.sourceImg = currentImg;
     })
-    this.getMaterial({task_type: type});
+    type && this.getMaterial({task_type: type});
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),

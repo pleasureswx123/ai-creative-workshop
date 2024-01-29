@@ -62,13 +62,10 @@ export default {
       const {width, height} = res.detail || {};
       this.width = width;
       this.height = height;
-      debugger
       this.downLoadVideoOrImgOrAudioFile({src: this.src, fileType: 'image'}).then(res => {
         this.info = res;
       })
-    }
-  },
-  computed: {
+    },
     handleDownload() {
       if(this.info.size) {
         this.saveToLocal(this.info);
@@ -81,6 +78,8 @@ export default {
         });
       }
     },
+  },
+  computed: {
     imgInfo() {
       const {size = 0} = this.info || {};
       const fileSizeInBytes = +(size || this.size) || 0;
