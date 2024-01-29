@@ -51,8 +51,8 @@ export default {
         this.generateState = 1;
         return;
       }
+      this.generateState = 2;
       this.createTask(this.params).then(({task_id}) => {
-        this.generateState = 2;
         const func = () => {
           pictureApi.getTaskstate({task_id}).then((res) => {
             const {state, url} = res || {};
@@ -75,7 +75,9 @@ export default {
         }
         this.timer = setInterval(() => {
           func();
-        }, 5000);
+        }, 3000);
+      }).catch(() => {
+        this.generateState = 1;
       })
     }
   }

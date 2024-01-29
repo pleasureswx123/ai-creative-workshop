@@ -1,6 +1,7 @@
 <template>
   <page-meta page-style="background: #f6f8fe" />
   <view class="page-container">
+    <TipsTxt></TipsTxt>
     <CreationItem
         v-for="(item, index) in list" :key="index"
         :info="item" @showToolAction="showToolAction" @toDetails="toDetails" />
@@ -21,6 +22,7 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import CreationMixins from './mixin/myCreation.js';
+import TipsTxt from './components/TipsTxt.vue'
 import CreationItem from './components/CreationItem.vue'
 import VideoDetails from './components/VideoDetails.vue'
 
@@ -38,7 +40,7 @@ export default {
     ...mapState('PictureInfo', ['toolsList']),
   },
   components: {
-    CreationItem, VideoDetails
+    TipsTxt, CreationItem, VideoDetails
   },
   onShow () {
     this.getToolsList({page:1, pagesize: 20});

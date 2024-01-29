@@ -10,78 +10,67 @@
 			"path": "pages/picture/index",
 			"style": {
 				"navigationBarTitleText": "我的创作",
-				"navigationBarBackgroundColor": "#ffffff",
 				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/picture/tool",
 			"style": {
-				"navigationBarTitleText": "图片处理",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "图片处理"
 			}
 		},
 		{
 			"path": "pages/picture/ai-face",
 			"style": {
-				"navigationBarTitleText": "智能换脸",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "智能换脸"
 			}
 		},
 		{
 			"path": "pages/picture/hd-redraw",
 			"style": {
-				"navigationBarTitleText": "高清重绘",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "高清重绘"
 			}
 		},
 		{
 			"path": "pages/picture/remove-bg",
 			"style": {
-				"navigationBarTitleText": "去除背景",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "去除背景"
 			}
 		},
 		{
 			"path": "pages/picture/replace-bg",
 			"style": {
-				"navigationBarTitleText": "更换背景",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "更换背景"
 			}
 		},
 		{
 			"path": "pages/picture/ai-expand",
 			"style": {
-				"navigationBarTitleText": "智能扩图",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "智能扩图"
 			}
 		},
 		{
 			"path": "pages/picture/part-redraw",
 			"style": {
-				"navigationBarTitleText": "局部重绘",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "局部重绘"
 			}
 		},
 		{
 			"path": "pages/picture/replace-bg-txt",
 			"style": {
-				"navigationBarTitleText": "更换背景(语义)",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "更换背景(语义)"
 			}
 		},
 		{
 			"path": "pages/sound/index",
 			"style": {
-				"navigationBarTitleText": "生成配音",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "生成配音"
 			}
 		},
 		{
 			"path": "pages/sound/history",
 			"style": {
 				"navigationBarTitleText": "历史配音",
-				"navigationBarBackgroundColor": "#ffffff",
 				"enablePullDownRefresh": true
 			}
 		},
@@ -89,22 +78,19 @@
 			"path": "pages/ai/index",
 			"style": {
 				"navigationBarTitleText": "智能对话",
-				"navigationBarBackgroundColor": "#ffffff",
 				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/ai/digit-chat",
 			"style": {
-				"navigationBarTitleText": "对话",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "对话"
 			}
 		},
 		{
 			"path": "pages/ai/assistant-chat",
 			"style": {
-				"navigationBarTitleText": "创作助手",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "创作助手"
 			}
 		},
 		{
@@ -393,11 +379,11 @@
 		
 	],
 	"globalStyle": {
+		"backgroundColor": "#f6f6f8",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#04BABE",
-		"navigationBarTextStyle": "white"
-		// "navigationStyle": "custom"
-		// "navigationStyle": ""
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom"
 	},
 	"subPackages": []
 }

@@ -33,7 +33,11 @@ export default {
   },
   computed: {
     imgUrls() {
-      return this.info?.img_urls || []
+      let urls = this.info?.img_urls;
+      if(!Array.isArray(urls)) {
+        urls = urls ? [urls] : []
+      }
+      return urls
     },
     isShowIndicator() {
       return this.imgUrls.length > 1

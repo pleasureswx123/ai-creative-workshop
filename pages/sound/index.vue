@@ -16,7 +16,7 @@
     <QmRadioPlain :list="dubList" :value.sync="timbre"></QmRadioPlain>
     <QmSlider :value.sync="volume" type="volume"></QmSlider>
     <QmSlider :value.sync="speed" type="speed"></QmSlider>
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate"></GenerateBtn>
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating"></GenerateBtn>
   </view>
 </template>
 
@@ -34,6 +34,7 @@ export default {
   components: { PicHeader, TitleCell, TryListen, QmRadioPlain, QmSlider, QmTextarea },
   data() {
     return {
+      generating: false,
       describe: '',
       timbre: '',
       volume: 2,
@@ -77,31 +78,35 @@ export default {
         this.timer = null;
       }
     },
-    handleGenerate(cb) {
+    handleGenerate() {
+      this.generating = true;
       this.createTask(this.params).then(({task_id}) => {
         const func = () => {
           soundApi.getTaskstate({task_id}).then(({state}) => {
             if(state === 2) {
-              cb && cb();
+              this.generating = false;
               this.clearTimer();
               uni.$u.toast('生成任务失败');
               return
             }
             if(state === 1) {
+              this.generating = false;
               this.clearTimer();
-              cb && cb();
               uni.$u.route({
                 url: `pages/sound/history`
               });
               return;
             }
+          }).catch(() => {
+            this.generating = false;
+            this.clearTimer();
           })
         }
         this.timer = setInterval(() => {
           func();
-        }, 1000);
+        }, 3000);
       }).catch(err => {
-        cb && cb();
+        this.generating = false;
       });
     }
   }
