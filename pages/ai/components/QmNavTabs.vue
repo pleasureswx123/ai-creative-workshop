@@ -3,8 +3,8 @@
     <u-tabs :current="currentValue" :list="list" @change="handleChange"
             lineWidth="60rpx"
             lineHeight="8rpx"
-            :activeStyle="{ color: '#303133', fontSize: '28rpx', fontWeight: 'bold' }"
-            :inactiveStyle="{ color: '#606266', fontSize: '28rpx' }"
+            :activeStyle="{ color: '#303133', fontSize: '30rpx', fontWeight: 'bold' }"
+            :inactiveStyle="{ color: '#606266', fontSize: '30rpx' }"
     ></u-tabs>
   </view>
 </template>
@@ -54,6 +54,8 @@ export default {
 
 <style lang="scss" scoped>
 .tabs-container {
+  height: 40px;
+  overflow: hidden;
   background: #f7f7f8;
   border-bottom: 1rpx solid #efefef;
   /deep/ {

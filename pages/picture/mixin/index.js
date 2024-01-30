@@ -1,5 +1,6 @@
 import {pictureApi} from "@/api";
 import {mapState, mapActions} from 'vuex';
+import Layout from '../components/Layout.vue';
 import PicHeader from '../components/PicHeader.vue';
 import TitleCell from '../components/TitleCell.vue';
 import UploadImg from '../components/UploadImg.vue';
@@ -16,7 +17,7 @@ export default {
       setImgUrl: this.setImgUrl
     }
   },
-  components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
+  components: { Layout, PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
   data() {
     return {
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态

@@ -1,8 +1,6 @@
 <template>
-  <page-meta page-style="background: var(--bg-color1)" />
-  <view class="page-container">
+  <Layout>
     <PicHeader title="去除背景" />
-    
     <TitleCell title="选择图片" :generateState="generateState" />
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
@@ -11,8 +9,10 @@
       <TipsHelp :info="taskDetail" />
     </template>
   
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
-  </view>
+    <template #footer>
+      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+    </template>
+  </Layout>
 </template>
 
 <script>
@@ -39,19 +39,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.page-container {
-  background: var(--bg-color1);
-  padding: 0 30rpx 160rpx;
-}
-.tips-img {
-  margin: 20rpx 0;
-  width: 60%;
-  aspect-ratio: 4 / 3;
-  image {
-    width: 100%;
-    height: 100%;
-  }
-}
-</style>

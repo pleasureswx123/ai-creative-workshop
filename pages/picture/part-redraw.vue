@@ -1,8 +1,6 @@
 <template>
-  <page-meta page-style="background: var(--bg-color1)" />
-  <view class="page-container">
+  <Layout>
     <PicHeader title="局部重绘(语义检测)" />
-    
     <TitleCell title="选择图片" :generateState="generateState" />
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
@@ -10,15 +8,15 @@
     <template v-if="generateState === 1">
       <TitleCell title="描述你想要<em>更换</em>的元素" :isShowRight="false" />
       <QmInput :value.sync="sourceElementText" placeholder="例如：红色的鸭舌帽"></QmInput>
-      
+    
       <TitleCell title="你想把它换成什么" :isShowRight="false" />
       <QmInput :value.sync="targetElementText" placeholder="例如：黑色的毛线帽"></QmInput>
-    
       <TipsHelp :info="taskDetail" />
     </template>
-    
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
-  </view>
+    <template #footer>
+      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+    </template>
+  </Layout>
 </template>
 
 <script>
@@ -51,10 +49,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.page-container {
-  background: var(--bg-color1);
-  padding: 0 30rpx 160rpx;
-}
-</style>

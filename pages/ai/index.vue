@@ -1,24 +1,24 @@
 <template>
-  <view class="page-container" :class="{chat: navType === 'chat'}">
-    <u-sticky style="top: 0!important">
+  <view class="page-container">
+    <view class="page-header" :style="`height: ${navType === 'digit' ? '41' : '77'}px`">
       <QmNavTabs :value.sync="navType"></QmNavTabs>
       <QmSubTabs v-if="navType === 'assistant'" :list="topicList" :value.sync="topicId"></QmSubTabs>
       <QmSubTabs v-if="navType === 'chat'" :list="modelList" :value.sync="modelId"></QmSubTabs>
-    </u-sticky>
-    
-    <view class="chat-main" v-if="navType === 'chat'">
-      <QmChat :modelId="modelId"></QmChat>
     </view>
-    
-    <view v-if="navType === 'assistant'">
-      <QmAssistant :list="list"></QmAssistant>
-      <QmLoadMore :status="loadStatus"></QmLoadMore>
+    <view class="page-main" :style="`height: calc(100vh - ${navType === 'digit' ? '41' : '77'}px)`">
+      <template v-if="navType === 'chat'">
+        <QmChat :modelId="modelId"></QmChat>
+      </template>
+  
+      <view v-if="navType === 'assistant'">
+        <QmAssistant :list="list"></QmAssistant>
+        <QmLoadMore :status="loadStatus"></QmLoadMore>
+      </view>
+  
+      <template v-if="navType === 'digit'">
+        <QmRoles :list="rolesList"></QmRoles>
+      </template>
     </view>
-    
-    <view v-if="navType === 'digit'">
-      <QmRoles :list="rolesList"></QmRoles>
-    </view>
-    
   </view>
 </template>
 
@@ -63,21 +63,19 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  padding-bottom: calc(0rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(0rpx + env(safe-area-inset-bottom));
+  height: 100vh;
   font-size: 24rpx;
-  min-height: 100vh;
-  box-sizing: border-box;
   background: #fff;
-  &.chat {
-    height: 100vh;
+  overflow: hidden;
+  .page-header {
+    height: 77px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    .chat-main {
-      flex: 1;
-      min-height: 0;
-    }
+  }
+  .page-main {
+    height: calc(100vh - 77px);
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 </style>

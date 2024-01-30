@@ -161,6 +161,10 @@ image {
 .uni-system-preview-image {
   z-index: 20500;
 }
+.uni-textarea-textarea,
+.uni-textarea-placeholder {
+  font-size: 13px!important;
+}
 page {
   min-height: calc(100vh - var(--window-bottom) - var(--window-top));
   background: var(--bg-color1)!important;

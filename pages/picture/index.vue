@@ -1,5 +1,5 @@
 <template>
-  <page-meta page-style="background: var(--bg-color1)" />
+  <page-meta :page-style="`background: var(--bg-color1); overflow: ${(showDetails || showAction) ? 'hidden' : 'visible'}`" />
   <view class="page-container">
     <TipsTxt></TipsTxt>
     <CreationItem

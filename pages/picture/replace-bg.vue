@@ -1,8 +1,6 @@
 <template>
-  <page-meta page-style="background: var(--bg-color1)" />
-  <view class="page-container">
+  <Layout>
     <PicHeader title="更换背景" />
-    
     <TitleCell title="选择图片" :generateState="generateState" />
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
@@ -10,12 +8,12 @@
     <template v-if="generateState === 1">
       <TitleCell title="把背景更换为" :isShowRight="false" />
       <QmTextarea :value.sync.trim="describe"></QmTextarea>
-    
       <TipsHelp :info="taskDetail" />
     </template>
-  
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
-  </view>
+    <template #footer>
+      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+    </template>
+  </Layout>
 </template>
 
 <script>
@@ -43,10 +41,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.page-container {
-  background: var(--bg-color1);
-  padding: 0 30rpx 160rpx;
-}
-</style>

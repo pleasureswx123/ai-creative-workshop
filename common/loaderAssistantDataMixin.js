@@ -5,7 +5,7 @@ export default {
     return {
       list: [],
       page: 1,
-      pagesize: 10,
+      pagesize: 100,
       loadStatus: '', // more/loading/noMore
     }
   },
@@ -51,7 +51,7 @@ export default {
     initParams() {
       this.list = [];
       this.page = 1;
-      this.pagesize = 10;
+      this.pagesize = 100;
       this.loadStatus = '';
     },
     loadMore() {
