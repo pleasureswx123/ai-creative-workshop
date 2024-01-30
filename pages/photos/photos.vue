@@ -1,8 +1,8 @@
 <template>
 	<view class="phogos-tontent">
-		<!-- 提示  -->
+		<!-- 提示  @click="onCellGroup"-->
 	<u-cell-group class="u-cell-group">
-		<u-cell v-if="photosTastNumber>0" class="u-cell"	:border="false"  value="去创建历史查看" :title="photosTastNumber+'个任务进行中...'" isLink url="/pages/componentsB/tag/tag" @click="onCellGroup"></u-cell>
+		<u-cell v-if="photosTastNumber>0" class="u-cell"	:border="false"  value="去创建历史查看" :title="photosTastNumber+'个任务进行中...'" isLink url="/pages/picture/index" ></u-cell>
 	</u-cell-group>
 	<!-- 内容 -->
 	<view class="photos-centont">
@@ -287,18 +287,18 @@ import user from './user/user.vue'
 						task_type:1,// 	任务类型
 						model_parentclass_id:this.photosSubseCtionCurrent+1,//模型所属分类 模型分类接口获取的id
 						model_style_id:this.photosPopupLora.model_style_id,// 模型ID
-						prompt:this.photosTextareaValue,// 正向提示词
+						prompt:this.photosTextareaValue || '',// 正向提示词
 						negative_prompt:this.photosTextareaNegativeValue,// 反向提示词
-						controlnet_type_id:this.photosControinetInfo.id,// 控制类型 id
-						controlnet_img:this.photosControinetInfo.img,//控制参考图
-						controlnet_img_detect:this.photosControinetInfo.url,// 控制垫图
-						controlnet_weight:this.photosControinetInfo.value,// 控制权重
-						lora_id:this.photosLoraInfo.lora_id,// Loraid
-						lora_weight:this.photosLoraInfo.value,//	lora 权重
-						reference_image:this.photosUploadInfo.url,//参考图
-						reference_image_weight:this.photosUploadInfo.value,//参考图权重值 
-						img_style_id:this.photosStyleInfo.img_style_id,//图片样式 id
-						img_scale:this.photosPlotList[this.photosPlotNumber].id,//	图片比例
+						controlnet_type_id:this.photosControinetInfo.id || '',// 控制类型 id
+						controlnet_img:this.photosControinetInfo.img || '',//控制参考图
+						controlnet_img_detect:this.photosControinetInfo.url || '',// 控制垫图
+						controlnet_weight:this.photosControinetInfo.value || '',// 控制权重
+						lora_id:this.photosLoraInfo.lora_id || '',// Loraid
+						lora_weight:this.photosLoraInfo.value || '',//	lora 权重
+						reference_image:this.photosUploadInfo.url || '',//参考图
+						reference_image_weight:this.photosUploadInfo.value || '',//参考图权重值 
+						img_style_id:this.photosStyleInfo.img_style_id || '',//图片样式 id
+						img_scale:this.photosPlotList[this.photosPlotNumber].id ,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
 				try{
@@ -494,7 +494,7 @@ import user from './user/user.vue'
 			//标题去创作历史查看
 			onCellGroup(){
 				uni.navigateTo({
-					url: '/pages/index/index'
+					url: '/pages/picture/index'
 				});
 			},
 			//请求导航数据事件
