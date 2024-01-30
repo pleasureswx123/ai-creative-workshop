@@ -173,6 +173,12 @@
 			}
 		},
 		{
+			"path": "pages/article/code",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/pay/chat",
 			"style": {
 				"navigationBarBackgroundColor": "#04BABE",

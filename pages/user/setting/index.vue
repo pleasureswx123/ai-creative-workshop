@@ -34,7 +34,7 @@
 			</view> -->
 		</view>
 		<view class="logout">
-			<button class="btn-logout text-danger" @tap="doLogout">{{ '退出登录' | lang }}</button>
+			<button class="btn-logout text-danger" @tap="doLogout">{{ '确定' | lang }}</button>
 		</view>
 
 	</view>
@@ -131,12 +131,8 @@
 			},
 			
 			doLogout() {
-				app.globalData.util.request({
-					url: '/user/logout'
-				}).then((res) => {
-					uni.reLaunch({
-						url: '/pages/index/index'
-					})
+				uni.navigateTo({
+					url: '/pages/user/index'
 				})
 			}
 		}

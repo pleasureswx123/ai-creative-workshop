@@ -1,17 +1,15 @@
 <template>
 	<view class="content">
-		<view class="banner-cont">
-			<view class="navList">
-				<view class="nav">
-					<u-icon name="list" color="#fff" size="24" @click="navShow = true"></u-icon>
-				</view>
-				<view class="head" @click="goUser">
-					<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
-				</view>
+		<view class="navList">
+			<navMenu v-if="navShow"></navMenu>
+			<view class="head" @click="goUser">
+				<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
 			</view>
+		</view>
+		<view class="banner-cont">
 			<view class="banner">
 				<view class="bannerBg">
-					<video id="myVideo" :src="banner.url" :autoplay="true" :loop="true" :controls="false" muted="muted" :show-center-play-btn="false" object-fit="cover"></video>
+					<video id="myVideo" :src="banner.url" :autoplay="false" :loop="true" :controls="false" :muted="true" :show-center-play-btn="false" object-fit="cover"></video>
 				</view>
 				<view class="bannerText">
 					<text class="eng">{{banner.slogan_en}}</text>
@@ -38,7 +36,7 @@
 				fontSize:'14px'
 			}" :inactiveStyle="{
 				color: '#606266',
-				transform: 'scale(1)',
+				transform: 'scale(1)', 
 				fontSize:'14px'
 			}"></u-tabs>
 			<view class="waterfall">
@@ -82,9 +80,7 @@
 				<view class="load-more" v-show="countShow == true">
 					<u-loadmore :status="status" :nomore-text="nomoreText" @loadmore="getList" />
 				</view>
-				<view class="load-more" v-show="countShow == false">
-					没有更多了
-				</view>
+				<view class="load-more" v-show="countShow == false">没有更多了</view>
 			</view>
 		</view>
 		<view class="footer">
@@ -105,82 +101,10 @@
 				<text @click="goMps">京公网安备11011102002471号</text>
 			</view>
 		</view>
-		<!-- 导航弹出 -->
-		<view class="popup">
-			<u-popup :show="navShow" mode="left" @close="close" @open="open" closeIconPos="top-right">
-				<view class="user" @click="goUser">
-					<view class="userAvater">
-						<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
-					</view>
-					<view class="Infor">
-						<view class="userName">{{userinfo.nickname || $lang('未设置昵称') }}</view>
-						<view class="userId">MID:{{userinfo.user_id}}</view>
-					</view>
-				</view>
-				<view class="integral">
-					<view class="inteNum">
-						积分
-						<text>{{userinfo.balance}}</text>
-					</view>
-					<view class="inteBtn" @click="blChange">兑换</view>
-				</view>
-				<view class="navList">
-					<view class="item" @click="goUser">
-						<u-icon name="account" size="22" color="#f5f5f5"></u-icon>个人中心
-					</view>
-					<view class="item" @click="goMyCreate">
-						<u-icon name="grid" size="22" color="#f5f5f5"></u-icon>我的创作
-					</view>
-					<view class="navSelmg"></view>
-					<view class="item" @click="goAi">
-						<u-icon name="chat" size="22" color="#f5f5f5"></u-icon>智能对话
-					</view>
-					<view class="item" @click="goGenerateImg">
-						<u-icon name="camera" size="22" color="#f5f5f5"></u-icon>生成图片
-					</view>
-					<view class="item" @click="goImgTool">
-						<u-icon name="photo" size="22" color="#f5f5f5"></u-icon>图片处理
-					</view>
-					<view class="item" @click="goImgToVideo">
-						<u-icon name="play-right" size="22" color="#f5f5f5"></u-icon>生成视频
-					</view>
-					<view class="navSelmg"></view>
-					<view class="item" data-url="/pages/article/list?type=help" @click="goUse">
-						<u-icon name="file-text" size="22" color="#f5f5f5"></u-icon>使用教程
-					</view>
-					<view class="item">
-						<u-icon name="kefu-ermai" size="22" color="#f5f5f5"></u-icon>联系我们
-					</view>
-					<view class="item" @click="toDoc('service')">
-						<u-icon name="order" size="20" color="#f5f5f5"></u-icon>服务条款
-					</view>
-					<view class="item" @click="toDoc('privacy')">
-						<u-icon name="info-circle" size="20" color="#f5f5f5"></u-icon>隐私协议
-					</view>
-					<view class="navSelmg"></view>
-					<view class="item" @click="doLogout">
-						<u-icon name="minus-square-fill" size="22" color="#f5f5f5"></u-icon>退出登录
-					</view>
-				</view>
-			</u-popup>
-		</view>
-		<!-- 兑换积分弹窗 -->
-		<view class="inpopup">
-			<u-popup :show="integralShow" mode="center" @close="inClose" @open="inOpen" closeIconPos="top-right">
-				<text class="title">兑换积分</text>
-				<text class="text">可以使用兑换码来获取平台积分，若您已拥有兑换码，可直接进行兑换。若尚未获得兑换码，可联系我们客服进行购买。</text>
-				<u--input placeholder="输入或粘贴兑换码" border="surround" v-model="value" @change="inChange"
-					placeholderStyle="fontSize:14px"></u--input>
-				<view class="operateBtn">
-					<view class="btn cancel" @click="integralShow = false">取消</view>
-					<view class="btn sure" @click="exchange">确认兑换</view>
-				</view>
-			</u-popup>
-		</view>
 		<!-- 瀑布流弹窗 -->
 		<view class="wallPopup">
 			<u-popup :show="wallShow" mode="center" @close="wallClose" @open="wallOpen" closeable closeIconPos="top-right">
-				<u-swiper height="500" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
+				<u-swiper height="500px" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
 					<view slot="indicator" class="indicator-num">
 						<text class="indicator-num__text">{{ currentNum + 1 }}/{{ wallList.length }}</text>
 					</view>
@@ -211,12 +135,16 @@
 
 <script>
 	import {guid} from '@/uni_modules/uv-ui-tools/libs/function/index.js'
+	import navMenu from '@/components/navMeun/index.vue';
 	const app = getApp();
 	export default {
+		components: {
+			navMenu
+		},
 		data() {
 			return {
 				banner: {},
-				navShow: false,
+				navShow: true,
 				makeList: [],
 				aiList: [],
 				current: 0,
@@ -232,9 +160,6 @@
 					balance: 0,
 					balance_draw: 0
 				},
-				integralShow: false,
-				value: '',
-				code: '',
 				slogan_cn: '',
 				slogan_cnEng: '',
 				list: [], // 瀑布流全部数据
@@ -248,8 +173,8 @@
 				currentNum: 0,
 				wallCont: {},
 				task_id: '',
-				roleForm: {},
-				countShow:false
+				countShow:false,
+				videoContext:null
 			}
 		},
 		computed: {
@@ -266,56 +191,29 @@
 				}
 			}
 		},
-		async onLoad() {
+		onLoad() {
 			this.getmakeList()
 			this.getaiList()
 			this.getUserInfo()
 			this.getData();
 		},
+		onReady() {
+			this.videoContext = uni.createVideoContext('myVideo', this);
+		},
 		methods: {
-      goMyCreate() {
-        uni.navigateTo({
-          url: '/pages/picture/index'
-        })
-      },
-      goAi() {
-        uni.navigateTo({
-          url: '/pages/ai/index'
-        })
-      },
-      goImgTool() {
-        uni.navigateTo({
-          url: '/pages/picture/tool'
-        })
-      },
-      goSound() {
-        uni.navigateTo({
-          url: '/pages/sound/index'
-        })
-      },
-      goImgToVideo() {
-        uni.navigateTo({
-          url: '/pages/picture/img-to-video'
-        })
-      },
-      goGenerateImg() {
-        uni.navigateTo({
-          url: '/pages/photos/photos'
-        })
-      },
 			getaiList() {
 				app.globalData.util.request({
-						url: '/Home/FeedsTab'
-					})
-					.then((res) => {
-						const aiList = res.data
-						this.aiList = aiList.map((item) => ({
-							name: item.title,
-							current: item.model_subclass_id
-						}));
-					});
+					url: '/Home/FeedsTab'
+				})
+				.then((res) => {
+					const aiList = res.data
+					this.aiList = aiList.map((item) => ({
+						name: item.title,
+						current: item.model_subclass_id
+					}));
+				});
 			},
-			async change(index) {
+			change(index) {
 				this.model_subclass_id = index.current
 				this.list = []
 				this.$refs.waterfall.clear()
@@ -368,24 +266,29 @@
 				})
 			},
 			wallOpen() {
-
+				document.body.style.position = 'fixed'
 			},
 			wallClose() {
 				this.wallShow = false
+				document.body.style.position = null
 			},
 			getDrawInfo() {
 				app.globalData.util.request({
-						url: '/AiDraw/GetInfo',
-						data: {
-							task_id: this.task_id
-						}
-					})
-					.then((res) => {
-						this.wallList = res.data.img_urls
-						this.wallCont = res.data
-					});
+					url: '/AiDraw/GetInfo',
+					data: {
+						task_id: this.task_id
+					}
+				})
+				.then((res) => {
+					this.wallList = res.data.img_urls
+					this.wallCont = res.data
+				});
 			},
 			wallInfo(task_id) {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				this.task_id = task_id
 				this.wallShow = true
 				this.getDrawInfo()
@@ -400,12 +303,6 @@
 					});
 				})
 			},
-			open() {
-				// console.log('open');
-			},
-			close() {
-				this.navShow = false
-			},
 			getmakeList() {
 				app.globalData.util.request({
 					url: '/Home/Index',
@@ -415,47 +312,10 @@
 					this.banner = res.data.banner
 					this.slogan_cn = res.data.banner.slogan_cn.slice(0, -3)
 					this.slogan_cnEng = res.data.banner.slogan_cn.slice(-1)
+					this.$nextTick(()=>{
+						this.videoContext.play()
+					})
 				});
-			},
-			inOpen() {
-				// console.log('open');
-			},
-			inClose() {
-				this.integralShow = false
-			},
-			blChange() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				this.navShow = false
-				this.integralShow = true
-				this.value = '';
-			},
-			exchange() {
-				app.globalData.util.request({
-						url: '/user/bindCard',
-						data: {
-							code: this.code
-						}
-					})
-					.then((res) => {
-						app.globalData.util.message(res.message)
-						this.integralShow = false
-						this.getUserInfo();
-					});
-			},
-			inChange(e) {
-				// console.log('change', e);
-			},
-			doLogout() {
-				app.globalData.util.request({
-					url: '/user/logout'
-				}).then((res) => {
-					uni.reLaunch({
-						url: '/pages/index/index'
-					})
-				})
 			},
 			goMiit() {
 				if (!this.isLogin) {
@@ -471,30 +331,55 @@
 				}
 				window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011102002471')
 			},
-			goDary(id) {
+			goAi() {
+				uni.navigateTo({
+				  url: '/pages/ai/index'
+				})
+			},
+			goImgTool() {
+				uni.navigateTo({
+				  url: '/pages/picture/tool'
+				})
+			},
+			goSound() {
+				uni.navigateTo({
+				  url: '/pages/sound/index'
+				})
+			},
+			goImgToVideo() {
+				uni.navigateTo({
+				  url: '/pages/picture/img-to-video'
+				})
+			},
+			goGenerateImg() {
+				uni.navigateTo({
+				  url: '/pages/photos/photos'
+				})
+			},
+			goDary() {
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-        switch (id) {
-          case '1':
-            this.goAi();
-            break;
-          case '2':
-            this.goGenerateImg();
-            break;
-          case '3':
-            this.goImgTool();
-            break;
-          case '4':
-            this.goImgToVideo();
-            break;
-          case '5':
-            this.goSound();
-            break;
-          default:
-            console.log(id)
-        }
+				switch (id) {
+				  case '1':
+					this.goAi();
+					break;
+				  case '2':
+					this.goGenerateImg();
+					break;
+				  case '3':
+					this.goImgTool();
+					break;
+				  case '4':
+					this.goImgToVideo();
+					break;
+				  case '5':
+					this.goSound();
+					break;
+				  default:
+					console.log(id)
+				}
 			},
 			goUser() {
 				if (!this.isLogin) {
@@ -503,25 +388,6 @@
 				}
 				uni.navigateTo({
 					url: '/pages/user/index'
-				})
-			},
-			goUse(e) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				const url = e.currentTarget.dataset.url;
-				uni.navigateTo({
-					url: url
-				});
-			},
-			toDoc(type) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				uni.navigateTo({
-					url: '/pages/article/article?type=' + type
 				})
 			},
 			onload() {
@@ -544,7 +410,7 @@
 						app.globalData.util.message('图片下载失败', 'error');
 					}
 				});
-			}
+			},
 		}
 	}
 </script>
@@ -579,7 +445,8 @@
 			background-color: #1D1E23;
 			text-align: center;
 			margin: 50rpx auto;
-
+			color:#88888B;
+			font-size: 28rpx;
 			/deep/.u-loadmore__content__text {
 				line-height: 88rpx !important;
 			}
@@ -623,36 +490,31 @@
 			padding: 10px 0;
 		}
 	}
-
-	.banner-cont {
-		width: 100%;
-		padding: 30rpx 40rpx 0;
-		box-sizing: border-box;
-		position: relative;
-
-		.navList {
-			display: flex;
-			display: -webkit-flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			align-items: center;
-			/deep/.u-icon__icon{
-				font-size: 24px!important;
-			}
-			.head {
-				width: 60rpx;
-				height: 60rpx;
-				overflow: hidden;
-				border-radius: 50%;
-				background-color: rgb(255, 173, 8);
-
-				image {
-					width: 100%;
-					height: 100%;
-				}
+	.navList {
+		display: flex;
+		display: -webkit-flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		.head {
+			width: 60rpx;
+			height: 60rpx;
+			overflow: hidden;
+			border-radius: 50%;
+			background-color: rgb(255, 173, 8);
+			margin: 30rpx 40rpx 0;
+			image {
+				width: 100%;
+				height: 100%;
+				
 			}
 		}
-
+	}
+	.banner-cont {
+		width: 100%;
+		padding: 0 40rpx 0;
+		box-sizing: border-box;
+		position: relative;
 		.banner {
 			border-radius: 10rpx;
 			height: 344rpx;
@@ -697,110 +559,6 @@
 			}
 		}
 	}
-
-	.popup {
-		width: 100%;
-
-		::v-deep .u-popup__content {
-			width: 100%;
-			box-sizing: border-box;
-			padding: 30rpx 20rpx;
-			background-color: #0D0D0D;
-		}
-
-		.user {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-
-			.userAvater {
-				height: 68rpx;
-				width: 68rpx;
-				background-color: #ffad08;
-				border-radius: 50%;
-				overflow: hidden;
-				margin-right: 20rpx;
-
-				image {
-					height: 100%;
-					width: 100%;
-				}
-			}
-
-			.Infor {
-				.userName {
-					font-size: 24rpx;
-					color: #fff;
-					font-weight: 700;
-				}
-
-				.userId {
-					font-size: 24rpx;
-					margin-top: 6rpx;
-					color: #818181;
-				}
-			}
-		}
-
-		.integral {
-			width: 420rpx;
-			padding: 20rpx 20rpx 20rpx 28rpx;
-			background-color: #1D1E23;
-			border-radius: 10rpx;
-			display: flex;
-			display: -webkit-flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			align-items: center;
-			margin: 40rpx 0;
-			box-sizing: border-box;
-
-			.inteNum {
-				font-size: 24rpx;
-				color: #B2B2B2;
-
-				text {
-					margin-left: 10rpx;
-				}
-			}
-
-			.inteBtn {
-				background-color: #F60652;
-				border-radius: 8rpx;
-				padding: 8rpx 16rpx;
-				font-size: 24rpx;
-				color: #fff;
-			}
-		}
-
-		.navList {
-			.item {
-				width: 100%;
-				padding: 0 20rpx;
-				margin: 0 0 30rpx;
-				font-size: 28rpx;
-				display: flex;
-				color: #f5f5f5;
-
-				.u-icon {
-					display: inline-block;
-					margin-right: 12rpx;
-					
-				}
-				/deep/.u-icon__icon{
-					font-size: 24px!important;
-				}
-			}
-
-			.navSelmg {
-				width: 100%;
-				height: 1px;
-				background-color: #f0f0f0;
-				margin: 40rpx 0;
-			}
-		}
-	}
-
 	.aiType {
 		display: flex;
 		display: -webkit-flex;
@@ -846,7 +604,6 @@
 			}
 		}
 	}
-
 	.aiList {
 		box-sizing: border-box;
 		padding: 0 30rpx;
@@ -855,61 +612,7 @@
 			background: #F60652 !important;
 		}
 	}
-
-	.inpopup {
-		width: 80%;
-
-		.title {
-			font-size: 32rpx;
-			text-align: center;
-			font-weight: 700;
-		}
-
-		.text {
-			font-size: 28rpx;
-			text-align: center;
-			margin: 20rpx 0;
-		}
-
-		/deep/.u-popup__content {
-			width: 80%;
-			border-radius: 20rpx;
-			box-sizing: border-box;
-			padding: 80rpx 40rpx;
-		}
-
-		/deep/.u-input {
-			border: 1px solid #f5f5f5;
-			background-color: #f5f5f5;
-			margin: 30rpx 0;
-		}
-
-		.operateBtn {
-			display: flex;
-			display: -webkit-flex;
-			justify-content: right;
-			flex-wrap: wrap;
-			align-items: center;
-
-			.btn {
-				width: 200rpx;
-				height: 50rpx;
-				line-height: 50rpx;
-				border: 1px solid #F60652;
-				border-radius: 8rpx;
-				display: inline-block;
-				text-align: center;
-				font-size: 28rpx;
-			}
-
-			.sure {
-				margin-left: 20rpx;
-				background-color: #F60652;
-				color: #fff;
-			}
-		}
-	}
-
+	
 	.footer {
 		border-top: 1px solid #4A4A4A;
 		width: 100%;
@@ -957,19 +660,22 @@
 			margin-right: 10rpx;
 		}
 	}
-
 	.wallPopup {
 		position: relative;
-
+		
 		/deep/.u-popup__content {
 			width: 100%;
 			height: 100%;
 			background-color: #2A2A2A;
 			.u-swiper{
 				background-color: #2A2A2A!important;
+				height: 500px!important;
 			}
 		}
-
+		/deep/.u-icon__icon{
+			font-size: 18px!important;
+			line-height: 18px!important;
+		}
 		.imgCont {
 			position: absolute;
 			bottom: 0;
@@ -978,7 +684,7 @@
 			box-sizing: border-box;
 			padding: 30rpx 40rpx;
 			background-color: rgba(0, 0, 0, .2);
-
+			z-index:1;
 			.tit {
 				font-size: 28rpx;
 				color: #fff;
@@ -1046,7 +752,7 @@
 
 			&__text {
 				color: #FFFFFF;
-				font-size: 12px;
+				font-size: 14px;
 			}
 		}
 	}
