@@ -1,25 +1,21 @@
 <template>
 	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" :closeable="true">
+		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" :closeable="true" >
 			<view class="model-popup">
 				<view class="photos-popup" >
 				 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
 					<text class="popup-op">{{photosModelInfo.content}}</text>
-					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" >
+					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px; " >
 					 <view class="popup-row" @touchmove.stop>
 						<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
 						 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
 						 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image>
-							<u--text :text="item.title" color="#FFFFFF" size="12"  style="width: 90%;margin: auto;" :lines="2"></u--text>
-							<u--text  :text="item.content" color="#909193" size="10"  style="width: 90%;margin: auto;" :lines="2"></u--text>
-							<!-- <view class="popup-rol">
-								<view class="popup-rol-text">{{item.title}}</view>
-									<view class="popup-rol-test">{{item.content}}</view>
-								</view> -->
+							<u--text :text="item.title" color="#FFFFFF" size="12"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2" ></u--text>
+							<u--text  :text="item.content" color="#909193" size="10"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
 							</view>
 								</view>
-							<view v-if="showMoreData" style="text-align: center;height: 100rpx;"></view>
+							<view v-if="showMoreData" style="text-align: center;height: 180rpx;"></view>
 					</scroll-view>
 						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>	
 						</view>	
@@ -172,7 +168,7 @@
 				background: #FF0000;
 				color: #fff;
 				position: absolute;
-				bottom: 50rpx;
+				bottom: 40rpx;
 			}
 	}	
 	.photos-active{

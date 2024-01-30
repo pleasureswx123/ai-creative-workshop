@@ -20,7 +20,7 @@
 						   </view>
 						 </view>
 						 
-						 	<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了</view>
+						 	<view v-if="showMoreData" style="text-align: center;height: 80rpx;"></view>
 						</scroll-view> 
 						 
 						 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
@@ -126,12 +126,13 @@
 			width: 100%;
 			height: 1300rpx;
 			background: #000000;
+			position: relative;
 		}
 		.create-list{
 			width: 95%;
 			margin: auto;
 			// height: 1300rpx;
-			position: relative;
+			// position: relative;
 			// overflow: hidden;
 			.create-popup-list{
 				width: 100%;
@@ -146,6 +147,7 @@
 				
 			}
 			.popup-list-but{
+				width: 95%;
 				background: #FF0000;
 				color: #fff;
 				border-radius: 15rpx;

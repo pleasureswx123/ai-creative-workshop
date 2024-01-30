@@ -96,7 +96,7 @@
 			 	  <view class="demo-layout bg-purple">
 				   <view class="row-col-item">
 				    <u--text color="#FFFFFF" :text="photosLoraInfo.title" :lines="1"></u--text>
-				    <u-icon  color="#FFFFFF" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
+				    <u-icon  color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
 				   </view>
 				   <view class="row-col-list" >
 					<u-slider class="col-slider"  max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>

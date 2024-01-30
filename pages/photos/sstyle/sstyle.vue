@@ -12,12 +12,12 @@
 						 	<view :class="['popup-list',photosStyleNumber === index?'photos-active':'']" v-for="(item,index) in photosStyleList" :key="index" @click="onPhotosLoraPopup(index)">
 						 		<u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="8"></u--image>
 								<view class="popup-list-text">
-									<u--text :text="item.title" size="12" lineHeight="20" color="#FFFFFF"></u--text>
+									<u--text :text="item.title" size="12" lineHeight="30" color="#FFFFFF" ></u--text>
 									<u--text :text="item.en_title" size="10" color="#909193"></u--text>
 								</view>
 						 	</view>
 						 </view>
-						 <view v-if="showMoreData" style="text-align: center;height: 300rpx;line-height: 100rpx;">没有更多数据...</view>
+						 <view v-if="showMoreData" style="text-align: center;height: 120rpx;"></view>
 						 </scroll-view>
 						 <u-button text="确认" class="popup-list-but" @click="onPhotosStyleConfig"></u-button>
 					</view>
@@ -106,12 +106,13 @@
 			width: 100%;
 			height: 1300rpx;
 			background: #000000;
+			position: relative;
 		}
 		.lora-list{
 			width: 90%;
 			margin: auto;
 			
-			position: relative;
+			// position: relative;
 			.lora-popup-list{
 				margin-top: 20rpx;
 				width: 100%;
@@ -141,11 +142,12 @@
 			  }
 
 			.popup-list-but{
+				width: 90%;
 				background: #FF0000;
 				color: #fff;
 				border-radius: 15rpx;
 				position: absolute;
-				bottom: 60rpx;
+				bottom: 40rpx;
 				// bottom: 40rpx;
 				border: none;
 			}
