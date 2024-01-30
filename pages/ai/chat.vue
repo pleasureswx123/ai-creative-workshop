@@ -674,6 +674,7 @@ export default {
 .box-input {
   width: 100%;
   padding: 40rpx 0;
+  position: absolute;
   left: 0;
   bottom: 0;
   border-top: 1px solid #d8d8e2;
@@ -768,9 +769,9 @@ export default {
 
 .box-msg-list {
   width: 100%;
-  height: 100%;
+  position: absolute;
   top: 0;
-  bottom: 132rpx;
+  bottom: 152rpx;
   left: 0;
   box-sizing: border-box;
   overflow: hidden;

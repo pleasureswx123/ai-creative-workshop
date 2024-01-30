@@ -28,6 +28,7 @@ export default {
   border-radius: 20rpx;
   border: 1rpx solid var(--txt-color3);
   background: var(--bg-color2);
+  position: relative;
   .icon-qm-tips {
     position: absolute;
     transform: translate3d(-50rpx, 2rpx, 0);

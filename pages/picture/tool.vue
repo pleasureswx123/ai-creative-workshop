@@ -1,19 +1,23 @@
 <template>
   <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
-    <PicHeader title="选择图片工具" />
-    <view class="grid-box">
-      <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
-        <view class="img-box">
-          <image :src="item.url"></image>
+    <navMenu></navMenu>
+    <view class="page-main">
+      <PicHeader title="选择图片工具" />
+      <view class="grid-box">
+        <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
+          <view class="img-box">
+            <image :src="item.url"></image>
+          </view>
+          <view class="title">{{item.title}}</view>
         </view>
-        <view class="title">{{item.title}}</view>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+import navMenu from '@/components/navMeun/index.vue';
 import {mapState, mapActions} from 'vuex';
 import PicHeader from './components/PicHeader.vue';
 
@@ -21,7 +25,7 @@ export default {
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
   },
-  components: { PicHeader },
+  components: { navMenu, PicHeader },
   onShow() {
     this.getToolsList({page:1, pagesize: 20, class_id: 1});
   },
@@ -43,7 +47,10 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   background: var(--bg-color1);
-  padding: 0 40rpx 100rpx;
+  padding: 0 0 100rpx;
+  .page-main {
+    padding: 0 40rpx;
+  }
 }
 .grid-box {
   display: grid;

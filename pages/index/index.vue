@@ -356,7 +356,7 @@
 				  url: '/pages/photos/photos'
 				})
 			},
-			goDary() {
+			goDary(id) {
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
