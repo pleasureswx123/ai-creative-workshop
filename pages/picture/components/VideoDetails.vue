@@ -78,18 +78,19 @@ export default {
     }
   },
   methods: {
-    handleDownVideo() {
-      this.downLoadVideoOrImgOrAudioFile({
-        src: this.info.video_url,
-        fileType: 'video'
-      });
+    async handleDownVideo() {
+      // const a = await this.getFileSize('/proxyApi/upload/video/55/55_1706503682_44677.mp4');
+      // const b = await this.getFileSize('/proxyApi/upload/video/65/65_1706513822_28764.png');
+      // const c = await this.getFileSize('/proxyApi/upload/dub/26/26_1706501199_46375.mp3');
+      
+      // const a = await this.downLoadFile('/proxyApi/upload/video/55/55_1706503682_44677.mp4');
+      // const b = await this.downLoadFile('/proxyApi/upload/video/65/65_1706513822_28764.png');
+      // const c = await this.downLoadFile('/proxyApi/upload/dub/26/26_1706501199_46375.mp3');
+      this.downLoadFile(this.info.video_url);
     },
     handleDownImage() {
-      const src = this.info.img_urls?.[this.imgCurrent] || ''
-      this.downLoadVideoOrImgOrAudioFile({
-        src,
-        fileType: 'image'
-      });
+      const src = this.info.img_urls?.[this.imgCurrent] || '';
+      src && this.downLoadFile(src);
     },
     jumpToTextToPicture() {
       alert(123)

@@ -55,7 +55,6 @@ export default {
       this.detailsInfo = null;
       this.getDetailsInfo({class_type, task_id}).then(res => {
         this.detailsInfo = res || {};
-        debugger
         this.showDetails = true;
       })
     },

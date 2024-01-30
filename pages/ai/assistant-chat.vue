@@ -156,7 +156,6 @@ export default {
     }
   },
   onLoad(options) {
-    debugger
     if (options.sid) {
       // 分享id
       uni.setStorageSync('sid', options.sid);

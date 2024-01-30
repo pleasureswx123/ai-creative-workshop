@@ -11,6 +11,11 @@ import QmTextarea from '../components/QmTextarea.vue';
 import ImgInfo from '../components/ImgInfo.vue';
 
 export default {
+  provide() {
+    return {
+      setSourceImg: this.setSourceImg
+    }
+  },
   components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
   data() {
     return {
@@ -41,6 +46,9 @@ export default {
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),
+    setSourceImg(url) {
+      this.sourceImg = url;
+    },
     clearTimer() {
       if(this.timer) {
         clearInterval(this.timer);

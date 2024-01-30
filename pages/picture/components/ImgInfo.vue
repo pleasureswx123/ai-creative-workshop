@@ -12,13 +12,14 @@
       <uni-icons v-if="!showDownload && !generating" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color2)" size="20" @tap="$emit('del')" />
     </view>
     <view class="img-el">
-      <image :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
+      <image :key="src" :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
       <view class="generating-box" v-if="generating">
         <view>
           <view class="icon-box">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="40" />
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color4)" size="50" />
           </view>
-          <view>正在生成中</view>
+          <view>等待生成...</view>
+          <view v-if="tips" class="tips-txt">{{tips}}</view>
         </view>
       </view>
     </view>
@@ -26,6 +27,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   props: {
     src: {
@@ -62,24 +65,20 @@ export default {
       const {width, height} = res.detail || {};
       this.width = width;
       this.height = height;
-      this.downLoadVideoOrImgOrAudioFile({src: this.src, fileType: 'image'}).then(res => {
-        this.info = res;
-      })
+      console.log(this.size);
+      !this.size && this.getFileSize(this.src).then(size => {
+        this.info.size = size;
+      });
     },
     handleDownload() {
-      if(this.info.size) {
-        this.saveToLocal(this.info);
-      } else {
-        this.downLoadVideoOrImgOrAudioFile({
-          src: this.src,
-          fileType: 'image'
-        }).then(res => {
-          this.saveToLocal(res);
-        });
-      }
+      this.downLoadFile(this.src);
     },
   },
   computed: {
+    ...mapState('PictureInfo', ['taskDetail']),
+    tips() {
+      return this.taskDetail?.tip || ''
+    },
     imgInfo() {
       const {size = 0} = this.info || {};
       const fileSizeInBytes = +(size || this.size) || 0;
@@ -151,9 +150,9 @@ export default {
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #9a9a9a;
-      font-size: 30rpx;
-      background: var(--bg-color2);
+      color: var(--txt-color2);
+      font-size: 28rpx;
+      background: var(--txt-color7);
       .icon-box {
         width: 100%;
         height: 100rpx;
@@ -163,6 +162,9 @@ export default {
       }
       .iconfont-qm {
         animation: rotate 1s linear infinite;
+      }
+      .tips-txt {
+        padding: 40rpx 30rpx 0;
       }
     }
   }

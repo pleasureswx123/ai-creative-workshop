@@ -63,6 +63,10 @@ export default {
   padding-top: 20rpx;
   background: var(--bg-color1);
   box-shadow: 0 0 6rpx rgba(0,0,0,.1);
+  z-index: 1030;
+  -webkit-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .btn-box {
   width: 80%;

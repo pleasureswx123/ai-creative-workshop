@@ -17,15 +17,6 @@
 </template>
 
 <script>
-const demo = {
-  "task_id": 4,
-  "content": "sfdsf",
-  "dub_url": "https://aigc.chaojiyuyan.com/upload/dub/4/4_1706257621_26327.mp3",
-  "dub_duration": "1.8秒",
-  "state": 1,
-  "create_time": "2024-01-26 16:26"
-}
-
 export default {
   props: {
     info: {
@@ -45,20 +36,7 @@ export default {
       }
     },
     downloadAudio() {
-      // this.downLoadVideoOrImgOrAudioFile({
-      //   src: 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/2minute-demo.mp4',
-      //   fileType: 'video'
-      // });
-      // return;
-      // this.downLoadVideoOrImgOrAudioFile({
-      //   src: 'https://web-assets.dcloud.net.cn/unidoc/zh/uni-app.png',
-      //   fileType: 'image'
-      // });
-      // return
-      this.downLoadVideoOrImgOrAudioFile({
-        src: this.info.dub_url,
-        fileType: 'audio'
-      });
+      this.downLoadFile(this.info.dub_url);
     },
     playAudio() {
       this.$emit('playAudio', this.info)

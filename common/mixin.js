@@ -7,7 +7,6 @@ export default {
           xhr.open('GET', url, true);
           xhr.responseType = 'blob';
           xhr.onload = function() {
-            debugger
             if (xhr.status === 200) {
               try {
                 const blob = xhr.response;
@@ -31,7 +30,6 @@ export default {
           };
           xhr.onerror = function(err) {
             console.log(err)
-            debugger
             reject()
           };
           xhr.send();
@@ -76,7 +74,6 @@ export default {
     },
     downLoadVideoOrImgOrAudioFile({src, fileType}) { // fileType: image || video || audio
       return new Promise((resolve, reject) => {
-        debugger
         // #ifdef H5
         const xhr = new XMLHttpRequest();
         xhr.open('GET', `${src}?_t=${Date.now()}`, true);
@@ -113,6 +110,54 @@ export default {
         });
         // #endif
       })
+    },
+    getFileSize(url) {
+      return new Promise((resolve, reject) => {
+        uni.downloadFile({url,
+          success: (res) => {
+            if (res.statusCode === 200) {
+              console.log('download tempFilePath: ', res.tempFilePath);
+              uni.getFileInfo({
+                filePath: res.tempFilePath,
+                success: function (res) {
+                  return resolve(res.size)
+                }
+              });
+            }
+          }
+        });
+      })
+    },
+    getFileName(url) {
+      return url?.split?.('/')?.slice(-1)?.[0] || url;
+    },
+    downLoadFile(url) {
+      uni.downloadFile({url,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            // #ifdef H5
+            const ele = document.createElement('a');
+            ele.href = res.tempFilePath;
+            ele.setAttribute('download', this.getFileName(url));
+            ele.style.display = 'none';
+            document.body.appendChild(ele);
+            ele.click();
+            document.body.removeChild(ele);
+            // #endif
+            // #ifndef H5
+            uni.saveFile({
+              tempFilePath: res.tempFilePath,
+              success: function (res) {
+                console.log(res.savedFilePath);
+              }
+            });
+            // #endif
+          }
+        },
+        fail: (err) => {
+          console.log('download fail: ', err)
+        }
+      });
     }
   }
 }

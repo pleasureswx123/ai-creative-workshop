@@ -83,8 +83,7 @@
 		{
 			"path": "pages/ai/index",
 			"style": {
-				"navigationBarTitleText": "智能对话",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "智能对话"
 			}
 		},
 		{

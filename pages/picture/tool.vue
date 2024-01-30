@@ -23,7 +23,7 @@ export default {
   },
   components: { PicHeader },
   onShow() {
-    this.getToolsList({page:1, pagesize: 20});
+    this.getToolsList({page:1, pagesize: 20, class_id: 1});
   },
   methods: {
     ...mapActions('PictureInfo', ['getToolsList']),

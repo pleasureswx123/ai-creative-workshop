@@ -79,7 +79,6 @@ export default {
           });
         },
         fail(...args) {
-          debugger
           console.log(args)
         }
       });

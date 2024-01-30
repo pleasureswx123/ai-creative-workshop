@@ -32,19 +32,12 @@ export default {
   methods: {
     loadedmetadata(res) {
       const {width, height, duration} = res.detail || {};
-      debugger
       this.width = width;
       this.height = height;
       this.duration = duration;
     },
     handleDownload() {
-      console.log('视频:视频下载')
-      this.downLoadVideoOrImgOrAudioFile({
-        src: this.src,
-        fileType: 'video'
-      }).then(res => {
-        this.saveToLocal(res);
-      });
+      this.downLoadFile(this.src);
     },
   },
   computed: {

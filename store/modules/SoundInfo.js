@@ -16,13 +16,11 @@ const actions = {
   },
   createTask({dispatch, commit}, params = {}) {
     return soundApi.createTask(params).then(res => {
-      debugger
       return Promise.resolve(res);
     })
   },
   getTaskList({dispatch, commit}, params = {}) {
     return soundApi.getTaskList(params).then(res => {
-      debugger
       return Promise.resolve(res);
     })
   },

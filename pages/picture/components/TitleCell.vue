@@ -1,15 +1,20 @@
 <template>
-  <view class="cell-box">
-    <view class="label" v-html="title"></view>
-    <view class="rt" v-if="isShowRight" @tap="handleToHistory">
-      <text>从创作历史选择</text>
-      <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
+  <view>
+    <view class="cell-box">
+      <view class="label" v-html="title"></view>
+      <view class="rt" v-if="isShowRight" @tap="handleToHistory">
+        <text>从创作历史选择</text>
+        <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
+      </view>
     </view>
+    <create ref="secludcreate" @createlist="getResult"/>
   </view>
 </template>
 
 <script>
+import create from '@/pages/photos/create/create.vue';
 export default {
+  inject: ['setSourceImg'],
   props: {
     title: {
       type: String,
@@ -20,9 +25,14 @@ export default {
       default: true
     }
   },
+  components: { create },
   methods: {
+    getResult(info) {
+      const url = info.img_url;
+      url && this.setSourceImg(url)
+    },
     handleToHistory() {
-      uni.$u.toast('跳转到选择图片')
+      this.$refs.secludcreate.open();
       // uni.$u.route({
       //   url: 'pages/photos/create/create'
       // })

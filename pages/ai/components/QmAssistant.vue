@@ -43,10 +43,8 @@ export default {
       const {id, isVote} = item;
       const prompt_id = id;
       userApi.votePrompt({prompt_id: prompt_id}).then((res) => {
-        debugger
         isVote === 1 ? uni.$u.toast('已取消收藏') : uni.$u.toast('收藏成功');
       }).catch(res => {
-        debugger
         if (res.errno == 403) {
           uni.showModal({
             title: '提示',
