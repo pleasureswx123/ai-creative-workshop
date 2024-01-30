@@ -3,7 +3,7 @@
   <view class="page-container">
     <PicHeader title="更换背景(语义)" />
     
-    <TitleCell title="选择图片" />
+    <TitleCell title="选择图片" :generateState="generateState" />
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
   

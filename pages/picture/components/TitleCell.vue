@@ -2,7 +2,7 @@
   <view>
     <view class="cell-box">
       <view class="label" v-html="title"></view>
-      <view class="rt" v-if="isShowRight" @tap="handleToHistory">
+      <view class="rt" v-if="isShowRight && (generateState === 1)" @tap="handleToHistory">
         <text>从创作历史选择</text>
         <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
       </view>
@@ -14,8 +14,12 @@
 <script>
 import create from '@/pages/photos/create/create.vue';
 export default {
-  inject: ['setSourceImg'],
+  inject: ['setImgUrl'],
   props: {
+    name: {
+      type: String,
+      default: 'sourceImg'
+    },
     title: {
       type: String,
       default: '标题'
@@ -23,13 +27,17 @@ export default {
     isShowRight: {
       type: Boolean,
       default: true
+    },
+    generateState: {
+      type: Number,
+      default: 1
     }
   },
   components: { create },
   methods: {
     getResult(info) {
       const url = info.img_url;
-      url && this.setSourceImg(url)
+      url && this.setImgUrl(this.name, url)
     },
     handleToHistory() {
       this.$refs.secludcreate.open();

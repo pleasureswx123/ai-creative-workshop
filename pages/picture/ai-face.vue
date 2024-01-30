@@ -3,13 +3,13 @@
   <view class="page-container">
     <PicHeader title="智能换脸" />
   
-    <TitleCell title="换脸源图片" />
+    <TitleCell title="换脸源图片" :generateState="generateState" />
 <!--    <ImgInfo :showDownload="true" src="/imgPath/upload/video/48/48_1706329981_92815.png" />-->
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
     
     <template v-if="generateState === 1">
-      <TitleCell title="换脸目标图片" />
+      <TitleCell title="换脸目标图片" name="targetImg" />
       <UploadImg :value.sync="targetImg"></UploadImg>
       <TipsHelp :info="taskDetail" />
     </template>

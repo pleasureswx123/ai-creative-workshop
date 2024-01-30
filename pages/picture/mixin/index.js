@@ -13,7 +13,7 @@ import ImgInfo from '../components/ImgInfo.vue';
 export default {
   provide() {
     return {
-      setSourceImg: this.setSourceImg
+      setImgUrl: this.setImgUrl
     }
   },
   components: { PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
@@ -46,8 +46,8 @@ export default {
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),
-    setSourceImg(url) {
-      this.sourceImg = url;
+    setImgUrl(keyName, url) {
+      this[keyName] = url;
     },
     clearTimer() {
       if(this.timer) {

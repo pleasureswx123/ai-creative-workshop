@@ -3,7 +3,7 @@
   <view class="page-container">
     <PicHeader title="高清重绘" />
     
-    <TitleCell title="选择要高清重绘的图片" />
+    <TitleCell title="选择要高清重绘的图片" :generateState="generateState" />
     <ImgInfo v-if="generateState === 3" :showDownload="true" :src="finalUrl" />
     <UploadImg v-else :generating="generating" :value.sync="sourceImg"></UploadImg>
   
