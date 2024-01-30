@@ -49,5 +49,7 @@ export default {
 .page-container {
   background: var(--bg-color1);
   padding: 0 30rpx 160rpx;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
 }
 </style>
