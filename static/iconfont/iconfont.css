@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "iconfont-qm";
-  src: url('@/static/iconfont/iconfont.ttf?t=1706522061797') format('truetype');
+  font-family: "iconfont-qm"; /* Project id 4418983 */
+  src: url('@/static/iconfont/iconfont.ttf?t=1706586314275') format('truetype');
 }
 
 .iconfont-qm {
@@ -9,6 +9,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qm-copy5:before {
+  content: "\e6b5";
 }
 
 .icon-qm-check:before {

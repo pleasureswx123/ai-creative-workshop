@@ -1,3 +1,6 @@
+html, body {
+  scroll-behavior: smooth;
+}
 :root {
   --bg-color1-light: #ffffff;
   --bg-color2-light: rgba(0,0,0,.1);
