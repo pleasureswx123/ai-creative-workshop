@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<view class="aiType">
-			<view class="item" v-for="(item,index) in makeList" :key="index" @click="goDary">
+			<view class="item" v-for="(item,index) in makeList" :key="index" @click="goDary(item.channel_id)">
 				<text class="aiTitle">{{item.title}}</text>
 				<text class="aiSubtitle">{{item.content}}</text>
 				<image :src="item.img" v-if="item.img" mode="aspectFit"></image>
@@ -331,10 +331,54 @@
 				}
 				window.open('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11011102002471')
 			},
+			goAi() {
+				uni.navigateTo({
+				  url: '/pages/ai/index'
+				})
+			},
+			goImgTool() {
+				uni.navigateTo({
+				  url: '/pages/picture/tool'
+				})
+			},
+			goSound() {
+				uni.navigateTo({
+				  url: '/pages/sound/index'
+				})
+			},
+			goImgToVideo() {
+				uni.navigateTo({
+				  url: '/pages/picture/img-to-video'
+				})
+			},
+			goGenerateImg() {
+				uni.navigateTo({
+				  url: '/pages/photos/photos'
+				})
+			},
 			goDary() {
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
+				}
+				switch (id) {
+				  case '1':
+					this.goAi();
+					break;
+				  case '2':
+					this.goGenerateImg();
+					break;
+				  case '3':
+					this.goImgTool();
+					break;
+				  case '4':
+					this.goImgToVideo();
+					break;
+				  case '5':
+					this.goSound();
+					break;
+				  default:
+					console.log(id)
 				}
 			},
 			goUser() {

@@ -46,7 +46,7 @@
 					<view class="item" data-url="/pages/article/list?type=help" @click="goUse">
 						<u-icon name="file-text" size="22" color="#f5f5f5"></u-icon>使用教程
 					</view>
-					<view class="item">
+					<view class="item" @click="goContact">
 						<u-icon name="kefu-ermai" size="22" color="#f5f5f5"></u-icon>联系我们
 					</view>
 					<view class="item" @click="toDoc('service')">
@@ -157,31 +157,55 @@
 				})
 			},
 			goMyCreate() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				uni.navigateTo({
 				  url: '/pages/picture/index'
 				})
 			},
 			goAi() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				uni.navigateTo({
 				  url: '/pages/ai/index'
 				})
 			},
 			goImgTool() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
 			},
-			goSound() {
-				uni.navigateTo({
-				  url: '/pages/sound/index'
-				})
-			},
 			goImgToVideo() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				uni.navigateTo({
 				  url: '/pages/picture/img-to-video'
 				})
 			},
+			goContact(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				uni.navigateTo({
+				  url: '/pages/article/code'
+				})
+			},
 			goGenerateImg() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
 				uni.navigateTo({
 				  url: '/pages/photos/photos'
 				})
