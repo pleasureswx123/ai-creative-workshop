@@ -3,6 +3,9 @@ html, body {
   -webkit-overflow-scrolling: touch;
   overflow: auto;
 }
+* {
+  -webkit-overflow-scrolling: touch;
+}
 :root {
   --bg-color1-light: #ffffff;
   --bg-color2-light: rgba(0,0,0,.1);

@@ -80,8 +80,7 @@ export default {
   .page-main {
     height: calc(100vh - 77px);
     -webkit-overflow-scrolling: touch;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
   }
 }
 </style>

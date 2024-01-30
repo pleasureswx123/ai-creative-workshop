@@ -1,20 +1,22 @@
 <template>
-  <view class="prompt-list">
-    <view class="prompt-item" v-for="item in list" :key="item.id">
-      <view class="bd" @tap="toWriteChat(item)">
-        <view class="title">{{item.title}}</view>
-        <view class="desc">{{item.desc}}</view>
-      </view>
-      <view class="ft">
-        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-eye" color="#878787" size="16" />
-        <view style="padding-right: 8rpx;">{{item.views}}</view>
-        <view class="flex1"></view>
-        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-comment" color="#878787" size="14" />
-        <view>{{item.usages}}</view>
-        <view class="flex1"></view>
-        <view @tap="doVote(item)">
-          <uni-icons v-if="item.isVote == 1" custom-prefix="iconfont-qm" type="icon-qm-heart" color="red" size="14" />
-          <uni-icons v-else custom-prefix="iconfont-qm" type="icon-qm-favorite" color="#878787" size="14" />
+  <view class="assistant-container">
+    <view class="prompt-list">
+      <view class="prompt-item" v-for="item in list" :key="item.id">
+        <view class="bd" @tap="toWriteChat(item)">
+          <view class="title">{{item.title}}</view>
+          <view class="desc">{{item.desc}}</view>
+        </view>
+        <view class="ft">
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-eye" color="#878787" size="16" />
+          <view style="padding-right: 8rpx;">{{item.views}}</view>
+          <view class="flex1"></view>
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-comment" color="#878787" size="14" />
+          <view>{{item.usages}}</view>
+          <view class="flex1"></view>
+          <view @tap="doVote(item)">
+            <uni-icons v-if="item.isVote == 1" custom-prefix="iconfont-qm" type="icon-qm-heart" color="red" size="14" />
+            <uni-icons v-else custom-prefix="iconfont-qm" type="icon-qm-favorite" color="#878787" size="14" />
+          </view>
         </view>
       </view>
     </view>
@@ -67,6 +69,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.assistant-container {
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 .prompt-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
