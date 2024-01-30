@@ -64,9 +64,15 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   height: 100vh;
+  width: 100vw;
   font-size: 24rpx;
   background: #fff;
   overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   .page-header {
     height: 77px;
     overflow: hidden;
