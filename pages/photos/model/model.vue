@@ -1,26 +1,25 @@
 <template>
-	<view class="model">
+	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" >
-			<view class="photos-popup" >
-			 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
-				<text class="popup-op">{{photosModelInfo.content}}</text>
-				<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
-				 <view class="popup-row">
-					<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
-					 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
-					 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="src"></u-image>
-						<view class="popup-rol">
-							<view class="popup-rol-text">{{item.title}}</view>
-								<view class="popup-rol-test">{{item.content}}</view>
+		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" :closeable="true" >
+			<view class="model-popup">
+				<view class="photos-popup" >
+				 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+					<text class="popup-op">{{photosModelInfo.content}}</text>
+					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px; " >
+					 <view class="popup-row" @touchmove.stop>
+						<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
+						 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
+						 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image>
+							<u--text :text="item.title" color="#FFFFFF" size="12"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2" ></u--text>
+							<u--text  :text="item.content" color="#909193" size="10"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
 							</view>
-						</view>
-							</view>
-						<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了...</view>
-						   	   
-				</scroll-view>
-					<u-button  @click="onPopupConfirm" class="popup-but">确认</u-button>	
-					</view>	
+								</view>
+							<view v-if="showMoreData" style="text-align: center;height: 180rpx;"></view>
+					</scroll-view>
+						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>	
+						</view>	
+			</view>
 		</u-popup>	
 	</view>
 </template>
@@ -66,6 +65,8 @@
 			//弹框模型选择确认事件
 			onPopupConfirm(){
 				let info = this.photosPopupList[this.photosPopupNumber]
+				// info['contents'] = this.photosModelInfo.content
+				info['contents'] = info.content
 				this.$emit('modelist',info)
 				this.photosModeleShow = false	
 				},
@@ -77,7 +78,7 @@
 			async onshowPopup(){
 					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
-					console.log(res)
+					// console.log(res.data.list[0])
 					this.photosPopupList = [...this.photosPopupList,...res.data.list]
 					this.total	= res.data.count
 			},
@@ -107,20 +108,29 @@
 
 <style lang="scss" scoped>
 .model{
-		
-	.photos-popup{
-			width: 95%;
-			height: 1300rpx;
-			margin: auto;
+	
+	.model-popup{
+		width: 100%;
+		height: 1280rpx;
+			background: #000000;
 			position: relative;
+	}
+	.photos-popup{
+			width: 90%;
+			// height: 1280rpx;
+			margin: auto;
+			// position: relative;
 			.popup-up{
 				height: 160rpx;
 				text-align: center;
 				font-size: 50rpx;
 				line-height: 160rpx;
+				color: #FFFFFF;
 			}
 			.popup-op{
 				font-size: 22rpx;
+				color: #FFFFFF;
+				opacity: 0.8;
 				// margin-bottom: 20rpx;
 			}
 			
@@ -130,10 +140,10 @@
 				justify-content: space-between;
 				flex-wrap: wrap;
 				.popup-col{
-					width: 230rpx;
-					height: 420rpx;
-					background: #f7f7f7;
-					margin-bottom: 20rpx;
+					width: 220rpx;
+					height: 446rpx;
+					background: #1D1E23;
+					margin-bottom: 40rpx;
 					.popup-rol{
 						width: 90%;
 						margin: auto;
@@ -153,17 +163,20 @@
 				}
 			}
 			.popup-but{
-				background: #000;
+				width: 90%;
+				margin: auto;
+				background: #FF0000;
 				color: #fff;
 				position: absolute;
-				bottom: 50rpx;
+				bottom: 40rpx;
 			}
 	}	
 	.photos-active{
 				// outline: 2rpx solid #000;
-				border: 2rpx #000 solid;
+				border: 2rpx #FF0000 solid;
 				border-radius: 15rpx;
 		}
 	
 }
+
 </style>

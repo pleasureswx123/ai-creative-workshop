@@ -1,19 +1,24 @@
 <template>
-	
 	<view class="phogos-tontent">
-		<!-- 提示 -->
-	 <u-cell-group class="u-cell-group">
-		<u-cell	v-if="photosTastNumber>0" value="去创建历史查看" :title="photosTastNumber+'个任务生成中...'" isLink url="/pages/componentsB/tag/tag" @click="onCellGroup"></u-cell>
+		<!-- 提示  @click="onCellGroup"-->
+	<u-cell-group class="u-cell-group">
+		<u-cell v-if="photosTastNumber>0" class="u-cell"	:border="false"  value="去创建历史查看" :title="photosTastNumber+'个任务进行中...'" isLink url="/pages/picture/index" ></u-cell>
 	</u-cell-group>
 	<!-- 内容 -->
 	<view class="photos-centont">
 		<!--	导航  -->
-		<u-subsection inactiveColor="#000" activeColor="#fff" class="u-subsection" keyName="title" :list="photosSubseCtionList" :current="photosSubseCtionCurrent" @change="onSubseCtionChange"></u-subsection>
+		<!-- <u-subsection inactiveColor="#000" activeColor="#fff" class="u-subsection" keyName="title" :list="photosSubseCtionList" :current="photosSubseCtionCurrent" @change="onSubseCtionChange"></u-subsection> -->
+		<view class="phogos-group" >
+			<!-- <view class="phogos-group-item" v-for="item in photosSubseCtionList" :key="item.id">{{item.title}}</view> -->
+				<view :class="['phogos-group-item',photosSubseCtionCurrent===0?'phogos-group-active':'']" @click="onSubseCtionChange(photosSubseCtionListOne.id)">{{photosSubseCtionListOne.title}}</view>
+				<view :class="['phogos-group-item','item',photosSubseCtionCurrent===1?'phogos-group-actives':'']" @click="onSubseCtionChange(photosSubseCtionListTow.id)">{{photosSubseCtionListTow.title}}</view>
+				<view :class="['phogos-group-item',photosSubseCtionCurrent===2?'phogos-group-activeis':'']" @click="onSubseCtionChange(photosSubseCtionListThenn.id)">{{photosSubseCtionListThenn.title}}</view>
+		</view>
 		<!-- 中间内容 -->
 		<view v-if="photosSubseCtionCurrent == 0 || photosSubseCtionCurrent == 1 || photosSubseCtionCurrent == 2">
 		 <!-- 模型选择 -->
 		<view class="photos-model">
-		 <u--text text="模型选择*" class="model-text"> </u--text>
+		 <u--text text="模型选择*" class="model-text" color="#FFFFFF"> </u--text>
 		 <u-row customStyle="margin-bottom: 10px" class="photos-row" @click="onPhotosRow">
 		 	<u-col span="3" >
 		 	 <view class="demo-layout bg-purple-light">
@@ -22,118 +27,121 @@
 		 	</u-col>
 		  <u-col span="8">
 		  <view class="demo-layout bg-purple">
-		 	<u--text :text="photosPopupLora.title"></u--text>
-		 	<u--text type="info" size="14" :text="photosPopupLora.content"></u--text>
+		 	<u--text :text="photosPopupLora.title" :lines="1" color="#FFFFFF" size="15"></u--text>
+			<!-- <view class="model-list" v-if="photosPopupLora.contents">{{photosPopupLora.contents}}</view>
+			<view class="model-list" v-else>{{photosSubseCtionListOne.content}}</view> -->
+			<view class="model-list" v-if="photosPopupLora.contents">{{photosPopupLora.contents}}</view>
+			<view v-else class="model-list" >{{photosModelList.content}}</view>							
+		 	<!--photosModelList <u--text v-if="photosPopupLora.contents" type="info" size="13" :text="photosPopupLora.contents" :lines="2"></u--text>
+		 	<u--text v-else type="info" size="13" :text="photosSubseCtionListOne.content" :lines="2"></u--text> -->
 		  </view>
 	      </u-col>
 		 <u-col span="1">
 		 <view class="demo-layout bg-purple">
-		 <u-icon  size="25" name="arrow-right"></u-icon>
+		 <u-icon  size="25" name="arrow-right" color="#FF0000" style="opacity: 0.5;"></u-icon>
 		 </view></u-col>	</u-row>
 		</view>	
 		<!-- 画面生成词 -->
 	<view class="photos-textarea">
 	 <view class="photos-textarea-text">
-		<u--text text="画面描述词*" class="photos-textarea-text"></u--text>
+		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF"></u--text>
 	 </view>
 	 <view class="textarea-list">
-	 	<u--textarea @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入内容" class="list-input"></u--textarea>
+	 	<u--textarea @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
 		<view class="list-but">
-			<u--text v-if="photosTextareaValue.length>5" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
-			<view  :class="['number-text',photosTextareaValue.length>5?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
+			<u--text v-if="photosTextareaValue.length>500" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
+			<view  :class="['number-text',photosTextareaValue.length>500?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
 		</view>
 	 </view>
 	</view>
 	<!-- 使用ControINet -->
 	<view class="photos-controinet" v-if="photosSubseCtionCurrent<2">
-	 <view class="photos-controinet-text"><u--text text="使用ControINet"></u--text></view>
+	 <view class="photos-controinet-text"><u--text text="使用ControINet" color="#FFFFFF"></u--text></view>
+
 	 <view class="photos-controinet-row" v-show="photosControinetInfoShow">
 	  <u-row customStyle="margin-bottom: 10px">
 		<u-col span="3">
 		<view class="demo-layout bg-purple-light">
 			<u--image :showLoading="true" :src="photosControinetInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
-			<!-- <view class="col-image" style="width: 100rpx;height: 100rpx;background: #e5e5e5;margin: 10px 10px;"> -->
-			<!-- <u--image :showLoading="true" :src="photosControinetInfo.url" ></u--image>	 -->
-			<!-- </view> -->
 		</view>
 		</u-col>
-	    <u-col span="8">
+	    <u-col span="9">
 		<view class="demo-layout bg-purple">
-		<u--text :text="photosControinetInfo.title" style="line-height: 60rpx;"></u--text>
-		<u-slider max="1" :showValue="true" v-model="photosControinetInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
+		 <view class="row-col-item">
+		  <u--text :text="photosControinetInfo.title" :lines="1" color="#FFFFFF"></u--text>
+		  <u-icon color="#ccc"  name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosControinetIcon"></u-icon> 
+		 </view>
+		 <view class="row-col-list" >
+		 	<u-slider class="col-slider"  max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+		 	<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosControinetInfo.value}}</view>
+		 </view>
 		</view>
 		</u-col>
-		<u-col span="1">
-		<view class="demo-layout bg-purple">
-		<u-icon name="close-circle-fill" size="25" top="-20" @click="onPhotosControinetIcon"></u-icon>
-		</view>
-		</u-col>
+	
 	</u-row>
 	</view>
-	<u-button class="photos-controinet-but"v-if="photosControinetInfoShow == false" text="添加控制网" icon="plus" @click="onPhotosControinetAdd"></u-button>
+		<u-button class="photos-controinet-but" iconColor="#FFFFFF" v-if="photosControinetInfoShow == false" text="添加控制网" icon="plus" @click="onPhotosControinetAdd"></u-button>
 </view>	
 		<!-- 使用Lora -->
 <view class="photos-lora" v-if="photosSubseCtionCurrent<2">
-			 <view class="photos-lora-text"><u--text text="使用Lora"></u--text></view>
-			 <view class="photos-lora-row"  v-show="photosLoraInfoShow">
-			   <u-row customStyle="margin-bottom: 10px">
-			 	<u-col span="3">
-			 	<view class="demo-layout bg-purple-light">
+				<view class="photos-lora-text"><u--text text="使用Lora" color="#FFFFFF"></u--text></view>
+				<view class="photos-lora-row" v-show="photosLoraInfoShow" >
+			     <u-row customStyle="margin-bottom: 10px">
+			 	  <u-col span="3">
+			 	   <view class="demo-layout bg-purple-light">
 			 		<u--image :showLoading="true" :src="photosLoraInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
-			 		<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
+			 	  </view>
+			 	  </u-col>
+			     <u-col span="9">
+			 	  <view class="demo-layout bg-purple">
+				   <view class="row-col-item">
+				    <u--text color="#FFFFFF" :text="photosLoraInfo.title" :lines="1"></u--text>
+				    <u-icon  color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
+				   </view>
+				   <view class="row-col-list" >
+					<u-slider class="col-slider"  max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+					<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosLoraInfo.value}}</view>
+				  </view>
 			 	</view>
-			 	</u-col>
-			     <u-col span="8">
-			 	<view class="demo-layout bg-purple">
-			 	<u--text :text="photosLoraInfo.title" style="line-height: 60rpx;"></u--text>
-			 	<u-slider max="1" :showValue="true" v-model="photosLoraInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
-			 	</view>
-			 	</u-col>
-			 	<u-col span="1">
-			 	<view class="demo-layout bg-purple">
-			 	<u-icon name="close-circle-fill" size="25" top="-20" @click="onPhotosLoraIcon"></u-icon>
-			 	</view>
-			 	</u-col>
-			 </u-row>
-			 </view>
-			 <u-button class="photos-lora-but"v-if="photosLoraInfoShow == false" text="添加风格" icon="plus" @click="onPhotosLoraAdd"></u-button>
-		</view>
+			   </u-col>
+		     </u-row>
+	       </view>
+	      <u-button class="photos-lora-but" iconColor="#FFFFFF" v-if="photosLoraInfoShow == false" text="添加风格" icon="plus" @click="onPhotosLoraAdd"></u-button>
+</view>
 	<!-- 图片样式哦 -->
 		<view class="photos-style">
-			<view class="photos-style-text"><u--text text="图片样式Style"></u--text></view>
-			<view class="photos-style-row" v-show="photosStyleInfoShow">
-			  <u-row customStyle="margin-bottom: 10px">
-				<u-col span="3">
-				<view class="demo-layout bg-purple-light">
-					<u--image :showLoading="true" :src="photosStyleInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
-					<!-- <u--image :showLoading="true" src="https://cdn.uviewui.com/uview/album/1.jpg" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image> -->
-				</view>
-				</u-col>
-			    <u-col span="8">
-				<view class="demo-layout bg-purple">
-				<u--text :text="photosStyleInfo.title"></u--text>
-				<u--text :text="photosStyleInfo.en_title" color="#ccc" style="margin-top: 10rpx;"></u--text>
-				
-				</view>
-				</u-col>
-				<u-col span="1">
-				<view class="demo-layout bg-purple">
-				<u-icon name="close-circle-fill" size="25" top="-20" @click="onPhotosStyleIcon"></u-icon>
-				</view>
-				</u-col>
-			</u-row>
-			</view>
-			<u-button v-if="photosStyleInfoShow == false" class="photos-style-but" text="添加样式" icon="plus" @click="onPhotoStyleAdd"></u-button>
-		</view>
-		<!-- 	参考图片 -->
-	<view class="photos-uploadup">
+		            <view class="photos-style-text"><u--text text="图片样式Style" color="#FFFFFF"></u--text></view>
+					<view class="photos-style-row" v-show="photosStyleInfoShow" >
+		              <u-row customStyle="margin-bottom: 10px">
+		                <u-col span="3">
+		                <view class="demo-layout bg-purple-light">
+		                    <u--image :showLoading="true" :src="photosStyleInfo.img_url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+		                </view>
+		                </u-col>
+		                <u-col span="9">
+		                <view class="demo-layout bg-purple">
+		                <view class="row-col-item">
+		                <u--text :text="photosStyleInfo.title" :lines="1" color="#FFFFFF"></u--text>
+		                <u-icon color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosStyleIcon"></u-icon>    
+		                </view>
+		                <u--text :lines="2" :text="photosStyleInfo.en_title" color="##909193" style="margin-top: 10rpx;"></u--text>
+		                </view>
+		                </u-col>
+		             </u-row>
+		            </view>
+		        <u-button iconColor="#FFFFFF" v-if="photosStyleInfoShow == false" class="photos-style-but" text="添加样式" icon="plus" @click="onPhotoStyleAdd"></u-button>
+		    </view>
+			
+			
+	<!-- 	参考图片 -->
+<view class="photos-uploadup">
 		<view class="photos-image">
 			<view class="photos-image-group" >
 				<view class="image-group-test">
-					<u--text text="参考图片"></u--text>
+					<u--text text="参考图片" color="#FFFFFF"></u--text>
 				</view>
 				<view class="image-group-text">
-					<u--text   suffixIcon="arrow-right" iconStyle="font-size: 15px" text="创作历史选择" @click="onPhotosText"></u--text>
+					<u--text color="#FFFFFF"   suffixIcon="arrow-right" iconStyle="font-size: 15px" text="创作历史选择" @click="onPhotosText"></u--text>
 				</view>
 			</view>
 		</view>
@@ -144,16 +152,17 @@
 				<u--image :showLoading="true" :src="photosUploadInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
 			</view>
 			</u-col>
-		    <u-col span="8" >
+		    <u-col span="9" >
 			<view class="demo-layout bg-purple" >
-			<!-- <u--text style="display:block;" :text="photosUploadInfo.name"  class="photos-upload-space"></u--text> -->
-			<view class="photos-upload-space">{{ photosUploadInfo.name }}</view>
-			<u-slider max="1" :showValue="true" v-model="photosUploadInfo.value" activeColor="#3c9cff" inactiveColor="#c0c4cc" step="0.1"></u-slider>
+			<view class="row-col-item">
+			 <!-- <u--text :text="photosUploadInfo.name" :lines="1" color="#FFFFFF"></u--text> -->
+			 	 <view style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;color:#FFFFFF;">{{photosUploadInfo.name}}</view>
+			 <u-icon color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
 			</view>
-			</u-col>
-			<u-col span="1">
-			<view class="demo-layout bg-purple">
-			<u-icon name="close-circle-fill" size="25" top="-20" @click="onPhotosUploadIcon"></u-icon>
+			<view class="row-col-list" >
+				<u-slider class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+				<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosUploadInfo.value}}</view>
+			</view>
 			</view>
 			</u-col>
 		</u-row>
@@ -162,11 +171,11 @@
 			<view class="upload-contont" @tap="onPhotosUploadAvatar">
 				<view class="upload-image">
 					<view class="upload-icon">
-					    <u-icon name="plus-square-fill"  size="28"></u-icon>
+					    <u-icon name="plus-square-fill"  size="28" color="#FFFFFF"></u-icon>
 					</view>
 					<view class="upload-text">
-					    <u--text text="点击上传"></u--text>
-					    <u--text text="支持png,jpn,jpeg格式,不超过20m" size="13" ></u--text>
+					    <u--text text="点击上传" color="#FFFFFF" style="margin-bottom: 10rpx;"></u--text>
+					    <u--text text="支持png,jpn,jpeg格式,不超过20m" size="13" color="#FFFFFF" style="opacity: 0.5;"></u--text>
 					</view>
 				</view>
 			</view>
@@ -175,18 +184,18 @@
 		<!-- 负面描述词 -->
 		<view class="photos-negative">
 			<view class="negative-text">
-				<u--text text="负面描述词"></u--text>
+				<u--text text="负面描述词" color="#FFFFFF"></u--text>
 			</view>
-		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="80" ></u--textarea>	
+		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="80" style="background: #23242C;"></u--textarea>	
 		</view>
 		<!-- 出图比例 -->
 		<view class="photos-plot">
-			<view class="plot-text"><u--text text="出图比例"></u--text></view>
+			<view class="plot-text"><u--text text="出图比例" color="#FFFFFF"></u--text></view>
 			<view class="photos">
 			<view  :class="['photos-proportion',photosPlotNumber === item.id?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(item.id)">
 					<view class="proportion-num">
-					<view :class="[photosPlotNumber === item.id?'plot-lists-active':'']">{{item.scale}}</view></view>
-					<view class="proportion-list">	{{item.title}}</view>
+					<view  :class="[photosPlotNumber === item.id?'plot-lists-active':'']">{{item.scale}}</view></view>
+					<view  class="proportion-list">	{{item.title}}</view>
 			</view>	
 			</view>
 		 </view>
@@ -198,11 +207,12 @@
 	<!-- 开始生成 -->
 	<view class="photps-generate" >
 	         <view class="generate">
-	         <u-button  class="generate-but" @click="onPhotoSselect"><view >{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-right"></u-icon></u-button>
-	         <u-button class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but">消耗{{this.photosSelectNumber}}万</view></u-button>
+	         <u-button size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
+	         <u-button size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
 	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
 	</view>	
+
 	<lora  ref="secludedlora" @loralist="loralist" :id="photosSubseCtionCurrent+1" :isLogin="isLogin"/>
 	<controinet  ref="secludedcontroinet" @controninetlist="ontroninetlist"/>
 	<model ref="secludedmodel" @modelist="modelist" :id="photosSubseCtionCurrent+1"/>
@@ -219,6 +229,7 @@ import controinet from './controinet/controinet.vue'
 import model from './model/model.vue'
 import sstyle from './sstyle/sstyle.vue'
 import create from './create/create.vue'
+import user from './user/user.vue'
 	const app = getApp()
 	export default {
 		components: {lora,controinet,model,sstyle,create	},
@@ -249,9 +260,13 @@ import create from './create/create.vue'
 				photosTextareaValue:'',//画面生成词的值
 				photosPopupLora:{},//模型选择展示数据
 				photosSubseCtionList:[],//	导航的数据
+				photosSubseCtionListOne: {},
+				photosSubseCtionListTow: {},
+				photosSubseCtionListThenn: {},
 				photosSubseCtionCurrent: 0,//切换导航的index
 				photosTastNumber:0,//任务展示排队
 				photosTaskId:'',//一件同款的数据接受
+				photosModelList:{},//接受数据
 			}
 		},
 		methods: {
@@ -261,41 +276,46 @@ import create from './create/create.vue'
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				if(this.photosTextareaValue.length>5)return util.confirm('字符数超出数量，无法提交')
-				if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
-				if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
-				if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
-				if(Object.keys(this.photosStyleInfo).length==0)return util.confirm('请添加样式')
-				if(this.photosUploadInfoShow === false)return util.confirm('请添加上传图片')
-				if(this.photosTextareaNegativeValue === '')return util.confirm('请输入负面描述词')
+				if(this.photosTextareaValue.length>500)return util.confirm('字符数超出数量，无法提交')
+				// if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
+				// if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
+				// if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
+				// if(Object.keys(this.photosStyleInfo).length==0)return util.confirm('请添加样式')
+				// if(this.photosUploadInfoShow === false)return util.confirm('请添加上传图片')
+				// if(this.photosTextareaNegativeValue === '')return util.confirm('请输入负面描述词')
 					let data = {
 						task_type:1,// 	任务类型
 						model_parentclass_id:this.photosSubseCtionCurrent+1,//模型所属分类 模型分类接口获取的id
 						model_style_id:this.photosPopupLora.model_style_id,// 模型ID
-						prompt:this.photosTextareaValue,// 正向提示词
+						prompt:this.photosTextareaValue || '',// 正向提示词
 						negative_prompt:this.photosTextareaNegativeValue,// 反向提示词
-						controlnet_type_id:this.photosControinetInfo.id,// 控制类型 id
-						controlnet_img:this.photosControinetInfo.img,//控制参考图
-						controlnet_img_detect:this.photosControinetInfo.url,// 控制垫图
-						controlnet_weight:this.photosControinetInfo.value,// 控制权重
-						lora_id:this.photosLoraInfo.lora_id,// Loraid
-						lora_weight:this.photosLoraInfo.value,//	lora 权重
-						reference_image:this.photosUploadInfo.url,//参考图
-						reference_image_weight:this.photosUploadInfo.value,//参考图权重值 
-						img_style_id:this.photosStyleInfo.img_style_id,//图片样式 id
-						img_scale:this.photosPlotList[this.photosPlotNumber].id,//	图片比例
+						controlnet_type_id:this.photosControinetInfo.id || '',// 控制类型 id
+						controlnet_img:this.photosControinetInfo.img || '',//控制参考图
+						controlnet_img_detect:this.photosControinetInfo.url || '',// 控制垫图
+						controlnet_weight:this.photosControinetInfo.value || '',// 控制权重
+						lora_id:this.photosLoraInfo.lora_id || '',// Loraid
+						lora_weight:this.photosLoraInfo.value || '',//	lora 权重
+						reference_image:this.photosUploadInfo.url || '',//参考图
+						reference_image_weight:this.photosUploadInfo.value || '',//参考图权重值 
+						img_style_id:this.photosStyleInfo.img_style_id || '',//图片样式 id
+						img_scale:this.photosPlotList[this.photosPlotNumber].id ,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
-				const res = await  util.request({url: '/AiDraw/CreateTask',data})
-					console.log(res)
-					if(res.data.task_id !== ''){
-					uni.navigateTo({
-						url:'/pages/index/index'
-					});
-						return;
-					}else{
-						util.confirm('生成失败请从新生成')
-					}
+				try{
+					const res = await  util.request({url: '/AiDraw/CreateTask',data})
+						console.log(res)
+						if(res.data.task_id !== ''){
+						uni.navigateTo({
+							url:'/pages/index/index'
+						});
+							return;
+						}else{
+							util.confirm('生成失败请从新生成')
+						}
+				}catch(e){
+					console.log(e)
+					//TODO handle the exception
+				}
 					//清空
 					// this.photosTextareaValue = ''
 					// this.photosTextareaNegativeValue = ''
@@ -340,7 +360,7 @@ import create from './create/create.vue'
 			//从创作历史选择中拿去
 			createlist(info){
 				this.photosUploadInfo.url = info.img_url
-				this.photosUploadInfo["value"] = 0.8
+				this.photosUploadInfo["value"] = 0.75
 				this.photosUploadInfo["name"] = info.img_url.slice(43, 53)
 				this.photosUploadInfoShow = true
 			},
@@ -411,6 +431,7 @@ import create from './create/create.vue'
 			},
 			//模型选择数据展示
 			modelist(info){
+					console.log(info)
 				this.photosPopupLora = info
 			},
 			//控制网展示数据
@@ -453,24 +474,48 @@ import create from './create/create.vue'
 					},
 			//点击标题进行切换事件
 			onSubseCtionChange(index){
-					this.photosSubseCtionCurrent = index
+					if(index === 1){
+						this.photosModelList = this.photosSubseCtionListOne
+							console.log(111111)
+							console.log(this.photosModelList)
+					}else if(index === 2){
+						this.photosModelList = this.photosSubseCtionListTow 
+						console.log(222222)
+						console.log(this.photosModelList)
+						this.onshowPopup()
+					}else{
+						this.photosModelList  = this.photosSubseCtionListThenn
+						console.log(333333)
+						console.log(this.photosModelList)
+					}
+					this.photosSubseCtionCurrent = index-1
 					this.onshowPlot()
 			},
 			//标题去创作历史查看
 			onCellGroup(){
 				uni.navigateTo({
-					url: '/pages/index/index'
+					url: '/pages/picture/index'
 				});
 			},
 			//请求导航数据事件
 			async	onshowList(){
 				const res = await	util.request({url: '/AiDraw/ModelClass'})
+					// console.log(res)
+					// this.photosSubseCtionList = res.data
+					this.photosSubseCtionListOne = res.data[0]
+					this.photosSubseCtionListTow = res.data[1]
+					this.photosSubseCtionListThenn = res.data[2]
 					this.photosSubseCtionList = res.data
+					this.photosModelList  = res.data[0]
 					},
 			//请求模型选择数据
 			async onshowPopup(){
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList'})
 						this.photosPopupLora  = res.data.list[0]
+								// console.log(this.photosPopupLora)
+						// this.photosPopupLora['contents'] = 
+							// console.log(this.photosSubseCtionList)
+							// console.log(this.photosSubseCtionListOne)
 			},
 			//请求任务进行中展示 
 			async onshowTask(){
@@ -540,32 +585,70 @@ import create from './create/create.vue'
 <style lang="scss" scoped>
 .phogos-tontent{
 	width: 100%;
+	background: #000000;
 	.u-cell-group{
-		// width: 100%;
-			background: paleturquoise;
-			// position: fixed;
-			// left: 0;
-			// top:80rpx;
-			// z-index:100;
+			// height: 60rpx;
+			background: #434343;
+			// .u-cell{
+			// 	margin-top: 6rpx;
+			// }
 		}
 	.photos-centont{
-		width: 95%;
+		width: 90%;
 		margin: auto;
+		.phogos-group{
+			width: 100%;
+			height: 86rpx;
+			background: #fff;
+			display: flex;
+			align-items: center;
+			border: 1px solid #606060;
+			border-radius: 50rpx;
+			margin-top: 50rpx;
+			background: #34363F;
+			// color: #ccc;
+				color: #909193;
+			.phogos-group-item{
+				height: 100%;
+				flex: 1;
+				text-align: center;
+				line-height: 86rpx;
+			}
+			.item{
+				height: 100%;
+				border-left: 1px solid #606060;
+				border-right: 1px solid #606060;
+				// line-height: 100rpx;
+			}
+		}
 		.photos-controinet{
 					margin-top: 40rpx;
 				.photos-controinet-text{
 							margin-bottom: 20rpx;
 				}
 				.photos-controinet-but{
-				background: #e5e5e5;
+					color: #FFFFFF;
+				background: #23242C;
 				border-radius: 15rpx;
+				border:none ;
 				}
 				.photos-controinet-row{
 					width: 100%;
 					height: 160rpx;
-					background: #f7f7f7;
+					background: #23242C;
 					margin-bottom: 20rpx;
-					
+					.row-col-item{
+						display: flex;
+						margin-top: 10rpx;
+						margin-bottom: 10rpx;
+					}
+					.row-col-list{
+						display: flex;
+						.col-slider{
+							flex: 1;
+							margin-right: 50rpx;
+						}
+					}
 				}
 			}
 		.photos-lora{
@@ -577,22 +660,37 @@ import create from './create/create.vue'
 			}	
 			.photos-lora-row{
 				height: 160rpx;
-				background: #f7f7f7;
+				background: #23242C;
 				margin-bottom: 20rpx;
+				.row-col-item{
+					display: flex;
+					margin-top: 10rpx;
+					margin-bottom: 10rpx;
+				}
+				.row-col-list{
+					display: flex;
+					.col-slider{
+						flex: 1;
+						margin-right: 50rpx;
+					}
+				}
 			}
 			.photos-lora-but{
-			background: #e5e5e5;
+			background: #23242C;
+			color: #FFFFFF;
 			border-radius: 15rpx;
+			border: none;
 			}
 		}
 		.u-subsection{
-					margin-top: 40rpx;
+					// margin-top: 40rpx;
 				}
 		.photos-textarea{
 				height: 360rpx;
 				margin-top: 40rpx;
 				.photos-textarea-text{
 					margin-bottom: 20rpx;
+					// color: #FFFFFF;
 				}
 				.textarea-list{
 					width: 100%;
@@ -600,6 +698,7 @@ import create from './create/create.vue'
 					position: relative;
 					.list-input{
 						height: 100%;
+						background: #23242C;
 					}
 					.list-but{
 						position: absolute;
@@ -624,7 +723,13 @@ import create from './create/create.vue'
 				width: 100%;
 				height: 160rpx;
 				margin-top: 10rpx;
-				background: #f7f7f7;
+				background: #23242C;
+				.model-list{
+					color: #FFFFFF;
+					opacity: 0.5;
+					font-size: 21rpx;
+					margin-top: 10rpx;
+				}
 			}
 		}
 		
@@ -636,10 +741,16 @@ import create from './create/create.vue'
 			margin-bottom: 20rpx;
 		}
 		.photos-style-row{
-			background: #f7f7f7;
-		}
+		            background: #23242C;
+		            .row-col-item{
+		                display: flex;
+		                // justify-content: space-betweenl;
+		            }
+		        }
 		.photos-style-but{
-			background: #e5e5e5;
+			background: #23242C;
+			color: #FFFFFF;
+			border: none;
 			border-radius: 15rpx;
 		}
 	}	
@@ -660,7 +771,7 @@ import create from './create/create.vue'
 		.upload-contont{
 			width: 100%;
 			height: 160rpx;
-			background: #f7f7f7;
+			background: #23242C;
 			.upload-image{
 				width: 100%;
 				height: 160rpx;
@@ -678,9 +789,21 @@ import create from './create/create.vue'
 	.photos-upload-row{
 		width: 100%;
 		height: 160rpx;
-		background: #f7f7f7;
+		background: #23242C;
 		margin-top: 20rpx;
-		
+		.row-col-item{
+		                    display: flex;
+		                    margin-top: 10rpx;
+		                    margin-bottom: 10rpx;
+							justify-content: space-between;
+		                }
+		                .row-col-list{
+		                    display: flex;
+		                    .col-slider{
+		                        flex: 1;
+		                        margin-right: 50rpx;
+		                    }
+		                }
 		.photos-upload-space{
 			width: 200rpx;
 			white-space: nowrap; 
@@ -710,16 +833,17 @@ import create from './create/create.vue'
 	 		justify-content: space-between; 
 	 		align-items: center;
 			font-size: 25rpx;
+			color: #d5d5d6;
 	 	.photos-proportion:nth-child(1){
 	 		width: 200rpx;
 	 		height: 200rpx;
-	 		background: #f7f7f7;
+	 		background: #23242C;
 	 		margin-bottom: 20rpx;
 	 		/* text-align: center; */
 	 		.proportion-num{
 	 			width: 100rpx;
 	 			height: 100rpx;
-	 			background: #e5e5e5;
+	 			background: #575A69;
 	 			margin: auto;
 	 			text-align: center;
 	 			line-height: 100rpx;
@@ -735,35 +859,37 @@ import create from './create/create.vue'
 	 		.photos-proportion:nth-child(2){
 	 			width: 200rpx;
 	 			height: 200rpx;
-	 			background: #f7f7f7;
+	 			background: #23242C;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
 	 				width: 100rpx;
 	 				height: 70rpx;
-	 				background: #e5e5e5;
+	 				background:#575A69;
 	 				margin: auto;
 	 				text-align: center;
 	 				line-height: 70rpx;
 	 				margin-top: 40rpx;
 	 				margin-bottom: 10rpx;
+
 	 			}
 	 			.proportion-list{
 	 				width: 100%;
 	 				height: 78rpx;
 	 				text-align: center;
 	 				line-height: 78rpx;
+				
 	 				
 	 			}
 	 			}
 	 		.photos-proportion:nth-child(3){
 	 		width: 200rpx;
 	 		height: 200rpx;
-	 			background: #f7f7f7;
+	 			background: #23242C;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
 	 				width: 80rpx;
 	 				height: 100rpx;
-	 				background: #e5e5e5;
+	 				background: #575A69;
 	 				margin: auto;
 	 				text-align: center;
 	 				line-height: 100rpx;
@@ -779,12 +905,12 @@ import create from './create/create.vue'
 	 			.photos-proportion:nth-child(4){
 	 				width: 200rpx;
 	 				height: 200rpx;
-	 				background: #f7f7f7;
+	 				background: #23242C;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
 	 					width: 50rpx;
 	 					height: 100rpx;
-	 					background:#e5e5e5;
+	 					background:#575A69;
 	 					margin: auto;
 	 					text-align: center;
 	 					line-height: 100rpx;
@@ -800,12 +926,12 @@ import create from './create/create.vue'
 	 			.photos-proportion:nth-child(5){
 	 				width: 200rpx;
 	 				height: 200rpx;
-	 				background: #f7f7f7;
+	 				background: #23242C;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
 	 					width: 100rpx;
 	 					height: 60rpx;
-	 					background: #e5e5e5;
+	 					background: #575A69;
 	 					margin: auto;
 	 					text-align: center;
 	 					line-height: 60rpx;
@@ -822,12 +948,12 @@ import create from './create/create.vue'
 	 				.photos-proportion:nth-child(6){
 	 					width: 200rpx;
 	 					height: 200rpx;
-	 					background: #f7f7f7;
+	 					background: #23242C;
 	 					margin-bottom: 20rpx;
 	 					.proportion-num{
 	 						width: 65rpx;
 	 						height: 100rpx;
-	 						background: #e5e5e5;
+	 						background: #575A69;
 	 						margin: auto;
 	 						text-align: center;
 	 						line-height: 100rpx;
@@ -867,29 +993,33 @@ import create from './create/create.vue'
 
 .photps-generate{
         width: 100%;
-        height: 150rpx;
-        margin-top: 10rpx;
-        background: #f7f7f7;
+        height: 198rpx;
+        // margin-top: 10rpx;
+        background: #323232;
 		.generate{
 			width: 90%;
 			height: 100%;
 			margin: auto;
 			display: flex;
+			align-items: center;
 		}
         .generate-but{
-            width: 100rpx;
-            margin-top: 40rpx;
-            background: #000;
+            width: 130rpx;
+            background: #494B59;
             color: #fff;
 			margin-right: 20rpx;
+			border: none;
+			font-size: 28rpx;
+			
         }
         .generate-buts{
             // width: 530rpx;
-            margin-top: 40rpx;
-            background: #000;
+            background: #FF0000;
+			border: none;
             color: #fff;
             .butts{
-                width: 78%;
+                width: 74%;
+				
 				// but{
 				// 	width:100rpx;
 				// }
@@ -899,12 +1029,14 @@ import create from './create/create.vue'
     }
 	}
 
-.plot-list-active{
-	border: #000 1rpx solid;
-	background-blend-mode: #000;
+ .plot-list-active{
+	background: #3A3C46;
+	outline: #FF0000 2rpx solid;
+	color: #FFFFFF;
+
 }
 .plot-lists-active{
-	background: #909193;
+	background: #777B8D;
 }
 .plot-active{
 	background: #909193;
@@ -934,7 +1066,48 @@ import create from './create/create.vue'
 ::v-deep .u-subsection--button__bar[data-v-78c1286e]{
 	background:#909193;
 }
+::v-deep .u-textarea--radius[data-v-09988a29]{
+	border: none;
+}
+::v-deep .u-textarea--radius[data-v-09988a29]:hover{
+	border: 1px solid #FF0000;
+}
+::v-deep .uni-textarea-placeholder {
+	opacity: 0.5;
+}
+::v-deep .uni-textarea-textarea {
+	color: #FFFFFF;
+}
 .photos-textarea-active{
 	color: red;
+}
+::v-deep .u-cell__body[data-v-1c4434ae]{
+	padding: 5px 20px;
+	
+}
+::v-deep .u-cell__value[data-v-1c4434ae]{
+		color: #FFFFFF;
+}
+::v-deep .u-icon__icon--info[data-v-2ee87dc9]{
+	color: #FFFFFF;
+}
+::v-deep .u-cell__title-text[data-v-1c4434ae]{
+	color: #FFFFFF;
+}
+.phogos-group-active{
+	background: #FF0000;
+	border-top-left-radius: 50rpx;
+	border-bottom-left-radius: 50rpx;
+	color: #FFFFFF;
+}
+.phogos-group-actives{
+	background: #FF0000;
+	color: #FFFFFF;
+}
+.phogos-group-activeis{
+	background: #FF0000;
+	border-top-right-radius: 50rpx;
+	border-bottom-right-radius: 50rpx;
+	color: #FFFFFF;
 }
 </style>

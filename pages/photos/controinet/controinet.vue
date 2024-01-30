@@ -2,76 +2,69 @@
 	<view class="conntroinet">
 		<!-- 控制网弹框 -->
 		<view class="controinet-popup">
-			<u-popup  :show="photosControinetShow" @close="onPotosPopupClose" @open="open">
-			 <view class="condition-popup">
-			<view class="controinet-popup-text">
-				<u--text text="选择控制类型" align="center" size="20" ></u--text>
-			</view>
-			<view class="controinet-popup-tabs">
-			<view :class="['controinet-tabs',controinetPopupNumber == index?'controinet-active':'']"  v-for="(item,index) in photosControinetPopupList" @click="oncontroinetPopuptabs(index)">
-			<view class="controinet-tabs-b">{{ item.title}}</view>
-			</view>
-			</view>
-			<!-- 点击切换内容 -->
-			<view class="controinet-popup-content">
-			<view  v-if="controinetPopupNumber == 0 || controinetPopupNumber == 1 || controinetPopupNumber == 2 || controinetPopupNumber == 3">
-			<!-- 标题 -->
-			<view class="controinet-content">
-			<u--text :text="photosControinetText" align="center" size="13" ></u--text>
-			</view>
-			<!-- 图片 -->
-			<view class="controinet-image">
-			<u--image :showLoading="true" :src="photosControinetImg" width="340px" height="120px" ></u--image>
-			</view>
-			<!-- 上传图片 -->
-			<u-row customStyle="margin-bottom: 10px" class="controinet-upload">
-				<u-col span="5.5">
-				 <view class="demo-layout bg-purple-light">
-					<u--text text="参考图" align="center"></u--text>
-			<!-- <u-upload class="u-upload" :fileList="photosUploadList"  :maxSize="2 * 1024 * 1024" @oversize="onPhotosOverSize" @delete="photosDeletePic" :deletable="true">
-				<view class="upload-style">
-					<u--image v-if="src" :showLoading="true" :src="src" width="152px" height="200px" radius="5px" @click="click"></u--image>
-					<view class="upload-up" >
-					<u-icon class="upload-icon" name="plus" :bold="true" size="25"></u-icon>
-					<view class="upload-icon">+</view>
-					<u--text text="点击上传" align="center"></u--text>
-					<u--text text="支持png,jpg,jpneg格式" align="center" type="info" size="13" > </u--text>
+			<u-popup  :show="photosControinetShow" @close="onPotosPopupClose" @open="open" :closeable="true">
+			<view class="controinnet-content">
+				<view class="condition-popup">
+					<view class="controinet-popup-text">
+						<u--text text="选择控制类型" align="center" size="20" color="#FFFFFF"></u--text>
+					</view>
+					<view class="controinet-popup-tabs">
+					<view :class="['controinet-tabs',controinetPopupNumber == index?'controinet-active':'']"  v-for="(item,index) in photosControinetPopupList" @click="oncontroinetPopuptabs(index)">
+					<view class="controinet-tabs-b">{{ item.title}}</view>
 					</view>
 					</view>
-			</u-upload> -->
-			<view class="upload" @tap="uploadAvatar">
-				<u--image v-if="photosControinetSrc" :showLoading="true" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image>
-				<view v-else class="upload-image">
-				    <view class="upload-icon">
-				        <u-icon class="icon" name="plus" :bold="true"  size="28" ></u-icon>
-				    </view>
-				    <view class="upload-text">
-				        <u--text text="点击上传" align="center"></u--text>
-				        <u--text text="支持png,jpn,jpeg格式" size="13" align="center"></u--text>
-				    </view>
-				</view>
-			</view>
-			
-				</view>
-					</u-col>
-					<u-col span="1">
-					<view class="upload-layout">
-						<u-icon name="play-right-fill" class="layout-icon"></u-icon>
+					<!-- 点击切换内容 -->
+					<view class="controinet-popup-content">
+					<view  v-if="controinetPopupNumber == 0 || controinetPopupNumber == 1 || controinetPopupNumber == 2 || controinetPopupNumber == 3">
+					<!-- 标题 -->
+					<view class="controinet-content">
+					<u--text :text="photosControinetText" align="center" size="13" color="#FFFFFF"></u--text>
 					</view>
-					</u-col>
-					<u-col span="5.5">
-				<u--text text="控制图" align="center"></u--text>
-					<view class="upload-purple">
-				<u--image v-if="photosControinetUploadSrc" :showLoading="true" :src="photosControinetUploadSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image>
-				<view  v-else   :class="['upload-info',photosControinetUploadText == '正在生成，请耐性等候......'?'upload-active':'']">
-				<view class="purple">{{photosControinetUploadText}}</view>
-				</view>
-				</view>
-				</u-col>
-			</u-row>
-				<!-- 确定按钮 -->
-			<u-button text="确定" class="controinet-primary" @click="onPhotosUploadBut"></u-button>
-		</view></view></view>
+					<!-- 图片 -->
+					<view class="controinet-image">
+					<u--image :showLoading="true" :src="photosControinetImg" width="360px" height="120px" ></u--image>
+					</view>
+					<!-- 上传图片 -->
+					<u-row customStyle="margin-bottom: 10px" class="controinet-upload">
+						<u-col span="5.5">
+						 <view class="demo-layout bg-purple-light">
+							<u--text text="参考图" align="center" color="#FFFFFF" ></u--text>
+					<view class="upload" @tap="uploadAvatar">
+						<!-- <u--image v-if="photosControinetSrc" :showLoading="true" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image> -->
+						<image v-if="photosControinetSrc"  :src="photosControinetSrc" mode="scaleToFill" style="width: 310rpx;height: 380rpx;"></image>
+						<view v-else class="upload-image">
+						    <view class="upload-icon">
+						        <u-icon class="icon" name="plus" :bold="true"  size="28" color="#FFFFFF"></u-icon>
+						    </view>
+						    <view class="upload-text">
+						        <u--text text="点击上传" align="center" color="#909193"></u--text>
+						        <u--text text="支持png,jpn,jpeg格式" size="13" align="center" color="#909193"></u--text>
+						    </view>
+						</view>
+					</view>
+					
+						</view>
+							</u-col>
+							<u-col span="1">
+							<view class="upload-layout">
+								<u-icon name="play-right-fill" class="layout-icon"></u-icon>
+							</view>
+							</u-col>
+							<u-col span="5.5">
+						<u--text text="控制图" align="center" color="#FFFFFF" ></u--text>
+							<view class="upload-purple">
+						<u--image v-if="photosControinetUploadSrc" :showLoading="true" :src="photosControinetUploadSrc" width="140px" height="210" style="margin-left: 25rpx;"></u--image>
+						<!-- <image v-if="photosControinetUploadSrc"  :src="photosControinetUploadSrc" mode="scaleToFill" style="width: 310rpx;height: 380rpx;"></image> -->
+						<view  v-else   :class="['upload-info',photosControinetUploadText == '正在生成，请耐心等候......'?'upload-active':'']">
+						<view class="purple">{{photosControinetUploadText}}</view>
+						</view>
+						</view>
+						</u-col>
+					</u-row>
+						<!-- 确定按钮 -->
+					<u-button text="确定" class="controinet-primary" @click="onPhotosUploadBut"></u-button>
+				</view></view></view>
+			</view>
 		</u-popup>
 		</view>
 	</view>
@@ -84,7 +77,7 @@
 			return {
 				src:'',
 				photosControinetUploadSrc:'',//控制图的图片
-				photosControinetUploadText:'上传图片后捋自动生成',
+				photosControinetUploadText:'上传参考图后自动生成',
 				photosControinetSrc:'',//上传图片回显图片
 				photosControinetText:'',
 				photosControinetImg:'',
@@ -111,7 +104,7 @@
 				            util.upload({url: '/Upload/image',filePath: res.tempFilePaths[0]})
 				            .then(res=>{
 								_this.photosControinetSrc = res.data.path
-								_this.photosControinetUploadText = '正在生成，请耐性等候......'
+								_this.photosControinetUploadText = '正在生成，请耐心等候......'
 								_this.oncontroineUpload()
 				            })
 				        }
@@ -129,7 +122,7 @@
 					this.$emit('controninetlist',info)
 					this.photosControinetUploadSrc = ''
 					this.photosControinetSrc = ''
-					this.photosControinetUploadText = '上传图片后捋自动生成'
+					// this.photosControinetUploadText = '上传参考图后自动生成'
 				},
 			//关闭弹框
 			onPotosPopupClose(){
@@ -140,6 +133,9 @@
 				this.controinetPopupNumber = index
 				this.photosControinetText = this.photosControinetPopupList[index].content
 				this.photosControinetImg = this.photosControinetPopupList[index].img_url
+				console.log(111111)
+				this.photosControinetSrc = ''
+				this.photosControinetUploadSrc = ''
 			},
 			//	请求控制网标题
 			async oncontroineList(){
@@ -170,10 +166,16 @@
 
 <style lang="scss" scoped>
 .conntroinet{
-	
+
 	.controinet-popup{
+
+		.controinnet-content{
+			width: 100%;
+			height: 1300rpx;
+			background: #000000;
+			
+		}
 			.condition-popup{
-				height: 1300rpx;
 				width: 90%;
 				margin: auto;
 				// overflow: auto;
@@ -184,7 +186,8 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					color: #909193;
+					// color: #909193;
+						color: #FFFFFF;
 					.controinet-tabs{
 						width: 200rpx;
 						height: 100%;
@@ -217,8 +220,8 @@
 			  .controinet-upload{
 				  width: 100%;
 				  height: 500rpx;
-				  margin-top: 100rpx;
-				  margin-bottom: 200rpx;
+				  margin-top: 20rpx;
+				  // margin-bottom: 200rpx;
 				.upload-style{
 					width: 300rpx;
 					height: 400rpx;
@@ -244,15 +247,17 @@
 						}
 				}
 				.upload-purple{
-					width: 300rpx;
-					height: 400rpx;
-					background: #e5e5e5;
+					width: 310rpx;
+					height: 380rpx;
+					background: #1D1E23;
+					margin-top: 10rpx;
 					// border: #e5e5e5 2rpx solid;
 					// border-radius: 15rpx;
 					.upload-info{
-						width:300rpx;
-						height:400rpx;
-						
+						// width:300rpx;
+						// height:400rpx;
+						width: 100%;
+						height: 100%;
 						
 					}
 					position: relative;
@@ -265,6 +270,7 @@
 						   top: 50%; 
 						   transform: translate(-50%, -50%);
 						   color: #909193;
+						   text-align: center;
 					}
 				}
 			  }
@@ -279,24 +285,28 @@
 						}
 		  }
 			.controinet-primary{
-				background: #000;
+				background: #FF0000;
+				border:none;
 				color: #fff;
 				border-radius: 15rpx;
+				margin-top: 130rpx;
 			}
 		.upload{
-			width: 300rpx;
-			height: 400rpx;
-			background: #e5e5e5;
-			border: #e5e5e5 2rpx solid;
+			width: 310rpx;
+			height: 380rpx;
+			background: #1D1E23;
+			margin-top: 10rpx;
+			// border: #e5e5e5 2rpx solid;
 			// border-radius: 15rpx;
 			text-align: center;
 			.upload-image{
-				margin-top: 100rpx;
-				height: 200rpx;
+				// margin-top: 100rpx;
+				// height: 200rpx;
 				.upload-icon{
 					.icon{
-						 margin-left: 120rpx;
-						 margin-bottom: 20rpx;
+						 // margin-left: 120rpx;
+						 // margin-bottom: 20rpx;
+						 padding: 120rpx 120rpx 30rpx;
 					}
 					// text-align: center;
 				}
@@ -308,12 +318,14 @@
 	    height: auto !important;
 	  }
 	.controinet-active{
-		color: #000;
+		color: #FF0000;
 		// color: red;
-		border-bottom: #909193 6rpx solid;
+		border-bottom: #FF0000 5rpx solid;
 	}
 	.upload-active{
-		background: #000;
+		background: #2B2B2B;
+		// background: #fff;
+		// 	border: #FF0000 1px solid;
 	}
 	
 }
