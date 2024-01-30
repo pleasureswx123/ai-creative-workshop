@@ -326,8 +326,8 @@
 	"globalStyle": {
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#04BABE",
-		"navigationBarTextStyle": "white"
-		// "navigationStyle": "custom"
+		"navigationBarTextStyle": "white",
+		"navigationStyle": "custom"
 		// "navigationStyle": ""
 	},
 	"subPackages": []

@@ -2,20 +2,24 @@
 	<view class="lora">
 		<!-- 风格弹框 -->
 		<view class="lora-popup" >
-			<u-popup  :show="photosLoraShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose">
-				<view  class="lora-list">
-					 <u--text text="选择Lora模型" align="center" size="18" lineHeight="70"></u--text>
-					 <view class="lora-popup-list">
-					 	<view :class="['popup-list',photosLoraNumber === index?'photos-active':'']" v-for="(item,index) in photosLoraList" :key="index" @click="onPhotosLoraPopup(index)">
-					 		<u--image :showLoading="true" :src="src" width="100%" height="130px" radius="8"></u--image>
-					 		<!-- <u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="5"></u--image> -->
-							<view class="popup-list-text">
-								<u--text :text="item.title" size="12" lineHeight="20"></u--text>
-								<u--text :text="item.content" size="10" color="#909193"></u--text>
-							</view>
-					 	</view>
-					 </view>
-					 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+			<u-popup  :show="photosLoraShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
+				<view class="list">
+					<view  class="lora-list">
+						 <u--text text="选择Lora模型" align="center" size="18" lineHeight="70" color="#FFFFFF"></u--text>
+						 <view class="lora-popup-list">
+						 	<view :class="['popup-list',photosLoraNumber === index?'photos-active':'']" v-for="(item,index) in photosLoraList" :key="index" @click="onPhotosLoraPopup(index)">
+						 		<!-- <u--image :showLoading="true" :src="src" width="100%" height="130px" radius="8"></u--image> -->
+						 		<u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="8"></u--image>
+								<view class="popup-list-text">
+									<!-- <u--text :text="item.title" size="12" lineHeight="20" class="text-up"></u--text>
+									<u--text :text="item.content" size="10" color="#909193"></u--text> -->
+									<view class="popup-rol-text">{{item.title}}</view>
+										<view class="popup-rol-test">{{item.content}}</view>
+								</view>
+						 	</view>
+						 </view>
+						 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+					</view>
 				</view>
 				</u-popup>
 		</view>	 
@@ -81,30 +85,52 @@
 <style lang="scss" scoped>
 .lora{
 	.lora-popup{
-		.lora-list{
-			width: 95%;
-			margin: auto;
-			height: 650px;
+		.list{
+			width: 100%;
+			height: 1300rpx;
+			background: #000000;
 			position: relative;
+		}
+		.lora-list{
+			width: 90%;
+			margin: auto;
+			// height: 650px;
+			// position: relative;
 			.lora-popup-list{
 				width: 100%;
 				height: 100%;
 				display: flex;
+				justify-content: space-between;
 				.popup-list{
-					width: 225rpx;
+					width: 220rpx;
 					height: 402rpx;
-					margin-left: 10rpx;
-					background: #e5e5e5;
+					// margin-left: 10rpx;
+					background: #1D1E23;
 					.popup-list-text{
-						// height: 120rpx;
-						// background: #e5e5e5;
-						padding: 10rpx 10rpx;
+						padding: 10rpx;
+						// box-sizing: border-box;
+						.popup-rol-text{
+							margin-top: 10rpx;
+							font-size: 26rpx;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+							color: #FFFFFF;
+						}
+						.popup-rol-test{
+							margin-top: 10rpx;
+							font-size: 20rpx;
+							// color:#ccc;
+							color:#fff;
+							opacity: 0.7;
+						}
 					}
 				}
 				
 			}
 			.popup-list-but{
-				background: #000;
+				width: 90%;
+				background: #FF0000;
 				color: #fff;
 				border-radius: 15rpx;
 				position: absolute;
@@ -115,7 +141,7 @@
 	
 	
 .photos-active{
-			outline: 2rpx solid #000;
+			outline: 2rpx solid #FF0000;
 			// border: 2rpx #000 solid;
 			border-radius: 15rpx;
 	}

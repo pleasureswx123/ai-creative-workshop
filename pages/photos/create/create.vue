@@ -2,34 +2,29 @@
 	<view class="create">
 		<!-- 创建弹框 -->
 		<view class="create-popup" >
-			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose">
-				<view  class="create-list">
-					 <u--text text="选择要处理的图片" align="center" size="18" lineHeight="70"></u--text>
-					 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
-					 <!-- <view class="create-content">
-						<view >
-							<view   :style="`height:${item.img_height/2}rpx`" :class="['content-image',photosCreateNumber === index?'photos-active':'']" @click="onPhotosLoraPopup(index)" v-for="(item,index) in photosCreateList" :key="index">
-														 <image :showLoading="true" :src="item.img_url"   class="image"></image>
-							</view>
-						</view>
-					 </view> -->
-					 <view class="container">
-					   <view
-					     class="cont-box"
-					     :style="{ '--layout-width': 100 / flowData.column - flowData.columnSpace + '%' }"
-					     v-for="(numVal, index) in flowData.column"
-					     :key="numVal"
-					   >
-					     <view class="item-box" v-for="(item, j) in flowData[`column_${index + 1}`]" :key="j" @click="onPhotosLoraPopup(item)">
-					       <image :class="['img-tip',photosCreateImg === item.img_url?'photos-active':'']" :src="item.img_url" mode="widthFix" lazy-load />
-					     </view>
-					   </view>
-					 </view>
-					 
-					 	<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了...</view>
-					</scroll-view> 
-					 
-					 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
+				<view class="list">
+					<view  class="create-list">
+						 <u--text color="#FFFFFF" text="选择要处理的图片" align="center" size="18" lineHeight="70"></u--text>
+						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
+						 <view class="container">
+						   <view
+						     class="cont-box"
+						     :style="{ '--layout-width': 100 / flowData.column - flowData.columnSpace + '%' }"
+						     v-for="(numVal, index) in flowData.column"
+						     :key="numVal"
+						   >
+						     <view class="item-box" v-for="(item, j) in flowData[`column_${index + 1}`]" :key="j" @click="onPhotosLoraPopup(item)">
+						       <image :class="['img-tip',photosCreateImg === item.img_url?'photos-active':'']" :src="item.img_url" mode="widthFix" lazy-load />
+						     </view>
+						   </view>
+						 </view>
+						 
+						 	<view v-if="showMoreData" style="text-align: center;height: 500rpx;">没有数据了</view>
+						</scroll-view> 
+						 
+						 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+					</view>
 				</view>
 				</u-popup>
 		</view>	 
@@ -127,10 +122,15 @@
 <style lang="scss" scoped>
 .create{
 	.create-popup{
+		.list{
+			width: 100%;
+			height: 1300rpx;
+			background: #000000;
+		}
 		.create-list{
 			width: 95%;
 			margin: auto;
-			height: 1300rpx;
+			// height: 1300rpx;
 			position: relative;
 			// overflow: hidden;
 			.create-popup-list{
@@ -146,11 +146,12 @@
 				
 			}
 			.popup-list-but{
-				background: #000;
+				background: #FF0000;
 				color: #fff;
 				border-radius: 15rpx;
 				position: absolute;
 				bottom: 40rpx;
+				border: none;
 			}
 			.create-content {
 				padding:5rpx;
@@ -196,7 +197,7 @@
 	
 .photos-active{
 	// outline: 1px solid #eee;
-	outline: 2px solid #000;
+	outline: 2px solid #FF0000;
 			// border: 2rpx #000 solid;
 			// border-radius: 15rpx;
 	}
