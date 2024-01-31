@@ -1,6 +1,7 @@
 <template>
   <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
+    <QmNavTop></QmNavTop>
     <HistoryItem v-for="item in list" :info="item" :key="item.task_id" @playAudio="handlePlayAudio"></HistoryItem>
     <QmLoadMore :status="loadStatus"></QmLoadMore>
     <view class="btn-container">

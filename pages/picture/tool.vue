@@ -1,7 +1,7 @@
 <template>
   <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
-    <navMenu></navMenu>
+    <QmNavTop></QmNavTop>
     <view class="page-main">
       <PicHeader title="选择图片工具" />
       <view class="grid-box">
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import navMenu from '@/components/navMeun/index.vue';
 import {mapState, mapActions} from 'vuex';
 import PicHeader from './components/PicHeader.vue';
 
@@ -25,7 +24,7 @@ export default {
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
   },
-  components: { navMenu, PicHeader },
+  components: { PicHeader },
   onShow() {
     this.getToolsList({page:1, pagesize: 20, class_id: 1});
   },

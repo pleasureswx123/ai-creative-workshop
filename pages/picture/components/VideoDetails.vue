@@ -3,7 +3,7 @@
       :safeAreaInsetBottom="safeAreaInsetBottom"
       :round="round" bgColor="var(--bg-color1)">
     <view :style="{borderRadius: `${round}px`}" class="pop-container" v-if="info">
-      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color2)" size="20" />
+      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color1)" size="30" />
       <view class="main-con">
         <template v-if="info.task_type === 2">
           <VideoItem :info="info"></VideoItem>
@@ -117,12 +117,12 @@ export default {
   overflow-y: auto;
   .close-btn {
     position: absolute;
-    top: 14rpx;
-    right: 14rpx;
+    top: 16rpx;
+    right: 20rpx;
     z-index: 2000;
   }
   .main-con {
-    padding: 70rpx 0 20rpx;
+    padding: 100rpx 0 20rpx;
     color: var(--txt-color1);
   }
 }

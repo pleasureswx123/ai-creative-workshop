@@ -2,6 +2,7 @@
   <page-meta page-style="background: #000000" />
   <view class="page-container" @click="hideCopyBtn">
     <view class="page-content">
+      <QmNavTop></QmNavTop>
       <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
       <view class="main-content">
         <scroll-view v-if="lists && lists.length > 0" style="height: 100%;"

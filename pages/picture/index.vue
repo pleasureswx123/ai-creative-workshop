@@ -1,6 +1,7 @@
 <template>
   <page-meta :page-style="`background: var(--bg-color1); ${(showDetails || showAction) ? 'height: 100vh; overflow: hidden' : ''}`" />
   <view class="page-container">
+    <QmNavTop></QmNavTop>
     <TipsTxt></TipsTxt>
     <CreationItem
         v-for="(item, index) in list" :key="index"

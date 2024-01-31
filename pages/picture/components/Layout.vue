@@ -1,7 +1,7 @@
 <template>
   <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
-    <view class="top-bar"><navMenu></navMenu></view>
+    <QmNavTop></QmNavTop>
     <view class="page-main">
       <view style="min-height: 150%">
         <slot></slot>
@@ -13,26 +13,15 @@
   </view>
 </template>
 
-<script>
-import navMenu from '@/components/navMeun/index.vue';
-export default {
-  components: { navMenu },
-}
-</script>
-
 <style lang="scss" scoped>
 .page-container {
   background: var(--bg-color1);
   height: 100vh;
   overflow: hidden;
   position: relative;
-  .top-bar {
-    height: 70rpx;
-    overflow: hidden;
-  }
   .page-main {
     padding: 0 30rpx;
-    height: calc(100vh - 210rpx);
+    height: calc(100vh - 220rpx);
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     overflow-y: auto;

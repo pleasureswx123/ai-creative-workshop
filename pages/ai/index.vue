@@ -1,12 +1,13 @@
 <template>
   <page-meta page-style="background: #000000" />
   <view class="page-container">
-    <view class="page-header" :style="`height: ${navType === 'digit' ? '41' : '77'}px`">
+    <view class="page-header" :style="`height: ${navType === 'digit' ? '81' : '117'}px`">
+      <QmNavTop></QmNavTop>
       <QmNavTabs :value.sync="navType"></QmNavTabs>
       <QmSubTabs v-if="navType === 'assistant'" :list="topicList" :value.sync="topicId"></QmSubTabs>
       <QmSubTabs v-if="navType === 'chat'" :list="modelList" :value.sync="modelId"></QmSubTabs>
     </view>
-    <view class="page-main" :style="`height: calc(100% - ${navType === 'digit' ? '41' : '77'}px)`">
+    <view class="page-main" :style="`height: calc(100% - ${navType === 'digit' ? '81' : '117'}px)`">
       <template v-if="navType === 'chat'">
         <QmChat :modelId="modelId"></QmChat>
       </template>
@@ -74,11 +75,11 @@ export default {
   top: 0;
   bottom: 0;
   .page-header {
-    height: 77px;
+    height: 117px;
     overflow: hidden;
   }
   .page-main {
-    height: calc(100% - 77px);
+    height: calc(100% - 117px);
     -webkit-overflow-scrolling: touch;
     overflow: hidden;
   }
