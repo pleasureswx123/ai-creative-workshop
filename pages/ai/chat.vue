@@ -8,70 +8,71 @@
         <view class="tab-item" :class="{active: model === 'model4'}" @tap="switchModel('model4')">{{model4Name}}
         </view>
       </view>-->
-      <scroll-view v-if="lists && lists.length > 0" class="box-msg-list" :scroll-x="false" :scroll-y="true"
-                   :scroll-with-animation="false" :scroll-top="scrollTop">
-        <view class="list">
-          <block v-for="(item, index) in lists" :key="index">
-            <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
+      <view class="scroll-container">
+        <scroll-view v-if="lists && lists.length > 0" class="box-msg-list" :scroll-x="false" :scroll-y="true"
+                     :scroll-with-animation="false" :scroll-top="scrollTop">
+          <view class="list">
+            <block v-for="(item, index) in lists" :key="index">
+              <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
+                <view class="avatar">
+                  <img src="/static/images/ic_ai.png" />
+                </view>
+                <view class="text markdown-body">
+                  <textComponent :text="item.message"></textComponent>
+                  <view class="tools">
+                    <view>
+                      <view class="btn" @click="copyText(item.message)">
+                        <image class="icon" src="/static/images/ic_copy.png"></image>
+                        <span>{{ '复制内容' | lang }}</span>
+                      </view>
+                    </view>
+                    <view>
+                      <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)"
+                            style="margin-right: 0;">
+                        <image class="icon" src="/static/images/ic_retry.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                
+                </view>
+              </view>
+              
+              <view class="message" v-else style="background: #fff">
+                <view class="avatar" style="background: #9aa37e">
+                  <img src="/static/images/avatar.jpg" />
+                </view>
+                <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
+                  <textComponent :text="item.message"></textComponent>
+                </view>
+              </view>
+            </block>
+            <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
               <view class="avatar">
                 <img src="/static/images/ic_ai.png" />
               </view>
               <view class="text markdown-body">
-                <textComponent :text="item.message"></textComponent>
+                <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
                 <view class="tools">
                   <view>
-                    <view class="btn" @click="copyText(item.message)">
-                      <image class="icon" src="/static/images/ic_copy.png"></image>
-                      <span>{{ '复制内容' | lang }}</span>
-                    </view>
-                  </view>
-                  <view>
-                    <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)"
-                          style="margin-right: 0;">
-                      <image class="icon" src="/static/images/ic_retry.png"></image>
+                    <view class="btn" @click="stopFetch">
+                      <image class="icon" src="/static/images/ic_stop.png"></image>
+                      <span>{{ '停止回复' | lang }}</span>
                     </view>
                   </view>
                 </view>
-              
               </view>
             </view>
             
-            <view class="message" v-else style="background: #fff">
-              <view class="avatar" style="background: #9aa37e">
-                <img src="/static/images/avatar.jpg" />
-              </view>
-              <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
-                <textComponent :text="item.message"></textComponent>
-              </view>
-            </view>
-          </block>
-          <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
-            <view class="avatar">
-              <img src="/static/images/ic_ai.png" />
-            </view>
-            <view class="text markdown-body">
-              <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
-              <view class="tools">
-                <view>
-                  <view class="btn" @click="stopFetch">
-                    <image class="icon" src="/static/images/ic_stop.png"></image>
-                    <span>{{ '停止回复' | lang }}</span>
-                  </view>
-                </view>
-              </view>
-            </view>
+            <view class="btn-copy" :style="'left:' + copyBtnLeft +'px;top:' + copyBtnTop + 'px;'"
+                  @tap="copyText(copyBtnText)">{{ '复制' | lang }}</view>
           </view>
-          
-          <view class="btn-copy" :style="'left:' + copyBtnLeft +'px;top:' + copyBtnTop + 'px;'"
-                @tap="copyText(copyBtnText)">{{ '复制' | lang }}</view>
-        </view>
-      </scroll-view>
-      <scroll-view v-else class="box-msg-list" :scroll-x="false" :scroll-y="true" :scroll-with-animation="false"
+        </scroll-view>
+        <scroll-view v-else class="box-msg-list" :scroll-x="false" :scroll-y="true" :scroll-with-animation="false"
                    style="background: #f7f7f8;">
         <welcome module="chat" :title="welcomeTitle" :desc="welcomeDesc" :tips="welcomeTips"
                  :hasModel4="!!hasModel4" @use="quickMessage"></welcome>
       </scroll-view>
-      
+      </view>
       <view class="box-input">
         <view class="input">
 					<textarea type="text" v-model="message" confirm-type="send" @confirm="sendConfirm"
@@ -154,6 +155,11 @@ export default {
       return this.chatSetting.tips
     }
   },
+  watch: {
+    modelId() {
+      this.init();
+    }
+  },
   created() {
     let tuid = 0
     let search = window.location.search
@@ -169,10 +175,7 @@ export default {
       system: app.globalData.system,
       siteroot: app.globalData.siteroot.replace('/web.php', '')
     });
-    
-    this.getChatSetting();
-    this.getHistoryMsg();
-    this.checkModel4();
+    this.init();
     app.globalData.util.checkLogin().then(() => {
       this.setData({
         isLogin: true
@@ -196,6 +199,11 @@ export default {
     // })
   },
   methods: {
+    init() {
+      this.getChatSetting();
+      this.getHistoryMsg();
+      this.checkModel4();
+    },
     inputFocus() {
       if (!this.isLogin) {
         app.globalData.util.toLogin('请登录')
@@ -763,11 +771,18 @@ export default {
   text-align: center;
 }
 
+.scroll-container {
+  height: calc(100% - 152rpx);
+  position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 .box-msg-list {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding-bottom: 152rpx;
+  //padding-bottom: 152rpx;
 }
 
 .list {

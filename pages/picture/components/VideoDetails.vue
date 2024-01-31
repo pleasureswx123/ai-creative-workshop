@@ -93,14 +93,13 @@ export default {
       src && this.downLoadFile(src);
     },
     jumpToTextToPicture() {
-      alert(123)
-      // const {task_id} = this.info || {};
-      // uni.$u.route({
-      //   url: '',
-      //   params: {
-      //     id: task_id
-      //   }
-      // })
+      const {task_id} = this.info || {};
+      uni.$u.route({
+        url: 'pages/photos/photos',
+        params: {
+          task_id: task_id
+        }
+      })
     },
   }
 }

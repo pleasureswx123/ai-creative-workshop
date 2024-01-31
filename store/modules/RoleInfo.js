@@ -10,7 +10,6 @@ const getters = {
 const actions = {
   getRoleInfo({ dispatch, commit }, id) {
     return userApi.getRoleInfo({role_id: id}).then(res => {
-      debugger
       commit('setRole', res || {})
       // #ifdef H5
       document.title = res.title
@@ -19,7 +18,6 @@ const actions = {
       // to do ...
       // #endif
     }).catch(err => {
-      debugger
       console.log(err)
     })
   }
