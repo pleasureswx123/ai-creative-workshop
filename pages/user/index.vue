@@ -1,5 +1,6 @@
 <template>
     <view class="page">
+		<navMenu></navMenu>
         <view class="bg-user">
             <view class="userinfo">
                 <view class="avatar" @tap="toSetting">
@@ -23,11 +24,11 @@
 			<view class="inteBtn" @click="blChange">兑换</view>
 		</view>
         <view class="menus">
-            <view class="item" @tap="linkto">
+            <view class="item" @click="goGenerateImg">
                 <text class="text-grey">{{ '图片创作' | lang }}</text>
 				<view class="arrow">21</view>
             </view>
-            <view class="item" @tap="linkto">
+            <view class="item" @click="goImgToVideo">
                 <text class="text-grey">{{ '视频创作' | lang }}</text>
 				<view class="arrow">5</view>
             </view>
@@ -62,8 +63,12 @@
 </template>
 
 <script>
+	import navMenu from '@/components/navMeun/index.vue';
 const app = getApp();
 export default {
+	components: {
+		navMenu
+	},
     data() {
         return {
 			isLogin: false,
@@ -132,10 +137,27 @@ export default {
                     }
                 })
                 .then((res) => {
-                    this.getUserInfo();  
+                    this.getUserInfo();
                 });
         },
-
+		goGenerateImg() {
+			if (!this.isLogin) {
+				app.globalData.util.toLogin('请登录')
+				return
+			}
+			uni.navigateTo({
+			  url: '/pages/photos/photos'
+			})
+		},
+		goImgToVideo() {
+			if (!this.isLogin) {
+				app.globalData.util.toLogin('请登录')
+				return
+			}
+			uni.navigateTo({
+			  url: '/pages/picture/img-to-video'
+			})
+		},
         linkto(e) {
 			// console.log(e)
 			if (!this.isLogin) {
@@ -147,25 +169,6 @@ export default {
                 url: url
             });
         },
-
-        toPay(type) {
-			if (!this.isLogin) {
-				app.globalData.util.toLogin('请登录')
-				return
-			}
-			app.globalData.util.toPay(type)
-        },
-
-        toTask() {
-			if (!this.isLogin) {
-				app.globalData.util.toLogin('请登录')
-				return
-			}
-            uni.navigateTo({
-                url: '/pages/task/index'
-            });
-        },
-
         toSetting() {
 			if (!this.isLogin) {
 				app.globalData.util.toLogin('请登录')
@@ -177,7 +180,7 @@ export default {
         },
 		open() {
 			this.integralShow = true
-		  },
+		},
 		close() {
 			this.integralShow = false
 		},
@@ -231,7 +234,7 @@ page {
 .userinfo {
     display: flex;
     align-items: center;
-    padding: 50rpx 0 0 60rpx;
+    padding: 50rpx 0 0 50rpx;
 }
 
 .userinfo .avatar {

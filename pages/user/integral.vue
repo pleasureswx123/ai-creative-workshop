@@ -1,5 +1,6 @@
 <template>
     <view class="page">
+		<navMenu></navMenu>
 		<view class="title">积分明细</view>
 		<view class="list">
 			<view class="item" v-for="(item,index) in recordList" :key="index">
@@ -20,8 +21,12 @@
 </template>
 
 <script>
+	import navMenu from '@/components/navMeun/index.vue';
 const app = getApp();
 export default {
+	components: {
+		navMenu
+	},
     data() {
         return {
             recordList:[],

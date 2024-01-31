@@ -195,7 +195,7 @@
 		box-sizing: border-box;
 	}
 	.title {
-		font-size: 48rpx;
+		font-size: 56rpx;
 		text-align: center;
 		margin-top: 100rpx;
 		letter-spacing: 4rpx;
@@ -250,12 +250,12 @@
 		bottom: 0;
 		text-align: center;
 		cursor: pointer;
-		background: #fff;
+		/* background: #fff; */
 		padding: 20rpx 0 50rpx 0;
 	}
-	.agree text {
+	/* .agree text {
 		color: #000;
-	}
+	} */
 	
 	.container {
 		width: 750rpx;
@@ -312,5 +312,7 @@
 		top: 26rpx;
 		z-index: 10;
 	}
-
+	.form .form-item text{
+		font-size: 32rpx;
+	}
 </style>

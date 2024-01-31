@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="navList">
-			<navMenu v-if="navShow"></navMenu>
+			<navMenu></navMenu>
 			<view class="head" @click="goUser">
 				<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
 			</view>
@@ -93,7 +93,7 @@
 			</view>
 			<text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
 			<view class="">
-				<text>用户协议和</text><text>隐私政策</text>
+				<text @click="toDoc('service')">用户协议和</text><text @click="toDoc('privacy')">隐私政策</text>
 			</view>
 			<text @click="goMiit">京ICP备2023009914号-5</text>
 			<view class="">
@@ -124,7 +124,7 @@
 					</view>
 					<view class="operateBtn">
 						<view class="btn" @click="onload">下载图片</view>
-						<view class="btn">一键同款</view>
+						<view class="btn" @click="sameModel">一键同款</view>
 					</view>
 					
 				</view>
@@ -144,7 +144,6 @@
 		data() {
 			return {
 				banner: {},
-				navShow: true,
 				makeList: [],
 				aiList: [],
 				current: 0,
@@ -282,6 +281,7 @@
 				.then((res) => {
 					this.wallList = res.data.img_urls
 					this.wallCont = res.data
+					this.task_id = res.data.task_id
 				});
 			},
 			wallInfo(task_id) {
@@ -390,6 +390,16 @@
 					url: '/pages/user/index'
 				})
 			},
+			toDoc(type) {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
+				uni.navigateTo({
+					url: '/pages/article/article?type=' + type
+				})
+			},
 			onload() {
 				uni.downloadFile({
 					url: this.wallList, //仅为示例，并非真实的资源
@@ -411,6 +421,19 @@
 					}
 				});
 			},
+			sameModel(){
+				app.globalData.util.request({
+					url: '/Home/FeedsTab',
+					data:{
+						task_id:this.task_id
+					}
+				})
+				.then((res) => {
+					uni.navigateTo({
+						url: '/page/photos/photos'
+					})
+				});
+			}
 		}
 	}
 </script>
