@@ -2,7 +2,7 @@
   <view class="hd">
     <view class="title">{{info.task_type_title}}</view>
     <view @tap.stop>
-      <u-button class="btn" :disabled="disabled" type="info" size="small" @tap="$emit('cb')" :text="btnTxt" />
+      <u-button class="btn" :disabled="disabled" type="info" size="mini" @tap="$emit('cb')" :text="btnTxt" />
     </view>
   </view>
 </template>
@@ -40,15 +40,20 @@ export default {
     min-width: 0;
   }
   .btn {
-    color: var(--txt-color2);
-    background-color: var(--bg-color2);
-    font-size: 60rpx;
+    //color: var(--txt-color2);
+    //background-color: var(--bg-color2);
+    background: var(--bg-color3);
+    color: var(--txt-color4);
+    font-size: 24rpx;
     border: 1px solid var(--txt-color3);
     //font-size: torpx(14);
     //border: 1px solid rgba(0,0,0,1);
     //color: rgba(0,0,0,1);
     //border-radius: torpx(4);
     //padding: 3rpx 15rpx;
+    /deep/ .u-button__text {
+      font-size: 24rpx!important;
+    }
   }
 }
 </style>
