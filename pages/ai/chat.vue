@@ -1,12 +1,13 @@
 <template>
   <view class="page-content" @click="hideCopyBtn">
-    <view class="page" :class="{gold: model === 'model4'}">
-      <view class="tab-model" v-if="hasModel4">
+<!--    <view class="page" :class="{gold: model === 'model4'}">-->
+    <view class="page">
+<!--      <view class="tab-model" v-if="hasModel4">
         <view class="tab-item" :class="{active: model === 'default'}" @tap="switchModel('default')">
           {{ '默认' | lang }}</view>
         <view class="tab-item" :class="{active: model === 'model4'}" @tap="switchModel('model4')">{{model4Name}}
         </view>
-      </view>
+      </view>-->
       <scroll-view v-if="lists && lists.length > 0" class="box-msg-list" :scroll-x="false" :scroll-y="true"
                    :scroll-with-animation="false" :scroll-top="scrollTop">
         <view class="list">
@@ -80,9 +81,9 @@
             <image mode="widthFix" src="/static/images/ic_send.png"></image>
           </button>
         </view>
-        <view class="balance4" v-if="model === 'model4'" @tap="toModel4Pay">
+<!--        <view class="balance4" v-if="model === 'model4'" @tap="toModel4Pay">
           {{model4Name}} {{ '余额' | lang }}<text>{{balance_model4}}</text>{{ '万字' | lang }}
-        </view>
+        </view>-->
       </view>
     </view>
   
@@ -589,18 +590,12 @@ export default {
   position: relative;
   height: 100%;
   overflow: hidden;
+  background: #fff;
 }
 .page {
   width: 100%;
+  height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: #fff;
 }
 
 .tab-model {
@@ -698,6 +693,7 @@ export default {
   max-height: 800rpx;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .box-input .input .btn-send {
@@ -769,12 +765,9 @@ export default {
 
 .box-msg-list {
   width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 152rpx;
-  left: 0;
+  height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  padding-bottom: 152rpx;
 }
 
 .list {

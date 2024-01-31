@@ -10,9 +10,8 @@
         <QmChat :modelId="modelId"></QmChat>
       </template>
   
-      <view v-if="navType === 'assistant'">
+      <view class="assistant-box" v-if="navType === 'assistant'">
         <QmAssistant :list="list"></QmAssistant>
-        <QmLoadMore :status="loadStatus"></QmLoadMore>
       </view>
   
       <template v-if="navType === 'digit'">
@@ -81,6 +80,13 @@ export default {
     height: calc(100vh - 77px);
     -webkit-overflow-scrolling: touch;
     overflow: hidden;
+  }
+  .assistant-box {
+    background: #fff;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 </style>

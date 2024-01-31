@@ -46,10 +46,16 @@ export default {
 <style lang="scss" scoped>
 .roles-group {
   padding: 30rpx;
-  background: #fff;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 .roles-card {
   margin-bottom: 40rpx;
+  &:last-child {
+    margin-bottom: 200rpx;
+  }
   .card-title {
     color: #666;
     font-size: 32rpx;

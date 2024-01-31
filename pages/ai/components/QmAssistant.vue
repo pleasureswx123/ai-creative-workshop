@@ -70,10 +70,9 @@ export default {
 
 <style lang="scss" scoped>
 .assistant-container {
-  height: 100%;
-  -webkit-overflow-scrolling: touch;
-  overflow-x: hidden;
-  overflow-y: auto;
+  min-height: 100%;
+  padding-bottom: 100rpx;
+  box-sizing: border-box;
 }
 .prompt-list {
   display: grid;
