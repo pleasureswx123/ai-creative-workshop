@@ -1,11 +1,14 @@
 <template>
-	<view class="create">
+	<view class="create" >
 		<!-- 创建弹框 -->
 		<view class="create-popup" >
 			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
 				<view class="list">
 					<view  class="create-list">
-						 <u--text color="#FFFFFF" text="选择要处理的图片" align="center" size="18" lineHeight="70"></u--text>
+						
+						 <view @mousewheel.prevent>
+						 	 <u--text color="#FFFFFF"  text="选择要处理的图片" align="center" size="50rpx" lineHeight="160rpx"></u--text>
+						 </view>
 						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
 						 <view class="container">
 						   <view
@@ -20,10 +23,11 @@
 						   </view>
 						 </view>
 						 
-						 	<view v-if="showMoreData" style="text-align: center;height: 80rpx;"></view>
+						 	<view v-if="showMoreData" style="text-align: center;height: 100rpx;"></view>
 						</scroll-view> 
-						 
-						 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+						 <view @mousewheel.prevent>
+						 	<u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+						 </view>
 					</view>
 				</view>
 				</u-popup>
@@ -73,6 +77,7 @@
 					let photosCreateInfo = {img_url:this.photosCreateImg}	
 					this.photosCreateShow = false
 					this.$emit('createlist',photosCreateInfo)
+					// this.photosCreateNumber = 
 			},
 			//创建弹框中选择每一项
 			onPhotosLoraPopup(img){
@@ -204,4 +209,8 @@
 			// border-radius: 15rpx;
 	}
 }
+/deep/ .uni-scroll-view {
+		// 在真正的滚动区域设置 阻断滚动穿透
+		overscroll-behavior-y: contain !important;
+	}
 </style>

@@ -1,13 +1,6 @@
 <template>
-  <view class="container" @touchmove.stop.prevent="">
-	<u-popup :show="show" @close="close" @open="open" @touchmove.stop.prevent="" class="popupshow">
-		<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" >
-	            <view v-for="item in value" :key="item" >
-	                <text>出淤泥而不染，濯清涟而不妖</text>
-	            </view>
-				<view v-if="value>60" style="height: 100rpx;">没有更多了</view>
-		</scroll-view>
-			</u-popup>
+  <view class="container" >
+		<view  class="list">初期的思考</view>
 	 </view>	
 </template>
  
@@ -59,8 +52,10 @@ export default {
  
 <style lang="scss" scoped>
 .container{
-	.popupshow{
-		height: 100vh;
+	.list{
+		margin-top: 100rpx;
+		text-align: center;
+		font-size: 28rpx;
 	}
 	}
 </style>

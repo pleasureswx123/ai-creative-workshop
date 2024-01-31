@@ -1,8 +1,10 @@
 <template>
-	<view class="phogos-tontent">
-		<!-- 提示  @click="onCellGroup"-->
-	<u-cell-group class="u-cell-group">
-		<u-cell v-if="photosTastNumber>0" class="u-cell"	:border="false"  value="去创建历史查看" :title="photosTastNumber+'个任务进行中...'" isLink url="/pages/picture/index" ></u-cell>
+	<view class="phogos-tontent" >
+		<!-- 页头 -->
+		<!-- <u--text text="生成图片" size="24" color="#FFFFFF" align="center" lineHeight="80"></u--text> -->
+		<!-- 提示  @click="onCellGroup" -->
+	<u-cell-group class="u-cell-group"  v-if="photosTastNumber>0">
+		<u-cell   :titleStyle="{'color':'#FFFFFF'}" :rightIconStyle="{'color':'#FFFFFF'}" 	:border="false"  value="去创建历史查看" :title="photosTastNumber+'个任务进行中...'" isLink url="/pages/picture/index" ></u-cell>
 	</u-cell-group>
 	<!-- 内容 -->
 	<view class="photos-centont">
@@ -18,7 +20,7 @@
 		<view v-if="photosSubseCtionCurrent == 0 || photosSubseCtionCurrent == 1 || photosSubseCtionCurrent == 2">
 		 <!-- 模型选择 -->
 		<view class="photos-model">
-		 <u--text text="模型选择*" class="model-text" color="#FFFFFF"> </u--text>
+		 <u--text text="模型选择*" class="model-text" color="#FFFFFF" size="28rpx"> </u--text>
 		 <u-row customStyle="margin-bottom: 10px" class="photos-row" @click="onPhotosRow">
 		 	<u-col span="3" >
 		 	 <view class="demo-layout bg-purple-light">
@@ -27,24 +29,21 @@
 		 	</u-col>
 		  <u-col span="8">
 		  <view class="demo-layout bg-purple">
-		 	<u--text :text="photosPopupLora.title" :lines="1" color="#FFFFFF" size="15"></u--text>
-			<!-- <view class="model-list" v-if="photosPopupLora.contents">{{photosPopupLora.contents}}</view>
-			<view class="model-list" v-else>{{photosSubseCtionListOne.content}}</view> -->
-			<view class="model-list" v-if="photosPopupLora.contents">{{photosPopupLora.contents}}</view>
-			<view v-else class="model-list" >{{photosModelList.content}}</view>							
-		 	<!--photosModelList <u--text v-if="photosPopupLora.contents" type="info" size="13" :text="photosPopupLora.contents" :lines="2"></u--text>
-		 	<u--text v-else type="info" size="13" :text="photosSubseCtionListOne.content" :lines="2"></u--text> -->
+		 	<u--text :text="photosPopupLora.title" :lines="1" color="#FFFFFF" size="28rpx"></u--text>
+			<view  class="model-list" v-if="photosPopupLora.contents">{{photosPopupLora.contents}}</view>
+			<view  v-else class="model-list" >{{photosModelList.content}}</view>							
+	
 		  </view>
 	      </u-col>
 		 <u-col span="1">
-		 <view class="demo-layout bg-purple">
-		 <u-icon  size="25" name="arrow-right" color="#FF0000" style="opacity: 0.5;"></u-icon>
+		 <view class="demo-layout bg-purple" >
+				<u-icon  size="28rpx" name="arrow-right" color="#FF0000" style="opacity: 0.5;margin-left: 10rpx;" ></u-icon> 
 		 </view></u-col>	</u-row>
 		</view>	
 		<!-- 画面生成词 -->
 	<view class="photos-textarea">
 	 <view class="photos-textarea-text">
-		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF"></u--text>
+		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF" size="28rpx"></u--text>
 	 </view>
 	 <view class="textarea-list">
 	 	<u--textarea @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
@@ -56,8 +55,7 @@
 	</view>
 	<!-- 使用ControINet -->
 	<view class="photos-controinet" v-if="photosSubseCtionCurrent<2">
-	 <view class="photos-controinet-text"><u--text text="使用ControINet" color="#FFFFFF"></u--text></view>
-
+	 <view class="photos-controinet-text"><u--text text="使用ControINet" color="#FFFFFF" size="28rpx"></u--text></view>
 	 <view class="photos-controinet-row" v-show="photosControinetInfoShow">
 	  <u-row customStyle="margin-bottom: 10px">
 		<u-col span="3">
@@ -68,12 +66,12 @@
 	    <u-col span="9">
 		<view class="demo-layout bg-purple">
 		 <view class="row-col-item">
-		  <u--text :text="photosControinetInfo.title" :lines="1" color="#FFFFFF"></u--text>
-		  <u-icon color="#ccc"  name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosControinetIcon"></u-icon> 
+		  <u--text :text="photosControinetInfo.title" :lines="1" color="#FFFFFF" size="28rpx"></u--text>
+		  <u-icon color="#ccc"  name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosControinetIcon"></u-icon> 
 		 </view>
 		 <view class="row-col-list" >
 		 	<u-slider class="col-slider"  max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-		 	<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosControinetInfo.value}}</view>
+		 	<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosControinetInfo.value}}</view>
 		 </view>
 		</view>
 		</u-col>
@@ -84,7 +82,7 @@
 </view>	
 		<!-- 使用Lora -->
 <view class="photos-lora" v-if="photosSubseCtionCurrent<2">
-				<view class="photos-lora-text"><u--text text="使用Lora" color="#FFFFFF"></u--text></view>
+				<view class="photos-lora-text"><u--text text="使用Lora" color="#FFFFFF" size="28rpx"></u--text></view>
 				<view class="photos-lora-row" v-show="photosLoraInfoShow" >
 			     <u-row customStyle="margin-bottom: 10px">
 			 	  <u-col span="3">
@@ -95,12 +93,12 @@
 			     <u-col span="9">
 			 	  <view class="demo-layout bg-purple">
 				   <view class="row-col-item">
-				    <u--text color="#FFFFFF" :text="photosLoraInfo.title" :lines="1"></u--text>
-				    <u-icon  color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
+				    <u--text color="#FFFFFF" :text="photosLoraInfo.title" :lines="1" size="28rpx"></u--text>
+				    <u-icon  color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
 				   </view>
 				   <view class="row-col-list" >
 					<u-slider class="col-slider"  max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-					<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosLoraInfo.value}}</view>
+					<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view>
 				  </view>
 			 	</view>
 			   </u-col>
@@ -108,9 +106,9 @@
 	       </view>
 	      <u-button class="photos-lora-but" iconColor="#FFFFFF" v-if="photosLoraInfoShow == false" text="添加风格" icon="plus" @click="onPhotosLoraAdd"></u-button>
 </view>
-	<!-- 图片样式哦 -->
+	<!-- 图片样式哦 --> 
 		<view class="photos-style">
-		            <view class="photos-style-text"><u--text text="图片样式Style" color="#FFFFFF"></u--text></view>
+		            <view class="photos-style-text"><u--text text="图片样式Style" color="#FFFFFF" size="28rpx"></u--text></view>
 					<view class="photos-style-row" v-show="photosStyleInfoShow" >
 		              <u-row customStyle="margin-bottom: 10px">
 		                <u-col span="3">
@@ -121,15 +119,15 @@
 		                <u-col span="9">
 		                <view class="demo-layout bg-purple">
 		                <view class="row-col-item">
-		                <u--text :text="photosStyleInfo.title" :lines="1" color="#FFFFFF"></u--text>
-		                <u-icon color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosStyleIcon"></u-icon>    
+		                <u--text :text="photosStyleInfo.title" :lines="1" color="#FFFFFF" size="28rpx" lineHeight="56rpx"></u--text>
+		                <u-icon color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosStyleIcon"></u-icon>    
 		                </view>
-		                <u--text :lines="2" :text="photosStyleInfo.en_title" color="##909193" style="margin-top: 10rpx;"></u--text>
+		                <u--text :lines="2" :text="photosStyleInfo.en_title" color="#909193" size="24rpx"></u--text>
 		                </view>
 		                </u-col>
 		             </u-row>
 		            </view>
-		        <u-button iconColor="#FFFFFF" v-if="photosStyleInfoShow == false" class="photos-style-but" text="添加样式" icon="plus" @click="onPhotoStyleAdd"></u-button>
+		        <u-button  iconColor="#FFFFFF" v-if="photosStyleInfoShow == false" class="photos-style-but" text="添加样式" icon="plus" @click="onPhotoStyleAdd"  ></u-button>
 		    </view>
 			
 			
@@ -138,10 +136,10 @@
 		<view class="photos-image">
 			<view class="photos-image-group" >
 				<view class="image-group-test">
-					<u--text text="参考图片" color="#FFFFFF"></u--text>
+					<u--text text="参考图片" color="#FFFFFF" size="28rpx"></u--text>
 				</view>
 				<view class="image-group-text">
-					<u--text color="#FFFFFF"   suffixIcon="arrow-right" iconStyle="font-size: 15px" text="创作历史选择" @click="onPhotosText"></u--text>
+					<u--text color="#FFFFFF"   suffixIcon="arrow-right" :iconStyle="{'font-size': '15px','color':'#FFFFFF'}" text="创作历史选择" @click="onPhotosText"size="28rpx" ></u--text>
 				</view>
 			</view>
 		</view>
@@ -156,12 +154,12 @@
 			<view class="demo-layout bg-purple" >
 			<view class="row-col-item">
 			 <!-- <u--text :text="photosUploadInfo.name" :lines="1" color="#FFFFFF"></u--text> -->
-			 	 <view style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;color:#FFFFFF;">{{photosUploadInfo.name}}</view>
-			 <u-icon color="#ccc" name="trash" size="20" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
+			 	 <view style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;color:#FFFFFF;font-size: 28rpx">{{photosUploadInfo.name}}</view>
+			 <u-icon color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
 			</view>
 			<view class="row-col-list" >
 				<u-slider class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-				<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;">&nbsp;强度{{photosUploadInfo.value}}</view>
+				<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosUploadInfo.value}}</view>
 			</view>
 			</view>
 			</u-col>
@@ -171,11 +169,11 @@
 			<view class="upload-contont" @tap="onPhotosUploadAvatar">
 				<view class="upload-image">
 					<view class="upload-icon">
-					    <u-icon name="plus-square-fill"  size="28" color="#FFFFFF"></u-icon>
+					    <u-icon name="plus-square-fill"  size="28rpx" color="#FFFFFF"></u-icon>
 					</view>
 					<view class="upload-text">
-					    <u--text text="点击上传" color="#FFFFFF" style="margin-bottom: 10rpx;"></u--text>
-					    <u--text text="支持png,jpn,jpeg格式,不超过20m" size="13" color="#FFFFFF" style="opacity: 0.5;"></u--text>
+					    <u--text text="点击上传" color="#FFFFFF" style="margin-bottom: 10rpx;" size="28rpx"></u--text>
+					    <u--text text="支持png,jpn,jpeg格式,不超过20m" size="24rpx" color="#FFFFFF" style="opacity: 0.5;"></u--text>
 					</view>
 				</view>
 			</view>
@@ -184,13 +182,13 @@
 		<!-- 负面描述词 -->
 		<view class="photos-negative">
 			<view class="negative-text">
-				<u--text text="负面描述词" color="#FFFFFF"></u--text>
+				<u--text text="负面描述词" color="#FFFFFF" size="28rpx"></u--text>
 			</view>
-		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="80" style="background: #23242C;"></u--textarea>	
+		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="100" style="background: #23242C;"></u--textarea>	
 		</view>
 		<!-- 出图比例 -->
 		<view class="photos-plot">
-			<view class="plot-text"><u--text text="出图比例" color="#FFFFFF"></u--text></view>
+			<view class="plot-text"><u--text text="出图比例" color="#FFFFFF" size=""></u--text></view>
 			<view class="photos">
 			<view  :class="['photos-proportion',photosPlotNumber === item.id?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(item.id)">
 					<view class="proportion-num">
@@ -208,7 +206,8 @@
 	<view class="photps-generate" >
 	         <view class="generate">
 	         <u-button size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
-	         <u-button size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
+	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
+	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
 	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
 	</view>	
@@ -235,7 +234,8 @@ import user from './user/user.vue'
 		components: {lora,controinet,model,sstyle,create	},
 		data() {
 			return {
-				isLogin:false,
+				photosDisabled:true,//禁用状态按钮
+				isLogin:true,//登陆的判断
 				photosSelecShow:false,//开始生成前张数选择的显示和隐藏
 				photosSelecList:[
 					  { name:1 ,fontSize:'20'},
@@ -306,11 +306,11 @@ import user from './user/user.vue'
 						console.log(res)
 						if(res.data.task_id !== ''){
 						uni.navigateTo({
-							url:'/pages/index/index'
+							url:'/pages/picture/index'
 						});
 							return;
 						}else{
-							util.confirm('生成失败请从新生成')
+							util.confirm('生成失败，请从新生成！')
 						}
 				}catch(e){
 					console.log(e)
@@ -331,6 +331,8 @@ import user from './user/user.vue'
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				// if(this.photosTextareaValue !== '')return  this.photosDisabled = false
+				if(this.photosTextareaValue !== '')return  console.log(111111)
 			},
 			//负面描述词的没有登陆提示
 			onPhotoTextareaFocu(){
@@ -490,12 +492,14 @@ import user from './user/user.vue'
 					}
 					this.photosSubseCtionCurrent = index-1
 					this.onshowPlot()
-			},
-			//标题去创作历史查看
-			onCellGroup(){
-				uni.navigateTo({
-					url: '/pages/picture/index'
-				});
+					this.photosTextareaValue = ''
+					this.onPhotosControinetIcon()
+					this.onPhotosLoraIcon()
+					this.onPhotosStyleIcon()
+					this.photosTextareaNegativeValue = ''
+					this.photosPlotNumber = 5
+					this.onPhotosUploadIcon()
+					this.photosSelectNumber = 1
 			},
 			//请求导航数据事件
 			async	onshowList(){
@@ -587,16 +591,14 @@ import user from './user/user.vue'
 	width: 100%;
 	background: #000000;
 	.u-cell-group{
-			// height: 60rpx;
 			background: #434343;
-			// .u-cell{
-			// 	margin-top: 6rpx;
-			// }
 		}
 	.photos-centont{
 		width: 90%;
 		margin: auto;
+		overflow: hidden;
 		.phogos-group{
+			margin-top: 40rpx;
 			width: 100%;
 			height: 86rpx;
 			background: #fff;
@@ -604,9 +606,8 @@ import user from './user/user.vue'
 			align-items: center;
 			border: 1px solid #606060;
 			border-radius: 50rpx;
-			margin-top: 50rpx;
+			font-size: 28rpx;
 			background: #34363F;
-			// color: #ccc;
 				color: #909193;
 			.phogos-group-item{
 				height: 100%;
@@ -706,6 +707,7 @@ import user from './user/user.vue'
 						bottom: -10px;
 						display: flex;
 						color: #909193;
+						font-size: 24rpx;
 					  .numbers-is{
 					  	width: 300rpx;
 					  	margin-right: 50rpx;
@@ -727,8 +729,15 @@ import user from './user/user.vue'
 				.model-list{
 					color: #FFFFFF;
 					opacity: 0.5;
-					font-size: 21rpx;
+					font-size: 24rpx;
 					margin-top: 10rpx;
+					// font-size: 28rpx;
+					word-break: break-all;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					 overflow: hidden;
+					 -webkit-line-clamp: 2;
+					   -webkit-box-orient: vertical; 
 				}
 			}
 		}
@@ -834,6 +843,7 @@ import user from './user/user.vue'
 	 		align-items: center;
 			font-size: 25rpx;
 			color: #d5d5d6;
+			font-size: 28rpx;
 	 	.photos-proportion:nth-child(1){
 	 		width: 200rpx;
 	 		height: 200rpx;
@@ -1085,13 +1095,7 @@ import user from './user/user.vue'
 	padding: 5px 20px;
 	
 }
-::v-deep .u-cell__value[data-v-1c4434ae]{
-		color: #FFFFFF;
-}
-::v-deep .u-icon__icon--info[data-v-2ee87dc9]{
-	color: #FFFFFF;
-}
-::v-deep .u-cell__title-text[data-v-1c4434ae]{
+::v-deep .u-cell__value{
 	color: #FFFFFF;
 }
 .phogos-group-active{
