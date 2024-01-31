@@ -124,7 +124,7 @@
 					</view>
 					<view class="operateBtn">
 						<view class="btn" @click="onload">下载图片</view>
-						<view class="btn">一键同款</view>
+						<view class="btn" @click="sameModel">一键同款</view>
 					</view>
 					
 				</view>
@@ -281,6 +281,7 @@
 				.then((res) => {
 					this.wallList = res.data.img_urls
 					this.wallCont = res.data
+					this.task_id = res.data.task_id
 				});
 			},
 			wallInfo(task_id) {
@@ -410,6 +411,19 @@
 					}
 				});
 			},
+			sameModel(){
+				app.globalData.util.request({
+					url: '/Home/FeedsTab',
+					data:{
+						task_id:this.task_id
+					}
+				})
+				.then((res) => {
+					uni.navigateTo({
+						url: '/page/photos/photos'
+					})
+				});
+			}
 		}
 	}
 </script>
