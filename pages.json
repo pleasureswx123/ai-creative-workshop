@@ -10,8 +10,7 @@
 			"path": "pages/picture/index",
 			"style": {
 				"navigationBarTitleText": "我的创作",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 100
+				"enablePullDownRefresh": true
 			}
 		},
 		{
