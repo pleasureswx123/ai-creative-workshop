@@ -1,4 +1,5 @@
 <template>
+  <page-meta page-style="background: #000000" />
   <view class="page-container" @click="hideCopyBtn">
     <view class="page-content">
       <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
@@ -513,7 +514,12 @@ export default {
 </script>
 <style>
 .page-container {
-  height: 100vh;
+  //height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .page-content {
   width: 100vw;
@@ -532,20 +538,22 @@ export default {
   flex: 1;
   min-height: 0;
   box-sizing: border-box;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .box-msg-list {
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
-  overflow-y: scroll;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  padding-bottom: 300rpx;
+  //left: 0;
+  //right: 0;
+  //top: 0;
+  //bottom: 0;
   background: #fff;
   z-index: 1;
   transition: all 0.3s;
