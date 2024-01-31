@@ -1,11 +1,11 @@
 <template>
-	<view class="lora">
+	<view class="lora" @mousewheel.prevent>
 		<!-- 风格弹框 -->
 		<view class="lora-popup" >
 			<u-popup  :show="photosLoraShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
 				<view class="list">
 					<view  class="lora-list">
-						 <u--text text="选择Lora模型" align="center" size="18" lineHeight="70" color="#FFFFFF"></u--text>
+						 <u--text text="选择Lora模型" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
 						 <view class="lora-popup-list">
 						 	<view :class="['popup-list',photosLoraNumber === index?'photos-active':'']" v-for="(item,index) in photosLoraList" :key="index" @click="onPhotosLoraPopup(index)">
 						 		<!-- <u--image :showLoading="true" :src="src" width="100%" height="130px" radius="8"></u--image> -->
@@ -18,7 +18,7 @@
 								</view>
 						 	</view>
 						 </view>
-						 <u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+						 <u-button  text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
 					</view>
 				</view>
 				</u-popup>
@@ -57,9 +57,10 @@
 					let photosLoraInfo =  this.photosLoraList[this.photosLoraNumber]
 							photosLoraInfo['value'] = 0.8
 					this.photosLoraShow = false
-						console.log(photosLoraInfo)
+						// console.log(photosLoraInfo)
 					this.$emit('loralist',photosLoraInfo)
 					// this.photosLoraInfoShow = true
+					// this.photosLoraNumber = 0
 			},
 			//风格弹框中选择每一项
 			onPhotosLoraPopup(index){
@@ -111,7 +112,7 @@
 						// box-sizing: border-box;
 						.popup-rol-text{
 							margin-top: 10rpx;
-							font-size: 26rpx;
+							font-size: 24rpx;
 							overflow: hidden;
 							white-space: nowrap;
 							text-overflow: ellipsis;
@@ -135,6 +136,7 @@
 				border-radius: 15rpx;
 				position: absolute;
 				bottom: 40rpx;
+				border: none;
 			}
 		}
 	}
@@ -146,4 +148,8 @@
 			border-radius: 15rpx;
 	}
 }
+/deep/ .uni-scroll-view {
+		// 在真正的滚动区域设置 阻断滚动穿透
+		overscroll-behavior-y: contain !important;
+	}
 </style>

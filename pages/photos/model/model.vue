@@ -2,22 +2,26 @@
 	<view class="model" >
 		<!-- 模型选择弹框 -->
 		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" :closeable="true" >
-			<view class="model-popup">
+			<view class="model-popup" >
 				<view class="photos-popup" >
-				 <view class="popup-up">选择{{photosModelInfo.title}}模型</view>
-					<text class="popup-op">{{photosModelInfo.content}}</text>
-					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px; " >
+					<view @mousewheel.prevent>
+						<view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+						<text class="popup-op">{{photosModelInfo.content}}</text>
+					</view>
+					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
 					 <view class="popup-row" @touchmove.stop>
 						<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
 						 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
 						 <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image>
-							<u--text :text="item.title" color="#FFFFFF" size="12"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2" ></u--text>
-							<u--text  :text="item.content" color="#909193" size="10"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
+							<u--text :text="item.title" color="#FFFFFF" size="24rpx"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2" ></u--text>
+							<u--text  :text="item.content" color="#909193" size="20rpx"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
 							</view>
 								</view>
 							<view v-if="showMoreData" style="text-align: center;height: 180rpx;"></view>
 					</scroll-view>
-						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>	
+					<view @mousewheel.prevent >
+						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>
+					</view>	
 						</view>	
 			</view>
 		</u-popup>	
@@ -69,6 +73,7 @@
 				info['contents'] = info.content
 				this.$emit('modelist',info)
 				this.photosModeleShow = false	
+				// this.photosPopupNumber = 0
 				},
 			//点击选择模型弹框中的一项事件
 			onPopupNumber(num){
@@ -128,16 +133,17 @@
 				color: #FFFFFF;
 			}
 			.popup-op{
-				font-size: 22rpx;
-				color: #FFFFFF;
-				opacity: 0.8;
+				font-size: 24rpx;
+				color: #d5d5d5;
+				// opacity: 0.8;
 				// margin-bottom: 20rpx;
 			}
 			
 			.popup-row{
 				margin-top: 20rpx;
 				display: flex;
-				justify-content: space-between;
+				// justify-content: space-between;
+				justify-content: space-around;
 				flex-wrap: wrap;
 				.popup-col{
 					width: 220rpx;
@@ -169,14 +175,26 @@
 				color: #fff;
 				position: absolute;
 				bottom: 40rpx;
+				border: none;
 			}
 	}	
 	.photos-active{
-				// outline: 2rpx solid #000;
-				border: 2rpx #FF0000 solid;
+				outline: 2rpx solid #FF0000;
+				// border: 2rpx #FF0000 solid;
 				border-radius: 15rpx;
 		}
 	
 }
+// ::v-deep .uni-croll-view{
+// 	overscroll-behavior-y: contain !important;
+// }
+
+ 
+	/deep/ .uni-scroll-view {
+		// 在真正的滚动区域设置 阻断滚动穿透
+		overscroll-behavior-y: contain !important;
+	}
+
+
 
 </style>

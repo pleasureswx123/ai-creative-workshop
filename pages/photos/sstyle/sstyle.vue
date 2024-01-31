@@ -5,21 +5,25 @@
 			<u-popup  :show="photosStyleShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
 				<view class="list">
 					<view  class="lora-list">
-						 <u--text text="选择样式" align="center" size="18" lineHeight="70" color="#FFFFFF"></u--text>
-						 <u--text :text="`基于${photosStyleId[id-1]}训1练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`" align="center" size="12" lineHeight="20" color="#FFFFFF"></u--text>
+						<view @mousewheel.prevent>
+							 <u--text text="选择样式" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
+						</view>
+						 <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="20" color="#d5d5d5"></u--text>
 						<scroll-view  scroll-y="true" @scrolltolower="onPhotosSstyleList" style="height: 600px;">
 						 <view class="lora-popup-list">
 						 	<view :class="['popup-list',photosStyleNumber === index?'photos-active':'']" v-for="(item,index) in photosStyleList" :key="index" @click="onPhotosLoraPopup(index)">
 						 		<u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="8"></u--image>
 								<view class="popup-list-text">
-									<u--text :text="item.title" size="12" lineHeight="30" color="#FFFFFF" ></u--text>
-									<u--text :text="item.en_title" size="10" color="#909193"></u--text>
+									<u--text :text="item.title" size="24rpx" lineHeight="30" color="#FFFFFF" ></u--text>
+									<u--text :text="item.en_title" size="20rpx" color="#909193"></u--text>
 								</view>
 						 	</view>
 						 </view>
-						 <view v-if="showMoreData" style="text-align: center;height: 120rpx;"></view>
+						 <view v-if="showMoreData" style="text-align: center;height: 150rpx;"></view>
 						 </scroll-view>
-						 <u-button text="确认" class="popup-list-but" @click="onPhotosStyleConfig"></u-button>
+						 <view @mousewheel.prevent>
+						 	<u-button text="确认" class="popup-list-but" @click="onPhotosStyleConfig"></u-button>
+						 </view>
 					</view>
 				</view>
 				</u-popup>
@@ -69,6 +73,7 @@
 					photosSTyleInfo['value'] = 0.8
 					this.photosStyleShow = false
 					this.$emit('stylelist',photosSTyleInfo)
+					// this.photosStyleNumber = 0
 			},
 			//样式弹框中选择每一项
 			onPhotosLoraPopup(index){
@@ -161,4 +166,8 @@
 		border-radius: 15rpx;
 	}
 }
+/deep/ .uni-scroll-view {
+		// 在真正的滚动区域设置 阻断滚动穿透
+		overscroll-behavior-y: contain !important;
+	}
 </style>
