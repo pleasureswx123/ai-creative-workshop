@@ -1,11 +1,11 @@
 <template>
 	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @open="open"  @close="onPotosPopupClose" :closeable="true" >
+		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" >
 			<view class="model-popup" >
 				<view class="photos-popup" >
 					<view @mousewheel.prevent>
-						<view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+						<view class="popup-up">选择{{photosModelInfo.title}}模型{{id}}</view>
 						<text class="popup-op">{{photosModelInfo.content}}</text>
 					</view>
 					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
@@ -50,7 +50,7 @@
 		methods: {
 			open() {
 					this.photosModeleShow = true 
-					// this.onshowPopup()
+					this.onshowPopup()
 					this.onshowList()
 				},
 			//触底加载数据
@@ -83,14 +83,12 @@
 			async onshowPopup(){
 					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
-					// console.log(res.data.list[0])
 					this.photosPopupList = [...this.photosPopupList,...res.data.list]
 					this.total	= res.data.count
 			},
 			//请求请求导航数据事件
 			async	onshowList(){
 				const res = await	util.request({url: '/AiDraw/ModelClass'})
-					// console.log(res)
 					if(this.id === 1){
 							this.photosModelInfo = res.data[0]
 					}else if(this.id === 2){
@@ -101,13 +99,7 @@
 					this.photosSubseCtionList = res.data
 					},
 		},
-		onLoad() {
-			// this.onshowPopup()
-		},
-		created(){
-			this.onshowPopup()
-			
-		}
+		
 	}
 </script>
 
