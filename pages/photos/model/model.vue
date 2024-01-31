@@ -1,11 +1,11 @@
 <template>
 	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup  :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" >
+		<u-popup   :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" >
 			<view class="model-popup" >
 				<view class="photos-popup" >
 					<view @mousewheel.prevent>
-						<view class="popup-up">选择{{photosModelInfo.title}}模型{{id}}</view>
+						<view class="popup-up">选择{{photosModelInfo.title}}模型</view>
 						<text class="popup-op">{{photosModelInfo.content}}</text>
 					</view>
 					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
@@ -82,7 +82,7 @@
 			//请求模型选择数据
 			async onshowPopup(){
 					let data ={page:this.page,pagesize:this.pageSize,class_id:this.id}
-				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
+					const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
 					this.photosPopupList = [...this.photosPopupList,...res.data.list]
 					this.total	= res.data.count
 			},
@@ -159,6 +159,10 @@
 					}	
 					}
 				}
+			}
+			.popup-row:after{
+				content: '';
+				flex: 220rpx;
 			}
 			.popup-but{
 				width: 90%;

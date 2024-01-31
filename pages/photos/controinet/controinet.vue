@@ -31,7 +31,7 @@
 							<u--text text="参考图" align="center" color="#FFFFFF" size="28rpx"></u--text>
 					<view class="upload" @tap="uploadAvatar">
 						<!-- <u--image v-if="photosControinetSrc" :showLoading="true" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image> -->
-						<image v-if="photosControinetSrc"  :src="photosControinetSrc" mode="scaleToFill" style="width: 310rpx;height: 380rpx;"></image>
+						<image v-if="photosControinetSrc"  :src="photosControinetSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
 						<view v-else class="upload-image">
 						    <view class="upload-icon">
 						        <u-icon class="icon" name="plus" :bold="true"  size="28rpx" color="#FFFFFF"></u-icon>
@@ -54,7 +54,7 @@
 						<u--text text="控制图" align="center" color="#FFFFFF" size="24rpx"></u--text>
 							<view class="upload-purple">
 						<!-- <u--image v-if="photosControinetUploadSrc" :showLoading="true" :src="photosControinetUploadSrc" width="140px" height="210" style="margin-left: 25rpx;"></u--image> -->
-						<image v-if="photosControinetUploadSrc"  :src="photosControinetUploadSrc" mode="scaleToFill" style="width: 310rpx;height: 380rpx;"></image>
+						<image v-if="photosControinetUploadSrc"  :src="photosControinetUploadSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
 						<view  v-else   :class="['upload-info',photosControinetUploadText == '正在生成，请耐心等候......'?'upload-active':'']">
 						<view class="purple">{{photosControinetUploadText}}</view>
 						</view>
@@ -256,6 +256,7 @@
 					background: #1D1E23;
 					margin-top: 10rpx;
 					font-size: 28rpx;
+					overflow: hidden;
 					// border: #e5e5e5 2rpx solid;
 					// border-radius: 15rpx;
 					.upload-info{
@@ -296,13 +297,14 @@
 				border:none;
 				color: #fff;
 				border-radius: 15rpx;
-				margin-top: 80rpx;
+				margin-top: 50rpx;
 			}
 		.upload{
 			width: 310rpx;
 			height: 380rpx;
 			background: #1D1E23;
 			margin-top: 10rpx;
+			overflow: hidden;
 			// border: #e5e5e5 2rpx solid;
 			// border-radius: 15rpx;
 			text-align: center;
@@ -316,7 +318,7 @@
 					margin-top: 80rpx;
 					margin-bottom: 30rpx;
 					.icon{
-						width: 28rpx;
+						width: 50rpx;
 						margin: auto;
 						 // margin-left: 120rpx;
 						 // margin-bottom: 20rpx;
