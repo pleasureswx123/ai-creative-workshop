@@ -1,6 +1,8 @@
 <template>
-  <view class="pictrue-box">
-    <video class="video-box" object-fit="contain" :src="info.video_url" :poster="info.video_cover_img" />
+  <view class="video-item">
+    <view class="pictrue-box">
+      <video class="video-box" object-fit="contain" :src="info.video_url" :poster="info.video_cover_img" />
+    </view>
   </view>
 </template>
 
@@ -16,6 +18,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.video-item {
+  padding: 50rpx 0 200px;
+}
 .pictrue-box {
   background-color: var(--txt-color5);
   aspect-ratio: 16 / 9;

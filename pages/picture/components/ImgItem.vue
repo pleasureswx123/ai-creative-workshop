@@ -1,6 +1,6 @@
 <template>
   <view class="pictrue-box">
-    <u-swiper height="500" :current="current" :list="imgUrls" imgMode="aspectFit"
+    <u-swiper height="100%" :current="current" :list="imgUrls" imgMode="aspectFit"
               :autoplay="false" @change="change" @click="handleClick">
       <template v-if="isShowIndicator">
         <view slot="indicator" class="indicator">
@@ -31,7 +31,8 @@ export default {
       return this.info?.img_urls || []
     },
     isShowIndicator() {
-      return this.imgUrls.length > 1
+      return false
+      // return this.imgUrls.length > 1
     },
     currentImg() {
       return this.imgUrls?.[this.current] || ''
@@ -53,9 +54,22 @@ export default {
 
 <style lang="scss" scoped>
 .pictrue-box {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   background: var(--txt-color5);
-  /deep/ .u-swiper__wrapper__item__wrapper__image {
-    background-color: var(--txt-color5)!important;
+  /deep/ {
+    .u-swiper__wrapper__item__wrapper__image {
+      background-color: #000!important;
+    }
+    .u-swiper__wrapper__item, .u-swiper__wrapper__item__wrapper {
+      background: #000!important;
+    }
+    uni-image>div, uni-image>img {
+      background-color: #000!important;
+    }
   }
 }
 

@@ -1,41 +1,44 @@
 <template>
-  <u-popup :show="showPop" mode="bottom" @close="showPop = false"
+  <u-popup :show="showPop" mode="bottom" @close="showPop = false" overlayStyle="background: rgba(0,0,0,.8)"
       :safeAreaInsetBottom="safeAreaInsetBottom"
       :round="round" bgColor="var(--bg-color1)">
     <view :style="{borderRadius: `${round}px`}" class="pop-container" v-if="info">
       <view class="top-bar">
-        <icon class="close-btn" @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
+        <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="rgba(255,255,255,.5)" size="30" />
+<!--        <icon class="close-btn" @tap="showPop = false" color="var(&#45;&#45;txt-color1)" type="cancel" size="30" />-->
       </view>
-<!--      <uni-icons class="close-btn" @tap="showPop = false" color="var(&#45;&#45;txt-color1)" type="closeempty" size="30"></uni-icons>-->
-<!--      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(&#45;&#45;txt-color1)" size="30" />-->
-      <view class="main-con">
-        <template v-if="info.task_type === 2">
+      <template v-if="info.task_type === 2">
+        <view class="main-video-con">
           <VideoItem :info="info"></VideoItem>
-        </template>
-        <template v-if="info.task_type !== 2">
+        </view>
+      </template>
+      <template v-if="info.task_type !== 2">
+        <view class="main-img-con">
           <ImgItem @change="sn => { imgCurrent = sn }" :info="info"></ImgItem>
-        </template>
-      </view>
-      <ItemFooter :info="info" />
+        </view>
+      </template>
       <view class="footer-bar">
-        <template v-if="info.task_type === 2">
-          <view class="btn-box" @tap="handleDownVideo">
-            <text>下载视频</text>
-          </view>
-        </template>
-        <template v-if="info.task_type === 1">
-          <view class="btn-box" @tap="handleDownImage">
-            <text>下载图片</text>
-          </view>
-          <view class="btn-box" @tap="jumpToTextToPicture">
-            <text>一键同款</text>
-          </view>
-        </template>
-        <template v-if="![1,2].includes(info.task_type)">
-          <view class="btn-box" @tap="handleDownImage">
-            <text>下载图片</text>
-          </view>
-        </template>
+        <ItemFooter :info="info" />
+        <view>
+          <template v-if="info.task_type === 2">
+            <view class="btn-box" @tap="handleDownVideo">
+              <text>下载视频</text>
+            </view>
+          </template>
+          <template v-if="info.task_type === 1">
+            <view class="btn-box" @tap="handleDownImage">
+              <text>下载图片</text>
+            </view>
+            <view class="btn-box" @tap="jumpToTextToPicture">
+              <text>一键同款</text>
+            </view>
+          </template>
+          <template v-if="![1,2].includes(info.task_type)">
+            <view class="btn-box" @tap="handleDownImage">
+              <text>下载图片</text>
+            </view>
+          </template>
+        </view>
       </view>
     </view>
   </u-popup>
@@ -63,7 +66,7 @@ export default {
     },
     round: {
       type: [Boolean, String, Number],
-      default: 12
+      default: 8
     }
   },
   data() {
@@ -114,13 +117,19 @@ export default {
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  padding-bottom: 60rpx;
   color: var(--txt-color1);
   background: var(--bg-color1);
-  max-height: 90vh;
+  max-height: 95vh;
   overflow-y: auto;
   .top-bar {
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //right: 0;
+    //width: 100%;
     height: 80rpx;
+    //z-index: 100;
+    box-sizing: border-box;
     padding: 0 20rpx;
     display: flex;
     align-items: center;
@@ -130,9 +139,24 @@ export default {
       z-index: 2000;
     }
   }
-  .main-con {
-    padding: 0 0 20rpx;
+  .footer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: rgba(0,0,0,.8);
+    padding-bottom: 60rpx;
+    box-sizing: border-box;
+    min-height: 180px;
+  }
+  .main-video-con {
     color: var(--txt-color1);
+  }
+  .main-img-con {
+    color: var(--txt-color1);
+    height: calc(95vh - 80rpx);
+    position: relative;
   }
 }
 .btn-box {
