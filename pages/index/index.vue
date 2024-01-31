@@ -93,7 +93,7 @@
 			</view>
 			<text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
 			<view class="">
-				<text>用户协议和</text><text>隐私政策</text>
+				<text @click="toDoc('service')">用户协议和</text><text @click="toDoc('privacy')">隐私政策</text>
 			</view>
 			<text @click="goMiit">京ICP备2023009914号-5</text>
 			<view class="">
@@ -388,6 +388,16 @@
 				}
 				uni.navigateTo({
 					url: '/pages/user/index'
+				})
+			},
+			toDoc(type) {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
+				uni.navigateTo({
+					url: '/pages/article/article?type=' + type
 				})
 			},
 			onload() {
