@@ -3,7 +3,11 @@
       :safeAreaInsetBottom="safeAreaInsetBottom"
       :round="round" bgColor="var(--bg-color1)">
     <view :style="{borderRadius: `${round}px`}" class="pop-container" v-if="info">
-      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color1)" size="30" />
+      <view class="top-bar">
+        <icon class="close-btn" @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
+      </view>
+<!--      <uni-icons class="close-btn" @tap="showPop = false" color="var(&#45;&#45;txt-color1)" type="closeempty" size="30"></uni-icons>-->
+<!--      <uni-icons class="close-btn" @tap="showPop = false" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(&#45;&#45;txt-color1)" size="30" />-->
       <view class="main-con">
         <template v-if="info.task_type === 2">
           <VideoItem :info="info"></VideoItem>
@@ -59,7 +63,7 @@ export default {
     },
     round: {
       type: [Boolean, String, Number],
-      default: 20
+      default: 12
     }
   },
   data() {
@@ -115,14 +119,19 @@ export default {
   background: var(--bg-color1);
   max-height: 90vh;
   overflow-y: auto;
-  .close-btn {
-    position: absolute;
-    top: 16rpx;
-    right: 20rpx;
-    z-index: 2000;
+  .top-bar {
+    height: 80rpx;
+    padding: 0 20rpx;
+    display: flex;
+    align-items: center;
+    .close-btn {
+      position: relative;
+      margin-left: auto;
+      z-index: 2000;
+    }
   }
   .main-con {
-    padding: 100rpx 0 20rpx;
+    padding: 0 0 20rpx;
     color: var(--txt-color1);
   }
 }
