@@ -166,6 +166,7 @@ util.toLogin = function (message = '') {
             uni.navigateTo({
                 url: '/pages/login/index'
             })
+			document.body.style.position = null
         })
     } else {
         uni.navigateTo({

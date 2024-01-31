@@ -85,7 +85,6 @@
 				navShow: false,
 				integralShow: false,
 				value: '',
-				code: '',
 				userinfo: {
 					user_id: 0,
 					balance: 0,
@@ -138,7 +137,7 @@
 				app.globalData.util.request({
 					url: '/user/bindCard',
 					data: {
-						code: this.code
+						code: this.value,
 					}
 				})
 				.then((res) => {
@@ -152,6 +151,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 					url: '/pages/user/index'
 				})
@@ -161,6 +161,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/index'
 				})
@@ -170,8 +171,19 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/ai/index'
+				})
+			},
+			goGenerateImg() {
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
+				uni.navigateTo({
+				  url: '/pages/photos/photos'
 				})
 			},
 			goImgTool() {
@@ -179,6 +191,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
@@ -188,26 +201,9 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/img-to-video'
-				})
-			},
-			goContact(){
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				uni.navigateTo({
-				  url: '/pages/article/code'
-				})
-			},
-			goGenerateImg() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				uni.navigateTo({
-				  url: '/pages/photos/photos'
 				})
 			},
 			goUse(e) {
@@ -215,21 +211,34 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				const url = e.currentTarget.dataset.url;
 				uni.navigateTo({
 					url: url
 				});
+			},
+			goContact(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
+				uni.navigateTo({
+				  url: '/pages/article/code'
+				})
 			},
 			toDoc(type) {
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
 				}
+				document.body.style.position = null
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
 				})
 			},
 			doLogout() {
+				document.body.style.position = null
 				app.globalData.util.request({
 					url: '/user/logout'
 				}).then((res) => {

@@ -1,20 +1,35 @@
 <template>
-	<view class="code">
-		<image src="../../static/images/code.png" mode="aspectFit"></image>
-		<text>请使用微信扫一扫</text>
+	<view class="">
+		<navMenu></navMenu>
+		<view class="code">
+			<image src="../../static/images/code.png" mode="aspectFit"></image>
+			<text>请使用微信扫一扫</text>
+		</view>
 	</view>
+	
 </template>
 
 <script>
+	import navMenu from '@/components/navMeun/index.vue';
+	export default {
+		components: {
+			navMenu
+		},
+	}
 </script>
 
 <style lang="scss" scoped>
+	page {
+		background: #0D0D0D;
+	}
 	.code{
-		width: 100%;
 		text-align: center;
-		margin-top: 50rpx;
+		padding: 30rpx 0;
+		background: #fff;
+		border-radius: 10px;
+		margin: 50rpx 30rpx 0;
 		text{
-			display: inline-block;			
+			display: inline-block;
 		}
 	}
 </style>

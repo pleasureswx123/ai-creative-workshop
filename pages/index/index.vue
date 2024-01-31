@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="navList">
-			<navMenu v-if="navShow"></navMenu>
+			<navMenu></navMenu>
 			<view class="head" @click="goUser">
 				<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
 			</view>
@@ -144,7 +144,6 @@
 		data() {
 			return {
 				banner: {},
-				navShow: true,
 				makeList: [],
 				aiList: [],
 				current: 0,
