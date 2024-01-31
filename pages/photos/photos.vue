@@ -9,7 +9,6 @@
 	<!-- 内容 -->
 	<view class="photos-centont">
 		<!--	导航  -->
-		<!-- <u-subsection inactiveColor="#000" activeColor="#fff" class="u-subsection" keyName="title" :list="photosSubseCtionList" :current="photosSubseCtionCurrent" @change="onSubseCtionChange"></u-subsection> -->
 		<view class="phogos-group" >
 			<!-- <view class="phogos-group-item" v-for="item in photosSubseCtionList" :key="item.id">{{item.title}}</view> -->
 				<view :class="['phogos-group-item',photosSubseCtionCurrent===0?'phogos-group-active':'']" @click="onSubseCtionChange(photosSubseCtionListOne.id)">{{photosSubseCtionListOne.title}}</view>
@@ -46,7 +45,7 @@
 		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF" size="28rpx"></u--text>
 	 </view>
 	 <view class="textarea-list">
-	 	<u--textarea @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
+	 	<u--textarea height="120" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
 		<view class="list-but">
 			<u--text v-if="photosTextareaValue.length>500" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
 			<view  :class="['number-text',photosTextareaValue.length>500?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
@@ -478,17 +477,13 @@ import user from './user/user.vue'
 			onSubseCtionChange(index){
 					if(index === 1){
 						this.photosModelList = this.photosSubseCtionListOne
-							console.log(111111)
-							console.log(this.photosModelList)
+						this.onshowPopup(index)
 					}else if(index === 2){
 						this.photosModelList = this.photosSubseCtionListTow 
-						console.log(222222)
-						console.log(this.photosModelList)
-						this.onshowPopup()
+						this.onshowPopup(index)
 					}else{
 						this.photosModelList  = this.photosSubseCtionListThenn
-						console.log(333333)
-						console.log(this.photosModelList)
+						this.onshowPopup(index)
 					}
 					this.photosSubseCtionCurrent = index-1
 					this.onshowPlot()
@@ -504,8 +499,6 @@ import user from './user/user.vue'
 			//请求导航数据事件
 			async	onshowList(){
 				const res = await	util.request({url: '/AiDraw/ModelClass'})
-					// console.log(res)
-					// this.photosSubseCtionList = res.data
 					this.photosSubseCtionListOne = res.data[0]
 					this.photosSubseCtionListTow = res.data[1]
 					this.photosSubseCtionListThenn = res.data[2]
@@ -513,13 +506,10 @@ import user from './user/user.vue'
 					this.photosModelList  = res.data[0]
 					},
 			//请求模型选择数据
-			async onshowPopup(){
-				const res = await	 util.request({url: '/AiDraw/ModelStyleList'})
+			async onshowPopup(id){
+					let data = {page:1,pagesize:10,class_id:id || 1}
+				const res = await	 util.request({url: '/AiDraw/ModelStyleList',data})
 						this.photosPopupLora  = res.data.list[0]
-								// console.log(this.photosPopupLora)
-						// this.photosPopupLora['contents'] = 
-							// console.log(this.photosSubseCtionList)
-							// console.log(this.photosSubseCtionListOne)
 			},
 			//请求任务进行中展示 
 			async onshowTask(){
@@ -598,8 +588,7 @@ import user from './user/user.vue'
 		margin: auto;
 		overflow: hidden;
 		.phogos-group{
-			margin-top: 40rpx;
-			width: 100%;
+			// width: 100%;
 			height: 86rpx;
 			background: #fff;
 			display: flex;
@@ -609,6 +598,7 @@ import user from './user/user.vue'
 			font-size: 28rpx;
 			background: #34363F;
 				color: #909193;
+			margin-top: 40rpx;
 			.phogos-group-item{
 				height: 100%;
 				flex: 1;
