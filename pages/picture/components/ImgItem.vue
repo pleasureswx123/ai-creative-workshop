@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss" scoped>
 .pictrue-box {
-  padding: 0 30rpx;
   background: var(--txt-color5);
   /deep/ .u-swiper__wrapper__item__wrapper__image {
     background-color: var(--txt-color5)!important;
