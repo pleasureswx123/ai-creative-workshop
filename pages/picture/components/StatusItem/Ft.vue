@@ -26,9 +26,10 @@ export default {
 .ft {
   padding: 0 30rpx 10rpx;
   color: var(--txt-color1);
+  font-size: 26rpx;
   .title {
     color: var(--txt-color1);
-    font-size: 24rpx;
+    font-size: 28rpx;
     padding: 20rpx 0;
     line-height: 1.8;
     border-bottom: 1rpx solid var(--txt-color3);

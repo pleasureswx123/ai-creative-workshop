@@ -1,9 +1,9 @@
 html, body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  overflow: auto;
 }
 * {
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 :root {

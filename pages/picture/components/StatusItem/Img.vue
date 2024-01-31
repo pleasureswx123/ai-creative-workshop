@@ -1,7 +1,7 @@
 <template>
   <Layout :info="info" @cb="clickRightBtnEvent" @toDetails="toDetails">
     <view class="pictrue-box">
-      <u-swiper height="300" :current="current" :list="imgUrls" imgMode="aspectFit"
+      <u-swiper height="400" :current="current" :list="imgUrls" imgMode="aspectFit"
           :autoplay="false" @change="change" @click="handleClick">
         <template v-if="isShowIndicator">
           <view slot="indicator" class="indicator">
@@ -71,6 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .pictrue-box {
+  padding: 0 30rpx;
   background: var(--txt-color5);
   /deep/ .u-swiper__wrapper__item__wrapper__image {
     background-color: var(--txt-color5)!important;

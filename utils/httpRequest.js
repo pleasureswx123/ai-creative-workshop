@@ -47,7 +47,12 @@ module.exports = (vm) => {
         return Promise.reject(data);
       };
       if (data.message && !hideToast) {
-        uni.$u.toast(data.message || 'error')
+        uni.showModal({
+          title: '提示',
+          showCancel: false,
+          content: data.message || 'error',
+          success: function (res) {}
+        });
       }
       return Promise.reject(data);
     }
