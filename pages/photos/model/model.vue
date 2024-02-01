@@ -1,7 +1,7 @@
 <template>
 	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup   :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" ref="popup">
+		<u-popup   :show="photosModeleShow" mode="bottom"  :round="10" @click="open"    ref="popup">
 			<view class="model-popup" >
 				<view class="photos-popup" >
 					<view @mousewheel.prevent>
@@ -23,6 +23,8 @@
 						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>
 					</view>	
 						</view>	
+				<!-- <u-icon name="close-circle" size="60rpx" color="#FFFFFF" class="model-icon" @click="onPotosPopupClose"></u-icon> -->
+					<icon color="#fff" type="cancel" size="30" class="model-icon" @click="onPotosPopupClose"/>
 			</view>
 		</u-popup>	
 	</view>
@@ -54,6 +56,7 @@
 					this.photosPopupList = []
 					this.onshowPopup()
 					this.onshowList()
+					this.photosPopupNumber = 0
 				},
 			//触底加载数据
 			onPhotosModelList(){
@@ -76,7 +79,7 @@
 				info['contents'] = info.content
 				this.$emit('modelist',info)
 				this.photosModeleShow = false	
-				// this.photosPopupNumber = 0
+				this.photosPopupNumber = 0
 				// this.page = 1
 				// this.photosPopupList = []
 				},
@@ -115,6 +118,11 @@
 		height: 1280rpx;
 			background: #000000;
 			position: relative;
+	}
+	.model-icon{
+		position: absolute;
+		right: 20rpx;
+		top: 20rpx;
 	}
 	.photos-popup{
 			width: 90%;

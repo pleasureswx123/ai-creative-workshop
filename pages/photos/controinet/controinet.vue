@@ -2,7 +2,7 @@
 	<view class="conntroinet" @mousewheel.prevent>
 		<!-- 控制网弹框 -->
 		<view class="controinet-popup">
-			<u-popup  :show="photosControinetShow" @close="onPotosPopupClose" @open="open" :closeable="true">
+			<u-popup  :show="photosControinetShow"  @open="open" >
 			<view class="controinnet-content">
 				<view class="condition-popup">
 					<view class="controinet-popup-text">
@@ -64,6 +64,7 @@
 						<!-- 确定按钮 -->
 					<u-button text="确定" class="controinet-primary" @click="onPhotosUploadBut"></u-button>
 				</view></view></view>
+				<icon color="#fff" type="cancel" size="30" class="model-icon" @click="onPotosPopupClose"/>
 			</view>
 		</u-popup>
 		</view>
@@ -176,7 +177,12 @@
 			width: 100%;
 			height: 1300rpx;
 			background: #000000;
-			
+			position: relative;
+			.model-icon{
+			        position: absolute;
+			        right: 20rpx;
+			        top: 20rpx;
+			    }
 		}
 			.condition-popup{
 				width: 90%;
