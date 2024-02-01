@@ -1,8 +1,8 @@
 <template>
 	<view class="lora">
-		<!-- 样式弹框 -->
+		<!-- 样式弹框  @open="open" -->
 		<view class="lora-popup" >
-			<u-popup  :show="photosStyleShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
+			<u-popup  :show="photosStyleShow" mode="bottom"  :round="10"  @click="open" @close="onPotosPopupClose" :closeable="true">
 				<view class="list">
 					<view  class="lora-list">
 						<view @mousewheel.prevent>
@@ -51,7 +51,7 @@
 		methods: {
 			open() {
 					this.photosStyleShow = true 
-					// this.onloraList()
+					this.onloraList()
 				},
 				////触底加载数据
 				onPhotosSstyleList(){
@@ -62,6 +62,8 @@
 			//关闭弹框
 			onPotosPopupClose(){
 				this.photosStyleShow = false
+				this.photosLoraList = []
+				this.page = 1
 				},
 			//样式弹框中确认事件
 			onPhotosStyleConfig(){
@@ -83,14 +85,14 @@
 			async	onloraList(){
 				let data = {page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	util.request({url: '/AiDraw/ImgStyleList',data})
-				// console.log(res.data.list)
+				console.log(res)
 					this.total  =  res.data.count
 					this.photosStyleList = [...this.photosStyleList,...res.data.list]
 			}
 		},
-		created(){
-			this.onloraList()
-		}
+		// created(){
+		// 	this.onloraList()
+		// }
 		// onLoad() {
 		// 	// this.onloraList()
 		// },

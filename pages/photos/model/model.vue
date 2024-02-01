@@ -1,11 +1,11 @@
 <template>
 	<view class="model" >
 		<!-- 模型选择弹框 -->
-		<u-popup   :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" >
+		<u-popup   :show="photosModeleShow" mode="bottom"  :round="10" @click="open"  @close="onPotosPopupClose" :closeable="true" ref="popup">
 			<view class="model-popup" >
 				<view class="photos-popup" >
 					<view @mousewheel.prevent>
-						<view class="popup-up">选择{{photosModelInfo.title}}模型</view>
+						<view class="popup-up">选择{{photosModelInfo.title}}</view>
 						<text class="popup-op">{{photosModelInfo.content}}</text>
 					</view>
 					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
@@ -35,7 +35,7 @@
 		data() {
 			return {
 				photosModelInfo:{},
-				photosSubseCtionList:[],
+				photosSubseCtionList:['SD1.5模型','SDXL模型','MJ模型'],
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosPopupNumber:0,//弹框选择模型的index
 				photosModeleShow:false,//模型选择的显示和隐藏
@@ -50,6 +50,8 @@
 		methods: {
 			open() {
 					this.photosModeleShow = true 
+					this.page = 1
+					this.photosPopupList = []
 					this.onshowPopup()
 					this.onshowList()
 				},
@@ -65,6 +67,7 @@
 			//关闭弹框
 			onPotosPopupClose(){
 				this.photosModeleShow = false
+				// this.$refs.popup.close();
 				},
 			//弹框模型选择确认事件
 			onPopupConfirm(){
@@ -74,6 +77,8 @@
 				this.$emit('modelist',info)
 				this.photosModeleShow = false	
 				// this.photosPopupNumber = 0
+				// this.page = 1
+				// this.photosPopupList = []
 				},
 			//点击选择模型弹框中的一项事件
 			onPopupNumber(num){
@@ -96,7 +101,6 @@
 					}else{
 						this.photosModelInfo = res.data[2]
 					}
-					this.photosSubseCtionList = res.data
 					},
 		},
 		

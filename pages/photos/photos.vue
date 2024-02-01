@@ -204,7 +204,7 @@
 	<!-- 开始生成 -->
 	<view class="photps-generate" >
 	         <view class="generate">
-	         <!-- <u-button size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button> -->
+	         <u-button v-if="photosSubseCtionCurrent<2" size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
 	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
 	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
 	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
@@ -246,7 +246,7 @@ import user from './user/user.vue'
 				photosUploadInfoShow:false,//上传图片的显示图片
 				photosPlotList:[],//出图比例的数据
 				photosPlotNumber:5,//出图比例，出图的切换index
-				photosSelectNumber:4,//选择张数的
+				photosSelectNumber:1,//选择张数的
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosStyleInfoShow:false,//样式的显示和隐藏
 				photosStyleInfo:{},//样式展示数据
@@ -269,7 +269,7 @@ import user from './user/user.vue'
 			}
 		},
 		methods: {
-			//更新 的滑块的值
+			//更新控制网的滑块的值
 			onPhotosInputControinet(value){
 			    this.photosControinetInfo.value = value
 			    },
@@ -288,6 +288,7 @@ import user from './user/user.vue'
 					return
 				}
 				if(this.photosTextareaValue.length>500)return util.confirm('字符数超出数量，无法提交')
+				if(this.photosSubseCtionCurrent === 2){this.photosSelectNumber = 4}
 				// if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
 				// if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
 				// if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
@@ -334,7 +335,6 @@ import user from './user/user.vue'
 					// this.photosLoraInfo = {}
 					// this.photosUploadInfo = {}
 					// this.photosStyleInfo = {}
-					
 			},
 			//画面描述词的没有登陆提示
 			onPhotoTextareaFocus(){
