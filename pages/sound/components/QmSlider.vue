@@ -4,10 +4,10 @@
     <view class="slider-box">
       <u-slider
           v-model="currentValue"
-          step="20" min="0" max="100"
-          activeColor="var(--txt-color1)"
+          step="1" min="0" max="4"
+          activeColor="red"
           inactiveColor="var(--txt-color5)"
-          block-size="16"
+          block-size="20"
           block-color="var(--txt-color6)"></u-slider>
     </view>
     <view class="tips">{{tipsInfo.tips}}</view>
@@ -19,7 +19,7 @@ export default {
   props: {
     value: {
       type: Number,
-      default: 2
+      default: 0
     },
     type: {
       type: String,
@@ -34,21 +34,21 @@ export default {
   computed: {
     currentValue: {
       get() {
-        return this.value * (100 / 5)
+        return this.value
       },
       set(val) {
-        this.$emit('update:value', val / (100 / 5))
+        this.$emit('update:value', val)
       }
     },
     tipsInfo() {
       const res = {
         volume: {
           txt: '音量',
-          tips: ['', '低', '略低', '正常', '略高', '高']
+          tips: ['低', '略低', '正常', '略高', '高']
         },
         speed: {
           txt: '语速',
-          tips: ['', '很慢', '稍慢', '正常', '稍快', '快']
+          tips: ['很慢', '稍慢', '正常', '稍快', '快']
         },
       }
       const {txt, tips} = res?.[this.type] || {};
@@ -73,7 +73,17 @@ export default {
     min-width: 0;
   }
   .tips {
+    width: 60rpx;
     color: #BABABA;
+    text-align: right;
+  }
+  /deep/ {
+    uni-slider {
+      margin-right: 10px;
+    }
+    uni-slider .uni-slider-handle-wrapper {
+      height: 3px!important;
+    }
   }
 }
 </style>

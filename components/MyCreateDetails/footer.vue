@@ -1,6 +1,9 @@
 <template>
   <view class="ft">
-    <view class="title" v-if="info.prompt">{{info.prompt}}</view>
+    <template v-if="info.prompt">
+      <view class="title">{{info.prompt}}</view>
+      <view class="btsolid"></view>
+    </template>
     <u-gap v-else height="30"></u-gap>
     <view class="info" v-if="info.model_style_name">{{info.model_style_name}}</view>
     <view class="info" v-if="info.lora_name">{{info.lora_name}}</view>
@@ -26,13 +29,20 @@ export default {
 <style lang="scss" scoped>
 .ft {
   color: var(--txt-color1);
+  padding-top: 20rpx;
   .title {
     color: var(--txt-color1);
     font-size: 24rpx;
-    padding: 20rpx 0;
     line-height: 1.8;
-    border-bottom: 1rpx solid var(--txt-color3);
-    margin-bottom: 30rpx;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .btsolid {
+    margin: 20rpx 0;
+    height: 2rpx;
+    border-top: 1rpx solid var(--txt-color3);
   }
   .info {
     display: inline-block;

@@ -38,8 +38,8 @@ export default {
       generating: false,
       describe: '',
       timbre: '',
-      volume: 2,
-      speed: 2,
+      volume: 0,
+      speed: 0,
       timer: null,
     }
   },
@@ -50,14 +50,14 @@ export default {
       return url || ''
     },
     disabled() {
-      return !(this.describe && this.timbre && !!this.speed && !!this.volume)
+      return !(this.describe && this.timbre)
     },
     params() {
       return {
         content: this.describe || '',
         dub_id: this.timbre || '',
-        dub_volume: ['0.2', '0.3', '1', '2', '3'][this.volume - 1],
-        dub_speed: ['0.7', '0.8', '1', '1.3', '1.6'][this.speed - 1],
+        dub_volume: ['0.2', '0.3', '1', '2', '3'][this.volume],
+        dub_speed: ['0.7', '0.8', '1', '1.3', '1.6'][this.speed],
       }
     }
   },

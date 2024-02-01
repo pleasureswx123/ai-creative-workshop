@@ -84,7 +84,7 @@ export default {
   color: var(--txt-color4);
   gap: 4rpx;
   &.disabled {
-    background: var(--bg-color2);
+    background: #6a6a6a;
     color: var(--txt-color2);
   }
   .tips-txt {
