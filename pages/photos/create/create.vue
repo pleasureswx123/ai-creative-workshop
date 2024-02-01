@@ -2,15 +2,14 @@
 	<view class="create" >
 		<!-- 创建弹框 -->
 		<view class="create-popup" >
-			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open"  :closeable="true">
+			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open" >
 				<view class="list">
 					<view  class="create-list">
-						
-						 <view @mousewheel.prevent>
+						<!-- <view @mousewheel.prevent> -->
 						 	 <u--text color="#FFFFFF"  text="选择要处理的图片" align="center" size="50rpx" lineHeight="160rpx"></u--text>
-						 </view>
-						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;"  @touchmove.stop.prevent="() => {}">
-						 <view class="container" @touchmove.stop>
+						 <!-- </view> -->
+					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" >
+						 <view class="container" >
 						   <view
 						     class="cont-box"
 						     :style="{ '--layout-width': 100 / flowData.column - flowData.columnSpace + '%' }"
@@ -22,12 +21,11 @@
 						     </view>
 						   </view>
 						 </view>
-						 
-						 	<view v-if="showMoreData" style="text-align: center;height: 100rpx;"></view>
-						</scroll-view> 
-						 <view @mousewheel.prevent>
+						 <view v-if="showMoreData" style="theight: 500rpx;"></view>
+						</scroll-view>
+						 <!-- <view @mousewheel.prevent> -->
 						 	<u-button text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
-						 </view>
+						 <!-- </view> -->
 					</view>
 					<icon color="#fff" type="cancel" size="30" class="model-icon" @click="onPotosPopupClose"/>
 				</view>
@@ -59,11 +57,14 @@
 		},
 		methods: {
 			open() {
+				document.body.style.position = 'fixed'
 					this.photosCreateShow = true 
 					// this.onloraList()
 				},
 			//触底加载数据
 			onPhotosModelList(){
+				console.log(this.page * this.pageSize)
+				console.log(this.total)
 				if (this.page * this.pageSize >= this.total) return this.showMoreData = true
 					this.page +=1
 	
@@ -71,6 +72,7 @@
 			},
 			//关闭弹框
 			onPotosPopupClose(){
+				document.body.style.position = null
 				this.photosCreateShow = false
 				this.photosCreateNumber = 0
 				this.photosLoraList = []
@@ -94,7 +96,6 @@
 			async	onloraList(){
 				let data = {page:this.page,pagesize:this.pageSize}
 				const res = await	util.request({url: '/AiDraw/getHistory',data})
-					// console.log(res)
 					this.photosCreateImg = res.data.list[0].img_url
 					this.total	= res.data.count
 					this.flowData.list = [...this.flowData.list,...res.data.list]
