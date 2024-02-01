@@ -19,6 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .nav-top-bar-container {
+  background: #000;
   border-bottom: 1px solid rgba(255,255,255,.1);
   .nav-top-bar, .nav-top-place {
     height: 80rpx;
@@ -29,7 +30,7 @@ export default {
     left: 0;
     right: 0;
     background: var(--bg-color1);
-    z-index: 100;
+    z-index: 99;
   }
 }
 </style>

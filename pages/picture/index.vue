@@ -1,5 +1,4 @@
 <template>
-  <page-meta :page-style="`background: var(--bg-color1); ${(showDetails || showAction) ? 'height: 100vh; overflow: hidden' : ''}`" />
   <view class="page-container">
     <QmNavTop></QmNavTop>
     <TipsTxt></TipsTxt>
@@ -16,7 +15,7 @@
         @close="showAction = false"
         :show="showAction" />
   
-    <VideoDetails :show.sync="showDetails" :info="detailsInfo" />
+    <MyCreateDetails :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
   </view>
 </template>
 
@@ -25,7 +24,6 @@ import {mapState, mapActions} from 'vuex'
 import CreationMixins from './mixin/myCreation.js';
 import TipsTxt from './components/TipsTxt.vue'
 import CreationItem from './components/CreationItem.vue'
-import VideoDetails from './components/VideoDetails.vue'
 
 export default {
   mixins: [CreationMixins],
@@ -41,7 +39,7 @@ export default {
     ...mapState('PictureInfo', ['toolsList']),
   },
   components: {
-    TipsTxt, CreationItem, VideoDetails
+    TipsTxt, CreationItem
   },
   onShow () {
     this.getToolsList({page:1, pagesize: 20});
