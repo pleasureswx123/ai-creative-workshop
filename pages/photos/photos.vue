@@ -556,7 +556,7 @@ import navmeun from '@/components/navMeun/index.vue';
 					//画面生成
 					this.photosTextareaValue = res.data.prompt
 					//控制网
-						
+		
 					if(res.dataontrolnet_type_id){
 						this.photosControinetInfo = {id:res.data.controlnet_type_id,title:'',url:res.data.controlnet_img_detect,img:res.data.controlnet_img,value:res.data.controlnet_weight}
 						this.photosControinetInfoShow = true
