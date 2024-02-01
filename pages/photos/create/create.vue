@@ -195,7 +195,7 @@
 		  display: flex;
 		      justify-content: space-around;
 			  // justify-content: space-evenly;
-		  // padding: 20rpx;
+		  padding: 10rpx;
 		  $borderRadius: 12rpx;
 		  .cont-box {
 		    width: var(--layout-width);
