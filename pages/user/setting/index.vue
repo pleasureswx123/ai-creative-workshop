@@ -141,7 +141,7 @@
 <style>
 	page {
 		min-height: 100%;
-		background-color: #f7f7f8;
+		background-color: #000;
 	}
 
 	.container {
@@ -178,7 +178,7 @@
 	}
 
 	.form {
-		background: #fff;
+		/* background: #fff; */
 	}
 
 	.form .a-item {
@@ -205,7 +205,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		font-size: 28rpx;
+		font-size: 32rpx;
 		color: #333;
 	}
 

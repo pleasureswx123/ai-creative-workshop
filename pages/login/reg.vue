@@ -184,6 +184,9 @@
 	};
 </script>
 <style>
+	page{
+		background: #0d0d0d;
+	}
 	.page {
 		padding: 40rpx 100rpx;
 		position: absolute;
@@ -196,7 +199,7 @@
 	}
 
 	.title {
-		font-size: 48rpx;
+		font-size: 56rpx;
 		text-align: center;
 		margin-top: 100rpx;
 		letter-spacing: 4rpx;
@@ -252,12 +255,12 @@
 		bottom: 0;
 		text-align: center;
 		cursor: pointer;
-		background: #fff;
+		background: #0d0d0d;
 		padding: 20rpx 0 50rpx 0;
 	}
 
 	.agree text {
-		color: #000;
+		/* color: #000; */
 	}
 
 	.container {

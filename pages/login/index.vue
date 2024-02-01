@@ -183,6 +183,9 @@
 	};
 </script>
 <style>
+	page{
+		background: #0d0d0d;
+	}
 	.page {
 		padding: 40rpx 100rpx;
 		position: absolute;
