@@ -64,8 +64,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-  //height: 100vh;
-  width: 100vw;
+  width: 100%;
   font-size: 24rpx;
   background: #fff;
   overflow: hidden;
@@ -73,13 +72,11 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
+  height: 100dvh;
   .page-header {
-    height: 117px;
     overflow: hidden;
   }
   .page-main {
-    height: calc(100% - 117px);
     -webkit-overflow-scrolling: touch;
     overflow: hidden;
   }

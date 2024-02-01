@@ -403,12 +403,13 @@ export default {
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
+  height: 100dvh;
   background: #fff;
+  overflow: hidden;
 }
 .page-content {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background: #fff;

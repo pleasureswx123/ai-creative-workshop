@@ -520,10 +520,10 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 100dvh;
 }
 .page-content {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -662,9 +662,9 @@ export default {
   border: none;
   resize: none;
   overflow: auto;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
   -moz-user-select:none;
   -ms-user-select:none;
   user-select:none
