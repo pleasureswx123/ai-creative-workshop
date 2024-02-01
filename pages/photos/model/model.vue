@@ -13,7 +13,9 @@
 						<view :class="['popup-col',photosPopupNumber === index?'photos-active':''] " v-for="(item,index) in photosPopupList" :key="index" @click="onPopupNumber(index)">
 						 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
 						 <!-- <u-image width="100%" height="300rpx" radius="8px" style="margin-bottom: 10rpx;" :src="item.img_url"></u-image> -->
-								<image    :src="item.img_url" mode="widthFix" style="width: 100%;height: 100%;"></image>
+								<view style="overflow: hidden;">
+									<image    :src="item.img_url" mode="widthFix" style="width: 100%;height: 100%;border-radius:15rpx"></image>
+								</view>
 							<u--text :text="item.title" color="#FFFFFF" size="24rpx"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2" ></u--text>
 							<u--text  :text="item.content" color="#909193" size="20rpx"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
 							</view>

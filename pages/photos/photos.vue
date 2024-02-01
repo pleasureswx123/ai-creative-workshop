@@ -1,7 +1,7 @@
 <template>
 	<view class="phogos-tontent" >
 		<!-- 标图展示 -->
-		<!-- <navmeun></navmeun> -->
+		<navmeun></navmeun>
 		<!-- 页头 -->
 		<!-- <u--text text="生成图片" size="24" color="#FFFFFF" align="center" lineHeight="80"></u--text> -->
 		<!-- 提示  @click="onCellGroup" -->
@@ -233,10 +233,10 @@ import model from './model/model.vue'
 import sstyle from './sstyle/sstyle.vue'
 import create from './create/create.vue'
 import user from './user/user.vue'
-// import navmeun from '@/components/navMeun/index.vue';
+import navmeun from '@/components/navMeun/index.vue';
 	const app = getApp()
 	export default {
-		components: {lora,controinet,model,sstyle,create,	},
+		components: {lora,controinet,model,sstyle,create,navmeun	},
 		data() {
 			return {
 				photosDisabled:true,//禁用状态按钮
