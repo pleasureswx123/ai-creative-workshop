@@ -124,7 +124,7 @@
 					</view>
 					<view class="operateBtn">
 						<view class="btn" @click="onload">下载图片</view>
-						<view class="btn" @click="sameModel">一键同款</view>
+						<view class="btn" @click="sameModel(wallCont.task_id)">一键同款</view>
 					</view>
 					
 				</view>
@@ -423,7 +423,7 @@
 					}
 				});
 			},
-			sameModel(){
+			sameModel(task_id){
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
@@ -437,7 +437,7 @@
 				})
 				.then((res) => {
 					uni.navigateTo({
-						url: '/pages/photos/photos'
+						url: '/pages/photos/photos?task_id=' + task_id
 					})
 				});
 			}
