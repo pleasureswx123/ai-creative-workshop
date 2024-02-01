@@ -2,7 +2,7 @@
 	<view class="lora" >
 		<!-- 风格弹框 @mousewheel.prevent-->
 		<view class="lora-popup" >
-			<u-popup   :show="photosLoraShow" mode="bottom"  :round="10"  @click="open" @close="onPotosPopupClose" :closeable="true">
+			<u-popup   :show="photosLoraShow" mode="bottom"  :round="10"  @click="open" >
 				<view class="list" >
 					<view  class="lora-list">
 						<view @mousewheel.prevent>
@@ -27,6 +27,7 @@
 						 	 <u-button  text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
 						 </view>
 					</view>
+					<icon color="#fff" type="cancel" size="30" class="model-icon" @click="onPotosPopupClose"/>
 				</view>
 				</u-popup>
 		</view>	 
@@ -66,6 +67,7 @@
 				this.photosLoraShow = false
 				this.photosLoraList = []
 				this.page = 1
+				this.photosLoraNumber = 0
 				},
 			//风格弹框中确认事件
 			onPhotosLoraConfig(){
@@ -79,6 +81,7 @@
 					this.$emit('loralist',photosLoraInfo)
 					this.photosLoraList = []
 					this.page = 1
+					this.photosLoraNumber = 0
 			},
 			//风格弹框中选择每一项
 			onPhotosLoraPopup(index){
@@ -106,6 +109,11 @@
 			height: 1300rpx;
 			background: #000000;
 			position: relative;
+			.model-icon{
+			        position: absolute;
+			        right: 20rpx;
+			        top: 20rpx;
+			    }
 		}
 		.lora-list{
 			width: 90%;

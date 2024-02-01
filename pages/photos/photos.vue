@@ -23,7 +23,7 @@
 		 <u-row customStyle="margin-bottom: 10px" class="photos-row" @click="onPhotosRow">
 		 	<u-col span="3" >
 		 	 <view class="demo-layout bg-purple-light">
-		 		<u--image :showLoading="true" :src="photosPopupLora.img_url" width="80px" height="80px" ></u--image>
+		 		<u--image  :src="photosPopupLora.img_url" width="150rpx" height="160rpx" ></u--image>
 		 	</view>
 		 	</u-col>
 		  <u-col span="8">
@@ -45,7 +45,7 @@
 		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF" size="28rpx"></u--text>
 	 </view>
 	 <view class="textarea-list">
-	 	<u--textarea height="240rpx" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
+	 	<u--textarea height="400rpx" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
 		<view class="list-but">
 			<u--text v-if="photosTextareaValue.length>500" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
 			<view  :class="['number-text',photosTextareaValue.length>500?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
@@ -96,8 +96,8 @@
 				    <u-icon  color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
 				   </view>
 				   <view class="row-col-list" >
-					<u-slider @change="onPhotosInputLora" class="col-slider" style="width: 99%;"    max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-					<view class=""  style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view>
+					<u-slider @change="onPhotosInputLora" :showValue="true" class="col-slider" style="width: 99%;"    max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+					<!-- <view class=""  style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view> -->
 				  </view>
 			 	</view>
 			   </u-col>
@@ -157,7 +157,7 @@
 			 <u-icon color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
 			</view>
 			<view class="row-col-list" >
-				<u-slider style="width: 99%;" @change="onPhotosInputSstyle":showValue="true" class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+				<u-slider style="width: 99%;" @change="onPhotosInputSstyle" :showValue="true" class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
 				<!-- <view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosUploadInfo.value}}</view> -->
 			</view>
 			</view>
@@ -700,6 +700,7 @@ import user from './user/user.vue'
 					width: 100%;
 					height: 260rpx;
 					position: relative;
+					
 					.list-input{
 						height: 100%;
 						background: #23242C;
