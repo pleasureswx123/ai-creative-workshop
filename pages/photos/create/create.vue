@@ -87,6 +87,7 @@
 					this.photosCreateNumber = 0
 					this.photosLoraList = []
 					this.page = 1
+					document.body.style.position = null
 			},
 			//创建弹框中选择每一项
 			onPhotosLoraPopup(img){
