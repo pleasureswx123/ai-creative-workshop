@@ -1,10 +1,10 @@
 <template>
 	<view class="content">
 		<view class="navList">
-			<navMenu></navMenu>
-			<view class="head" @click="goUser">
-				<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
+			<view class="head">
+				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
 			</view>
+			<navMenu></navMenu>
 		</view>
 		<view class="banner-cont">
 			<view class="banner">
@@ -538,10 +538,9 @@
 		align-items: center;
 		.head {
 			width: 60rpx;
-			height: 60rpx;
+			height: 58rpx;
 			overflow: hidden;
 			border-radius: 50%;
-			background-color: rgb(255, 173, 8);
 			margin: 30rpx 40rpx 0;
 			image {
 				width: 100%;

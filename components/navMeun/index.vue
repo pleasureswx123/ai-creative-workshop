@@ -5,7 +5,7 @@
 		</view>
 		<!-- 导航弹出 -->
 		<view class="popup">
-			<u-popup :show="navShow" mode="left" @close="close" @open="open" closeIconPos="top-right">
+			<u-popup :show="navShow" mode="right" @close="close" @open="open" closeIconPos="top-right">
 				<view class="user" @click="goUser">
 					<view class="userAvater">
 						<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
