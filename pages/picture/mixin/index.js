@@ -22,6 +22,7 @@ export default {
     return {
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
       finalUrl: '',
+      taskType: ''
     }
   },
   computed: {
@@ -30,7 +31,14 @@ export default {
       return this.generateState === 2
     },
     btnInfo() {
-      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: '消耗10'};
+      let tipsTxt = '1万'
+      if (this.taskType === '7') {
+        tipsTxt = '2万'
+      }
+      if(!this.taskType) {
+        tipsTxt = '10万'
+      }
+      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: `消耗${tipsTxt}`};
       return this.generateState === 3 ? {btnTxt: '重新生成'} : temp;
     },
   },
@@ -38,6 +46,7 @@ export default {
     this.clearTimer();
   },
   onLoad({type}) {
+    this.taskType = type || '';
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('acceptData', ({data}) => {
       const { currentImg } = data || {};
