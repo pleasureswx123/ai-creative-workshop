@@ -19,7 +19,7 @@
 								</view>
 						 	</view>
 						 </view>
-						 <view v-if="showMoreData" style="text-align: center;height: 150rpx;"></view>
+						 <view v-if="showMoreData" style="text-align: center;height: 200rpx;"></view>
 						 </scroll-view>
 						 <view @mousewheel.prevent>
 						 	<u-button text="确认" class="popup-list-but" @click="onPhotosStyleConfig"></u-button>

@@ -2,7 +2,7 @@
 	<view class="create" >
 		<!-- 创建弹框 -->
 		<view class="create-popup" >
-			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
+			<u-popup  :show="photosCreateShow" mode="bottom"  :round="10"  @open="open"  :closeable="true">
 				<view class="list">
 					<view  class="create-list">
 						
@@ -10,7 +10,7 @@
 						 	 <u--text color="#FFFFFF"  text="选择要处理的图片" align="center" size="50rpx" lineHeight="160rpx"></u--text>
 						 </view>
 						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;"  @touchmove.stop.prevent="() => {}">
-						 <view class="container">
+						 <view class="container" @touchmove.stop>
 						   <view
 						     class="cont-box"
 						     :style="{ '--layout-width': 100 / flowData.column - flowData.columnSpace + '%' }"
@@ -18,7 +18,7 @@
 						     :key="numVal"
 						   >
 						     <view class="item-box" v-for="(item, j) in flowData[`column_${index + 1}`]" :key="j" @click="onPhotosLoraPopup(item)">
-						       <image :class="['img-tip',photosCreateImg === item.img_url?'photos-active':'']" :src="item.img_url" mode="widthFix" lazy-load />
+						       <image  :class="['img-tip',photosCreateImg === item.img_url?'photos-active':'']" :src="item.img_url" mode="widthFix" lazy-load />
 						     </view>
 						   </view>
 						 </view>
@@ -94,7 +94,7 @@
 			async	onloraList(){
 				let data = {page:this.page,pagesize:this.pageSize}
 				const res = await	util.request({url: '/AiDraw/getHistory',data})
-					console.log(res)
+					// console.log(res)
 					this.photosCreateImg = res.data.list[0].img_url
 					this.total	= res.data.count
 					this.flowData.list = [...this.flowData.list,...res.data.list]
