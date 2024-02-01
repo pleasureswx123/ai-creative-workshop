@@ -1,14 +1,17 @@
 <template>
-	<view class="lora" @mousewheel.prevent>
-		<!-- 风格弹框 -->
+	<view class="lora" >
+		<!-- 风格弹框 @mousewheel.prevent-->
 		<view class="lora-popup" >
-			<u-popup  :show="photosLoraShow" mode="bottom"  :round="10"  @open="open" @close="onPotosPopupClose" :closeable="true">
-				<view class="list">
+			<u-popup   :show="photosLoraShow" mode="bottom"  :round="10"  @click="open" @close="onPotosPopupClose" :closeable="true">
+				<view class="list" >
 					<view  class="lora-list">
-						 <u--text text="选择Lora模型" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
+						<view @mousewheel.prevent>
+						 <u--text  text="选择Lora模型" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
+						  <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="20" color="#d5d5d5"></u--text>
+						</view>
+						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
 						 <view class="lora-popup-list">
 						 	<view :class="['popup-list',photosLoraNumber === index?'photos-active':'']" v-for="(item,index) in photosLoraList" :key="index" @click="onPhotosLoraPopup(index)">
-						 		<!-- <u--image :showLoading="true" :src="src" width="100%" height="130px" radius="8"></u--image> -->
 						 		<u--image :showLoading="true" :src="item.img_url" width="100%" height="130px" radius="8"></u--image>
 								<view class="popup-list-text">
 									<!-- <u--text :text="item.title" size="12" lineHeight="20" class="text-up"></u--text>
@@ -18,7 +21,11 @@
 								</view>
 						 	</view>
 						 </view>
-						 <u-button  text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+						  <view v-if="showMoreData" style="text-align: center;height: 150rpx;"></view>
+						 </scroll-view>
+						 <view @mousewheel.prevent >
+						 	 <u-button  text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
+						 </view>
 					</view>
 				</view>
 				</u-popup>
@@ -32,6 +39,11 @@
 		props:{id:{type:Number},isLogin:{type:Boolean}},
 		data() {
 			return {
+				photosStyleId:['SD1.5','SDXL','ML'],
+				page: 1, // 当前页码
+				pageSize: 10, // 每页数据量
+				total:0,//总数量
+				showMoreData:false,//显示和隐藏没有数据了
 				photosLoraNumber:0,//控制风格弹框中的index
 				src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				photosLoraList:[],
@@ -41,11 +53,19 @@
 		methods: {
 			open() {
 					this.photosLoraShow = true 
-					// this.onloraList()
+					this.onloraList()
 				},
+			//触底加载数据
+			onPhotosModelList(){
+				if (this.page * this.pageSize >= this.total) return this.showMoreData = true
+					this.page +=1
+					this.onloraList()
+			},
 			//关闭弹框
 			onPotosPopupClose(){
 				this.photosLoraShow = false
+				this.photosLoraList = []
+				this.page = 1
 				},
 			//风格弹框中确认事件
 			onPhotosLoraConfig(){
@@ -53,14 +73,12 @@
 					util.toLogin('请登录')
 					return
 				}
-					// console.log(this.photosLoraList[this.photosLoraNumber])
 					let photosLoraInfo =  this.photosLoraList[this.photosLoraNumber]
 							photosLoraInfo['value'] = 0.8
 					this.photosLoraShow = false
-						// console.log(photosLoraInfo)
 					this.$emit('loralist',photosLoraInfo)
-					// this.photosLoraInfoShow = true
-					// this.photosLoraNumber = 0
+					this.photosLoraList = []
+					this.page = 1
 			},
 			//风格弹框中选择每一项
 			onPhotosLoraPopup(index){
@@ -70,16 +88,13 @@
 			async	onloraList(){
 					let data = {page:1,pagesize:10,class_id:this.id}
 				const res = await	util.request({url: '/AiDraw/LoraList',data})
-					// console.log(res.data.list)
-					this.photosLoraList = res.data.list
+							console.log(res)
+					this.photosLoraList = [...this.photosLoraList,...res.data.list]
 			},
 		},
 		created() {
-			this.onloraList()
+			// this.onloraList()
 		}
-		// onLoad() {
-		// 	// this.onloraList()
-		// }
 	}
 </script>
 
@@ -95,18 +110,18 @@
 		.lora-list{
 			width: 90%;
 			margin: auto;
-			// height: 650px;
-			// position: relative;
 			.lora-popup-list{
-				width: 100%;
-				height: 100%;
+				margin-top: 20rpx;
 				display: flex;
 				justify-content: space-between;
+				flex-wrap: wrap;
 				.popup-list{
 					width: 220rpx;
 					height: 402rpx;
 					// margin-left: 10rpx;
 					background: #1D1E23;
+					margin-bottom: 40rpx;
+					margin-left: 1rpx;
 					.popup-list-text{
 						padding: 10rpx;
 						// box-sizing: border-box;
@@ -129,6 +144,10 @@
 				}
 				
 			}
+			.lora-popup-list:after{
+			      width: 220rpx;
+			      content: "";
+			    }
 			.popup-list-but{
 				width: 90%;
 				background: #FF0000;

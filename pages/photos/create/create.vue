@@ -9,7 +9,7 @@
 						 <view @mousewheel.prevent>
 						 	 <u--text color="#FFFFFF"  text="选择要处理的图片" align="center" size="50rpx" lineHeight="160rpx"></u--text>
 						 </view>
-						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;">
+						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;"  @touchmove.stop.prevent="() => {}">
 						 <view class="container">
 						   <view
 						     class="cont-box"
@@ -51,7 +51,7 @@
 				photosCreateList:[],
 				photosCreateShow:false,//风格弹框显示和隐藏
 				page: 1, // 当前页码
-				pageSize: 6, // 每页数据量
+				pageSize: 5, // 每页数据量
 				total:0,//总数量
 				showMoreData:false,//显示和隐藏没有数据了
 			}
@@ -65,11 +65,14 @@
 			onPhotosModelList(){
 				if (this.page * this.pageSize >= this.total) return this.showMoreData = true
 					this.page +=1
+	
 				this.onloraList()
 			},
 			//关闭弹框
 			onPotosPopupClose(){
 				this.photosCreateShow = false
+				this.photosLoraList = []
+				this.page = 1
 				},
 			//创建弹框中确认事件
 			onPhotosLoraConfig(){
@@ -81,12 +84,13 @@
 			},
 			//创建弹框中选择每一项
 			onPhotosLoraPopup(img){
-				// console.log(img)
 				this.photosCreateImg = img.img_url
 			},
 			//请求创建数据
 			async	onloraList(){
-				const res = await	util.request({url: '/AiDraw/getHistory'})
+				let data = {page:this.page,pagesize:this.pageSize}
+				const res = await	util.request({url: '/AiDraw/getHistory',data})
+					console.log(res)
 					this.photosCreateImg = res.data.list[0].img_url
 					this.total	= res.data.count
 					this.flowData.list = [...this.flowData.list,...res.data.list]

@@ -45,7 +45,7 @@
 		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF" size="28rpx"></u--text>
 	 </view>
 	 <view class="textarea-list">
-	 	<u--textarea height="120" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
+	 	<u--textarea height="240rpx" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
 		<view class="list-but">
 			<u--text v-if="photosTextareaValue.length>500" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
 			<view  :class="['number-text',photosTextareaValue.length>500?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
@@ -69,8 +69,8 @@
 		  <u-icon color="#ccc"  name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosControinetIcon"></u-icon> 
 		 </view>
 		 <view class="row-col-list" >
-		 	<u-slider class="col-slider"  max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-		 	<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosControinetInfo.value}}</view>
+		 	<u-slider style="width: 99%;" @change="onPhotosInputControinet":showValue="true" class="col-slider"  max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+		 	<!-- <view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosControinetInfo.value}}</view> -->
 		 </view>
 		</view>
 		</u-col>
@@ -96,8 +96,8 @@
 				    <u-icon  color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
 				   </view>
 				   <view class="row-col-list" >
-					<u-slider class="col-slider"  max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-					<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view>
+					<u-slider @change="onPhotosInputLora" class="col-slider" style="width: 99%;"    max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+					<view class=""  style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view>
 				  </view>
 			 	</view>
 			   </u-col>
@@ -146,7 +146,7 @@
 		  <u-row customStyle="margin-bottom: 10px">
 			<u-col span="3">
 			<view class="demo-layout bg-purple-light">
-				<u--image :showLoading="true" :src="photosUploadInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
+				<u--image  :src="photosUploadInfo.url" width="60px" height="60px" radius="5px" style="margin: 10px 10px;"></u--image>
 			</view>
 			</u-col>
 		    <u-col span="9" >
@@ -157,8 +157,8 @@
 			 <u-icon color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
 			</view>
 			<view class="row-col-list" >
-				<u-slider class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
-				<view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosUploadInfo.value}}</view>
+				<u-slider style="width: 99%;" @change="onPhotosInputSstyle":showValue="true" class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+				<!-- <view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosUploadInfo.value}}</view> -->
 			</view>
 			</view>
 			</u-col>
@@ -168,7 +168,7 @@
 			<view class="upload-contont" @tap="onPhotosUploadAvatar">
 				<view class="upload-image">
 					<view class="upload-icon">
-					    <u-icon name="plus-square-fill"  size="28rpx" color="#FFFFFF"></u-icon>
+					    <u-icon name="plus-square-fill"  size="60rpx" color="#FFFFFF"></u-icon>
 					</view>
 					<view class="upload-text">
 					    <u--text text="点击上传" color="#FFFFFF" style="margin-bottom: 10rpx;" size="28rpx"></u--text>
@@ -183,13 +183,13 @@
 			<view class="negative-text">
 				<u--text text="负面描述词" color="#FFFFFF" size="28rpx"></u--text>
 			</view>
-		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="100" style="background: #23242C;"></u--textarea>	
+		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="200rpx" style="background: #23242C;"></u--textarea>	
 		</view>
 		<!-- 出图比例 -->
 		<view class="photos-plot">
 			<view class="plot-text"><u--text text="出图比例" color="#FFFFFF" size=""></u--text></view>
 			<view class="photos">
-			<view  :class="['photos-proportion',photosPlotNumber === item.id?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(item.id)">
+			<view style="margin-left: 1rpx;margin-right: 1rpx;" :class="['photos-proportion',photosPlotNumber === item.id?'plot-list-active':'']" v-for="(item,index) in photosPlotList" :key="index" @click="onPhotosLiist(item.id)">
 					<view class="proportion-num">
 					<view  :class="[photosPlotNumber === item.id?'plot-lists-active':'']">{{item.scale}}</view></view>
 					<view  class="proportion-list">	{{item.title}}</view>
@@ -204,7 +204,7 @@
 	<!-- 开始生成 -->
 	<view class="photps-generate" >
 	         <view class="generate">
-	         <u-button size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
+	         <u-button v-if="photosSubseCtionCurrent<2" size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
 	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
 	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
 	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
@@ -269,6 +269,18 @@ import user from './user/user.vue'
 			}
 		},
 		methods: {
+			//更新控制网的滑块的值
+			onPhotosInputControinet(value){
+			    this.photosControinetInfo.value = value
+			    },
+			//更新上传图片的滑块的值
+			onPhotosInputSstyle(value){
+			    this.photosUploadInfo.value = value
+			    },
+			//更新lora滑块的值
+			onPhotosInputLora(value){
+			    this.photosLoraInfo.value = value
+			    },
 			//开始生成
 			async onPhotosStart(){
 				if (!this.isLogin) {
@@ -276,6 +288,7 @@ import user from './user/user.vue'
 					return
 				}
 				if(this.photosTextareaValue.length>500)return util.confirm('字符数超出数量，无法提交')
+				if(this.photosSubseCtionCurrent === 2){this.photosSelectNumber = 4}
 				// if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
 				// if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
 				// if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
@@ -297,7 +310,7 @@ import user from './user/user.vue'
 						reference_image:this.photosUploadInfo.url || '',//参考图
 						reference_image_weight:this.photosUploadInfo.value || '',//参考图权重值 
 						img_style_id:this.photosStyleInfo.img_style_id || '',//图片样式 id
-						img_scale:this.photosPlotList[this.photosPlotNumber].id ,//	图片比例
+						img_scale:this.photosPlotNumber,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
 				try{
@@ -322,7 +335,6 @@ import user from './user/user.vue'
 					// this.photosLoraInfo = {}
 					// this.photosUploadInfo = {}
 					// this.photosStyleInfo = {}
-					
 			},
 			//画面描述词的没有登陆提示
 			onPhotoTextareaFocus(){
@@ -526,6 +538,7 @@ import user from './user/user.vue'
 			async onshowPlot(){
 					let data = {class_id:this.photosSubseCtionCurrent+1}
 					const res = await  util.request({url: '/AiDraw/GetImgScale',data})
+						// console.log(res)
 					this.photosPlotList = res.data.list
 			},
 			//请求一键同款数据
@@ -633,13 +646,13 @@ import user from './user/user.vue'
 						margin-top: 10rpx;
 						margin-bottom: 10rpx;
 					}
-					.row-col-list{
-						display: flex;
-						.col-slider{
-							flex: 1;
-							margin-right: 50rpx;
-						}
-					}
+					// .row-col-list{
+					// 	display: flex;
+					// 	.col-slider{
+					// 		flex: 1;
+					// 		margin-right: 50rpx;
+					// 	}
+					// }
 				}
 			}
 		.photos-lora{
@@ -658,13 +671,13 @@ import user from './user/user.vue'
 					margin-top: 10rpx;
 					margin-bottom: 10rpx;
 				}
-				.row-col-list{
-					display: flex;
-					.col-slider{
-						flex: 1;
-						margin-right: 50rpx;
-					}
-				}
+				// .row-col-list{
+				// 	display: flex;
+				// 	.col-slider{
+				// 		flex: 1;
+				// 		margin-right: 50rpx;
+				// 	}
+				// }
 			}
 			.photos-lora-but{
 			background: #23242C;
@@ -796,13 +809,13 @@ import user from './user/user.vue'
 		                    margin-bottom: 10rpx;
 							justify-content: space-between;
 		                }
-		                .row-col-list{
-		                    display: flex;
-		                    .col-slider{
-		                        flex: 1;
-		                        margin-right: 50rpx;
-		                    }
-		                }
+		                // .row-col-list{
+		                //     display: flex;
+		                //     .col-slider{
+		                //         flex: 1;
+		                //         margin-right: 50rpx;
+		                //     }
+		                // }
 		.photos-upload-space{
 			width: 200rpx;
 			white-space: nowrap; 
@@ -1045,11 +1058,11 @@ import user from './user/user.vue'
   ::v-deep .u-drawer__scroll-view {
     height: auto !important;
   }
-::v-deep .u-textarea--radius[data-v-09988a29] {
-    border-radius: 4px;
-    border: #e5e5e5 1px solid;
-	background: #f7f7f7;
-}
+// ::v-deep .u-textarea--radius[data-v-09988a29] {
+//     border-radius: 4px;
+//     border: #e5e5e5 1px solid;
+// 	background: #f7f7f7;
+// }
 ::v-deep uni-slider{
 	margin: 0;
 }
