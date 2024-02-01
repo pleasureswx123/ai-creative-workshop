@@ -31,6 +31,11 @@ export default {
     right: 0;
     background: var(--bg-color1);
     z-index: 99;
+    display: flex;
+    align-items: center;
+    /deep/ .navList {
+      padding-top: 0;
+    }
   }
 }
 </style>
