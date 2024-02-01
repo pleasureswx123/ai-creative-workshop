@@ -352,11 +352,7 @@
 				  url: '/pages/photos/photos'
 				})
 			},
-			goDary() {
-				// if (!this.isLogin) {
-				// 	app.globalData.util.toLogin('请登录')
-				// 	return
-				// }
+			goDary(id) {
 				switch (id) {
 				  case '1':
 					this.goAi();
