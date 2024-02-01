@@ -7,7 +7,7 @@
 					<view  class="lora-list">
 						<view @mousewheel.prevent>
 						 <u--text  text="选择Lora模型" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
-						  <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="20" color="#d5d5d5"></u--text>
+						  <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="40rpx" color="#d5d5d5"></u--text>
 						</view>
 						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
 						 <view class="lora-popup-list">
@@ -21,7 +21,7 @@
 								</view>
 						 	</view>
 						 </view>
-						  <view v-if="showMoreData" style="text-align: center;height: 150rpx;"></view>
+						  <view v-if="showMoreData" style="text-align: center;height: 200rpx;"></view>
 						 </scroll-view>
 						 <view @mousewheel.prevent >
 						 	 <u-button  text="确认" class="popup-list-but" @click="onPhotosLoraConfig"></u-button>
@@ -121,7 +121,7 @@
 			.lora-popup-list{
 				margin-top: 20rpx;
 				display: flex;
-				justify-content: space-between;
+				justify-content: space-around;
 				flex-wrap: wrap;
 				.popup-list{
 					width: 220rpx;
@@ -129,7 +129,7 @@
 					// margin-left: 10rpx;
 					background: #1D1E23;
 					margin-bottom: 40rpx;
-					margin-left: 1rpx;
+					// margin-left: 1rpx;
 					.popup-list-text{
 						padding: 10rpx;
 						// box-sizing: border-box;
@@ -153,7 +153,8 @@
 				
 			}
 			.lora-popup-list:after{
-			      width: 220rpx;
+			      // width: 220rpx;
+				  flex: 1;
 			      content: "";
 			    }
 			.popup-list-but{
