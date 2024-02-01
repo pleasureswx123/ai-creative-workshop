@@ -26,11 +26,11 @@
         <view class="menus">
             <view class="item" @click="goGenerateImg">
                 <text class="text-grey">{{ '图片创作' | lang }}</text>
-				<view class="arrow">21</view>
+				<view class="arrow">{{userinfo.img_task_num}}</view>
             </view>
             <view class="item" @click="goImgToVideo">
                 <text class="text-grey">{{ '视频创作' | lang }}</text>
-				<view class="arrow">5</view>
+				<view class="arrow">{{userinfo.video_task_num}}</view>
             </view>
 			<view class="item" data-url="/pages/user/integral" @tap="linkto">
 			    <text class="text-grey">{{ '积分明细' | lang }}</text>
@@ -38,7 +38,7 @@
 			</view>
             <view class="item">
                 <text class="text-grey">{{ '手机号' | lang }}</text>
-				<view class="arrow">13252147859</view>
+				<view class="arrow">{{userinfo.phone}}</view>
             </view>
         </view>
 		<!-- 兑换积分弹窗 -->

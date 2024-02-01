@@ -1,10 +1,10 @@
 <template>
 	<view class="content">
 		<view class="navList">
-			<navMenu></navMenu>
-			<view class="head" @click="goUser">
-				<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
+			<view class="head">
+				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
 			</view>
+			<navMenu></navMenu>
 		</view>
 		<view class="banner-cont">
 			<view class="banner">
@@ -15,8 +15,8 @@
 					<text class="eng">{{banner.slogan_en}}</text>
 					<view>
 						<text class="cn">{{slogan_cn}}</text>
-						<text class="cnmain">{{banner.slogan_mark}}</text>
-						<text class="cn">{{slogan_cnEng}}</text>
+						<!-- <text class="cnmain">{{banner.slogan_mark}}</text> -->
+						<!-- <text class="cn">{{slogan_cnEng}}</text> -->
 					</view>
 				</view>
 			</view>
@@ -89,7 +89,7 @@
 					<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
 					<text class="primaryColor">超级语言AI</text>
 				</view>
-				<view class="contact">联系我们</view>
+				<view class="contact" @click="goContact">联系我们</view>
 			</view>
 			<text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
 			<view class="">
@@ -103,8 +103,8 @@
 		</view>
 		<!-- 瀑布流弹窗 -->
 		<view class="wallPopup">
-			<u-popup :show="wallShow" mode="center" @close="wallClose" @open="wallOpen" closeable closeIconPos="top-right">
-				<u-swiper height="500px" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
+			<u-popup :show="wallShow" mode="bottom" @close="wallClose" @open="wallOpen" closeable closeIconPos="top-right">
+				<u-swiper height="600px" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
 					<view slot="indicator" class="indicator-num">
 						<text class="indicator-num__text">{{ currentNum + 1 }}/{{ wallList.length }}</text>
 					</view>
@@ -285,10 +285,6 @@
 				});
 			},
 			wallInfo(task_id) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				this.task_id = task_id
 				this.wallShow = true
 				this.getDrawInfo()
@@ -310,7 +306,7 @@
 				.then((res) => {
 					this.makeList = res.data.channel
 					this.banner = res.data.banner
-					this.slogan_cn = res.data.banner.slogan_cn.slice(0, -3)
+					this.slogan_cn = res.data.banner.slogan_cn
 					this.slogan_cnEng = res.data.banner.slogan_cn.slice(-1)
 					this.$nextTick(()=>{
 						this.videoContext.play()
@@ -357,10 +353,6 @@
 				})
 			},
 			goDary(id) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				switch (id) {
 				  case '1':
 					this.goAi();
@@ -400,6 +392,16 @@
 					url: '/pages/article/article?type=' + type
 				})
 			},
+			goContact(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
+				uni.navigateTo({
+				  url: '/pages/article/code'
+				})
+			},
 			onload() {
 				uni.downloadFile({
 					url: this.wallList, //仅为示例，并非真实的资源
@@ -422,6 +424,11 @@
 				});
 			},
 			sameModel(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
 				app.globalData.util.request({
 					url: '/Home/FeedsTab',
 					data:{
@@ -489,18 +496,24 @@
 		}
 	}
 	.waterfall-item__ft {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 10rpx 20rpx;
+		// background-color: rgba(0,0,0,.3);
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.7),rgba(0, 0, 0, 0));
 		position: absolute;
-		bottom: 20rpx;
+		bottom: 0;
 		left: 50%;
 		transform: translate(-50%, 0);
+		overflow: hidden;
 
 		&__title {
-			text-align: center;
-			font-weight: 700;
+			// text-align: center;
+			// font-weight: 700;
 
 			.value {
 				font-size: 28rpx;
-				color: #fff;
+				color: rgba(255,255,255,.7);
 			}
 		}
 
@@ -521,10 +534,9 @@
 		align-items: center;
 		.head {
 			width: 60rpx;
-			height: 60rpx;
+			height: 58rpx;
 			overflow: hidden;
 			border-radius: 50%;
-			background-color: rgb(255, 173, 8);
 			margin: 30rpx 40rpx 0;
 			image {
 				width: 100%;
@@ -597,10 +609,10 @@
 			width: 100%;
 			overflow: hidden;
 			background-color: #1D1E23;
-			margin-bottom: 20rpx;
+			margin-bottom: 30rpx;
 			position: relative;
 			box-sizing: border-box;
-			padding: 20rpx 30rpx;
+			padding: 30rpx 30rpx;
 			border-radius: 10rpx;
 
 			image {
@@ -685,14 +697,18 @@
 	}
 	.wallPopup {
 		position: relative;
-		
+		/deep/.u-popup{
+			.u-transition{
+				height: 90%;
+			}
+		}
 		/deep/.u-popup__content {
 			width: 100%;
 			height: 100%;
 			background-color: #2A2A2A;
 			.u-swiper{
 				background-color: #2A2A2A!important;
-				height: 500px!important;
+				height: 600px!important;
 			}
 		}
 		/deep/.u-icon__icon{
@@ -700,13 +716,13 @@
 			line-height: 18px!important;
 		}
 		.imgCont {
-			position: absolute;
+			position: fixed;
 			bottom: 0;
 			left: 0;
 			width: 100%;
 			box-sizing: border-box;
 			padding: 30rpx 40rpx;
-			background-color: rgba(0, 0, 0, .2);
+			background-color: rgba(0, 0, 0, .45);
 			z-index:1;
 			.tit {
 				font-size: 28rpx;
@@ -715,8 +731,8 @@
 
 			.imgDetail {
 				margin: 20rpx 0 40rpx;
-				font-size: 24rpx;
-				color: #9C9C9A;
+				font-size: 24rpx; 
+				color: #fff;
 
 				text {
 					margin-right: 30rpx;
@@ -745,7 +761,7 @@
 
 		/deep/.u-swiper__indicator {
 			bottom: 0;
-			top: 50rpx;
+			top: 26rpx;
 		}
 
 		.indicator {

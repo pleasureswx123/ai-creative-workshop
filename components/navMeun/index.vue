@@ -5,7 +5,7 @@
 		</view>
 		<!-- 导航弹出 -->
 		<view class="popup">
-			<u-popup :show="navShow" mode="left" @close="close" @open="open" closeIconPos="top-right">
+			<u-popup :show="navShow" mode="right" @close="close" @open="open" closeIconPos="top-right">
 				<view class="user" @click="goUser">
 					<view class="userAvater">
 						<image :src="userinfo.avatar" v-if="userinfo.avatar" mode="aspectFit"></image>
@@ -23,6 +23,9 @@
 					<view class="inteBtn" @click="blChange">兑换</view>
 				</view>
 				<view class="headList">
+					<view class="item" @click="goHome">
+						<u-icon name="home" size="22" color="#f5f5f5"></u-icon>首页
+					</view>
 					<view class="item" @click="goUser">
 						<u-icon name="account" size="22" color="#f5f5f5"></u-icon>个人中心
 					</view>
@@ -38,6 +41,9 @@
 					</view>
 					<view class="item" @click="goImgTool">
 						<u-icon name="photo" size="22" color="#f5f5f5"></u-icon>图片处理
+					</view>
+					<view class="item" @click="goDub">
+						<u-icon name="mic" size="22" color="#f5f5f5"></u-icon>智能配音
 					</view>
 					<view class="item" @click="goImgToVideo">
 						<u-icon name="play-right" size="22" color="#f5f5f5"></u-icon>生成视频
@@ -146,13 +152,19 @@
 					this.getUserInfo();
 				});
 			},
+			goHome() {
+				document.body.style.position = null
+				uni.reLaunch({
+					url: '/pages/index/index'
+				})
+			},
 			goUser() {
 				if (!this.isLogin) {
 					app.globalData.util.toLogin('请登录')
 					return
 				}
 				document.body.style.position = null
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/user/index'
 				})
 			},
@@ -167,50 +179,36 @@
 				})
 			},
 			goAi() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/ai/index'
 				})
 			},
 			goGenerateImg() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/photos/photos'
 				})
 			},
 			goImgTool() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
 			},
+			goDub() {
+				document.body.style.position = null
+				uni.navigateTo({
+				  url: '/pages/sound/index'
+				})
+			},
 			goImgToVideo() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/img-to-video'
 				})
 			},
 			goUse(e) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				const url = e.currentTarget.dataset.url;
 				uni.navigateTo({
@@ -218,20 +216,12 @@
 				});
 			},
 			goContact(){
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/article/code'
 				})
 			},
 			toDoc(type) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
@@ -261,7 +251,9 @@
 		align-items: center;
 		padding: 30rpx 40rpx 0;
 		/deep/.u-icon__icon{
-			font-size: 24px!important;
+			font-size: 28px!important;
+			line-height: 28px!important;
+			color: rgba(255,255,255,.7)!important;
 		}
 	}
 	.popup {
@@ -272,6 +264,8 @@
 			box-sizing: border-box;
 			padding: 30rpx 20rpx;
 			background-color: #0D0D0D;
+			overflow-y: auto;
+			overflow-x: hidden;
 		}
 	
 		.user {
@@ -296,7 +290,7 @@
 			.Infor {
 				.userName {
 					font-size: 24rpx;
-					color: #fff;
+					color: rgba(255,255,255,.7);
 					font-weight: 700;
 				}
 	
@@ -347,7 +341,7 @@
 				font-size: 28rpx;
 				display: flex;
 				align-items: center;
-				color: #f5f5f5;
+				color: rgba(255,255,255,.7);
 				.u-icon {
 					display: inline-block;
 					margin-right: 12rpx;
@@ -361,7 +355,7 @@
 			.navSelmg {
 				width: 100%;
 				height: 1px;
-				background-color: #f0f0f0;
+				background-color: rgba(255,255,255,.2);
 				margin: 40rpx 0;
 			}
 		}

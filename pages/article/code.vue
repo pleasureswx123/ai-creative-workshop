@@ -25,11 +25,12 @@
 	.code{
 		text-align: center;
 		padding: 30rpx 0;
-		background: #fff;
 		border-radius: 10px;
 		margin: 50rpx 30rpx 0;
 		text{
 			display: inline-block;
+			color: #B2B2B2;
+			margin-top: 20rpx;
 		}
 	}
 </style>
