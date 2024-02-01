@@ -38,8 +38,8 @@ export default {
       generating: false,
       describe: '',
       timbre: '',
-      volume: 0,
-      speed: 0,
+      volume: 2,
+      speed: 2,
       timer: null,
     }
   },
