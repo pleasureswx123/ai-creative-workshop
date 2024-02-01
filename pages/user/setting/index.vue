@@ -182,7 +182,7 @@
 	}
 
 	.form .a-item {
-		border-top: 1rpx solid #eee;
+		border-top: 1px solid #555555;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -206,7 +206,7 @@
 		justify-content: flex-end;
 		align-items: center;
 		font-size: 32rpx;
-		color: #333;
+		color: #F60652;
 	}
 
 	.form .a-item .arrow {
