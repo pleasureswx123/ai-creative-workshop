@@ -55,7 +55,7 @@
 	 </view>
 	</view>
 	<!-- 使用ControINet -->
-	<view class="photos-controinet" v-if="photosSubseCtionCurrent<2">
+	<view class="photos-controinet" v-if="photosSubseCtionCurrent == 0  " >
 	 <view class="photos-controinet-text"><u--text text="使用ControINet" color="#FFFFFF" size="28rpx"></u--text></view>
 	 <view class="photos-controinet-row" v-show="photosControinetInfoShow">
 	  <u-row customStyle="margin-bottom: 10px">
@@ -207,7 +207,10 @@
 	<view class="photps-generate" >
 	         <view class="generate">
 	         <u-button v-if="photosSubseCtionCurrent<2" size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
-	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
+	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view>
+			 <view  v-if="photosSubseCtionCurrent !== 2" class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view>
+			 <view v-else class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗4万</view>
+			 </u-button>
 	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
 	         	<u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
@@ -541,7 +544,6 @@ import navmeun from '@/components/navMeun/index.vue';
 			async onshowPlot(){
 					let data = {class_id:this.photosSubseCtionCurrent+1}
 					const res = await  util.request({url: '/AiDraw/GetImgScale',data})
-						// console.log(res)
 					this.photosPlotList = res.data.list
 			},
 			//请求一键同款数据

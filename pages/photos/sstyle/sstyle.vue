@@ -8,7 +8,7 @@
 						<view @mousewheel.prevent>
 							 <u--text text="选择样式" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
 						</view>
-						 <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="20" color="#d5d5d5"></u--text>
+						 <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="40rpx" color="#d5d5d5"></u--text>
 						<scroll-view  scroll-y="true" @scrolltolower="onPhotosSstyleList" style="height: 600px;">
 						 <view class="lora-popup-list">
 						 	<view :class="['popup-list',photosStyleNumber === index?'photos-active':'']" v-for="(item,index) in photosStyleList" :key="index" @click="onPhotosLoraPopup(index)">

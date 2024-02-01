@@ -31,9 +31,9 @@
 							<u--text text="参考图" align="center" color="#FFFFFF" size="28rpx"></u--text>
 					<view class="upload" @tap="uploadAvatar"> 
 						<!-- <u--image v-if="photosControinetSrc" :showLoading="true" mode="widthFix" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image> -->
-						<view 	style="margin: 0 auto;"  v-if="photosControinetSrc">
-							<image    :src="photosControinetSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
-						</view>
+						<!-- <view 	style="margin: 0 auto;"  > -->
+							<image  v-if="photosControinetSrc"  :src="photosControinetSrc" mode="aspectFit" style="width: 100%;height: 100%;"></image>
+						<!-- </view> -->
 						<view v-else class="upload-image">
 						    <view class="upload-icon">
 						        <u-icon class="icon" name="plus" :bold="true"  size="28rpx" color="#FFFFFF"></u-icon>
@@ -56,7 +56,8 @@
 						<u--text text="控制图" align="center" color="#FFFFFF" size="24rpx"></u--text>
 							<view class="upload-purple">
 						<!-- <u--image v-if="photosControinetUploadSrc" :showLoading="true" :src="photosControinetUploadSrc" width="140px" height="210" style="margin-left: 25rpx;"></u--image> -->
-						<image v-if="photosControinetUploadSrc"  :src="photosControinetUploadSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
+						<!-- <image v-if="photosControinetUploadSrc"  :src="photosControinetUploadSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image> -->
+						<image  v-if="photosControinetSrc"  :src="photosControinetUploadSrc" mode="aspectFit" style="width: 100%;height: 100%;"></image>
 						<view  v-else   :class="['upload-info',photosControinetUploadText == '正在生成，请耐心等候......'?'upload-active':'']">
 						<view class="purple">{{photosControinetUploadText}}</view>
 						</view>
@@ -156,7 +157,7 @@
 				try{
 					let data = {img_url:this.photosControinetSrc,type_id:this.photosControinetPopupList[this.controinetPopupNumber].id}
 					const res = await	util.request({url: '/AiDraw/ControlNetDetect',data})
-						console.log(res)
+						// console.log(res)
 					this.photosControinetUploadSrc	= res.data.img_url
 				}catch(e){
 					console.log(e)
