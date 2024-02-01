@@ -1,8 +1,14 @@
 <template>
 	<view class="navList">
-		<view class="nav">
-			<u-icon name="list" color="#fff" size="24" @click="navShow = true"></u-icon>
-		</view>
+		<u-sticky offset-top="100">
+			<view class="head" @click="goHome">
+				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
+			</view>
+			<view class="nav">
+				<u-icon name="list" color="#fff" size="24" @click="navShow = true"></u-icon>
+			</view>
+		</u-sticky>
+		
 		<!-- 导航弹出 -->
 		<view class="popup">
 			<u-popup :show="navShow" mode="right" @close="close" @open="open" closeIconPos="top-right">
@@ -244,17 +250,34 @@
 
 <style lang="scss" scoped>
 	.navList {
-		display: flex;
-		display: -webkit-flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		align-items: center;
+		width: 100%;
+		box-sizing: border-box;
 		padding: 30rpx 40rpx 0;
 		/deep/.u-icon__icon{
 			font-size: 28px!important;
 			line-height: 28px!important;
 			color: rgba(255,255,255,.7)!important;
 		}
+		.head {
+			width: 60rpx;
+			height: 58rpx;
+			overflow: hidden;
+			border-radius: 50%;
+			image {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		/deep/.u-sticky{
+			width: 100%;
+			.u-sticky__content{
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+		}
+		
 	}
 	.popup {
 		width: 100%;

@@ -1,9 +1,9 @@
 <template>
 	<view class="content">
 		<view class="navList">
-			<view class="head">
+			<!-- <view class="head">
 				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
-			</view>
+			</view> -->
 			<navMenu></navMenu>
 		</view>
 		<view class="banner-cont">
@@ -437,7 +437,7 @@
 				})
 				.then((res) => {
 					uni.navigateTo({
-						url: '/page/photos/photos'
+						url: '/pages/photos/photos'
 					})
 				});
 			}
