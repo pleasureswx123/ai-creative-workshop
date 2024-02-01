@@ -46,13 +46,15 @@ export default {
     this.clearTimer();
   },
   onLoad({type}) {
-    this.taskType = type || '';
-    const eventChannel = this.getOpenerEventChannel();
-    eventChannel.on('acceptData', ({data}) => {
-      const { currentImg } = data || {};
-      this.sourceImg = currentImg;
+    this.checkLoginStatus().then(() => {
+      this.taskType = type || '';
+      const eventChannel = this.getOpenerEventChannel();
+      eventChannel.on('acceptData', ({data}) => {
+        const { currentImg } = data || {};
+        this.sourceImg = currentImg;
+      })
+      type && this.getMaterial({task_type: type});
     })
-    type && this.getMaterial({task_type: type});
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),

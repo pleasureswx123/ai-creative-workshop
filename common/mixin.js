@@ -1,5 +1,39 @@
+import {userApi} from "@/api";
+
 export default {
+  data() {
+    return {
+      isLoginStatus: false
+    }
+  },
   methods: {
+    checkLoginStatus() {
+      return new Promise((resolve, reject) => {
+        userApi.checkLogin().then(res => {
+          this.isLoginStatus = true;
+          resolve(res);
+        }).catch(err => {
+          if(err.errno === 403) {
+            uni.showModal({
+              title: '提示',
+              content: '请登录',
+              confirmText: '去登录',
+              cancelText: '取消',
+              success: function (res) {
+                if (res.confirm) {
+                  uni.$u.route({
+                    url: `pages/login/index`,
+                    params: {
+                      // backurl  encodeURIComponent
+                    }
+                  })
+                }
+              }
+            })
+          }
+        })
+      })
+    },
     loadImageAndReadFile(url) {
       return new Promise((resolve, reject) => {
         try {
