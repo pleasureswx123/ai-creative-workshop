@@ -285,10 +285,6 @@
 				});
 			},
 			wallInfo(task_id) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				this.task_id = task_id
 				this.wallShow = true
 				this.getDrawInfo()
@@ -357,10 +353,10 @@
 				})
 			},
 			goDary() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
+				// if (!this.isLogin) {
+				// 	app.globalData.util.toLogin('请登录')
+				// 	return
+				// }
 				switch (id) {
 				  case '1':
 					this.goAi();
@@ -432,6 +428,11 @@
 				});
 			},
 			sameModel(){
+				if (!this.isLogin) {
+					app.globalData.util.toLogin('请登录')
+					return
+				}
+				document.body.style.position = null
 				app.globalData.util.request({
 					url: '/Home/FeedsTab',
 					data:{
@@ -704,7 +705,6 @@
 		/deep/.u-popup{
 			.u-transition{
 				height: 90%;
-				overflow-y: auto;
 			}
 		}
 		/deep/.u-popup__content {

@@ -153,12 +153,8 @@
 				});
 			},
 			goHome() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/index/index'
 				})
 			},
@@ -168,7 +164,7 @@
 					return
 				}
 				document.body.style.position = null
-				uni.navigateTo({
+				uni.reLaunch({
 					url: '/pages/user/index'
 				})
 			},
@@ -183,60 +179,36 @@
 				})
 			},
 			goAi() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/ai/index'
 				})
 			},
 			goGenerateImg() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/photos/photos'
 				})
 			},
 			goImgTool() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
 			},
 			goDub() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/sound/index'
 				})
 			},
 			goImgToVideo() {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/picture/img-to-video'
 				})
 			},
 			goUse(e) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				const url = e.currentTarget.dataset.url;
 				uni.navigateTo({
@@ -244,20 +216,12 @@
 				});
 			},
 			goContact(){
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/article/code'
 				})
 			},
 			toDoc(type) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
 				document.body.style.position = null
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
