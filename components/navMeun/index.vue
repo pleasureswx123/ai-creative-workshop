@@ -1,13 +1,16 @@
 <template>
 	<view class="navList">
-		<u-sticky offset-top="100">
-			<view class="head" @click="goHome">
-				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
+		<view class="menu">
+			<view class="gohome" @click="goHome">
+				<view class="head">
+					<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
+				</view>
+				<text>首页</text>
 			</view>
-			<view class="nav">
-				<u-icon name="list" color="#fff" size="24" @click="navShow = true"></u-icon>
+			<view class="nav" @click="open">
+				<u-icon name="list" color="#fff" size="24"></u-icon>
 			</view>
-		</u-sticky>
+		</view>
 		
 		<!-- 导航弹出 -->
 		<view class="popup">
@@ -116,14 +119,19 @@
 					this.isLogin =  true
 				})
 			},
-			open() {
-				// console.log('open');
-				this.navShow = true
+			null() {
+				document.body.style.position = null
+			},
+			fixed(){
 				document.body.style.position = 'fixed'
+			},
+			open() {
+				this.navShow = true
+				this.fixed()
 			},
 			close() {
 				this.navShow = false
-				document.body.style.position = null
+				this.null()
 			},
 			blChange() {
 				if (!this.isLogin) {
@@ -136,11 +144,11 @@
 			},
 			inOpen() {
 				// console.log('open');
-				document.body.style.position = 'fixed'
+				this.fixed()
 			},
 			inClose() {
 				this.integralShow = false
-				document.body.style.position = null
+				this.null()
 			},
 			inChange(e) {
 				// console.log('change', e);
@@ -159,7 +167,7 @@
 				});
 			},
 			goHome() {
-				document.body.style.position = null
+				this.null()
 				uni.reLaunch({
 					url: '/pages/index/index'
 				})
@@ -169,7 +177,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				document.body.style.position = null
+				this.null()
 				uni.reLaunch({
 					url: '/pages/user/index'
 				})
@@ -179,62 +187,62 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/index'
 				})
 			},
 			goAi() {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/ai/index'
 				})
 			},
 			goGenerateImg() {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/photos/photos'
 				})
 			},
 			goImgTool() {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
 			},
 			goDub() {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/sound/index'
 				})
 			},
 			goImgToVideo() {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/img-to-video'
 				})
 			},
 			goUse(e) {
-				document.body.style.position = null
+				this.null()
 				const url = e.currentTarget.dataset.url;
 				uni.navigateTo({
 					url: url
 				});
 			},
 			goContact(){
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 				  url: '/pages/article/code'
 				})
 			},
 			toDoc(type) {
-				document.body.style.position = null
+				this.null()
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
 				})
 			},
 			doLogout() {
-				document.body.style.position = null
+				this.null()
 				app.globalData.util.request({
 					url: '/user/logout'
 				}).then((res) => {
@@ -250,34 +258,47 @@
 
 <style lang="scss" scoped>
 	.navList {
-		width: 100%;
-		box-sizing: border-box;
-		padding: 30rpx 40rpx 0;
-		/deep/.u-icon__icon{
-			font-size: 28px!important;
-			line-height: 28px!important;
-			color: rgba(255,255,255,.7)!important;
-		}
-		.head {
-			width: 60rpx;
-			height: 58rpx;
-			overflow: hidden;
-			border-radius: 50%;
-			image {
-				width: 100%;
-				height: 100%;
-			}
-		}
-		/deep/.u-sticky{
+		margin-bottom: 120rpx;
+		.menu{
 			width: 100%;
-			.u-sticky__content{
-				width: 100%;
+			display: -webkit-flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			align-items: center;
+			padding: 30rpx 40rpx;
+			box-sizing: border-box;
+			position: fixed;
+			top: 0;
+			left:0;
+			background-color: #0D0D0D;
+			z-index: 11;
+			.gohome{
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
+				text{
+					color: #fff;
+					font-size: 14px;
+					opacity: .7;
+					margin-left: 8rpx;
+				}
+			}
+			/deep/.u-icon__icon{
+				font-size: 28px!important;
+				line-height: 28px!important;
+				color: rgba(255,255,255,.7)!important;
+			}
+			.head {
+				width: 60rpx;
+				height: 58rpx;
+				overflow: hidden;
+				border-radius: 50%;
+				image {
+					width: 100%;
+					height: 100%;
+					
+				}
 			}
 		}
-		
 	}
 	.popup {
 		width: 100%;

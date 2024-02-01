@@ -1,11 +1,6 @@
 <template>
 	<view class="content">
-		<view class="navList">
-			<!-- <view class="head">
-				<image src="../../static/images/index/logo.png" mode="aspectFit"></image>
-			</view> -->
-			<navMenu></navMenu>
-		</view>
+		<navMenu></navMenu>
 		<view class="banner-cont">
 			<view class="banner">
 				<view class="bannerBg">
@@ -26,6 +21,7 @@
 				<text class="aiTitle">{{item.title}}</text>
 				<text class="aiSubtitle">{{item.content}}</text>
 				<image :src="item.img" v-if="item.img" mode="aspectFit"></image>
+				<view class="stay" v-if="item.channel_id==6||item.channel_id==7||item.channel_id==8||item.channel_id==9">敬请期待</view>
 			</view>
 		</view>
 		<view class="aiList">
@@ -96,6 +92,9 @@
 				<text @click="toDoc('service')">用户协议和</text><text @click="toDoc('privacy')">隐私政策</text>
 			</view>
 			<text @click="goMiit">京ICP备2023009914号-5</text>
+			<view>
+				<text>增值电信业务许可证 京B2-20240305</text>
+			</view>
 			<view class="">
 				<image src="../../static/images/index/semi.png" mode="aspectFit" class="semi"></image>
 				<text @click="goMps">京公网安备11011102002471号</text>
@@ -112,15 +111,15 @@
 				<view class="imgCont">
 					<view class="tit">{{wallCont.prompt}}</view>
 					<view class="imgDetail">
-						<text>{{wallCont.task_name}}</text>
-						<text>{{wallCont.model_style_name}}</text>
-						<text>{{wallCont.lora_name}}</text>
-						<text>{{wallCont.controlnet_type}}</text>
-						<text>{{wallCont.img_style_name}}</text>
-						<text>{{wallCont.img_scale}}</text>
-						<text>{{wallCont.jifen_consume}}</text>
-						<text>{{wallCont.task_id}}</text>
-						<text>{{wallCont.create_time}}</text>
+						<text v-if="wallCont.task_name">{{wallCont.task_name}}</text>
+						<text v-if="wallCont.model_style_name">{{wallCont.model_style_name}}</text>
+						<text v-if="wallCont.lora_name">{{wallCont.lora_name}}</text>
+						<text v-if="wallCont.controlnet_type">{{wallCont.controlnet_type}}</text>
+						<text v-if="wallCont.img_style_name">{{wallCont.img_style_name}}</text>
+						<text v-if="wallCont.img_scale">{{wallCont.img_scale}}</text>
+						<text v-if="wallCont.img_scale">{{wallCont.jifen_consume}}</text>
+						<text v-if="wallCont.task_id">任务Id:{{wallCont.task_id}}</text>
+						<text v-if="wallCont.create_time">{{wallCont.create_time}}</text>
 					</view>
 					<view class="operateBtn">
 						<view class="btn" @click="onload">下载图片</view>
@@ -212,10 +211,17 @@
 					}));
 				});
 			},
+			null() {
+				document.body.style.position = null
+			},
+			fixed(){
+				document.body.style.position = 'fixed'
+			},
 			change(index) {
 				this.model_subclass_id = index.current
 				this.list = []
 				this.$refs.waterfall.clear()
+				this.page = 1
 				this.list1 = []
 				this.list2 = []
 				this.getData()
@@ -265,11 +271,11 @@
 				})
 			},
 			wallOpen() {
-				document.body.style.position = 'fixed'
+				this.fixed()
 			},
 			wallClose() {
 				this.wallShow = false
-				document.body.style.position = null
+				this.null()
 			},
 			getDrawInfo() {
 				app.globalData.util.request({
@@ -383,21 +389,11 @@
 				})
 			},
 			toDoc(type) {
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				document.body.style.position = null
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
 				})
 			},
 			goContact(){
-				if (!this.isLogin) {
-					app.globalData.util.toLogin('请登录')
-					return
-				}
-				document.body.style.position = null
 				uni.navigateTo({
 				  url: '/pages/article/code'
 				})
@@ -410,6 +406,7 @@
 						uni.saveImageToPhotosAlbum({
 							filePath: res.tempFilePath,
 							success: function() {
+								this.null()
 								app.globalData.util.message('已保存到相册');
 							},
 							fail: function(res) {
@@ -428,7 +425,7 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				document.body.style.position = null
+				this.null()
 				app.globalData.util.request({
 					url: '/Home/FeedsTab',
 					data:{
@@ -468,18 +465,31 @@
 		}
 
 		.load-more {
-			width: 400rpx;
+			width: 260rpx;
 			height: 88rpx;
 			line-height: 88rpx;
 			border-radius: 16rpx;
-			background-color: #1D1E23;
+			background-color: transparent;
 			text-align: center;
 			margin: 50rpx auto;
-			color:#88888B;
+			border: 1px solid #fff;
+			color:#fff;
 			font-size: 28rpx;
-			/deep/.u-loadmore__content__text {
-				line-height: 88rpx !important;
+			opacity: .8;
+			/deep/.u-loadmore{
+				margin: 0!important;
+				.u-loadmore__content{
+					width: 100%;
+					.u-loadmore__content__text {
+						line-height: 88rpx !important;
+						font-size: 28rpx!important;
+						width: 100%;
+						color: #fff!important;
+					}
+				}
 			}
+			
+			
 		}
 	}
 	.waterfall-item {
@@ -505,15 +515,15 @@
 		bottom: 0;
 		left: 50%;
 		transform: translate(-50%, 0);
-		overflow: hidden;
-
 		&__title {
-			// text-align: center;
-			// font-weight: 700;
-
 			.value {
+				width: 100%;
 				font-size: 28rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 				color: rgba(255,255,255,.7);
+				display: inline-block;
 			}
 		}
 
@@ -526,38 +536,18 @@
 			padding: 10px 0;
 		}
 	}
-	.navList {
-		display: flex;
-		display: -webkit-flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		align-items: center;
-		.head {
-			width: 60rpx;
-			height: 58rpx;
-			overflow: hidden;
-			border-radius: 50%;
-			margin: 30rpx 40rpx 0;
-			image {
-				width: 100%;
-				height: 100%;
-				
-			}
-		}
-	}
 	.banner-cont {
 		width: 100%;
 		padding: 0 40rpx 0;
 		box-sizing: border-box;
 		position: relative;
+		margin:0 0 30rpx 0;
 		.banner {
 			border-radius: 10rpx;
 			height: 344rpx;
 			width: 100%;
 			overflow: hidden;
-			margin: 30rpx 0;
 			position: relative;
-
 			.bannerBg {
 				width: 100%;
 				height: 100% !important;
@@ -604,7 +594,6 @@
 		box-sizing: border-box;
 		padding: 0 40rpx;
 		margin: 30rpx 0;
-
 		.item {
 			width: 100%;
 			overflow: hidden;
@@ -614,7 +603,6 @@
 			box-sizing: border-box;
 			padding: 30rpx 30rpx;
 			border-radius: 10rpx;
-
 			image {
 				position: absolute;
 				top: 30rpx;
@@ -636,6 +624,19 @@
 			.aiSubtitle {
 				color: #77787B;
 				font-size: 26rpx;
+			}
+			.stay{
+				background-color: rgba(246, 6, 82, 1);
+				color:rgba(255, 255, 255, .9);
+				text-align: center;
+				width: 136rpx;
+				height: 44rpx;
+				line-height: 44rpx;
+				border-radius: 0 16rpx 0 16rpx;
+				font-size: 22rpx;
+				position: absolute;
+				right: 0;
+				top: 0;
 			}
 		}
 	}
@@ -727,6 +728,9 @@
 			.tit {
 				font-size: 28rpx;
 				color: #fff;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
 			.imgDetail {
