@@ -1,7 +1,7 @@
 <template>
 	<view class="phogos-tontent" >
 		<!-- 标图展示 -->
-		<navmeun></navmeun>
+		<!-- <navmeun></navmeun> -->
 		<!-- 页头 -->
 		<!-- <u--text text="生成图片" size="24" color="#FFFFFF" align="center" lineHeight="80"></u--text> -->
 		<!-- 提示  @click="onCellGroup" -->
@@ -174,7 +174,7 @@
 					</view>
 					<view class="upload-text">
 					    <u--text text="点击上传" color="#FFFFFF" style="margin-bottom: 10rpx;" size="28rpx"></u--text>
-					    <u--text text="支持png,jpn,jpeg格式,不超过20m" size="24rpx" color="#FFFFFF" style="opacity: 0.5;"></u--text>
+					    <u--text text="支持png,jpn,jpeg格式,不超过20M" size="24rpx" color="#FFFFFF" style="opacity: 0.5;"></u--text>
 					</view>
 				</view>
 			</view>
@@ -183,7 +183,7 @@
 		<!-- 负面描述词 -->
 		<view class="photos-negative">
 			<view class="negative-text">
-				<u--text text="负面描述词" color="#FFFFFF" size="28rpx"></u--text>
+				<u--text text="负面描述词" color="#FFFFFF" size="28rpx" maxlength="500" ></u--text>
 			</view>
 		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="200rpx" style="background: #23242C;"></u--textarea>	
 		</view>
@@ -233,10 +233,10 @@ import model from './model/model.vue'
 import sstyle from './sstyle/sstyle.vue'
 import create from './create/create.vue'
 import user from './user/user.vue'
-import navmeun from '@/components/navMeun/index.vue';
+// import navmeun from '@/components/navMeun/index.vue';
 	const app = getApp()
 	export default {
-		components: {lora,controinet,model,sstyle,create,navmeun	},
+		components: {lora,controinet,model,sstyle,create,	},
 		data() {
 			return {
 				photosDisabled:true,//禁用状态按钮

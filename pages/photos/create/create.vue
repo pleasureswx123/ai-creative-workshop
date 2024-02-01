@@ -202,7 +202,7 @@
 		    .item-box {
 				margin-top: 5rpx;
 		      width: 100%;
-		      // padding-bottom: 20rpx;
+		      padding-bottom: 20rpx;
 		      margin-bottom: 5rpx;
 		      border-radius: $borderRadius;
 		      // box-shadow: 0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08);
