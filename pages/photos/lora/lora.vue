@@ -89,9 +89,11 @@
 			},
 			//请求风格数据
 			async	onloraList(){
-					let data = {page:1,pagesize:10,class_id:this.id}
+					let data = {page:this.page,pagesize:this.pageSize,class_id:this.id}
 				const res = await	util.request({url: '/AiDraw/LoraList',data})
 							console.log(res)
+					this.total = res.data.count
+
 					this.photosLoraList = [...this.photosLoraList,...res.data.list]
 			},
 		},
