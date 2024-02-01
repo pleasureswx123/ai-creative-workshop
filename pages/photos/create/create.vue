@@ -50,7 +50,7 @@
 				photosCreateList:[],
 				photosCreateShow:false,//风格弹框显示和隐藏
 				page: 1, // 当前页码
-				pageSize: 5, // 每页数据量
+				pageSize: 10, // 每页数据量
 				total:0,//总数量
 				showMoreData:false,//显示和隐藏没有数据了
 			}
