@@ -7,7 +7,7 @@
       <QmSubTabs v-if="navType === 'assistant'" :list="topicList" :value.sync="topicId"></QmSubTabs>
       <QmSubTabs v-if="navType === 'chat'" :list="modelList" :value.sync="modelId"></QmSubTabs>
     </view>
-    <view class="page-main" :style="`height: calc(100dvh - ${navType === 'digit' ? '162' : '234'}rpx)`">
+    <view class="page-main" :style="`height: calc(100% - ${navType === 'digit' ? '162' : '234'}rpx)`">
       <template v-if="navType === 'chat'">
         <QmChat :modelId="modelId"></QmChat>
       </template>
@@ -72,7 +72,7 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  height: 100dvh;
+  height: 100vh;
   .page-header {
     overflow: hidden;
   }
@@ -86,6 +86,11 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+  }
+}
+@supports (-webkit-touch-callout: none) {
+  .page-container {
+    height: 100dvh;
   }
 }
 </style>

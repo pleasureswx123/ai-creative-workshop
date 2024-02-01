@@ -398,15 +398,20 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped lang="scss">
 .page-container {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  height: 100dvh;
+  height: 100vh;
   background: #fff;
   overflow: hidden;
+}
+@supports (-webkit-touch-callout: none) {
+  .page-container {
+    height: 100dvh;
+  }
 }
 .page-content {
   width: 100%;

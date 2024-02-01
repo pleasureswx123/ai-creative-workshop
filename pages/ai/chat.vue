@@ -593,7 +593,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped lang="scss">
 .page-content {
   position: relative;
   height: 100%;
@@ -620,7 +620,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 20rpx rgb(0, 0, 0, 0.1);
+  box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.1);
 }
 
 .tab-model .tab-item {

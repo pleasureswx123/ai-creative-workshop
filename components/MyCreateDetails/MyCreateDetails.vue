@@ -120,7 +120,7 @@ export default {
   background: var(--bg-color1);
   color: var(--txt-color1);
   font-size: 28rpx;
-  height: 100dvh;
+  height: 100vh;
   position: relative;
   .top-bar {
     width: 100%;
@@ -183,6 +183,11 @@ export default {
     align-items: center;
     justify-content: center;
     flex: 1;
+  }
+}
+@supports (-webkit-touch-callout: none) {
+  .pop-container {
+    height: 100dvh;
   }
 }
 .pop-main-content {

@@ -1,7 +1,7 @@
 <template>
   <view class="page-container">
     <QmNavTop></QmNavTop>
-    <TipsTxt></TipsTxt>
+<!--    <TipsTxt></TipsTxt>-->
     <CreationItem
         v-for="(item, index) in list" :key="index"
         :info="item" @showToolAction="showToolAction" @toDetails="toDetails" />
