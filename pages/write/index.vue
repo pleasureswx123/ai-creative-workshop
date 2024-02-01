@@ -94,8 +94,9 @@
 		},
 		methods: {
 			onHo(){
+				// 573
 				uni.navigateTo({
-				                    url: '/pages/photos/photos?task_id=' + 1
+				                    url: '/pages/photos/photos?task_id=' + 573
 				                })
 			},
 			onHotos(){

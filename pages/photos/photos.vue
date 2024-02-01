@@ -548,7 +548,7 @@ import navmeun from '@/components/navMeun/index.vue';
 			 async onshowDate(id){
 				 let data = {task_id:id}
 				const res = await  util.request({url: '/AiDraw/GetSameModel',data})
-					// console.log(res)
+					console.log(res)
 					//模型分类
 					this.photosSubseCtionCurrent = res.data.model_parentclass_id-1
 					//模型选择
@@ -556,17 +556,40 @@ import navmeun from '@/components/navMeun/index.vue';
 					//画面生成
 					this.photosTextareaValue = res.data.prompt
 					//控制网
-					this.photosControinetInfo = {id:res.data.controlnet_type_id,title:'',url:res.data.controlnet_img_detect,img:res.data.controlnet_img,value:res.data.controlnet_weight}
-					this.photosControinetInfoShow = true
+						
+					if(res.dataontrolnet_type_id){
+						this.photosControinetInfo = {id:res.data.controlnet_type_id,title:'',url:res.data.controlnet_img_detect,img:res.data.controlnet_img,value:res.data.controlnet_weight}
+						this.photosControinetInfoShow = true
+					}else{
+						this.photosControinetInfoShow = false
+					}
+					
 					//lora
-					this.photosLoraInfo = {lora_id:res.data.lora_id,title:res.data.lora_title,content:res.data.lora_content,img_url:res.data.lora_img,value:res.data.lora_weight}
-					this.photosLoraInfoShow = true
+						
+					if(res.data.lora_id){
+						this.photosLoraInfo = {lora_id:res.data.lora_id,title:res.data.lora_title,content:res.data.lora_content,img_url:res.data.lora_img,value:res.data.lora_weight}
+						this.photosLoraInfoShow = true
+					}else{
+						this.photosLoraInfoShow = false
+					}
+					
 					//参考图
-					this.photosUploadInfo = {url:res.data.reference_image,value:res.data.reference_image_weight,name:'home.jpg'}
-					this.photosUploadInfoShow = true
+						
+					if(res.data.reference_image){
+						this.photosUploadInfo = {url:res.data.reference_image,value:res.data.reference_image_weight,name:'home.jpg'}
+						this.photosUploadInfoShow = true
+						
+					}else{
+						this.photosUploadInfoShow = false
+					}
+					
 					//样式
-					this.photosStyleInfo = {img_style_id:res.data.img_style_id,title:res.data.img_style_title,en_title:res.data.img_style_content,img_url:res.data.img_style_img,}
-					this.photosStyleInfoShow = true
+					if(res.data.img_style_id){
+							this.photosStyleInfo = {img_style_id:res.data.img_style_id,title:res.data.img_style_title,en_title:res.data.img_style_content,img_url:res.data.img_style_img,}
+							this.photosStyleInfoShow = true
+					}else{
+						this.photosStyleInfoShow = false
+					}
 					//负面词
 					this.photosTextareaNegativeValue = res.data.negative_prompt
 					//比例
@@ -577,7 +600,7 @@ import navmeun from '@/components/navMeun/index.vue';
 			}
 		},
 		onLoad(options){
-				// console.log(options.task_id)
+				console.log(options.task_id)
 				this.photosTaskId = options.task_id
 				if(options.task_id){
 						this.onshowDate(options.task_id)
@@ -904,13 +927,14 @@ import navmeun from '@/components/navMeun/index.vue';
 	 			background: #23242C;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
-	 				width: 80rpx;
-	 				height: 100rpx;
+	 				width: 120rpx;
+	 				height: 80rpx;
 	 				background: #575A69;
 	 				margin: auto;
 	 				text-align: center;
-	 				line-height: 100rpx;
-	 				margin-top: 20rpx;
+	 				line-height: 80rpx;
+	 				margin-top: 30rpx;
+					// margin-bottom: 10rpx;
 	 			}
 	 			.proportion-list{
 	 				width: 100%;
