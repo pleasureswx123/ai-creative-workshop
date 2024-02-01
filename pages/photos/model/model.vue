@@ -17,7 +17,7 @@
 							<u--text  :text="item.content" color="#909193" size="20rpx"  style="width: 90%;margin: auto;margin-top: 10rpx;" :lines="2"></u--text>
 							</view>
 								</view>
-							<view v-if="showMoreData" style="text-align: center;height: 180rpx;"></view>
+							<view v-if="showMoreData" style="text-align: center;height: 280rpx;"></view>
 					</scroll-view>
 					<view @mousewheel.prevent >
 						<u-button  @click="onPopupConfirm" class="popup-but" >确认</u-button>
@@ -144,6 +144,7 @@
 			}
 			
 			.popup-row{
+				// background: saddlebrown;
 				margin-top: 20rpx;
 				display: flex;
 				// justify-content: space-between;
@@ -174,7 +175,8 @@
 			}
 			.popup-row:after{
 				content: '';
-				flex: 220rpx;
+				width: 220rpx;
+				// flex: 1;
 			}
 			.popup-but{
 				width: 90%;
@@ -187,7 +189,7 @@
 			}
 	}	
 	.photos-active{
-				outline: 2rpx solid #FF0000;
+				outline: 1rpx solid #FF0000;
 				// border: 2rpx #FF0000 solid;
 				border-radius: 15rpx;
 		}

@@ -1,5 +1,7 @@
 <template>
 	<view class="phogos-tontent" >
+		<!-- 标图展示 -->
+		<navmeun></navmeun>
 		<!-- 页头 -->
 		<!-- <u--text text="生成图片" size="24" color="#FFFFFF" align="center" lineHeight="80"></u--text> -->
 		<!-- 提示  @click="onCellGroup" -->
@@ -45,7 +47,7 @@
 		<u--text text="画面描述词*" class="photos-textarea-text" color="#FFFFFF" size="28rpx"></u--text>
 	 </view>
 	 <view class="textarea-list">
-	 	<u--textarea height="400rpx" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
+	 	<u--textarea height="240rpx" @focus="onPhotoTextareaFocus" maxlength="600" v-model="photosTextareaValue" placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入" class="list-input"></u--textarea>
 		<view class="list-but">
 			<u--text v-if="photosTextareaValue.length>500" class="numbers-is" size="13" color="red" :iconStyle="{'color': 'yellow','font-size': '20px',}" prefixIcon="warning-fill"  text="字符数超过限制"></u--text>
 			<view  :class="['number-text',photosTextareaValue.length>500?'photos-textarea-active':'']" >{{photosTextareaValue.length}}/500</view>
@@ -228,9 +230,10 @@ import model from './model/model.vue'
 import sstyle from './sstyle/sstyle.vue'
 import create from './create/create.vue'
 import user from './user/user.vue'
+import navmeun from '@/components/navMeun/index.vue';
 	const app = getApp()
 	export default {
-		components: {lora,controinet,model,sstyle,create	},
+		components: {lora,controinet,model,sstyle,create,navmeun	},
 		data() {
 			return {
 				photosDisabled:true,//禁用状态按钮
@@ -876,14 +879,14 @@ import user from './user/user.vue'
 	 			background: #23242C;
 	 			margin-bottom: 20rpx;
 	 			.proportion-num{
-	 				width: 100rpx;
-	 				height: 70rpx;
+	 				width: 120rpx;
+	 				height: 100rpx;
 	 				background:#575A69;
 	 				margin: auto;
 	 				text-align: center;
-	 				line-height: 70rpx;
-	 				margin-top: 40rpx;
-	 				margin-bottom: 10rpx;
+	 				line-height: 100rpx;
+	 				margin-top: 20rpx;
+	 				// margin-bottom: 10rpx;
 
 	 			}
 	 			.proportion-list{
@@ -922,7 +925,7 @@ import user from './user/user.vue'
 	 				background: #23242C;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
-	 					width: 50rpx;
+	 					width: 80rpx;
 	 					height: 100rpx;
 	 					background:#575A69;
 	 					margin: auto;
@@ -943,7 +946,7 @@ import user from './user/user.vue'
 	 				background: #23242C;
 	 				margin-bottom: 20rpx;
 	 				.proportion-num{
-	 					width: 100rpx;
+	 					width: 120rpx;
 	 					height: 60rpx;
 	 					background: #575A69;
 	 					margin: auto;

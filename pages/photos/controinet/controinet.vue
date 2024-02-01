@@ -29,9 +29,11 @@
 						<u-col span="5.5">
 						 <view class="demo-layout bg-purple-light">
 							<u--text text="参考图" align="center" color="#FFFFFF" size="28rpx"></u--text>
-					<view class="upload" @tap="uploadAvatar">
-						<!-- <u--image v-if="photosControinetSrc" :showLoading="true" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image> -->
-						<image v-if="photosControinetSrc"  :src="photosControinetSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
+					<view class="upload" @tap="uploadAvatar"> 
+						<!-- <u--image v-if="photosControinetSrc" :showLoading="true" mode="widthFix" :src="photosControinetSrc" width="150px" height="213px" style="margin-left: 10rpx;"></u--image> -->
+						<view 	style="margin: 0 auto;"  v-if="photosControinetSrc">
+							<image    :src="photosControinetSrc" mode="widthFix" style="width: 310rpx;height: auto;"></image>
+						</view>
 						<view v-else class="upload-image">
 						    <view class="upload-icon">
 						        <u-icon class="icon" name="plus" :bold="true"  size="28rpx" color="#FFFFFF"></u-icon>
@@ -123,7 +125,7 @@
 					this.$emit('controninetlist',info)
 					this.photosControinetUploadSrc = ''
 					this.photosControinetSrc = ''
-					// this.photosControinetUploadText = '上传参考图后自动生成'
+					this.photosControinetUploadText = '上传参考图后自动生成'
 				},
 			//关闭弹框
 			onPotosPopupClose(){
@@ -140,6 +142,7 @@
 				console.log(111111)
 				this.photosControinetSrc = ''
 				this.photosControinetUploadSrc = ''
+				this.photosControinetUploadText = '上传参考图后自动生成'
 			},
 			//	请求控制网标题
 			async oncontroineList(){
@@ -178,6 +181,7 @@
 			height: 1300rpx;
 			background: #000000;
 			position: relative;
+			
 			.model-icon{
 			        position: absolute;
 			        right: 20rpx;
@@ -324,7 +328,7 @@
 					margin-top: 80rpx;
 					margin-bottom: 30rpx;
 					.icon{
-						width: 50rpx;
+						width: 26rpx;
 						margin: auto;
 						 // margin-left: 120rpx;
 						 // margin-bottom: 20rpx;
