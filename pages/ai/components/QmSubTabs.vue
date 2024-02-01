@@ -1,11 +1,13 @@
 <template>
   <view class="tabs-container" v-if="list.length">
-    <u-tabs :current="currentValue" :list="list" @change="handleChange"
-            lineWidth="30rpx"
-            lineHeight="8rpx"
-            :activeStyle="{ color: '#303133', fontSize: '28rpx', fontWeight: 'bold' }"
-            :inactiveStyle="{ color: '#606266', fontSize: '28rpx' }"
-    ></u-tabs>
+    <view class="tabs-box">
+      <u-tabs :current="currentValue" :list="list" @change="handleChange"
+              lineWidth="30rpx"
+              lineHeight="8rpx"
+              :activeStyle="{ color: '#303133', fontSize: '28rpx', fontWeight: 'bold' }"
+              :inactiveStyle="{ color: '#606266', fontSize: '28rpx' }"
+      ></u-tabs>
+    </view>
   </view>
 </template>
 
@@ -50,11 +52,15 @@ export default {
 
 <style lang="scss" scoped>
 .tabs-container {
-  height: 35px;
+  height: 70rpx;
   overflow: hidden;
   background: #fff;
   border-bottom: 1rpx solid #efefef;
-  //margin: 0 0 10rpx;
+  display: flex;
+  align-items: center;
+  .tabs-box {
+    width: 100%;
+  }
   /deep/ {
     .u-tabs__wrapper__nav__item {
       height: 35px!important;

@@ -20,7 +20,7 @@ export default {
 <style lang="scss" scoped>
 .nav-top-bar-container {
   background: #000;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1rpx solid rgba(255,255,255,.1);
   .nav-top-bar, .nav-top-place {
     height: 80rpx;
   }

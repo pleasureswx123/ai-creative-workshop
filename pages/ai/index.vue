@@ -1,13 +1,13 @@
 <template>
   <page-meta page-style="background: #000000" />
   <view class="page-container">
-    <view class="page-header" :style="`height: ${navType === 'digit' ? '81' : '117'}px`">
+    <view class="page-header" :style="`height: ${navType === 'digit' ? '162' : '234'}rpx`">
       <QmNavTop></QmNavTop>
       <QmNavTabs :value.sync="navType"></QmNavTabs>
       <QmSubTabs v-if="navType === 'assistant'" :list="topicList" :value.sync="topicId"></QmSubTabs>
       <QmSubTabs v-if="navType === 'chat'" :list="modelList" :value.sync="modelId"></QmSubTabs>
     </view>
-    <view class="page-main" :style="`height: calc(100% - ${navType === 'digit' ? '81' : '117'}px)`">
+    <view class="page-main" :style="`height: calc(100dvh - ${navType === 'digit' ? '162' : '234'}rpx)`">
       <template v-if="navType === 'chat'">
         <QmChat :modelId="modelId"></QmChat>
       </template>
