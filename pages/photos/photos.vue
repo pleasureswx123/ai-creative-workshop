@@ -209,7 +209,7 @@
 	         <u-button v-if="photosSubseCtionCurrent<2" size="large" class="generate-but" @click="onPhotoSselect"><view style="margin-left: 20rpx;">{{photosSelectNumber}}&nbsp;张</view><u-icon color="#fff" name="arrow-down" style="margin-left: 10rpx;margin-right: 10rpx;"></u-icon></u-button>
 	         <u-button  size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button>
 	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
-	         <u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
+	         	<u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
 	</view>	
 
@@ -240,10 +240,10 @@ import navmeun from '@/components/navMeun/index.vue';
 				isLogin:true,//登陆的判断
 				photosSelecShow:false,//开始生成前张数选择的显示和隐藏
 				photosSelecList:[
-					  { name:1 ,fontSize:'20'},
-					  { name:2, fontSize:'20'},
-					  { name:3, fontSize:'20'},
-					  { name:4, fontSize:'20'},
+					  { name:1 ,fontSize:'28'},
+					  { name:2, fontSize:'28'},
+					  { name:3, fontSize:'28'},
+					  { name:4, fontSize:'28'},
 				],//开始生成前张数的数据
 				photosUploadInfo:{},//上传图片之后展示图片
 				photosUploadInfoShow:false,//上传图片的显示图片
@@ -600,7 +600,7 @@ import navmeun from '@/components/navMeun/index.vue';
 			}
 		},
 		onLoad(options){
-				console.log(options.task_id)
+				// console.log(options.task_id)
 				this.photosTaskId = options.task_id
 				if(options.task_id){
 						this.onshowDate(options.task_id)
