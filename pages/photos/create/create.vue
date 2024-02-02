@@ -195,14 +195,14 @@
 		  display: flex;
 		      justify-content: space-around;
 			  // justify-content: space-evenly;
-		  // padding: 20rpx;
+		  padding: 10rpx;
 		  $borderRadius: 12rpx;
 		  .cont-box {
 		    width: var(--layout-width);
 		    .item-box {
 				margin-top: 5rpx;
 		      width: 100%;
-		      // padding-bottom: 20rpx;
+		      padding-bottom: 20rpx;
 		      margin-bottom: 5rpx;
 		      border-radius: $borderRadius;
 		      // box-shadow: 0rpx 3rpx 6rpx rgba(0, 46, 37, 0.08);

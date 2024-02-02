@@ -6,7 +6,8 @@
 				<view class="photos-popup" >
 					<view @mousewheel.prevent>
 						<view class="popup-up">选择{{photosModelInfo.title}}</view>
-						<text class="popup-op">{{photosModelInfo.content}}</text>
+						<!-- <text class="popup-op">{{photosModelInfo.content}}</text> -->
+							<u-text :text="photosModelInfo.content" size="24rpx" lineHeight="40rpx" color="#d5d5d5"></u-text>
 					</view>
 					<scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
 					 <view class="popup-row" @touchmove.stop>
