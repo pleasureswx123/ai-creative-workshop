@@ -71,7 +71,7 @@
 		  <u-icon color="#ccc"  name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosControinetIcon"></u-icon> 
 		 </view>
 		 <view class="row-col-list" >
-		 	<u-slider style="width: 99%;" @change="onPhotosInputControinet":showValue="true" class="col-slider"  max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+		 	<u-slider style="width: 99%;" @change="onPhotosInputControinet":showValue="true" class="col-slider" min="0.1" max="1"  v-model="photosControinetInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
 		 	<!-- <view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosControinetInfo.value}}</view> -->
 		 </view>
 		</view>
@@ -98,7 +98,7 @@
 				    <u-icon  color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosLoraIcon"></u-icon>    
 				   </view>
 				   <view class="row-col-list" >
-					<u-slider @change="onPhotosInputLora" :showValue="true" class="col-slider" style="width: 99%;"    max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+					<u-slider @change="onPhotosInputLora" :showValue="true" class="col-slider" style="width: 99%;" min="0.1"   max="1"  v-model="photosLoraInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
 					<!-- <view class=""  style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosLoraInfo.value}}</view> -->
 				  </view>
 			 	</view>
@@ -129,9 +129,8 @@
 		             </u-row>
 		            </view>
 		        <u-button  iconColor="#FFFFFF" v-if="photosStyleInfoShow == false" class="photos-style-but" text="添加样式" icon="plus" @click="onPhotoStyleAdd"  ></u-button>
-		    </view>
-			
-			
+		</view>
+					
 	<!-- 	参考图片 -->
 <view class="photos-uploadup">
 		<view class="photos-image">
@@ -159,7 +158,7 @@
 			 <u-icon color="#ccc" name="trash" size="28rpx" style="margin-right:20rpx" top="-10px" @click="onPhotosUploadIcon"></u-icon>    
 			</view>
 			<view class="row-col-list" >
-				<u-slider style="width: 99%;" @change="onPhotosInputSstyle" :showValue="true" class="col-slider"  max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
+				<u-slider style="width: 99%;" @change="onPhotosInputSstyle" :showValue="true" class="col-slider" min="0.1" max="1"  v-model="photosUploadInfo.value" activeColor="#FF0000" block-color="#FF0000" blockSize="16" step="0.1"></u-slider>
 				<!-- <view class="" style="width: 130rpx;color:#ccc;font-size: 28rpx;text-align: center;">&nbsp;强度{{photosUploadInfo.value}}</view> -->
 			</view>
 			</view>
@@ -321,22 +320,21 @@ import navmeun from '@/components/navMeun/index.vue';
 						img_scale:this.photosPlotNumber,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
-						console.log(data)
-				// try{
-				// 	const res = await  util.request({url: '/AiDraw/CreateTask',data})
-				// 		console.log(res)
-				// 		if(res.data.task_id !== ''){
-				// 		uni.navigateTo({
-				// 			url:'/pages/picture/index'
-				// 		});
-				// 			return;
-				// 		}else{
-				// 			util.confirm('生成失败，请从新生成！')
-				// 		}
-				// }catch(e){
-				// 	console.log(e)
-				// 	//TODO handle the exception
-				// }
+				try{
+					const res = await  util.request({url: '/AiDraw/CreateTask',data})
+						console.log(res)
+						if(res.data.task_id !== ''){
+						uni.navigateTo({
+							url:'/pages/picture/index'
+						});
+							return;
+						}else{
+							util.confirm('生成失败，请从新生成！')
+						}
+				}catch(e){
+					console.log(e)
+					//TODO handle the exception
+				}
 					//清空
 					// this.photosTextareaValue = ''
 					// this.photosTextareaNegativeValue = ''
