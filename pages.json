@@ -7,6 +7,12 @@
 			}
 		},
 		{
+			"path": "pages/photos/index",
+			"style": {
+				"navigationBarTitleText": "生成图片"
+			}
+		},
+		{
 			"path": "pages/picture/index",
 			"style": {
 				"navigationBarTitleText": "我的创作",
