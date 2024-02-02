@@ -65,7 +65,21 @@ export default {
         }
       });
     },
-  }
+  },
+  watch: {
+    showAction: {
+      immediate: true,
+      handler(status) {
+        this.toggleBodyPositionStatus(status)
+      }
+    },
+    showDetails: {
+      immediate: true,
+      handler(status) {
+        this.toggleBodyPositionStatus(status)
+      }
+    },
+  },
 }
 </script>
 

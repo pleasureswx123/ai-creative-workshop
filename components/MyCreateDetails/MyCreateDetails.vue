@@ -122,16 +122,19 @@ export default {
   font-size: 28rpx;
   height: 100vh;
   position: relative;
+  overflow: hidden;
   .top-bar {
     width: 100%;
     box-sizing: border-box;
-    position: absolute;
-    top: 40rpx;
+    position: fixed;
+    top: 80rpx;
+    left: 0;
+    right: 0;
     padding: 0 40rpx;
     display: flex;
     align-items: center;
     gap: 20rpx;
-    z-index: 100;
+    z-index: 90;
     height: 60rpx;
     .tips-con {
       flex: 1;
@@ -163,7 +166,7 @@ export default {
     left: 0;
     right: 0;
     padding: 0 30rpx;
-    z-index: 100;
+    z-index: 90;
     background-color: rgba(0,0,0,.85);
   }
   .ft-btn-box {

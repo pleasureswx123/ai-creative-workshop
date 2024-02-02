@@ -32,6 +32,11 @@ import QmSlider from './components/QmSlider.vue';
 import QmTextarea from './components/QmTextarea.vue';
 
 export default {
+  provide() {
+    return {
+      toastTipsErrorTxt: this.toastTipsErrorTxt
+    }
+  },
   components: { PicHeader, TitleCell, TryListen, QmRadioPlain, QmSlider, QmTextarea },
   data() {
     return {
@@ -70,6 +75,16 @@ export default {
   },
   methods: {
     ...mapActions('SoundInfo', ['getDubList', 'createTask']),
+    toastTipsErrorTxt() {
+      let result = '';
+      const {content, dub_id} = this.params;
+      if(!content) {
+        result = '请输入配音文案'
+      } else if(!dub_id) {
+        result = '请选择音色'
+      }
+      return result;
+    },
     jumpHistory() {
       uni.$u.route({url: 'pages/sound/history'})
     },
@@ -117,9 +132,7 @@ export default {
 <style lang="scss" scoped>
 .page-container {
   background: var(--bg-color1);
-  padding-bottom: calc(10rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
-  padding: 0 30rpx 160rpx;
+  padding: 0 30rpx 300rpx;
 }
 </style>

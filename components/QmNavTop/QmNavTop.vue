@@ -19,12 +19,13 @@ export default {
 
 <style lang="scss" scoped>
 .nav-top-bar-container {
-  background: #000;
-  border-bottom: 1rpx solid rgba(255,255,255,.1);
   .nav-top-bar, .nav-top-place {
     height: 80rpx;
+    position: relative;
+    overflow: hidden;
   }
   .nav-top-bar {
+    border-bottom: 1rpx solid rgba(255,255,255,.1);
     position: fixed;
     top: 0;
     left: 0;
@@ -34,7 +35,12 @@ export default {
     display: flex;
     align-items: center;
     /deep/ .navList {
-      padding-top: 0;
+      padding: 0;
+      margin: 0;
+      .menu {
+        padding-top: 15rpx;
+        padding-bottom: 0;
+      }
     }
   }
 }

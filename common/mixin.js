@@ -7,6 +7,9 @@ export default {
     }
   },
   methods: {
+    toggleBodyPositionStatus(status) {
+      document.body.style.position = status ? 'fixed' : '';
+    },
     checkLoginStatus() {
       return new Promise((resolve, reject) => {
         userApi.checkLogin().then(res => {

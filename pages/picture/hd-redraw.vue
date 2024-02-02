@@ -22,6 +22,11 @@ export default {
   data() {
     return {
       sourceImg: '',
+      toastTips: {
+        reference_image: {
+          txt: '请上传图片'
+        }
+      },
     }
   },
   computed: {
@@ -32,7 +37,7 @@ export default {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 7,
-        reference_image: this.sourceImg
+        reference_image: this.sourceImg || ''
       }
     }
   },

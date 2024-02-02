@@ -12,7 +12,9 @@
       <TipsHelp :info="taskDetail" />
     </template>
     <template #footer>
-      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+      <GenerateBtn
+          :errorTips="toastTipsErrorTxt"
+          :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
   </Layout>
 </template>
@@ -26,6 +28,14 @@ export default {
     return {
       sourceImg: '',
       targetImg: '',
+      toastTips: {
+        reference_image: {
+          txt: '换脸源图片不能为空'
+        },
+        reference_image_extend: {
+          txt: '换脸目标图片不能为空'
+        },
+      },
     }
   },
   computed: {
@@ -36,8 +46,8 @@ export default {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 3,
-        reference_image: this.sourceImg,
-        reference_image_extend: this.targetImg,
+        reference_image: this.sourceImg || '',
+        reference_image_extend: this.targetImg || '',
       }
     }
   },

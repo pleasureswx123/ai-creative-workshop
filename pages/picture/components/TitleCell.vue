@@ -1,5 +1,5 @@
 <template>
-  <view style="position: relative; z-index: 99;">
+  <view>
     <view class="cell-box">
       <view class="label" v-html="title"></view>
       <view class="rt" v-if="isShowRight && (generateState === 1)" @tap="handleToHistory">

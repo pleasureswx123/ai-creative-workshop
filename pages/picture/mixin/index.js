@@ -14,7 +14,8 @@ import ImgInfo from '../components/ImgInfo.vue';
 export default {
   provide() {
     return {
-      setImgUrl: this.setImgUrl
+      setImgUrl: this.setImgUrl,
+      toastTipsErrorTxt: this.toastTipsErrorTxt
     }
   },
   components: { Layout, PicHeader, TitleCell, UploadImg, QmRadio, QmInput, QmTextarea, TipsHelp, ImgInfo, QmCheckbox },
@@ -58,6 +59,22 @@ export default {
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),
+    toastTipsErrorTxt() {
+      let result = '';
+      try {
+        const keyNames = Object.keys(this.toastTips);
+        for(let i = 0, l = keyNames.length; i < l; i++) {
+          const keyName = keyNames[i];
+          if(!this.params[keyName]) {
+            result = this.toastTips[keyName].txt;
+            break;
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      return result;
+    },
     setImgUrl(keyName, url) {
       this[keyName] = url;
     },

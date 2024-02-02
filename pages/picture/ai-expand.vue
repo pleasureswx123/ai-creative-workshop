@@ -30,6 +30,25 @@ export default {
       direction: '',
     }
   },
+  methods: {
+    toastTipsErrorTxt() {
+      let result = '';
+      try {
+        if(!this.params.reference_image) {
+          result = '请上传图片'
+        } else {
+          const {upper, below, left, right} = this.params;
+          const val = upper || below || left || right;
+          if(!val) {
+            result = '请选择扩图方向'
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      return result;
+    },
+  },
   computed: {
     disabled() {
       return !(this.sourceImg && !!this.directions.length)
@@ -38,7 +57,7 @@ export default {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 6,
-        reference_image: this.sourceImg,
+        reference_image: this.sourceImg || '',
         upper: this.directions.includes('top') ? 1 : 0,
         below: this.directions.includes('down') ? 1 : 0,
         left: this.directions.includes('left') ? 1 : 0,

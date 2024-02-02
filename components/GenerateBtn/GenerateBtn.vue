@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  inject: ['toastTipsErrorTxt'],
   props: {
     btnInfo: {
       type: Object,
@@ -35,6 +36,17 @@ export default {
   },
   methods: {
     handleStart() {
+      const error = this.toastTipsErrorTxt();
+      if(error) {
+        uni.showModal({
+          title: '提示',
+          content: error,
+          confirmText: '确定',
+          showCancel: false,
+          success: function () {}
+        })
+        return;
+      }
       if (!this.disabled && !this.loading) {
         this.$emit('cb');
       }
@@ -61,7 +73,7 @@ export default {
   box-sizing: border-box;
   height: 140rpx;
   padding-top: 20rpx;
-  background: var(--bg-color1);
+  //background: rgba(255,255,255,.1);
   box-shadow: 0 0 6rpx rgba(0,0,0,.1);
   z-index: 98;
   -webkit-transform: translate3d(0, 0, 0);
@@ -84,8 +96,8 @@ export default {
   color: var(--txt-color4);
   gap: 4rpx;
   &.disabled {
-    background: #6a6a6a;
-    color: var(--txt-color2);
+    background: var(--bg-color3);
+    color: var(--txt-color4);
   }
   .tips-txt {
     font-size: 24rpx;
