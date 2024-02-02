@@ -322,21 +322,21 @@ import navmeun from '@/components/navMeun/index.vue';
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
 						console.log(data)
-				// try{
-				// 	const res = await  util.request({url: '/AiDraw/CreateTask',data})
-				// 		console.log(res)
-				// 		if(res.data.task_id !== ''){
-				// 		uni.navigateTo({
-				// 			url:'/pages/picture/index'
-				// 		});
-				// 			return;
-				// 		}else{
-				// 			util.confirm('生成失败，请从新生成！')
-				// 		}
-				// }catch(e){
-				// 	console.log(e)
-				// 	//TODO handle the exception
-				// }
+				try{
+					const res = await  util.request({url: '/AiDraw/CreateTask',data})
+						console.log(res)
+						if(res.data.task_id !== ''){
+						uni.navigateTo({
+							url:'/pages/picture/index'
+						});
+							return;
+						}else{
+							util.confirm('生成失败，请从新生成！')
+						}
+				}catch(e){
+					console.log(e)
+					//TODO handle the exception
+				}
 					//清空
 					// this.photosTextareaValue = ''
 					// this.photosTextareaNegativeValue = ''
