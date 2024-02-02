@@ -400,11 +400,11 @@
 			},
 			
 			onload() {
-				const url = this.wallList
+				const url = this.wallList[this.currentNum]
 				uni.downloadFile({
 					url:url, //仅为示例，并非真实的资源
 					success: (res) => {
-						console.log(res)
+						// console.log(res)
 						if (res.statusCode === 200) {
 							// #ifdef H5
 							const fileName =  url?.split?.('/')?.slice(-1)?.[0] || url;
@@ -419,7 +419,7 @@
 							// #ifndef H5
 							uni.saveFile({
 							  tempFilePath: res.tempFilePath,
-							  success: function (res) {
+							  success: (res) => {
 								console.log(res.savedFilePath);
 							  }
 							});
