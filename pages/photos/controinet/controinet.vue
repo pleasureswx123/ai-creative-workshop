@@ -179,7 +179,8 @@
 
 		.controinnet-content{
 			width: 100%;
-			height: 1300rpx;
+			// height: 1300rpx;
+			height: 95vh;
 			background: #000000;
 			position: relative;
 			

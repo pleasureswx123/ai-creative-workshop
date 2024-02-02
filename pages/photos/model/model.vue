@@ -119,7 +119,8 @@
 	
 	.model-popup{
 		width: 100%;
-		height: 1280rpx;
+		// height: 1280rpx;
+		height: 95vh;
 			background: #000000;
 			position: relative;
 	}

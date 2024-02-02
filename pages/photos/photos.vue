@@ -183,9 +183,9 @@
 		<!-- 负面描述词 -->
 		<view class="photos-negative">
 			<view class="negative-text">
-				<u--text text="负面描述词" color="#FFFFFF" size="28rpx" maxlength="500" ></u--text>
+				<u--text text="负面描述词" color="#FFFFFF" size="28rpx"  ></u--text>
 			</view>
-		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="200rpx" style="background: #23242C;"></u--textarea>	
+		<u--textarea @focus="onPhotoTextareaFocu"   v-model="photosTextareaNegativeValue" placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"  height="200rpx" style="background: #23242C;" maxlength="500"></u--textarea>	
 		</view>
 		<!-- 出图比例 -->
 		<view class="photos-plot">
@@ -294,7 +294,9 @@ import navmeun from '@/components/navMeun/index.vue';
 					return
 				}
 				if(this.photosTextareaValue.length>500)return util.confirm('字符数超出数量，无法提交')
-				if(this.photosSubseCtionCurrent === 2){this.photosSelectNumber = 4}
+				// if(this.photosSubseCtionCurrent === 2){this.photosSelectNumber = 4,this.photosLoraInfo = {},this.photosControinetInfo = {}}
+				// if(this.photosSubseCtionCurrent == 1){this.photosControinetInfo = {}}
+				// if(this.photosSubseCtionCurrent == 0){this.photosLoraInfo = this.photosLoraInfo,this.photosControinetInfo = this.photosControinetInfo}
 				// if(this.photosTextareaValue === '')return util.confirm('请输入画面描述词')
 				// if(Object.keys(this.photosControinetInfo).length==0)return util.confirm('请添加控制网')
 				// if(Object.keys(this.photosLoraInfo).length==0)return util.confirm('请添加风格')
@@ -319,21 +321,22 @@ import navmeun from '@/components/navMeun/index.vue';
 						img_scale:this.photosPlotNumber,//	图片比例
 						batch_size:this.photosSelectNumber,// 生成图片数量
 					}
-				try{
-					const res = await  util.request({url: '/AiDraw/CreateTask',data})
-						console.log(res)
-						if(res.data.task_id !== ''){
-						uni.navigateTo({
-							url:'/pages/picture/index'
-						});
-							return;
-						}else{
-							util.confirm('生成失败，请从新生成！')
-						}
-				}catch(e){
-					console.log(e)
-					//TODO handle the exception
-				}
+						console.log(data)
+				// try{
+				// 	const res = await  util.request({url: '/AiDraw/CreateTask',data})
+				// 		console.log(res)
+				// 		if(res.data.task_id !== ''){
+				// 		uni.navigateTo({
+				// 			url:'/pages/picture/index'
+				// 		});
+				// 			return;
+				// 		}else{
+				// 			util.confirm('生成失败，请从新生成！')
+				// 		}
+				// }catch(e){
+				// 	console.log(e)
+				// 	//TODO handle the exception
+				// }
 					//清空
 					// this.photosTextareaValue = ''
 					// this.photosTextareaNegativeValue = ''
@@ -505,11 +508,11 @@ import navmeun from '@/components/navMeun/index.vue';
 					}
 					this.photosSubseCtionCurrent = index-1
 					this.onshowPlot()
-					this.photosTextareaValue = ''
+					// this.photosTextareaValue = ''
 					this.onPhotosControinetIcon()
 					this.onPhotosLoraIcon()
 					this.onPhotosStyleIcon()
-					this.photosTextareaNegativeValue = ''
+					// this.photosTextareaNegativeValue = ''
 					this.photosPlotNumber = 5
 					this.onPhotosUploadIcon()
 					this.photosSelectNumber = 1

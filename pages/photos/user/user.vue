@@ -1,6 +1,8 @@
 <template>
   <view class="container" >
-		<view  class="list">初期的思考</view>
+		<view class="avatar" @tap="uploadAvatar">
+			我来了
+		</view>
 	 </view>	
 </template>
  
@@ -9,12 +11,7 @@
 export default {
   data() {
     return {
-		 list: ['未付款', '待评价', '已付款'],
-		 current: 0,
-		 	src: 'https://cdn.uviewui.com/uview/album/1.jpg',
-			value: 30,
-			value1:'123',
-			show: false
+		 
     };
   },
   created() {
@@ -24,26 +21,28 @@ export default {
 	
   },
   methods: {
-	 open() {
-	          // console.log('open');
-			  this.show = true
-	        },
-	        close() {
-	          this.show = false
-	          // console.log('close');
-	        },
-	onPhotosModelList(){
-		if(this.value>60)return false
-		this.value+=30
+	
+	uploadAvatar() {
+		// const _this = this;
+		uni.chooseImage({
+			count: 1,
+			success: function(res) {
+				// uni.showLoading({
+				// 	title: '正在上传'
+				// });
+				app.globalData.util.upload({
+					url: '/upload/image',
+					filePath: res.tempFilePaths[0]
+				}).then((res) => {
+					var avatar = res.data.path;
+					// uni.hideLoading();
+					// _this.setData({
+					// 	avatar: avatar
+					// })
+				})
+			}
+		})
 	},
-				moveHandle(){
-					return false
-				},
-				disabledScroll(){
-					if(this.show){
-						return false
-					}
-				}
 
    
   }
@@ -52,10 +51,6 @@ export default {
  
 <style lang="scss" scoped>
 .container{
-	.list{
-		margin-top: 100rpx;
-		text-align: center;
-		font-size: 28rpx;
-	}
+	
 	}
 </style>
