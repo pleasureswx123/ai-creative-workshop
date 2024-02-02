@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     toggleBodyPositionStatus(status) {
-      document.body.style.position = status ? 'fixed' : '';
+      document.body.style.overflow = status ? 'hidden' : '';
     },
     checkLoginStatus() {
       return new Promise((resolve, reject) => {
