@@ -47,11 +47,11 @@
 								<view class="waterfall-item__image" :style="[imageStyle(item)]">
 									<image :src="item.img_url" mode="widthFix"></image>
 								</view>
-								<view class="waterfall-item__ft">
+								<!-- <view class="waterfall-item__ft">
 									<view class="waterfall-item__ft__title">
 										<text class="value">{{item.model_info}}</text>
 									</view>
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</template>
@@ -64,11 +64,11 @@
 								<view class="waterfall-item__image" :style="[imageStyle(item)]">
 									<image :src="item.img_url" mode="widthFix"></image>
 								</view>
-								<view class="waterfall-item__ft">
+								<!-- <view class="waterfall-item__ft">
 									<view class="waterfall-item__ft__title">
 										<text class="value">{{item.model_info}}</text>
 									</view>
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</template>
@@ -398,25 +398,36 @@
 				  url: '/pages/article/code'
 				})
 			},
+			
 			onload() {
+				const url = this.wallList
 				uni.downloadFile({
-					url: this.wallList, //仅为示例，并非真实的资源
-					success: function(res) {
+					url:url, //仅为示例，并非真实的资源
+					success: (res) => {
 						console.log(res)
-						uni.saveImageToPhotosAlbum({
-							filePath: res.tempFilePath,
-							success: function() {
-								this.null()
-								app.globalData.util.message('已保存到相册');
-							},
-							fail: function(res) {
-								console.log('error', res);
-								app.globalData.util.message('保存失败，请检查是否有保存到相册权限', 'error');
-							}
-						});
+						if (res.statusCode === 200) {
+							// #ifdef H5
+							const fileName =  url?.split?.('/')?.slice(-1)?.[0] || url;
+							const ele = document.createElement('a');
+							ele.href = res.tempFilePath;
+							ele.setAttribute('download', fileName);
+							ele.style.display = 'none';
+							document.body.appendChild(ele);
+							ele.click();
+							document.body.removeChild(ele);
+							// #endif
+							// #ifndef H5
+							uni.saveFile({
+							  tempFilePath: res.tempFilePath,
+							  success: function (res) {
+								console.log(res.savedFilePath);
+							  }
+							});
+							// #endif
+						}
 					},
-					fail: function() {
-						app.globalData.util.message('图片下载失败', 'error');
+					fail: (err) => {
+					  console.log('download fail: ', err)
 					}
 				});
 			},
