@@ -213,8 +213,9 @@
 	         <!-- <u-button :disabled="photosDisabled" size="large"  class="generate-buts"  @click="onPhotosStart"><view  class="butts">开始生成</view><view class="but" style="font-size: 28rpx;color: #d5d5d5;">消耗{{this.photosSelectNumber}}万</view></u-button> -->
 	         	<u-action-sheet   :closeOnClickOverlay="true" @close="ononPhotoSselectClose" @select="onPhotoSselectList"  :actions="photosSelecList" :show="photosSelecShow"></u-action-sheet>	
 	         </view>
+			 <u-button @click="onPhotosButton"  text="免责声明" icon="error-circle" iconColor="#fff" style="background: #323232;border: none;color: #FFFFFF;font-size: 28rpx;margin-top: 10rpx;" ></u-button>
+					<!-- <button   @click="onPhotosButton" style="background: #323232;border: none;color: #FFFFFF;font-size: 28rpx;margin-top: 10rpx;" >免责声明</button> -->
 	</view>	
-
 	<lora  ref="secludedlora" @loralist="loralist" :id="photosSubseCtionCurrent+1" :isLogin="isLogin"/>
 	<controinet  ref="secludedcontroinet" @controninetlist="ontroninetlist"/>
 	<model ref="secludedmodel" @modelist="modelist" :id="photosSubseCtionCurrent+1"/>
@@ -274,6 +275,10 @@ import navmeun from '@/components/navMeun/index.vue';
 			}
 		},
 		methods: {
+			//button弹框
+			onPhotosButton(){
+				util.confirm('供用交产品前你次理能，A1产出必路叔送于人工部说对大故进的深厦学习，不机校其中部分信息可脂存在殺、故，不合理成号1发不候之处；品，你須确保，依法使用本服务生陇A作不公花任约部三方的版权、场标团其花合法权利，；不得好生成的作品用于任饲非法用途;如四你的不当处用行为宁放任何苑三方权益受按的，你招依法永担相皮法律费住。')
+			},
 			//更新控制网的滑块的值
 			onPhotosInputControinet(value){
 			    this.photosControinetInfo.value = value
@@ -1040,12 +1045,18 @@ import navmeun from '@/components/navMeun/index.vue';
         height: 198rpx;
         // margin-top: 10rpx;
         background: #323232;
+		overflow: hidden;
+		.generate-button{
+			width: 100%;
+			background: #323232;
+		}
 		.generate{
 			width: 90%;
-			height: 100%;
+			// height: 100%;
 			margin: auto;
 			display: flex;
 			align-items: center;
+			margin-top: 20rpx;
 		}
         .generate-but{
             width: 130rpx;
