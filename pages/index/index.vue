@@ -47,11 +47,11 @@
 								<view class="waterfall-item__image" :style="[imageStyle(item)]">
 									<image :src="item.img_url" mode="widthFix"></image>
 								</view>
-								<view class="waterfall-item__ft">
+								<!-- <view class="waterfall-item__ft">
 									<view class="waterfall-item__ft__title">
 										<text class="value">{{item.model_info}}</text>
 									</view>
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</template>
@@ -64,11 +64,11 @@
 								<view class="waterfall-item__image" :style="[imageStyle(item)]">
 									<image :src="item.img_url" mode="widthFix"></image>
 								</view>
-								<view class="waterfall-item__ft">
+								<!-- <view class="waterfall-item__ft">
 									<view class="waterfall-item__ft__title">
 										<text class="value">{{item.model_info}}</text>
 									</view>
-								</view>
+								</view> -->
 							</view>
 						</view>
 					</template>
