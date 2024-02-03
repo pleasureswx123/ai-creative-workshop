@@ -17,13 +17,13 @@
 export default {
   props: {
     value: {
-      type: Number
+      type: [Number, String]
     },
   },
   computed: {
     currentValue: {
       get() {
-        return this.value
+        return +this.value
       },
       set(value) {
         this.$emit('update:value', +(value.toFixed(1)))

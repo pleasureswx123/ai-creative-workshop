@@ -91,6 +91,8 @@ export default {
     ModelSelectPop, ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
   data() {
     return {
+      taskId: '',
+      taskModelId: '',
       modeId: 1,
       description: '',
       controlNetInfo: null,
@@ -136,21 +138,21 @@ export default {
       this.checkLoginStatus().then(() => {
         const params = {
           task_type: 1,
-          model_parentclass_id: this.modeId,
-          model_style_id: this.currentModeInfo.model_style_id,
+          model_parentclass_id: this.modeId || 1,
+          model_style_id: this.currentModeInfo?.model_style_id || '',
           prompt: this.description || '',
-          controlnet_type_id: this.controlNetInfo.id || '',
-          controlnet_img: this.controlNetInfo.img || '',
-          controlnet_img_detect: this.controlNetInfo.url || '',
-          controlnet_weight: this.controlNetInfo.value || '',
-          lora_id: this.loraInfo.lora_id || '',
-          lora_weight: this.loraInfo.value || '',
-          img_style_id: this.imgStyleInfo.img_style_id || '',
-          reference_image: this.referenceImgInfo.url || '',
-          reference_image_weight: this.referenceImgInfo.value || '',
-          negative_prompt: this.badDescription,
-          img_scale: this.ratioId,
-          batch_size: this.picNums,
+          controlnet_type_id: this.controlNetInfo?.id || '',
+          controlnet_img: this.controlNetInfo?.img || '',
+          controlnet_img_detect: this.controlNetInfo?.url || '',
+          controlnet_weight: this.controlNetInfo?.value || '',
+          lora_id: this.loraInfo?.lora_id || '',
+          lora_weight: this.loraInfo?.value || '',
+          img_style_id: this.imgStyleInfo?.img_style_id || '',
+          reference_image: this.referenceImgInfo?.url || '',
+          reference_image_weight: this.referenceImgInfo?.value || '',
+          negative_prompt: this.badDescription || '',
+          img_scale: this.ratioId || 5,
+          batch_size: this.picNums || 1,
         };
         try {
           this.createTask(params).then(res => {
@@ -173,89 +175,96 @@ export default {
         }
       });
     },
+    getTaskInfo(id) {
+      id && this.getSameModel({task_id: id}).then(res => {
+        const {
+          model_parentclass_id, model_style_img, model_style_content, model_style_id, model_style_title,
+          prompt, controlnet_type_id, controlnet_img_detect, controlnet_img, controlnet_weight,
+          lora_id, lora_title, lora_content, lora_img, lora_weight,
+          img_style_id, img_style_title, img_style_content, img_style_img,
+          reference_image, reference_image_weight,
+          negative_prompt, img_scale, batch_size
+        } = res || {};
+        this.taskModelId = model_parentclass_id;
+        this.modeId = model_parentclass_id;
+        this.setCurrentModeInfo({
+          img_url: model_style_img,
+          content: model_style_content,
+          model_style_id: model_style_id,
+          title: model_style_title
+        });
+        this.description = (prompt || '')?.slice(0, 500);
+        if(controlnet_type_id) {
+          this.controlNetInfo = {
+            id: controlnet_type_id,
+            title: controlnet_type_id,
+            url: controlnet_img_detect,
+            img: controlnet_img,
+            value: controlnet_weight || 0.8
+          }
+        }
+        if(lora_id) {
+          this.loraInfo = {
+            lora_id: lora_id,
+            title: lora_title,
+            content: lora_content,
+            img_url: lora_img,
+            value: lora_weight || 0.8,
+          }
+        }
+        if(img_style_id) {
+          this.imgStyleInfo = {
+            img_style_id: img_style_id,
+            title: img_style_title,
+            en_title: img_style_content,
+            img_url: img_style_img,
+          }
+        }
+        if(reference_image) {
+          this.referenceImgInfo = {
+            url: reference_image,
+            title: reference_image?.split?.('/')?.slice(-1)?.[0] || reference_image,
+            value: reference_image_weight || 0.8
+          }
+        }
+        if(negative_prompt) {
+          this.badDescription = (negative_prompt || '')?.slice(0, 500);
+        }
+        this.ratioId = img_scale || 5
+        this.picNums = batch_size || 1;
+      });
+    },
   },
   watch: {
     modeId: {
       immediate: true,
       handler(id) {
-        this.getModelStyleList({page: 1, pagesize: 10, class_id: id || 1});
-        this.getImgScale({class_id: id}).then(res => {
-          this.ratioId = 5;
-        });
-        this.controlNetInfo = null;
-        this.loraInfo = null;
-        this.imgStyleInfo = null;
-        this.picNums = 1;
+        setTimeout(() => {
+          this.getModelStyleList({page: 1, pagesize: 10, class_id: id || 1});
+          this.getImgScale({class_id: id}).then(res => {
+            this.ratioId = 5;
+          });
+          this.controlNetInfo = null;
+          this.loraInfo = null;
+          this.imgStyleInfo = null;
+          this.picNums = 1;
+          
+          if(this.taskId) {
+            if (!this.taskModelId || (this.taskModelId === id)) {
+              this.getTaskInfo(this.taskId);
+            }
+          }
+        }, 300)
       }
     }
   },
   onLoad(options) {
+    this.taskId = options.task_id || '';
     this.checkLoginStatus();
     this.getModelClass().then(list => {
       this.modeId = list?.[0]?.id || 0;
-      setTimeout(() => {
-        const taskId = options.task_id;
-        if(taskId) {
-          this.getSameModel({task_id: taskId}).then(res => {
-            const {
-              model_parentclass_id, model_style_img, model_style_content, model_style_id, model_style_title,
-              prompt, controlnet_type_id, controlnet_img_detect, controlnet_img, controlnet_weight,
-              lora_id, lora_title, lora_content, lora_img, lora_weight,
-              img_style_id, img_style_title, img_style_content, img_style_img,
-              reference_image, reference_image_weight,
-              negative_prompt, img_scale, batch_size
-            } = res || {};
-            this.modeId = model_parentclass_id;
-            this.setCurrentModeInfo({
-              img_url: model_style_img,
-              content: model_style_content,
-              model_style_id: model_style_id,
-              title: model_style_title
-            });
-            this.description = (prompt || '')?.slice(0, 500);
-            if(controlnet_type_id) {
-              this.controlNetInfo = {
-                id: controlnet_type_id,
-                title: controlnet_type_id,
-                url: controlnet_img_detect,
-                img: controlnet_img,
-                value: controlnet_weight || 0.8
-              }
-            }
-            if(lora_id) {
-              this.loraInfo = {
-                lora_id: lora_id,
-                title: lora_title,
-                content: lora_content,
-                img_url: lora_img,
-                value: lora_weight || 0.8,
-              }
-            }
-            if(img_style_id) {
-              this.imgStyleInfo = {
-                img_style_id: img_style_id,
-                title: img_style_title,
-                en_title: img_style_content,
-                img_url: img_style_img,
-              }
-            }
-            if(reference_image) {
-              this.referenceImgInfo = {
-                url: reference_image,
-                title: reference_image?.split?.('/')?.slice(-1)?.[0] || reference_image,
-                value: reference_image_weight || 0.8
-              }
-            }
-            if(negative_prompt) {
-              this.badDescription = (negative_prompt || '')?.slice(0, 500);
-            }
-            this.ratioId = img_scale || 5
-            this.picNums = batch_size || 1
-          });
-        }
-      }, 600)
     });
-  }
+  },
 }
 </script>
 

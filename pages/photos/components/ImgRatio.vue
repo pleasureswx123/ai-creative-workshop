@@ -22,7 +22,7 @@ export default {
     ratios: {
       type: Array,
       default: () => ([
-        {"id": 5, "title": "头像", "scale": "1:1", "width": "512", "height": "512"}
+        // {"id": 5, "title": "头像", "scale": "1:1", "width": "512", "height": "512"}
       ])
     }
   },

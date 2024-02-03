@@ -18,10 +18,10 @@ export default {
     info: {
       type: Object,
       default: () => ({
-        model_style_id: 24,
-        title: 'sushi厚涂',
-        img_url: 'https://aigc.chaojiyuyan.cn/upload/app/draw/CCA17B08DA-darkSushiMixMix_225D-scale-0_50x.jpg',
-        content: '基于sD15训练或微调的各种大模型，对各种画风lora的兼容表现更好兼顾出图质量和速度。',
+        // model_style_id: 24,
+        // title: 'sushi厚涂',
+        // img_url: 'https://aigc.chaojiyuyan.cn/upload/app/draw/CCA17B08DA-darkSushiMixMix_225D-scale-0_50x.jpg',
+        // content: '基于sD15训练或微调的各种大模型，对各种画风lora的兼容表现更好兼顾出图质量和速度。',
       })
     }
   },

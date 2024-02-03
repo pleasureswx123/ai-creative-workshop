@@ -4,7 +4,7 @@
 		<view class="banner-cont">
 			<view class="banner">
 				<view class="bannerBg">
-					<video id="myVideo" :src="banner.url" :autoplay="false" :loop="true" :controls="false" :muted="true" :show-center-play-btn="false" object-fit="cover"></video>
+					<video id="myVideo" @loadedmetadata="loadedmetadata" :src="banner.url" :autoplay="false" :loop="true" :controls="false" :muted="true" :show-center-play-btn="false" object-fit="cover"></video>
 				</view>
 				<view class="bannerText">
 					<text class="eng">{{banner.slogan_en}}</text>
@@ -305,6 +305,9 @@
 					});
 				})
 			},
+      loadedmetadata() {
+        this.videoContext.play()
+      },
 			getmakeList() {
 				app.globalData.util.request({
 					url: '/Home/Index',
@@ -314,9 +317,6 @@
 					this.banner = res.data.banner
 					this.slogan_cn = res.data.banner.slogan_cn
 					this.slogan_cnEng = res.data.banner.slogan_cn.slice(-1)
-					this.$nextTick(()=>{
-						this.videoContext.play()
-					})
 				});
 			},
 			goMiit() {
