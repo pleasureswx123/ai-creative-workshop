@@ -154,6 +154,12 @@ image {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .flex1 {
   flex: 1;
   min-width: 0;
