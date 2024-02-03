@@ -146,7 +146,7 @@ export default {
 				return
 			}
 			uni.navigateTo({
-			  url: '/pages/photos/photos'
+			  url: '/pages/photos/index'
 			})
 		},
 		goImgToVideo() {

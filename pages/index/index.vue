@@ -355,7 +355,7 @@
 			},
 			goGenerateImg() {
 				uni.navigateTo({
-				  url: '/pages/photos/photos'
+				  url: '/pages/photos/index'
 				})
 			},
 			goDary(id) {
@@ -445,7 +445,7 @@
 				})
 				.then((res) => {
 					uni.navigateTo({
-						url: '/pages/photos/photos?task_id=' + task_id
+						url: '/pages/photos/index?task_id=' + task_id
 					})
 				});
 			}

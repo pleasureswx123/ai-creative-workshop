@@ -201,7 +201,7 @@
 			goGenerateImg() {
 				this.null()
 				uni.navigateTo({
-				  url: '/pages/photos/photos'
+				  url: '/pages/photos/index'
 				})
 			},
 			goImgTool() {

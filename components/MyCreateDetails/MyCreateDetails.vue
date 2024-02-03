@@ -105,7 +105,7 @@ export default {
     jumpToTextToPicture() {
       const {task_id} = this.info || {};
       uni.$u.route({
-        url: 'pages/photos/photos',
+        url: 'pages/photos/index',
         params: {
           task_id: task_id
         }

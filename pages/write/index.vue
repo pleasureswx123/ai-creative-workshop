@@ -96,7 +96,7 @@
 			onHo(){
 				// 573
 				uni.navigateTo({
-				                    url: '/pages/photos/photos?task_id=' + 573
+				                    url: '/pages/photos/index?task_id=' + 573
 				                })
 			},
 			onHotos(){
@@ -114,7 +114,7 @@
 			},
 			onClick(){
 				uni.navigateTo({
-					url: '/pages/photos/photos'
+					url: '/pages/photos/index'
 				});
 			},
 			switchTopic: function(e) {
