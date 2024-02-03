@@ -6,7 +6,7 @@
           :confirmType="null" v-model="current"
           placeholderStyle="color: red;"
           :placeholder="placeholder" count
-          :maxlength="maxlength" height="200"></u--textarea>
+          :maxlength="maxlength" height="300"></u--textarea>
     </view>
   </BoxLayout>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: {
     maxlength: {
       type: Number,
-      default: 500
+      default: 1000
     },
     title: {
       type: String,

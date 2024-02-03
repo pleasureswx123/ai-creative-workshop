@@ -1,7 +1,7 @@
 <template>
   <view class="slide-container">
     <view class="img-box">
-      <image mode="aspectFill" :src="info.url || info.img_url"></image>
+      <image mode="aspectFit" :src="info.url || info.img_url"></image>
     </view>
     <view class="info-box">
       <view class="info-hd">
@@ -41,6 +41,7 @@ export default {
     height: 120rpx;
     width: 120rpx;
     image {
+      background-color: #000;
       width: 100%;
       height: 100%;
       display: block;

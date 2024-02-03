@@ -11,6 +11,7 @@
         :info="currentModeInfo" />
     <DescriptionTextareaCard
         title="画面描述词"
+        :maxlength="maxlength"
         placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
         :value.sync="description" />
     <ControlNetCard
@@ -30,6 +31,7 @@
         :info.sync="referenceImgInfo" />
     <DescriptionTextareaCard
         title="负面描述词"
+        :maxlength="maxlength"
         placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"
         :value.sync="badDescription" />
     <ImgRatioCard
@@ -91,6 +93,7 @@ export default {
     ModelSelectPop, ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
   data() {
     return {
+      maxlength: 1000,
       taskId: '',
       taskModelId: '',
       modeId: 1,
@@ -193,7 +196,7 @@ export default {
           model_style_id: model_style_id,
           title: model_style_title
         });
-        this.description = (prompt || '')?.slice(0, 500);
+        this.description = (prompt || '')?.slice(0, this.maxlength);
         if(controlnet_type_id) {
           this.controlNetInfo = {
             id: controlnet_type_id,
@@ -228,7 +231,7 @@ export default {
           }
         }
         if(negative_prompt) {
-          this.badDescription = (negative_prompt || '')?.slice(0, 500);
+          this.badDescription = (negative_prompt || '')?.slice(0, this.maxlength);
         }
         this.ratioId = img_scale || 5
         this.picNums = batch_size || 1;

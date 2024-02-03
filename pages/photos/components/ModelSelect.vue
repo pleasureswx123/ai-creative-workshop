@@ -1,7 +1,7 @@
 <template>
   <BoxLayout title="模型选择">
     <view class="mode-box" @tap="$emit('showPopFunc')">
-      <image :src="info.img_url" mode="aspectFill"></image>
+      <image :src="info.img_url" mode="aspectFit"></image>
       <view class="info">
         <view class="title">{{info.title}}</view>
         <view class="content">{{info.content}}</view>
@@ -42,6 +42,7 @@ export default {
   image {
     width: 150rpx;
     height: 100%;
+    background-color: #000;
     display: block;
   }
   .info {
