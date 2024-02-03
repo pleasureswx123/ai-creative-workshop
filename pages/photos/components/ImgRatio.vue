@@ -3,7 +3,7 @@
     <view class="ratio-box">
       <view class="items-box" :class="{active: currentVal === item.id}" v-for="item in ratios" :key="item.id" @tap="change(item)">
         <view class="items-con">
-          <view class="ratio-val" :style="{'aspect-ratio': getRatio(item.scale)}">{{item.scale}}</view>
+          <view class="ratio-val" :style="{'aspect-ratio': getRatio(item.scale)}"><view>{{item.scale}}</view></view>
         </view>
         <view class="title">{{item.title}}</view>
       </view>
@@ -76,9 +76,11 @@ export default {
         transform: translate3d(-50%, -50%, 0);
         background-color: #575A69;
         font-size: 20rpx;
+        font-weight: bold;
         color: #fff;
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     .title {

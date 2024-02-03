@@ -63,6 +63,7 @@ export default {
       min-width: 0;
       background-color: #ff0000;
       font-size: 30rpx;
+      font-weight: bold;
       text-align: center;
       position: relative;
       .tips-txt {
