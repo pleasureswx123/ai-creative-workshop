@@ -36,6 +36,15 @@ export default {
       if (this.taskType === '7') {
         tipsTxt = '2万'
       }
+      if (this.taskType === '10') {
+        tipsTxt = '50万'
+      }
+      if (this.taskType === '11') {
+        tipsTxt = '50万'
+      }
+      if (this.taskType === '2') {
+        tipsTxt = '10万'
+      }
       if(!this.taskType) {
         tipsTxt = '10万'
       }

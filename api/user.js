@@ -19,6 +19,12 @@ export default {
       custom: {auth: true},
     })
   },
+  uploadVideo({filePath, name = 'video'}) {
+    return uni.$u.http.upload(`/upload/video`, {
+      fileType: 'video', filePath, name, timeout: 600000,
+      custom: {auth: true},
+    })
+  },
   getMyCreation(params = {}) {
     return uni.$u.http.post(`/User/MyCreation`, params, {
       custom: {

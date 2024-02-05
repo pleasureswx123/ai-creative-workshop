@@ -10,6 +10,11 @@ const getters = {
 };
 
 const actions = {
+  getTemplate({dispatch, commit}, params = {}) {
+    return pictureApi.getTemplate(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
   getToolsList({dispatch, commit}, params = {}) {
     return pictureApi.getToolsList(params).then(res => {
       commit('setToolsList', res?.list || [])

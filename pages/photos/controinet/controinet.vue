@@ -40,7 +40,7 @@
 						    </view>
 						    <view class="upload-text">
 						        <u--text text="点击上传" align="center" color="#909193" size="28rpx"></u--text>
-						        <u--text text="支持png,jpn,jpeg格式"  align="center" color="#909193" size="24rpx"></u--text>
+						        <u--text text="支持jpg/png/gif格式"  align="center" color="#909193" size="24rpx"></u--text>
 						    </view>
 						</view>
 					</view>

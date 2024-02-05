@@ -2,13 +2,6 @@
   <Layout>
     <PicHeader title="一张照片来跳舞" />
   
-    <template v-if="generateState === 1">
-      <TitleCell
-          title="选择舞蹈模板"
-          :isShowRight="false" />
-      <QmSelect :value.sync="template_id"></QmSelect>
-    </template>
-  
     <TitleCell
         :isShowRight="generateState === 1"
         title="上传全身照片" />
@@ -22,6 +15,11 @@
         :value.sync="sourceImg" />
   
     <template v-if="generateState === 1">
+      <TitleCell
+          title="选择舞蹈模板"
+          :isShowRight="false" />
+      <QmSelectDanceTemplate
+          :value.sync="templateInfo" />
       <TipsHelp :info="taskDetail" />
     </template>
     
@@ -44,7 +42,7 @@ export default {
   data() {
     return {
       sourceImg: '',
-      template_id: '',
+      templateInfo: null,
       toastTips: {
         template_id: {
           txt: '请选择模板'
@@ -61,14 +59,17 @@ export default {
     }
   },
   computed: {
+    templateId() {
+      return this.templateInfo?.id || ''
+    },
     disabled() {
-      return !(this.sourceImg && this.template_id)
+      return !(this.sourceImg && this.templateId)
     },
     params() {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 10,
-        template_id: this.template_id || '',
+        template_id: this.templateId || '',
         reference_image: this.sourceImg || ''
       }
     }

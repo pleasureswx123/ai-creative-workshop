@@ -1,10 +1,10 @@
 <template>
   <Layout>
     <PicHeader title="视频转绘" />
-<!--    <view class="description-tips">
+    <view class="description-tips">
       上传一段视频，再选择一个风格， <br />
       你将得到一段令人耳目一新的视频。
-    </view>-->
+    </view>
     
     <TitleCell
         title="上传原视频"
@@ -20,9 +20,18 @@
         :value.sync="sourceImg" />
   
     <template v-if="generateState === 1">
-      <TitleCell title="选择转绘风格" :isShowRight="false" />
-      <view style="color: #fff;">12121</view>
-      <TipsHelp :info="taskDetail" />
+      <TitleCell
+          title="选择转绘风格"
+          :isShowRight="false" />
+      <QmSelectDrawStyle
+          :value.sync="currentDrawStyle" />
+  
+      <TitleCell
+          title="生成时长"
+          :isShowRight="false" />
+      <QmRadio
+          :value.sync="generation_duration"
+          :options="radioOptions" />
     </template>
     
     <template #footer>
@@ -41,11 +50,11 @@ export default {
   data() {
     return {
       sourceImg: '',
-      template_id: '',
-      generation_duration: 0,
+      generation_duration: '',
+      currentDrawStyle: null,
       toastTips: {
         reference_image: {
-          txt: '请上传图片'
+          txt: '请上传视频'
         },
         template_id: {
           txt: '请选择模板'
@@ -57,15 +66,24 @@ export default {
     }
   },
   computed: {
+    radioOptions() {
+      return (this.taskDetail?.expand_model?.generation_duration || []).map(item => {
+        const { val, val_name } = item || {};
+        return { label: val_name, value: val}
+      })
+    },
+    templateId() {
+      return this.currentDrawStyle?.id || ''
+    },
     disabled() {
-      return !(this.sourceImg && this.template_id && this.generation_duration)
+      return !(this.sourceImg && this.templateId && this.generation_duration)
     },
     params() {
       return {
         // 任务类型 2图生视频 3智能换脸 4去除背景 5更换背景 6智能扩图 7高清重绘 8局部重绘
         task_type: 11,
         generation_duration: this.generation_duration || '',
-        template_id: this.template_id || '',
+        template_id: this.templateId || '',
         reference_image: this.sourceImg || ''
       }
     }
@@ -77,8 +95,8 @@ export default {
 .description-tips {
   color: var(--txt-color2);
   text-align: center;
-  font-size: 28rpx;
-  padding: 30rpx 0;
-  line-height: 1.6;
+  font-size: 24rpx;
+  padding: 30rpx 0 20rpx;
+  line-height: 1.5;
 }
 </style>

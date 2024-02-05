@@ -86,6 +86,7 @@ export default {
   line-height: 80rpx;
   border-radius: 10rpx;
   font-size: 28rpx;
+  font-weight: bold;
   text-align: center;
   display: flex;
   align-items: center;
@@ -100,6 +101,7 @@ export default {
     color: var(--txt-color4);
   }
   .tips-txt {
+    font-weight: normal;
     font-size: 24rpx;
     position: absolute;
     right: 30rpx;

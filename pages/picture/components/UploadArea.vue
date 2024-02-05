@@ -75,7 +75,8 @@ export default {
           success: res => {
             const {tempFilePath: filePath} = res || {};
             this.loading = true;
-            userApi.uploadImg({filePath}).then((res) => {
+            userApi.uploadVideo({filePath}).then((res) => {
+              debugger
               const url = res.path || '';
               this.$emit('cb', url);
             }).finally(() => {

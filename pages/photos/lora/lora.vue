@@ -7,7 +7,7 @@
 					<view  class="lora-list">
 						<view @mousewheel.prevent>
 						 <u--text  text="选择Lora模型" align="center" size="50rpx" lineHeight="160rpx" color="#FFFFFF"></u--text>
-						  <u--text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种面风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="40rpx" color="#d5d5d5"></u--text>
+<!--						  <u&#45;&#45;text :text="`基于${photosStyleId[id-1]}训练或微调的各种大模型，对各种画风Lora的兼容表现更好，兼顾出图质量和速度。`"  size="24rpx" lineHeight="40rpx" color="#d5d5d5"></u&#45;&#45;text>-->
 						</view>
 						 <scroll-view  scroll-y="true" @scrolltolower="onPhotosModelList" style="height: 600px;" @touchmove.stop.prevent="() => {}">
 						 <view class="lora-popup-list">

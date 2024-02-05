@@ -1,10 +1,12 @@
 <template>
   <view>
     <view class="select-box" @tap="show = true">
-      <view class="con">点击选择</view>
+      <view class="con">{{cardInfo.title}}</view>
       <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arrowdown2" color="rgba(255,255,255,.3)" size="40" />
     </view>
-    <view v-if="show" style="color: #fff;">{{show}}</view>
+    <QmSelectDanceTemplatePopup
+        :show.sync="show"
+        :selectedInfo.sync="selectedInfo" />
   </view>
 </template>
 
@@ -12,8 +14,8 @@
 export default {
   props: {
     value: {
-      type: [String, Number],
-      default: ''
+      type: Object,
+      default: () => (null)
     }
   },
   data() {
@@ -22,12 +24,18 @@ export default {
     }
   },
   computed: {
-    currentValue: {
+    selectedInfo: {
       get() {
-        return this.value
+        return this.value || null
       },
-      set(value) {
-        this.$emit('update:value', value)
+      set(info) {
+        this.$emit('update:value', info)
+      }
+    },
+    cardInfo() {
+      const {title} = this.selectedInfo || {};
+      return {
+        title: title || '点击选择'
       }
     }
   },
