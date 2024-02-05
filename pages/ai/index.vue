@@ -59,10 +59,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('UserInfo', ['getModelList', 'getTopicList', 'getRolesList']),
+    ...mapActions('UserInfo', ['getModelList', 'getTopicList', 'getRolesList', 'getUserInfo']),
     checkLogin() {
       userApi.checkLogin().then(() => {
-        userApi.getUserInfo();
+        this.getUserInfo();
       })
     },
   }

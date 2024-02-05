@@ -246,6 +246,7 @@
 				app.globalData.util.request({
 					url: '/user/logout'
 				}).then((res) => {
+          uni.clearStorage();
 					uni.reLaunch({
 						url: '/pages/index/index'
 					})

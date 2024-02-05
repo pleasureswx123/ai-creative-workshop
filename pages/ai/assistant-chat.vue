@@ -10,7 +10,7 @@
             <block v-for="(item, index) in lists" :key="index">
               <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
                 <view class="avatar">
-                  <img mode="widthFix" src="@/static/images/ic_ai.png" />
+                  <img mode="widthFix" src="@/static/images/ic_ai.jpg" />
                 </view>
                 <view class="text markdown-body">
                   <textComponent :text="item.message"></textComponent>
@@ -41,7 +41,7 @@
             </block>
             <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
               <view class="avatar">
-                <img src="@/static/images/ic_ai.png" />
+                <img src="@/static/images/ic_ai.jpg" />
               </view>
               <view class="text markdown-body">
                 <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>

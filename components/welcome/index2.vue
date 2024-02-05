@@ -4,7 +4,7 @@
 		<view class="row row-ai">
 			<view class="message">
 				<view class="avatar">
-					<image src="/static/images/ic_ai.png" />
+					<image src="@/static/images/ic_ai.jpg" />
 				</view>
 				<view class="text markdown-body">
 					<view class="title" v-if="welcomeTitle">{{ welcomeTitle }}</view>

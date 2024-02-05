@@ -28,7 +28,8 @@ util.request = function (option) {
             dataType: 'json',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Site': uni.getStorageSync('sitecode')
+                'X-Site': uni.getStorageSync('sitecode'),
+                'X-Token': uni.getStorageSync('token'),
             },
             timeout: option.timeout ? option.timeout : 60000,
             success: function (res) {
@@ -96,7 +97,8 @@ util.upload = function (option = null) {
             name: option.name ? option.name : 'image',
             formData: option.data ? option.data : {},
             header: {
-                'X-Site': uni.getStorageSync('sitecode')
+                'X-Site': uni.getStorageSync('sitecode'),
+                'X-Token': uni.getStorageSync('token'),
             },
             success: function (response) {
                 const res = JSON.parse(response.data);
