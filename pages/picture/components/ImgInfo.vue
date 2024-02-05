@@ -2,34 +2,24 @@
   <view class="upload-img-container">
     <view class="img-header" v-if="imgInfo">
       <view>{{imgInfo.width}}*{{imgInfo.height}}</view>
-      <view v-if="imgInfo.sizeStr">{{imgInfo.sizeStr}}</view>
-      <template v-if="showDownload">
-        <view class="down-box" @tap="handleDownload">
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="var(--txt-color2)" size="20" />
-          <text>下载</text>
-        </view>
-      </template>
+      <view v-if="showDownload" class="down-box" @tap="handleDownload">
+        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="var(--txt-color2)" size="20" />
+        <text>下载</text>
+      </view>
       <uni-icons v-if="!showDownload && !generating" custom-prefix="iconfont-qm" type="icon-qm-close" color="var(--txt-color2)" size="20" @tap="$emit('del')" />
     </view>
     <view class="img-el">
       <image :key="src" :src="src" mode="aspectFit" @tap="previewImage" @load="handleLoad" />
-      <view class="generating-box" v-if="generating">
-        <view>
-          <view class="icon-box">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color4)" size="50" />
-          </view>
-          <view>等待生成...</view>
-          <view v-if="tips" class="tips-txt">{{tips}}</view>
-        </view>
-      </view>
+      <Generating v-if="generating"></Generating>
     </view>
   </view>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import Generating from './Generating.vue'
 
 export default {
+  components: { Generating },
   props: {
     src: {
       type: String,
@@ -43,10 +33,6 @@ export default {
       type: Boolean,
       default: false
     },
-    size: {
-      type: Number,
-      default: 0
-    }
   },
   data() {
     return {
@@ -65,33 +51,25 @@ export default {
       const {width, height} = res.detail || {};
       this.width = width;
       this.height = height;
-      console.log(this.size);
-      !this.size && this.getFileSize(this.src).then(size => {
-        this.info.size = size;
-      });
     },
     handleDownload() {
       this.downLoadFile(this.src);
     },
   },
   computed: {
-    ...mapState('PictureInfo', ['taskDetail']),
-    tips() {
-      return this.taskDetail?.tip || ''
-    },
     imgInfo() {
-      const {size = 0} = this.info || {};
-      const fileSizeInBytes = +(size || this.size) || 0;
-      const fileSizeInKB = fileSizeInBytes / 1024;
-      const fileSizeInMB = fileSizeInKB / 1024;
+      // const {size = 0} = this.info || {};
+      // const fileSizeInBytes = +(size || this.size) || 0;
+      // const fileSizeInKB = fileSizeInBytes / 1024;
+      // const fileSizeInMB = fileSizeInKB / 1024;
       // console.log(`File size: ${fileSizeInBytes} bytes`);
       // console.log(`File size: ${fileSizeInKB} KB`);
       // console.log(`File size: ${fileSizeInMB} MB`);
-      const sizeStr = !!fileSizeInBytes && (fileSizeInBytes < 1024 ? `${fileSizeInBytes.toFixed(2)}b` : (fileSizeInKB < 1024 ? `${fileSizeInKB.toFixed(2)}kb` : `${fileSizeInMB.toFixed(2)}mb`))
+      // const sizeStr = !!fileSizeInBytes && (fileSizeInBytes < 1024 ? `${fileSizeInBytes.toFixed(2)}b` : (fileSizeInKB < 1024 ? `${fileSizeInKB.toFixed(2)}kb` : `${fileSizeInMB.toFixed(2)}mb`))
       return {
         width: this.width,
         height: this.height,
-        sizeStr
+        // sizeStr
       }
     }
   }
@@ -99,14 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 .upload-img-container {
   width: 100%;
   border-radius: 6rpx;
@@ -137,35 +107,6 @@ export default {
       max-width: 100%;
       margin: 0 auto;
       background: var(--bg-color2);
-    }
-    .generating-box {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--txt-color2);
-      font-size: 28rpx;
-      background: var(--txt-color7);
-      .icon-box {
-        width: 100%;
-        height: 100rpx;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .iconfont-qm {
-        animation: rotate 1s linear infinite;
-      }
-      .tips-txt {
-        padding: 40rpx 30rpx 0;
-      }
     }
   }
 }

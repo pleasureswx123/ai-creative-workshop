@@ -1,7 +1,8 @@
 import {pictureApi} from '@/api'
 
 const state = {
-  toolsList: [],
+  toolsList: [], // 图片工具列表
+  videoToolsList: [], // 视频工具列表
   taskDetail: {},
 };
 
@@ -12,6 +13,12 @@ const actions = {
   getToolsList({dispatch, commit}, params = {}) {
     return pictureApi.getToolsList(params).then(res => {
       commit('setToolsList', res?.list || [])
+      return Promise.resolve(res);
+    })
+  },
+  getVideoToolsList({dispatch, commit}, params = {}) {
+    return pictureApi.getToolsList(params).then(res => {
+      commit('setVideoToolsList', res?.list || [])
       return Promise.resolve(res);
     })
   },
@@ -48,6 +55,21 @@ const mutations = {
         url: item.img_url,
         name: item.title,
         ...({type: temp[item.id] || 'replace-bg-txt'})
+      }
+    });
+  },
+  setVideoToolsList(state, info = []) {
+    state.videoToolsList = info.map(item => {
+      const temp = {
+        2: 'img-to-video',
+        10: 'img-to-dance',
+        11: 'img-to-draw',
+      }
+      return {
+        ...item,
+        url: item.img_url,
+        name: item.title,
+        ...({type: temp[item.id] || 'img-to-video'})
       }
     });
   }

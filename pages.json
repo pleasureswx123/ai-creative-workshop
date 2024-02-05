@@ -20,9 +20,27 @@
 			}
 		},
 		{
+			"path": "pages/picture/video-tool",
+			"style": {
+				"navigationBarTitleText": "视频处理"
+			}
+		},
+		{
 			"path": "pages/picture/img-to-video",
 			"style": {
 				"navigationBarTitleText": "图生视频"
+			}
+		},
+		{
+			"path": "pages/picture/img-to-dance",
+			"style": {
+				"navigationBarTitleText": "一张照片来跳舞"
+			}
+		},
+		{
+			"path": "pages/picture/img-to-draw",
+			"style": {
+				"navigationBarTitleText": "视频转绘"
 			}
 		},
 		{

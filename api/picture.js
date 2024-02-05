@@ -27,4 +27,11 @@ export default {
       }
     })
   },
+  getTemplate(params = {}) {
+    return uni.$u.http.post(`/DrawTools/GetTemplate`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }
