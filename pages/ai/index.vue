@@ -31,6 +31,7 @@ import QmAssistant from './components/QmAssistant.vue';
 import QmRoles from './components/QmRoles.vue';
 import loaderAssistantDataMixin from '@/common/loaderAssistantDataMixin.js'
 import QmChat from './chat.vue'
+import {userApi} from '@/api'
 
 export default {
   mixins: [loaderAssistantDataMixin],
@@ -46,6 +47,7 @@ export default {
     ...mapState('UserInfo', ['modelList', 'topicList', 'rolesList'])
   },
   onShow() {
+    this.checkLogin();
     this.getTopicList();
     this.getModelList();
   },
@@ -58,6 +60,11 @@ export default {
   },
   methods: {
     ...mapActions('UserInfo', ['getModelList', 'getTopicList', 'getRolesList']),
+    checkLogin() {
+      userApi.checkLogin().then(() => {
+        userApi.getUserInfo();
+      })
+    },
   }
 }
 </script>

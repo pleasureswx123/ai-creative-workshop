@@ -1,6 +1,7 @@
 import {userApi} from '@/api'
 
 const state = {
+  userInfoState: null,
   modelList: [],
   topicList: [],
   rolesList: [],
@@ -24,10 +25,18 @@ const actions = {
     return userApi.getRolesList(params).then(res => {
       commit('setRolesList', res || [])
     })
+  },
+  getUserInfo({dispatch, commit}, params = {}) {
+    return userApi.getUserInfo(params).then(res => {
+      commit('setUserInfo', res || {})
+    })
   }
 };
 
 const mutations = {
+  setUserInfo(state, info = {}) {
+    state.userInfoState = info
+  },
   setRolesList(state, info = []) {
     state.rolesList = info
   },

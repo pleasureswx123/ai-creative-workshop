@@ -15,21 +15,21 @@
             <block v-for="(item, index) in lists" :key="index">
               <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
                 <view class="avatar">
-                  <img src="/static/images/ic_ai.png" />
+                  <img src="@/static/images/ic_ai.png" />
                 </view>
                 <view class="text markdown-body">
                   <textComponent :text="item.message"></textComponent>
                   <view class="tools">
                     <view>
                       <view class="btn" @click="copyText(item.message)">
-                        <image class="icon" src="/static/images/ic_copy.png"></image>
+                        <image class="icon" src="@/static/images/ic_copy.png"></image>
                         <span>{{ '复制内容' | lang }}</span>
                       </view>
                     </view>
                     <view>
                       <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)"
                             style="margin-right: 0;">
-                        <image class="icon" src="/static/images/ic_retry.png"></image>
+                        <image class="icon" src="@/static/images/ic_retry.png"></image>
                       </view>
                     </view>
                   </view>
@@ -39,7 +39,7 @@
               
               <view class="message" v-else style="background: #fff">
                 <view class="avatar" style="background: #9aa37e">
-                  <img src="/static/images/avatar.jpg" />
+                  <img mode="widthFix" :src="userAvatar" />
                 </view>
                 <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
                   <textComponent :text="item.message"></textComponent>
@@ -48,14 +48,14 @@
             </block>
             <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
               <view class="avatar">
-                <img src="/static/images/ic_ai.png" />
+                <img src="@/static/images/ic_ai.png" />
               </view>
               <view class="text markdown-body">
                 <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
                 <view class="tools">
                   <view>
                     <view class="btn" @click="stopFetch">
-                      <image class="icon" src="/static/images/ic_stop.png"></image>
+                      <image class="icon" src="@/static/images/ic_stop.png"></image>
                       <span>{{ '停止回复' | lang }}</span>
                     </view>
                   </view>
@@ -79,7 +79,7 @@
                     @focus="inputFocus" :auto-height="true" :placeholder="'输入你的问题' | lang" maxlength="3000"
                     cursor-spacing="0"></textarea>
           <button class="btn-send" @tap="sendText">
-            <image mode="widthFix" src="/static/images/ic_send.png"></image>
+            <image mode="widthFix" src="@/static/images/ic_send.png"></image>
           </button>
         </view>
 <!--        <view class="balance4" v-if="model === 'model4'" @tap="toModel4Pay">
@@ -92,14 +92,16 @@
 </template>
 
 <script>
-const app = getApp();
+import ic_user from "@/static/images/avatar.jpg";
 
+const app = getApp();
+import {mapState} from 'vuex';
 import TextComponent from '../../components/message/text'
 import Welcome from '../../components/welcome/index2'
 import 'katex/dist/katex.min.css'
-import '../../static/styles/lib/tailwind.css'
-import '../../static/styles/lib/highlight.scss'
-import '../../static/styles/lib/github-markdown.scss'
+import '@/static/styles/lib/tailwind.css'
+import '@/static/styles/lib/highlight.scss'
+import '@/static/styles/lib/github-markdown.scss'
 
 var textStacks = []
 var textOutputSi = 0
@@ -140,6 +142,10 @@ export default {
     };
   },
   computed: {
+    ...mapState('UserInfo', ['userInfoState']),
+    userAvatar() {
+      return this.userInfoState?.avatar || ic_user
+    },
     welcomeTitle() {
       return this.page_title
     },

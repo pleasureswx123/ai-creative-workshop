@@ -12,20 +12,20 @@
             <block v-for="(item, index) in lists" :key="index">
               <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
                 <view class="avatar">
-                  <image mode="widthFix" src="/static/images/ic_ai.png" />
+                  <image mode="widthFix" src="@/static/images/ic_ai.png" />
                 </view>
                 <view class="text markdown-body">
                   <textComponent :text="item.message"></textComponent>
                   <view class="tools">
                     <view>
                       <view class="btn" @click="copyText(item.message)">
-                        <image class="icon" src="/static/images/ic_copy.png"></image>
+                        <image class="icon" src="@/static/images/ic_copy.png"></image>
                         <span>{{ '复制内容' | lang }}</span>
                       </view>
                     </view>
                     <view>
                       <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)" style="margin-right: 0;">
-                        <image class="icon" src="/static/images/ic_retry.png"></image>
+                        <image class="icon" src="@/static/images/ic_retry.png"></image>
                       </view>
                     </view>
                   </view>
@@ -43,14 +43,14 @@
             </block>
             <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
               <view class="avatar">
-                <image src="/static/images/ic_ai.png" />
+                <image src="@/static/images/ic_ai.png" />
               </view>
               <view class="text markdown-body">
                 <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
                 <view class="tools">
                   <view>
                     <view class="btn" @click="stopFetch">
-                      <image class="icon" src="/static/images/ic_stop.png"></image>
+                      <image class="icon" src="@/static/images/ic_stop.png"></image>
                       <span>{{ '停止回复' | lang }}</span>
                     </view>
                   </view>
@@ -91,10 +91,11 @@ const app = getApp();
 import TextComponent from '../../components/message/text'
 import Welcome from '../../components/welcome/index2'
 import 'katex/dist/katex.min.css'
-import '../../static/styles/lib/tailwind.css'
-import '../../static/styles/lib/highlight.scss'
-import '../../static/styles/lib/github-markdown.scss'
+import '@/static/styles/lib/tailwind.css'
+import '@/static/styles/lib/highlight.scss'
+import '@/static/styles/lib/github-markdown.scss'
 import QmSubTabs from "./components/QmSubTabs.vue";
+import ic_user from '@/static/images/avatar.jpg'
 
 var textStacks = []
 var textOutputSi = 0
@@ -121,7 +122,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('UserInfo', ['modelList']),
+    ...mapState('UserInfo', ['modelList', 'userInfoState']),
     ...mapState('RoleInfo', ['role']),
     welcomeTitle() {
       return this.role.title
@@ -133,11 +134,7 @@ export default {
       return this.role.tips
     },
     userAvatar() {
-      if(this.userinfo && this.userinfo.avatar) {
-        return this.userinfo.avatar
-      } else {
-        return '/static/img/ic_user.png'
-      }
+      return this.userInfoState?.avatar || ic_user
     }
   },
   onLoad(options) {
