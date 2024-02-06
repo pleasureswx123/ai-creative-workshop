@@ -146,7 +146,7 @@ export default {
 				return
 			}
 			uni.navigateTo({
-			  url: '/pages/photos/index'
+			  url: '/pages/picture/index'
 			})
 		},
 		goImgToVideo() {
@@ -155,7 +155,7 @@ export default {
 				return
 			}
 			uni.navigateTo({
-			  url: '/pages/picture/video-tool'
+			  url: '/pages/picture/index'
 			})
 		},
         linkto(e) {

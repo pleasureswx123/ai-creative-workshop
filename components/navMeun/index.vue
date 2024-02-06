@@ -110,6 +110,22 @@
 		mounted() {
 			this.getUserInfo()
 		},
+    computed: {
+      showPop() {
+        return this.navShow || this.integralShow;
+      }
+    },
+    watch: {
+      showPop: {
+        immediate: true,
+        handler(status) {
+          this.toggleBodyPositionStatus(status)
+        }
+      }
+    },
+    beforeDestroy() {
+      this.toggleBodyPositionStatus(false)
+    },
 		methods: {
 			getUserInfo() {
 				app.globalData.util.request({
@@ -119,19 +135,11 @@
 					this.isLogin =  true
 				})
 			},
-			null() {
-				document.body.style.position = null
-			},
-			fixed(){
-				document.body.style.position = 'fixed'
-			},
 			open() {
 				this.navShow = true
-				this.fixed()
 			},
 			close() {
 				this.navShow = false
-				this.null()
 			},
 			blChange() {
 				if (!this.isLogin) {
@@ -144,11 +152,9 @@
 			},
 			inOpen() {
 				// console.log('open');
-				this.fixed()
 			},
 			inClose() {
 				this.integralShow = false
-				this.null()
 			},
 			inChange(e) {
 				// console.log('change', e);
@@ -167,7 +173,6 @@
 				});
 			},
 			goHome() {
-				this.null()
 				uni.reLaunch({
 					url: '/pages/index/index'
 				})
@@ -177,7 +182,6 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				this.null()
 				uni.reLaunch({
 					url: '/pages/user/index'
 				})
@@ -187,62 +191,52 @@
 					app.globalData.util.toLogin('请登录')
 					return
 				}
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/index'
 				})
 			},
 			goAi() {
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/ai/index'
 				})
 			},
 			goGenerateImg() {
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/photos/index'
 				})
 			},
 			goImgTool() {
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/tool'
 				})
 			},
 			goDub() {
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/sound/index'
 				})
 			},
 			goImgToVideo() {
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/picture/video-tool'
 				})
 			},
 			goUse(e) {
-				this.null()
 				const url = e.currentTarget.dataset.url;
 				uni.navigateTo({
 					url: url
 				});
 			},
 			goContact(){
-				this.null()
 				uni.navigateTo({
 				  url: '/pages/article/code'
 				})
 			},
 			toDoc(type) {
-				this.null()
 				uni.navigateTo({
 					url: '/pages/article/article?type=' + type
 				})
 			},
 			doLogout() {
-				this.null()
 				app.globalData.util.request({
 					url: '/user/logout'
 				}).then((res) => {

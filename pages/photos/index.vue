@@ -55,8 +55,10 @@
     </QmPop>
     
     <ControinetPop
+        v-if="showControinetPop"
+        :showStatus.sync="showControinetPop"
         ref="ControinetPopRef"
-        @controninetlist="(info) => { controlNetInfo = info }" />
+        @controninetlist="setControlNetInfo" />
     <LoraPop
         ref="LoraPopRef"
         @loralist="(info) => { loraInfo = info }"
@@ -105,6 +107,7 @@ export default {
     ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
   data() {
     return {
+      showControinetPop: false,
       showModelSelectPop: false,
       maxlength: 1000,
       taskId: '',
@@ -141,7 +144,14 @@ export default {
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
     ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getImgScale', 'getSameModel', 'createTask']),
     showControlNetPop(){
-      this.$refs.ControinetPopRef.open();
+      this.showControinetPop = true;
+      this.$nextTick(() => {
+        this.$refs.ControinetPopRef.open();
+      })
+    },
+    setControlNetInfo(info) {
+      this.showControinetPop = false;
+      this.controlNetInfo = info;
     },
     showLoraPop(){
       this.$refs.LoraPopRef.open();

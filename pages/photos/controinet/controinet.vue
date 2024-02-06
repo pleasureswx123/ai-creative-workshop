@@ -77,6 +77,17 @@
 <script>
 	import util from '@/utils/util.js'
 	export default {
+    props: {
+      showStatus: {
+        type: Boolean,
+        default: false
+      }
+    },
+    watch: {
+      photosControinetShow(status) {
+        !status && this.$emit('update:showStatus', false)
+      }
+    },
 		data() {
 			return {
 				src:'',
