@@ -29,7 +29,8 @@
       <QmPop
           title="选择转绘风格"
           componentName="StyleItem"
-          :taskType="11"
+          :paramsInfo="{task_type: 11}"
+          :getList="getTemplate"
           :show.sync="showPop"
           :currentInfo.sync="currentDrawStyle">
         <template #tips>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 import PicMixins from './mixin';
 import VideoInfo from './components/VideoInfo.vue'
 
@@ -78,6 +80,9 @@ export default {
         },
       },
     }
+  },
+  methods: {
+    ...mapActions('PictureInfo', ['getTemplate']),
   },
   computed: {
     radioOptions() {

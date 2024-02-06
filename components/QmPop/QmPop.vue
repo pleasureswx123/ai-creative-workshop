@@ -28,17 +28,12 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
 import StyleItem from './Item/StyleItem.vue';
 import TemplateItem from './Item/TemplateItem.vue';
 
 export default {
   components: { StyleItem, TemplateItem },
   props: {
-    idName: {
-      type: String,
-      default: 'id'
-    },
     componentName: {
       type: String,
       default: ''
@@ -51,10 +46,6 @@ export default {
       type: String,
       default: '标题'
     },
-    taskType: {
-      type: Number,
-      default: 11
-    },
     show: {
       type: Boolean,
       default: false
@@ -62,6 +53,17 @@ export default {
     currentInfo: {
       type: Object,
       default: () => (null)
+    },
+    paramsInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    getList: {
+      type: Function,
+      default: () => (() => {})
+    },
+    proxyList: { // 保证必须有id
+      type: Function,
     },
   },
   data() {
@@ -75,13 +77,13 @@ export default {
   },
   computed: {
     currentId() {
-      return this.selectedInfo?.[this.idName] || '';
+      return this.selectedInfo?.id || '';
     },
     params() {
       return {
         page: this.page,
         pagesize: this.pagesize,
-        task_type: this.taskType,
+        ...this.paramsInfo
       }
     },
   },
@@ -101,7 +103,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions('PictureInfo', ['getTemplate']),
     initData() {
       this.initParams();
       this.getData().then(info => {
@@ -112,7 +113,6 @@ export default {
     initParams() {
       this.page = 1;
       this.pagesize = 10;
-      this.task_type = this.taskType;
       this.list = [];
     },
     loadMore() {
@@ -122,12 +122,14 @@ export default {
       }
     },
     getData() {
-      return this.getTemplate(this.params).then(res => {
+      return this.getList(this.params).then(res => {
         const {list = [], count} = res || {};
+        const temp = list || [];
+        const listData = this.proxyList ? (temp.map(this.proxyList)) : temp;
         this.count = count;
-        this.list = [...this.list, ...(list || [])];
+        this.list = [...this.list, ...(listData || [])];
         this.isHaveMore = this.count > this.list.length;
-        return (list || [])?.[0] || null;
+        return (listData || [])?.[0] || null;
       })
     },
     handleConfirm() {
