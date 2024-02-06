@@ -1,48 +1,22 @@
 <template>
-  <view>
-    <view class="slide-container" @tap.stop="show = true">
-      <view class="img-box">
-        <image mode="aspectFit" :src="cardInfo.url"></image>
-      </view>
-      <view class="info-box">
-        <view class="info-hd">
-          <view class="title">{{cardInfo.title}}</view>
-        </view>
+  <view class="slide-container" @tap.stop="$emit('showPop')" v-if="info">
+    <view class="img-box">
+      <image mode="aspectFit" :src="info.img_url"></image>
+    </view>
+    <view class="info-box">
+      <view class="info-hd">
+        <view class="title">{{info.title}}</view>
       </view>
     </view>
-    <QmSelectDrawStylePopup
-        :show.sync="show"
-        :selectedInfo.sync="selectedInfo" />
   </view>
 </template>
 
 <script>
 export default {
   props: {
-    value: {
+    info: {
       type: Object,
       default: () => (null)
-    }
-  },
-  data() {
-    return {
-      show: false
-    }
-  },
-  computed: {
-    selectedInfo: {
-      get() {
-        return this.value || null
-      },
-      set(info) {
-        this.$emit('update:value', info)
-      }
-    },
-    cardInfo() {
-      const {img_url, title} = this.selectedInfo || {};
-      return {
-        url: img_url, title
-      }
     }
   },
 }

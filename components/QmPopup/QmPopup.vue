@@ -7,14 +7,18 @@
       :round="round"
       :safeAreaInsetBottom="safeAreaInsetBottom">
     <view class="pop-container">
-      <view class="pop-body-container">
+      <view class="pop-body-container" v-if="show">
         <view class="top-bar">
           <text class="title">{{title}}</text>
           <view class="close-box">
             <icon @tap="$emit('close')" color="var(--txt-color1)" type="cancel" size="30" />
           </view>
         </view>
-        <slot name="tips"></slot>
+        <u-gap height="30" />
+        <view class="tips-wrapper" v-if="$slots.tips">
+          <slot name="tips"></slot>
+        </view>
+        <u-gap height="30" />
         <view class="pop-main-content">
           <slot></slot>
         </view>
@@ -117,7 +121,7 @@ export default {
       background: red;
       margin: 0 auto;
       height: 80rpx;
-      border-radius: 80rpx;
+      border-radius: 10rpx;
       text-align: center;
       line-height: 80rpx;
       position: relative;
@@ -130,5 +134,8 @@ export default {
   .pop-container {
     height: 100dvh;
   }
+}
+.tips-wrapper {
+  padding: 0 30rpx;
 }
 </style>

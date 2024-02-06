@@ -18,15 +18,23 @@
       <TitleCell
           title="选择舞蹈模板"
           :isShowRight="false" />
-      <QmSelectDanceTemplate
-          :value.sync="templateInfo" />
+      <QmSelectBox
+          @showPop="showPop = true"
+          :info="currentTemplateInfo" />
+      <QmPop
+          styleStr="grid-template-columns: repeat(2, 1fr)"
+          title="选择舞蹈模板"
+          componentName="TemplateItem"
+          :taskType="10"
+          :show.sync="showPop"
+          :currentInfo.sync="currentTemplateInfo">
+      </QmPop>
       <TipsHelp :info="taskDetail" />
     </template>
     
     <template #footer>
       <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
-    
     
   </Layout>
 </template>
@@ -41,8 +49,9 @@ export default {
   components: { VideoInfo },
   data() {
     return {
+      showPop: false,
       sourceImg: '',
-      templateInfo: null,
+      currentTemplateInfo: null,
       toastTips: {
         template_id: {
           txt: '请选择模板'
@@ -60,7 +69,7 @@ export default {
   },
   computed: {
     templateId() {
-      return this.templateInfo?.id || ''
+      return this.currentTemplateInfo?.id || ''
     },
     disabled() {
       return !(this.sourceImg && this.templateId)

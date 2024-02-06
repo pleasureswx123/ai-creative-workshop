@@ -3,21 +3,24 @@
       :show="show"
       @close="$emit('update:show', false)"
       @confirm="handleConfirm"
-      title="选择舞蹈模板">
-    <u-gap height="30" />
+      :title="title">
+    <template #tips>
+      <slot name="tips"></slot>
+    </template>
+    <slot v-if="$slots.default"></slot>
     <scroll-view
+        v-else
         scroll-y="true"
         style="height: 100%"
         @scrolltolower="loadMore">
-      <view class="item-wrapper">
-        <TemplateItem
+      <view class="item-wrapper" :style="styleStr">
+        <component
+            :is="componentName"
             v-for="item in list"
             :key="item.id"
             :info="item"
             :active="currentId === item.id"
-            @select="info => { currentInfo = info }"
-            @play="handlePlay"
-        />
+            @select="info => { selectedInfo = info }" />
       </view>
       <u-gap height="150rpx" />
     </scroll-view>
@@ -26,17 +29,37 @@
 
 <script>
 import {mapActions} from 'vuex';
-import TemplateItem from './TemplateItem.vue';
-import UGap from "../../uni_modules/uview-ui/components/u-gap/u-gap";
+import StyleItem from './Item/StyleItem.vue';
+import TemplateItem from './Item/TemplateItem.vue';
 
 export default {
-  components: {UGap, TemplateItem },
+  components: { StyleItem, TemplateItem },
   props: {
+    idName: {
+      type: String,
+      default: 'id'
+    },
+    componentName: {
+      type: String,
+      default: ''
+    },
+    styleStr: {
+      type: String,
+      default: ''
+    },
+    title: {
+      type: String,
+      default: '标题'
+    },
+    taskType: {
+      type: Number,
+      default: 11
+    },
     show: {
       type: Boolean,
       default: false
     },
-    selectedInfo: {
+    currentInfo: {
       type: Object,
       default: () => (null)
     },
@@ -45,12 +68,22 @@ export default {
     return {
       page: 1,
       pagesize: 10,
-      task_type: 10,
       list: [],
       isHaveMore: true,
-      currentInfo: null,
-      videoContext: null
+      selectedInfo: null
     }
+  },
+  computed: {
+    currentId() {
+      return this.selectedInfo?.[this.idName] || '';
+    },
+    params() {
+      return {
+        page: this.page,
+        pagesize: this.pagesize,
+        task_type: this.taskType,
+      }
+    },
   },
   created() {
     this.initData();
@@ -60,52 +93,26 @@ export default {
       immediate: true,
       handler(status) {
         if(status) {
-          if(this.selectedInfo) {
-            this.currentInfo = this.selectedInfo;
+          if(this.currentInfo) {
+            this.selectedInfo = this.currentInfo;
           }
         }
       }
     }
   },
-  computed: {
-    currentId() {
-      return this.currentInfo?.id || '';
-    },
-    params() {
-      return {
-        page: this.page,
-        pagesize: this.pagesize,
-        task_type: 10,
-      }
-    },
-  },
-  beforeDestroy() {
-    this.destoryVideo();
-  },
   methods: {
     ...mapActions('PictureInfo', ['getTemplate']),
-    destoryVideo() {
-      if(this.videoContext) {
-        this.videoContext.pause();
-        this.videoContext = null;
-      }
-    },
-    handlePlay(info) {
-      this.destoryVideo();
-      this.videoContext = uni.createVideoContext(`video-temp-${info.id}`, this);
-      this.videoContext.play();
-    },
     initData() {
       this.initParams();
       this.getData().then(info => {
-        this.currentInfo = info;
-        info && this.$emit('update:selectedInfo', info);
+        this.selectedInfo = info;
+        info && this.$emit('update:currentInfo', info);
       });
     },
     initParams() {
       this.page = 1;
       this.pagesize = 10;
-      this.task_type = 10;
+      this.task_type = this.taskType;
       this.list = [];
     },
     loadMore() {
@@ -124,7 +131,7 @@ export default {
       })
     },
     handleConfirm() {
-      this.$emit('update:selectedInfo', this.currentInfo);
+      this.$emit('update:currentInfo', this.selectedInfo);
       this.$emit('update:show', false);
     }
   },
@@ -134,7 +141,7 @@ export default {
 <style lang="scss" scoped>
 .item-wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20rpx;
 }
 </style>

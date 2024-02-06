@@ -23,8 +23,21 @@
       <TitleCell
           title="选择转绘风格"
           :isShowRight="false" />
-      <QmSelectDrawStyle
-          :value.sync="currentDrawStyle" />
+      <QmCardDrawStyle
+          @showPop="showPop = true"
+          :info="currentDrawStyle" />
+      <QmPop
+          title="选择转绘风格"
+          componentName="StyleItem"
+          :taskType="11"
+          :show.sync="showPop"
+          :currentInfo.sync="currentDrawStyle">
+        <template #tips>
+          <view class="tips-txt">
+            基于SD1.5训练或微调的各种大模型，对各种画风Lora的兼容表现更好，兼顾出图质量和速度。
+          </view>
+        </template>
+      </QmPop>
   
       <TitleCell
           title="生成时长"
@@ -49,6 +62,7 @@ export default {
   components: { VideoInfo },
   data() {
     return {
+      showPop: false,
       sourceImg: '',
       generation_duration: '',
       currentDrawStyle: null,

@@ -2,12 +2,12 @@
   <view class="item-box" :class="{active}" @tap.stop>
     <view class="pic-box">
       <video class="video-box" object-fit="contain" :src="info.video_url" />
-<!--      <video
-          :id="`video-temp-${info.id}`"
-          :autoplay="false" :loop="true" :controls="false"
-          :show-center-play-btn="false"
-          object-fit="contain"
-          :src="info.video_url" />-->
+      <!--      <video
+                :id="`video-temp-${info.id}`"
+                :autoplay="false" :loop="true" :controls="false"
+                :show-center-play-btn="false"
+                object-fit="contain"
+                :src="info.video_url" />-->
     </view>
     <view @tap="$emit('select', info)">
       <u-gap height="20rpx" />
