@@ -350,7 +350,7 @@
 			},
 			goImgToVideo() {
 				uni.navigateTo({
-				  url: '/pages/picture/img-to-video'
+				  url: '/pages/picture/video-tool'
 				})
 			},
 			goGenerateImg() {

@@ -155,7 +155,7 @@ export default {
 				return
 			}
 			uni.navigateTo({
-			  url: '/pages/picture/img-to-video'
+			  url: '/pages/picture/video-tool'
 			})
 		},
         linkto(e) {

@@ -219,7 +219,7 @@
 			goImgToVideo() {
 				this.null()
 				uni.navigateTo({
-				  url: '/pages/picture/img-to-video'
+				  url: '/pages/picture/video-tool'
 				})
 			},
 			goUse(e) {
