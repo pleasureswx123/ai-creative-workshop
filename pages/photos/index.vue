@@ -7,7 +7,7 @@
         :value.sync="modeId"
         :tabs="modeClassInfo" />
     <ModelSelectCard
-        @showPopFunc="showModelSelectPop"
+        @showPopFunc="showModelSelectPop = true"
         :info="currentModeInfo" />
     <DescriptionTextareaCard
         title="画面描述词"
@@ -37,11 +37,23 @@
     <ImgRatioCard
         :value.sync="ratioId"
         :ratios="ImgRatioInfo" />
+  
+    <QmPop
+        v-if="showModelSelectPop"
+        :title="`选择模型${currentModelInfo.title}`"
+        componentName="ModelStyleItem"
+        :paramsInfo="{class_id: modeId}"
+        :getList="getModelList"
+        :proxyList="item => ({ ...item, id: item.model_style_id })"
+        :show.sync="showModelSelectPop"
+        :currentInfo.sync="currentModeInfoData">
+      <template #tips>
+        <view class="tips-txt">
+          {{currentModelInfo.content}}
+        </view>
+      </template>
+    </QmPop>
     
-    <ModelSelectPop
-        ref="ModelSelectRef"
-        @modelist="(info) => {setCurrentModeInfo(info)}"
-        :id="modeId" />
     <ControinetPop
         ref="ControinetPopRef"
         @controninetlist="(info) => { controlNetInfo = info }" />
@@ -81,7 +93,6 @@ import ReferenceImgCard from './components/ReferenceImg.vue';
 import ImgRatioCard from './components/ImgRatio.vue';
 import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
-import ModelSelectPop from './model/model.vue'
 import ControinetPop from './controinet/controinet.vue'
 import LoraPop from './lora/lora.vue'
 import ImgStylePop from './sstyle/sstyle.vue'
@@ -91,9 +102,10 @@ export default {
   components: { TaskTips, ModelTabs, GeneratePhotoBtn,
     ModelSelectCard, DescriptionTextareaCard, ControlNetCard,
     LoraCard, ImgStyleCard, ReferenceImgCard, ImgRatioCard,
-    ModelSelectPop, ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
+    ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
   data() {
     return {
+      showModelSelectPop: false,
       maxlength: 1000,
       taskId: '',
       taskModelId: '',
@@ -112,14 +124,22 @@ export default {
     ...mapState('PhotoInfo', ['modeClassInfo', 'currentModeInfo', 'ImgRatioInfo']),
     photosModelList() {
       return this.modeClassInfo.find(item => item.id === this.modeId);
+    },
+    currentModeInfoData: {
+      get() {
+        return this.currentModeInfo
+      },
+      set(info) {
+        this.setCurrentModeInfo(info)
+      }
+    },
+    currentModelInfo() {
+      return this.modeClassInfo.find(item => item.id === this.modeId);
     }
   },
   methods: {
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
-    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getImgScale', 'getSameModel', 'createTask']),
-    showModelSelectPop(){
-      this.$refs.ModelSelectRef.open();
-    },
+    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getImgScale', 'getSameModel', 'createTask']),
     showControlNetPop(){
       this.$refs.ControinetPopRef.open();
     },

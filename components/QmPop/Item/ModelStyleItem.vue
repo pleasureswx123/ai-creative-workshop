@@ -3,7 +3,10 @@
     <view class="pic-box">
       <image mode="aspectFit" :src="info.img_url"></image>
     </view>
-    <view class="title">{{info.title}}</view>
+    <view class="txt-box">
+      <view class="title">{{info.title}}</view>
+      <view class="content">{{info.content}}</view>
+    </view>
   </view>
 </template>
 
@@ -45,15 +48,27 @@ export default {
       height: 100%;
     }
   }
+  .txt-box {
+    padding: 0 10rpx;
+  }
   .title {
     color: #fff;
     font-size: 28rpx;
     line-height: 1.5;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .content {
+    padding-top: 10rpx;
+    color: #909193;
+    font-size: 24rpx;
+    line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-align: center;
   }
 }
 </style>

@@ -54,6 +54,7 @@ export default {
     position: relative;
     display: grid;
     place-items: center;
+    border-radius: 20rpx;
     image {
       width: 100%;
       height: 100%;

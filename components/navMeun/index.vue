@@ -260,8 +260,6 @@
 <style lang="scss" scoped>
 	.navList {
 		margin-bottom: 120rpx;
-    position: relative;
-    z-index: 10;
 		.menu{
 			width: 100%;
 			display: -webkit-flex;

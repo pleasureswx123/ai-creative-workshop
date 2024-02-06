@@ -551,7 +551,6 @@
 		width: 100%;
 		padding: 0 40rpx 0;
 		box-sizing: border-box;
-		position: relative;
 		margin:0 0 30rpx 0;
 		.banner {
 			border-radius: 10rpx;

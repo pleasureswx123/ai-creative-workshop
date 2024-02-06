@@ -58,6 +58,9 @@ export default {
       }
     },
   },
+  beforeDestroy() {
+    this.toggleBodyPositionStatus(false)
+  }
 }
 </script>
 

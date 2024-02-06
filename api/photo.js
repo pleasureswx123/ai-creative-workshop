@@ -1,4 +1,11 @@
 export default {
+  getModelStyleList(params = {}) {
+    return uni.$u.http.post(`/AiDraw/ModelStyleList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getQueue(params = {}) {
     return uni.$u.http.post(`/AiDraw/GetQueue`, params, {
       custom: {
@@ -8,13 +15,6 @@ export default {
   },
   getModelClass(params = {}) {
     return uni.$u.http.post(`/AiDraw/ModelClass`, params, {
-      custom: {
-        auth: true,
-      }
-    })
-  },
-  getModelStyleList(params = {}) {
-    return uni.$u.http.post(`/AiDraw/ModelStyleList`, params, {
       custom: {
         auth: true,
       }

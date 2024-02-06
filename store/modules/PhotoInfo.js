@@ -10,16 +10,21 @@ const getters = {
 };
 
 const actions = {
-  getModelClass({dispatch, commit}, params = {}) {
-    return photoApi.getModelClass(params).then(list => {
-      commit('setModeClassInfo', list || []);
-      return Promise.resolve(list);
+  getModelList({dispatch, commit}, params = {}) {
+    return photoApi.getModelStyleList(params).then(res => {
+      return Promise.resolve(res);
     })
   },
   getModelStyleList({dispatch, commit}, params = {}) {
     return photoApi.getModelStyleList(params).then(res => {
       commit('setCurrentModeInfo', res?.list?.[0] || {});
       return Promise.resolve(res);
+    })
+  },
+  getModelClass({dispatch, commit}, params = {}) {
+    return photoApi.getModelClass(params).then(list => {
+      commit('setModeClassInfo', list || []);
+      return Promise.resolve(list);
     })
   },
   getImgScale({dispatch, commit}, params = {}) {
@@ -48,7 +53,10 @@ const mutations = {
     state.modeClassInfo = info || [];
   },
   setCurrentModeInfo(state, info = {}) {
-    state.currentModeInfo = info || {};
+    state.currentModeInfo = {
+      ...(info || {}),
+      id: info.model_style_id
+    };
   },
 }
 

@@ -30,9 +30,14 @@
 <script>
 import StyleItem from './Item/StyleItem.vue';
 import TemplateItem from './Item/TemplateItem.vue';
+import ModelStyleItem from './Item/ModelStyleItem.vue';
 
 export default {
-  components: { StyleItem, TemplateItem },
+  components: {
+    StyleItem,
+    TemplateItem,
+    ModelStyleItem
+  },
   props: {
     componentName: {
       type: String,
@@ -95,7 +100,6 @@ export default {
       immediate: true,
       handler(status) {
         if(status) {
-          
           if(this.currentInfo) {
             this.selectedInfo = this.currentInfo;
           }
@@ -107,8 +111,10 @@ export default {
     initData() {
       this.initParams();
       this.getData().then(info => {
-        this.selectedInfo = info;
-        info && this.$emit('update:currentInfo', info);
+        if(!this.currentInfo) {
+          this.selectedInfo = info;
+          info && this.$emit('update:currentInfo', info);
+        }
       });
     },
     initParams() {

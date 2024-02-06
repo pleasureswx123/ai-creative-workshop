@@ -44,6 +44,7 @@ export default {
     height: 100%;
     background-color: #000;
     display: block;
+    border-radius: 20rpx;
   }
   .info {
     flex: 1;
