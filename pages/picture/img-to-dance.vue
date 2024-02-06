@@ -22,7 +22,7 @@
           @showPop="showPop = true"
           :info="currentTemplateInfo" />
       <QmPop
-          styleStr="grid-template-columns: repeat(2, 1fr)"
+          styleStr="grid-template-columns: repeat(3, 1fr)"
           title="选择舞蹈模板"
           componentName="TemplateItem"
           :paramsInfo="{task_type: 10}"
@@ -36,6 +36,10 @@
     <template #footer>
       <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
+  
+    <QmPreviewVideo
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
     
   </Layout>
 </template>
@@ -47,10 +51,17 @@ import PicMixins from './mixin';
 import VideoInfo from './components/VideoInfo.vue'
 
 export default {
+  provide() {
+    return {
+      previewVideo: this.previewVideo
+    }
+  },
   mixins: [PicMixins],
   components: { VideoInfo },
   data() {
     return {
+      showPreviewVideo: false,
+      previewVideoInfo: null,
       showPop: false,
       sourceImg: '',
       currentTemplateInfo: null,
@@ -66,6 +77,10 @@ export default {
   },
   methods: {
     ...mapActions('PictureInfo', ['getTemplate']),
+    previewVideo(videoInfo) {
+      this.previewVideoInfo = videoInfo;
+      this.showPreviewVideo = true;
+    },
     getTemplateList() {
       pictureApi.getTemplateList({page: 1, pageSize: 10, task_type: 10})
     }

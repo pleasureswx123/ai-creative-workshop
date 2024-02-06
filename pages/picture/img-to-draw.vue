@@ -69,7 +69,7 @@ export default {
       generation_duration: '',
       currentDrawStyle: null,
       toastTips: {
-        reference_image: {
+        reference_video: {
           txt: '请上传视频'
         },
         template_id: {
@@ -103,7 +103,7 @@ export default {
         task_type: 11,
         generation_duration: this.generation_duration || '',
         template_id: this.templateId || '',
-        reference_image: this.sourceImg || ''
+        reference_video: this.sourceImg || ''
       }
     }
   },

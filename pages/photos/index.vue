@@ -32,7 +32,7 @@
     <DescriptionTextareaCard
         title="负面描述词"
         :maxlength="maxlength"
-        placeholder="输入不希望在面面中看见的内容，越靠前作用越明显"
+        placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
         :value.sync="badDescription" />
     <ImgRatioCard
         :value.sync="ratioId"

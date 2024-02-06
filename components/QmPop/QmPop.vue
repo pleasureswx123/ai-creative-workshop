@@ -95,6 +95,7 @@ export default {
       immediate: true,
       handler(status) {
         if(status) {
+          
           if(this.currentInfo) {
             this.selectedInfo = this.currentInfo;
           }
@@ -145,5 +146,10 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20rpx;
+}
+/deep/ {
+  .u-popup__content {
+    background-color: transparent;
+  }
 }
 </style>

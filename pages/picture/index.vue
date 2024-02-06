@@ -15,7 +15,7 @@
         @close="showAction = false"
         :show="showAction" />
   
-    <MyCreateDetails :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
+    <MyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
   </view>
 </template>
 
@@ -37,6 +37,9 @@ export default {
   },
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
+    popShowStatus() {
+      return this.showAction || this.showDetails;
+    }
   },
   components: {
     TipsTxt, CreationItem
@@ -67,13 +70,7 @@ export default {
     },
   },
   watch: {
-    showAction: {
-      immediate: true,
-      handler(status) {
-        this.toggleBodyPositionStatus(status)
-      }
-    },
-    showDetails: {
+    popShowStatus: {
       immediate: true,
       handler(status) {
         this.toggleBodyPositionStatus(status)

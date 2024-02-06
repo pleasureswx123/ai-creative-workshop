@@ -3,7 +3,7 @@
       :show="show"
       mode="bottom"
       @close="$emit('close')"
-      overlayStyle="background: #000"
+      overlayStyle="background: rgba(0,0,0,.5)"
       :round="round"
       :safeAreaInsetBottom="safeAreaInsetBottom">
     <view class="pop-container">
@@ -49,7 +49,15 @@ export default {
       type: [Boolean, String, Number],
       default: 8
     }
-  }
+  },
+  watch: {
+    show: {
+      immediate: true,
+      handler(status) {
+        this.toggleBodyPositionStatus(status)
+      }
+    },
+  },
 }
 </script>
 
@@ -62,7 +70,7 @@ export default {
   position: relative;
   overflow: hidden;
   .pop-body-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;

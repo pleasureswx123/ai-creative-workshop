@@ -12,10 +12,10 @@
       </view>
       <view class="pop-main-content">
         
-        <template v-if="info.task_type === 2">
+        <template v-if="isVideoTaskType(info.task_type)">
           <VideoItem :info="info"></VideoItem>
         </template>
-        <template v-if="info.task_type !== 2">
+        <template v-if="!isVideoTaskType(info.task_type)">
           <ImgItem @change="sn => { imgCurrent = sn }" :info="info"></ImgItem>
         </template>
         
@@ -23,10 +23,10 @@
       <view class="footer-bar">
         <DetailsFooter :info="info"></DetailsFooter>
         <view class="ft-btn-box">
-          <view v-if="info.task_type === 2" class="btn-box" @tap="handleDownVideo">
+          <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
             <text>下载视频</text>
           </view>
-          <template v-if="info.task_type === 1">
+          <template v-if="!isVideoTaskType(info.task_type)">
             <view class="btn-box" @tap="handleDownImage">
               <text>下载图片</text>
             </view>
@@ -34,9 +34,9 @@
               <text>一键同款</text>
             </view>
           </template>
-          <view v-if="![1,2].includes(info.task_type)" class="btn-box" @tap="handleDownImage">
+<!--          <view v-if="![1,2].includes(info.task_type)" class="btn-box" @tap="handleDownImage">
             <text>下载图片</text>
-          </view>
+          </view>-->
         </view>
       </view>
     </view>
