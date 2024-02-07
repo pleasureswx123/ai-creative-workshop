@@ -5,7 +5,12 @@
           v-if="[1,2].includes(modeId)"
           :value.sync="currentVal" />
       <view class="btn-box" @tap="$emit('cb')">
-        <text>开始生成</text>
+        <view class="btn-txt">
+          <view class="rotate-box" v-if="generateStatus">
+            <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="var(--txt-color4)" size="14" />
+          </view>
+          <text>开始生成</text>
+        </view>
         <view class="tips-txt">
           <text v-if="[1,2].includes(modeId)">消耗{{value}}万</text>
           <text v-else>消耗4万</text>
@@ -22,6 +27,10 @@ import Statement from './Statement.vue';
 
 export default {
   props: {
+    generateStatus: {
+      type: Boolean,
+      default:  false
+    },
     value: {
       type: Number,
       default:  1
@@ -56,16 +65,25 @@ export default {
     .btn-box {
       border-radius: 10rpx;
       height: 80rpx;
-      line-height: 80rpx;
       padding: 0 20rpx;
-      color: #fff;
       flex: 1;
       min-width: 0;
       background-color: #ff0000;
-      font-size: 30rpx;
-      font-weight: bold;
-      text-align: center;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .btn-txt {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rpx;
+        text {
+          color: #fff;
+          font-size: 30rpx;
+          font-weight: bold;
+        }
+      }
       .tips-txt {
         position: absolute;
         right: 30rpx;
@@ -76,5 +94,24 @@ export default {
       }
     }
   }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.rotate-box {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rotate {
+  animation: rotate 3s linear infinite;
 }
 </style>

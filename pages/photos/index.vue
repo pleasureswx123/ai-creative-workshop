@@ -87,6 +87,7 @@
     <GeneratePhotoBtn
         :value.sync="picNums"
         :modeId="modeId"
+        :generateStatus="generateStatus"
         @cb="startGenerate" />
   </view>
 </template>
@@ -114,6 +115,7 @@ export default {
     ControinetPop, ReferenceImgPop, },
   data() {
     return {
+      generateStatus: false,
       showControinetPop: false,
       showModelSelectPop: false,
       showLoraPop: false,
@@ -172,6 +174,10 @@ export default {
       };
     },
     startGenerate() {
+      if(this.generateStatus) {
+        return;
+      }
+      this.generateStatus = true;
       this.checkLoginStatus().then(() => {
         const params = {
           task_type: 1,
@@ -206,10 +212,15 @@ export default {
                 success: function () {}
               })
             }
+          }).finally(() => {
+            this.generateStatus = false;
           })
         } catch (e) {
+          this.generateStatus = false;
           console.log(e)
         }
+      }).catch(() => {
+        this.generateStatus = false;
       });
     },
     getTaskInfo(id) {
