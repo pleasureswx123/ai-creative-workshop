@@ -110,12 +110,7 @@ import {mapActions} from 'vuex';
 		},
     watch: {
       model_subclass_id() {
-        this.list = []
-        this.$refs.waterfall.clear()
-        this.page = 1
-        this.list1 = []
-        this.list2 = []
-        this.getData()
+        this.initData()
       },
       wallShow: {
         immediate: true,
@@ -143,16 +138,27 @@ import {mapActions} from 'vuex';
 		},
 		onLoad() {
 			this.getHomeInfo();
-			this.getData();
 		},
+    onShow() {
+      this.model_subclass_id = '100';
+      this.initData();
+    },
 		methods: {
       ...mapActions('HomeInfo', ['getHomeInfo']),
+      initData() {
+        this.list = [];
+        this.$refs?.waterfall?.clear();
+        this.page = 1;
+        this.list1 = [];
+        this.list2 = [];
+        this.getData();
+      },
 			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
 			changeList(e) {
 				this[e.name].push(e.value);
 			},
 			getList() {
-				this.page++
+				this.page++;
 				this.getData()
 			},
 			// 模拟的后端数据
@@ -168,7 +174,6 @@ import {mapActions} from 'vuex';
 						})
 						.then((res) => {
 							this.imgs = res.data.list
-							const imgs = this.imgs
 							if(res.data.list.length<10){
 								this.countShow = false
 							}else{

@@ -6,12 +6,12 @@
             color: '#F60652',
             fontWeight: 'bold',
             transform: 'scale(1.05)',
-            fontSize:'14px'
+            fontSize:'28rpx'
           }"
       :inactiveStyle="{
             color: '#606266',
             transform: 'scale(1)',
-            fontSize:'14px'
+            fontSize:'28rpx'
           }" />
 </template>
 

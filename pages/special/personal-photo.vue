@@ -1,12 +1,26 @@
 <template>
   <view class="page-container">
     <QmNavTop></QmNavTop>
-    创作个人写真摄影
+    <view class="page-content">
+      <template v-for="(item, index) in stayTunedInfo">
+        <ImgItem v-if="item.type === 'img'" :src="item.url"/>
+        <VideoItem v-if="item.type === 'video'" :src="item.url" :key="index"/>
+      </template>
+    </view>
   </view>
 </template>
 
 <script>
+import TunedMixins from './mixin';
 
+export default {
+  mixins: [TunedMixins],
+  data() {
+    return {
+      taskType: 6
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -15,5 +29,9 @@
   padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
+  
+  .page-content {
+    padding: 30rpx 40rpx;
+  }
 }
 </style>

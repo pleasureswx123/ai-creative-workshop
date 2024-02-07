@@ -13,4 +13,11 @@ export default {
       }
     })
   },
+  getStayTuned(params = {}) {
+    return uni.$u.http.post(`/Home/StayTuned`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

@@ -10,7 +10,8 @@
         <view class="title">{{item.title}}</view>
         <view class="con">{{item.content}}</view>
       </view>
-      <image v-if="item.img" class="icon-img" :src="item.img" mode="aspectFit" />
+      <uni-icons custom-prefix="iconfont-qm" :type="getIconName(item.id)" color="#77787B" size="30" />
+<!--      <image v-if="item.img" class="icon-img" :src="item.img" mode="aspectFit" />-->
 <!--      <view class="stay" v-if="[6,7,8,9].includes(+item.id)">敬请期待</view>-->
     </view>
   </view>
@@ -24,20 +25,57 @@ export default {
     ...mapState('HomeInfo', ['aiTypeList']),
   },
   methods: {
-    handleJump(id) {
+    getInfo(id) {
       const temp = {
-        1: 'pages/ai/index',
-        2: 'pages/photos/index',
-        3: 'pages/picture/tool',
-        4: 'pages/picture/video-tool',
-        5: 'pages/sound/index',
-        6: 'pages/special/personal-photo',
-        7: 'pages/special/novel',
-        8: 'pages/special/make-diagram',
-        9: 'pages/special/train-model',
-        10: 'pages/special/digital-humans',
+        1: {
+          iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
+          url: 'pages/ai/index'
+        },
+        2: {
+          iconName: 'icon-qm-MaterialSymbolsLinkedCameraRounded',
+          url: 'pages/photos/index'
+        },
+        3: {
+          iconName: 'icon-qm-MdiImageEdit',
+          url: 'pages/picture/tool'
+        },
+        4: {
+          iconName: 'icon-qm-MaterialSymbolsVideoCallRounded',
+          url: 'pages/picture/video-tool'
+        },
+        5: {
+          iconName: 'icon-qm-MaterialSymbolsAutoDetectVoice',
+          url: 'pages/sound/index'
+        },
+        6: {
+          iconName: 'icon-qm-MaterialSymbolsAddAPhotoRounded',
+          url: 'pages/special/personal-photo'
+        },
+        7: {
+          iconName: 'icon-qm-MaterialSymbolsMenuBook',
+          url: 'pages/special/novel'
+        },
+        8: {
+          iconName: 'icon-qm-MaterialSymbolsPhotoCameraFront',
+          url: 'pages/special/make-diagram'
+        },
+        9: {
+          iconName: 'icon-qm-IcRoundModelTraining',
+          url: 'pages/special/train-model'
+        },
+        10: {
+          iconName: 'icon-qm-GgDigitalocean',
+          url: 'pages/special/digital-humans'
+        },
       };
-      const url = temp[`${id}`] || '';
+      return temp[id] || {};
+    },
+    getIconName(id) {
+      const { iconName } = this.getInfo(id);
+      return iconName || ''
+    },
+    handleJump(id) {
+      const { url } = this.getInfo(id);
       url && uni.$u.route({url});
     },
   }
@@ -52,7 +90,7 @@ export default {
     gap: 30rpx;
     align-items: center;
     background-color: #1D1E23;
-    margin-bottom: 30rpx;
+    margin-bottom: 10rpx;
     padding: 30rpx;
     border-radius: 10rpx;
     position: relative;

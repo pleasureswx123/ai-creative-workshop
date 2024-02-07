@@ -3,9 +3,9 @@
     <QmNavTop></QmNavTop>
     <u-gap height="30rpx"></u-gap>
     <TaskTips />
-    <ModelTabs
+    <QmTabs
         :value.sync="modeId"
-        :tabs="modeClassInfo" />
+        :options="modeClassInfo" />
     <ModelSelectCard
         @showPopFunc="showModelSelectPop = true"
         :info="currentModeInfo" />
@@ -84,7 +84,6 @@
 <script>
 import {mapState, mapActions, mapMutations} from 'vuex';
 import TaskTips from './components/TaskTips.vue';
-import ModelTabs from './components/ModelTabs.vue';
 
 import ModelSelectCard from './components/ModelSelect.vue';
 import DescriptionTextareaCard from './components/DescriptionTextarea.vue';
@@ -101,7 +100,7 @@ import ImgStylePop from './sstyle/sstyle.vue'
 import ReferenceImgPop from './create/create.vue'
 
 export default {
-  components: { TaskTips, ModelTabs, GeneratePhotoBtn,
+  components: { TaskTips, GeneratePhotoBtn,
     ModelSelectCard, DescriptionTextareaCard, ControlNetCard,
     LoraCard, ImgStyleCard, ReferenceImgCard, ImgRatioCard,
     ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },

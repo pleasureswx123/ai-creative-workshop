@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont-qm"; /* Project id 4418983 */
-  src: url('@/static/iconfont/iconfont.ttf?t=1706948017107') format('truetype');
+  src: url('@/static/iconfont/iconfont.ttf?t=1707294434755') format('truetype');
 }
 
 .iconfont-qm {
@@ -9,6 +9,78 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qm-MaterialSymbolsVideoCallRounded:before {
+  content: "\e6c5";
+}
+
+.icon-qm-MaterialSymbolsVideocamRounded:before {
+  content: "\e6c6";
+}
+
+.icon-qm-MaterialSymbolsAndroidCamera:before {
+  content: "\e6c7";
+}
+
+.icon-qm-MaterialSymbolsAutoDetectVoice:before {
+  content: "\e6c8";
+}
+
+.icon-qm-MaterialSymbolsLinkedCameraRounded:before {
+  content: "\e6c9";
+}
+
+.icon-qm-StreamlineVoiceMailSolid:before {
+  content: "\e6ca";
+}
+
+.icon-qm-MaterialSymbolsVideoCameraBackRounded:before {
+  content: "\e6cb";
+}
+
+.icon-qm-MaterialSymbolsCameraVideo:before {
+  content: "\e6cc";
+}
+
+.icon-qm-MaterialSymbolsAddAPhotoRounded:before {
+  content: "\e6cd";
+}
+
+.icon-qm-MaterialSymbolsLightAddAPhoto:before {
+  content: "\e6ce";
+}
+
+.icon-qm-MdiImageEdit:before {
+  content: "\e6cf";
+}
+
+.icon-qm-MaterialSymbolsMenuBook:before {
+  content: "\e6be";
+}
+
+.icon-qm-MaterialSymbolsPhotoCameraFront:before {
+  content: "\e6bf";
+}
+
+.icon-qm-MaterialSymbolsChatOutlineRounded:before {
+  content: "\e6c0";
+}
+
+.icon-qm-MaterialSymbolsPhotoLibraryRounded:before {
+  content: "\e6c1";
+}
+
+.icon-qm-IcRoundModelTraining:before {
+  content: "\e6c2";
+}
+
+.icon-qm-GgDigitalocean:before {
+  content: "\e6c3";
+}
+
+.icon-qm-MaterialSymbolsPermCameraMicRounded:before {
+  content: "\e6c4";
 }
 
 .icon-qm-warning1:before {

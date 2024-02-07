@@ -4,6 +4,7 @@ const state = {
   aiTypeList: [],
   bannerInfo: {},
   feedsTabs: [],
+  stayTunedInfo: []
 };
 
 const getters = {
@@ -24,6 +25,12 @@ const actions = {
       return Promise.resolve(res);
     })
   },
+  getStayTuned({dispatch, commit}, params = {}) {
+    return homeApi.getStayTuned(params).then(res => {
+      commit('setStayTunedInfo', res.urls || []);
+      return Promise.resolve(res);
+    })
+  },
 };
 
 const mutations = {
@@ -40,6 +47,11 @@ const mutations = {
     state.feedsTabs = (info || []).map(item => {
       const {title: name, model_subclass_id: id} = item || {};
       return { name, id }
+    });
+  },
+  setStayTunedInfo(state, info = []) {
+    state.stayTunedInfo = (info || []).map((item, index) => {
+      return { ...item, id: index }
     });
   },
 }
