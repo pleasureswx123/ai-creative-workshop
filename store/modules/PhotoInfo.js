@@ -25,6 +25,11 @@ const actions = {
       return Promise.resolve(res);
     })
   },
+  getHistoryList({dispatch, commit}, params = {}) {
+    return photoApi.getHistoryList(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
   getModelStyleList({dispatch, commit}, params = {}) {
     return photoApi.getModelStyleList(params).then(res => {
       commit('setCurrentModeInfo', res?.list?.[0] || {});

@@ -20,6 +20,13 @@ export default {
       }
     })
   },
+  getHistoryList(params = {}) {
+    return uni.$u.http.post(`/AiDraw/getHistory`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getQueue(params = {}) {
     return uni.$u.http.post(`/AiDraw/GetQueue`, params, {
       custom: {

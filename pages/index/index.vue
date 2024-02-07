@@ -6,22 +6,28 @@
 		<view class="aiList">
       <QmHomeTypeTabs :value.sync="model_subclass_id" />
 			<view class="waterfall">
-				<uv-waterfall ref="waterfall" v-model="list" :add-time="10" :left-gap="leftGap" :right-gap="rightGap"
-					:column-gap="columnGap" @changeList="changeList">
+				<uv-waterfall
+            ref="waterfall"
+            v-model="list"
+            :add-time="10"
+            :left-gap="leftGap"
+            :right-gap="rightGap"
+            :column-gap="columnGap"
+            @changeList="changeList">
 					<!-- 第一列数据 -->
 					<template v-slot:list1>
 						<!-- 为了磨平部分平台的BUG，必须套一层view -->
 						<view>
-							<view v-for="(item, index) in list1" :key="item.id" class="waterfall-item"
-								@click="wallInfo(item.task_id)">
-								<view class="waterfall-item__image" :style="[imageStyle(item)]">
-									<image :src="item.img_url" mode="widthFix"></image>
+							<view
+                  v-for="(item, index) in list1"
+                  :key="item.id"
+                  class="waterfall-item"
+                  @click="wallInfo(item.task_id)">
+								<view
+                    class="waterfall-item__image"
+                    :style="[imageStyle(item)]">
+									<image :src="item.img_url" mode="widthFix" />
 								</view>
-								<!-- <view class="waterfall-item__ft">
-									<view class="waterfall-item__ft__title">
-										<text class="value">{{item.model_info}}</text>
-									</view>
-								</view> -->
 							</view>
 						</view>
 					</template>
@@ -29,24 +35,26 @@
 					<template v-slot:list2>
 						<!-- 为了磨平部分平台的BUG，必须套一层view -->
 						<view>
-							<view v-for="(item, index) in list2" :key="item.id" class="waterfall-item"
-								@click="wallInfo(item.task_id)">
-								<view class="waterfall-item__image" :style="[imageStyle(item)]">
-									<image :src="item.img_url" mode="widthFix"></image>
+							<view
+                  v-for="(item, index) in list2"
+                  :key="item.id"
+                  class="waterfall-item"
+                  @click="wallInfo(item.task_id)">
+								<view
+                    class="waterfall-item__image"
+                    :style="[imageStyle(item)]">
+									<image :src="item.img_url" mode="widthFix" />
 								</view>
-								<!-- <view class="waterfall-item__ft">
-									<view class="waterfall-item__ft__title">
-										<text class="value">{{item.model_info}}</text>
-									</view>
-								</view> -->
 							</view>
 						</view>
 					</template>
 				</uv-waterfall>
-				<view class="load-more" v-show="countShow == true">
+    
+				<view class="load-more" v-if="countShow">
 					<u-loadmore :status="status" :nomore-text="nomoreText" @loadmore="getList" />
 				</view>
-				<view class="load-more" v-show="countShow == false">没有更多了</view>
+				<view class="load-more" v-else>没有更多了</view>
+    
 			</view>
 		</view>
     <QmHomeFooter></QmHomeFooter>
@@ -164,36 +172,14 @@ import {mapActions} from 'vuex';
 			// 模拟的后端数据
 			getData() {
 				return new Promise((resolve) => {
-					app.globalData.util.request({
-							url: '/Home/FeedsList',
-							data: {
-								page: this.page,
-								pagesize: this.pagesize,
-								model_subclass_id: this.model_subclass_id
-							}
-						})
-						.then((res) => {
-							this.imgs = res.data.list
-							if(res.data.list.length<10){
-								this.countShow = false
-							}else{
-								this.countShow = true
-							}
-							if (this.list.length == 0) {
-								this.list = this.imgs.map(item => {
-									return {
-										...item.task_info
-									}
-								})
-							} else if (this.list.length > 0) {
-								this.imgs.map(item => {
-									this.list.push({
-										...item.task_info
-									})
-								})
-							}
-
-						})
+					app.globalData.util.request({url: '/Home/FeedsList',
+							data: {page: this.page, pagesize: this.pagesize, model_subclass_id: this.model_subclass_id}
+						}).then((res) => {
+            const resList = res?.data?.list || [];
+            this.countShow = !(resList.length < 10)
+            const info = resList.map(item => item.task_info);
+            this.list = [...this.list, ...info];
+          })
 				})
 			},
 			getDrawInfo() {
