@@ -12,7 +12,7 @@
       </view>
       <uni-icons custom-prefix="iconfont-qm" :type="getIconName(item.id)" color="#77787B" size="30" />
 <!--      <image v-if="item.img" class="icon-img" :src="item.img" mode="aspectFit" />-->
-<!--      <view class="stay" v-if="[6,7,8,9].includes(+item.id)">敬请期待</view>-->
+      <view class="stay" v-if="[6,7,8,9, 10].includes(+item.id)">敬请期待</view>
     </view>
   </view>
 </template>
