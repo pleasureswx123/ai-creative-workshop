@@ -15,6 +15,16 @@ const actions = {
       return Promise.resolve(res);
     })
   },
+  getLoraList({dispatch, commit}, params = {}) {
+    return photoApi.getLoraList(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
+  getImgStyleList({dispatch, commit}, params = {}) {
+    return photoApi.getImgStyleList(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
   getModelStyleList({dispatch, commit}, params = {}) {
     return photoApi.getModelStyleList(params).then(res => {
       commit('setCurrentModeInfo', res?.list?.[0] || {});

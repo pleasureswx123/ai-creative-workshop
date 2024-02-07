@@ -20,10 +20,10 @@
         :info.sync="controlNetInfo" />
     <LoraCard
         v-if="[1, 2].includes(modeId)"
-        @showPopFunc="showLoraPop"
+        @showPopFunc="showLoraPop = true"
         :info.sync="loraInfo" />
     <ImgStyleCard
-        @showPopFunc="showImgStylePop"
+        @showPopFunc="showImgStylePop = true"
         :info.sync="imgStyleInfo" />
     <ReferenceImgCard
         @showPopFunc="showReferenceImgPop"
@@ -54,21 +54,31 @@
       </template>
     </QmPop>
     
+    <QmPop
+        v-if="showLoraPop"
+        title="选择Lora模型"
+        componentName="LoraItem"
+        :paramsInfo="{class_id: modeId}"
+        :getList="getLoraList"
+        :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+        :show.sync="showLoraPop"
+        :currentInfo.sync="loraInfo" />
+    
+    <QmPop
+        v-if="showImgStylePop"
+        :show.sync="showImgStylePop"
+        :currentInfo.sync="imgStyleInfo"
+        title="选择样式"
+        componentName="ImgStyleItem"
+        :paramsInfo="{class_id: modeId}"
+        :getList="getImgStyleList"
+        :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
+    
     <ControinetPop
         v-if="showControinetPop"
         :showStatus.sync="showControinetPop"
         ref="ControinetPopRef"
         @controninetlist="setControlNetInfo" />
-    <LoraPop
-        ref="LoraPopRef"
-        @loralist="(info) => { loraInfo = info }"
-        :id="modeId"
-        :isLogin="isLoginStatus" />
-    <ImgStylePop
-        ref="ImgStyleRef"
-        @stylelist="(info) => { imgStyleInfo = info }"
-        :id="modeId"
-        :isLogin="isLoginStatus" />
     <ReferenceImgPop
         ref="ReferenceImgRef"
         @createlist="setReferenceImgInfo" />
@@ -95,19 +105,19 @@ import ImgRatioCard from './components/ImgRatio.vue';
 import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
 import ControinetPop from './controinet/controinet.vue'
-import LoraPop from './lora/lora.vue'
-import ImgStylePop from './sstyle/sstyle.vue'
 import ReferenceImgPop from './create/create.vue'
 
 export default {
   components: { TaskTips, GeneratePhotoBtn,
     ModelSelectCard, DescriptionTextareaCard, ControlNetCard,
     LoraCard, ImgStyleCard, ReferenceImgCard, ImgRatioCard,
-    ControinetPop, LoraPop, ImgStylePop, ReferenceImgPop, },
+    ControinetPop, ReferenceImgPop, },
   data() {
     return {
       showControinetPop: false,
       showModelSelectPop: false,
+      showLoraPop: false,
+      showImgStylePop: false,
       maxlength: 1000,
       taskId: '',
       taskModelId: '',
@@ -141,7 +151,7 @@ export default {
   },
   methods: {
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
-    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getImgScale', 'getSameModel', 'createTask']),
+    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getLoraList', 'getImgStyleList', 'getImgScale', 'getSameModel', 'createTask']),
     showControlNetPop(){
       this.showControinetPop = true;
       this.$nextTick(() => {
@@ -151,12 +161,6 @@ export default {
     setControlNetInfo(info) {
       this.showControinetPop = false;
       this.controlNetInfo = info;
-    },
-    showLoraPop(){
-      this.$refs.LoraPopRef.open();
-    },
-    showImgStylePop() {
-      this.$refs.ImgStyleRef.open()
     },
     showReferenceImgPop() {
       this.$refs.ReferenceImgRef.open()

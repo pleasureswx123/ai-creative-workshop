@@ -31,12 +31,16 @@
 import StyleItem from './Item/StyleItem.vue';
 import TemplateItem from './Item/TemplateItem.vue';
 import ModelStyleItem from './Item/ModelStyleItem.vue';
+import LoraItem from './Item/LoraItem.vue';
+import ImgStyleItem from './Item/ImgStyleItem.vue';
 
 export default {
   components: {
     StyleItem,
     TemplateItem,
-    ModelStyleItem
+    ModelStyleItem,
+    LoraItem,
+    ImgStyleItem,
   },
   props: {
     componentName: {

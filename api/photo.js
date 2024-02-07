@@ -6,6 +6,20 @@ export default {
       }
     })
   },
+  getLoraList(params = {}) {
+    return uni.$u.http.post(`/AiDraw/LoraList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getImgStyleList(params = {}) {
+    return uni.$u.http.post(`/AiDraw/ImgStyleList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getQueue(params = {}) {
     return uni.$u.http.post(`/AiDraw/GetQueue`, params, {
       custom: {
