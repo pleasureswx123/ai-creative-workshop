@@ -84,13 +84,13 @@ export default {
 
 <style lang="scss" scoped>
 .aiType {
-  padding: 30rpx 40rpx;
+  padding: 0 40rpx 30rpx;
   .item-box {
     display: flex;
     gap: 30rpx;
     align-items: center;
     background-color: #1D1E23;
-    margin-bottom: 10rpx;
+    margin-bottom: 20rpx;
     padding: 30rpx;
     border-radius: 10rpx;
     position: relative;
