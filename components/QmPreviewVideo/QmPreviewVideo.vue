@@ -32,7 +32,7 @@ export default {
       }
     },
     videoUrl() {
-      return this.info?.video_url || ''
+      return this.info?.video_url || this.info?.url || ''
     }
   },
 }

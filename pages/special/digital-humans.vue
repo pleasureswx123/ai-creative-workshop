@@ -5,8 +5,12 @@
         :value.sync="current"
         :options="stayTunedInfo" />
     <view class="page-content">
-      <VideoItem :src="currentVideoInfo.url" />
+      <VideoItem :info="currentVideoInfo" />
     </view>
+  
+    <QmPreviewVideo
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
   </view>
 </template>
 

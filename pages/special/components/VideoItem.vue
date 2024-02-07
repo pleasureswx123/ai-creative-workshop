@@ -1,19 +1,21 @@
 <template>
   <view class="video-wrapper">
-    <view class="video-box">
-      <video
-          :src="src"
-          object-fit="contain" />
+    <img :src="info.cover_img" alt="" />
+    <view class="play-box">
+      <view class="play-btn">
+        <uni-icons @tap="previewVideo(info)" custom-prefix="iconfont-qm" type="icon-qm-play" color="rgba(255,255,255,.8)" size="40" />
+      </view>
     </view>
   </view>
 </template>
 
 <script>
 export default {
+  inject: ['previewVideo'],
   props: {
-    src: {
-      type: String,
-      default: '',
+    info: {
+      type: Object,
+      default: () => ({}),
       required: true
     }
   }
@@ -27,10 +29,27 @@ export default {
   border-radius: 8rpx;
   padding: 8rpx;
   margin-bottom: 8rpx;
-  .video-box {
-    //aspect-ratio: 9 / 16;
-    video {
-      width: 100%;
+  position: relative;
+  img {
+    width: 100%;
+    height: auto;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .play-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      border-radius: 50%;
     }
   }
 }

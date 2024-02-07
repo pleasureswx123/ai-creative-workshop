@@ -4,9 +4,13 @@
     <view class="page-content">
       <template v-for="(item, index) in stayTunedInfo">
         <ImgItem v-if="item.type === 'img'" :src="item.url" />
-        <VideoItem v-if="item.type === 'video'" :src="item.url" :key="index" />
+        <VideoItem v-if="item.type === 'video'" :info="item" :key="index" />
       </template>
     </view>
+  
+    <QmPreviewVideo
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
   </view>
 </template>
 
