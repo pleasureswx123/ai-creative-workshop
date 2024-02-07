@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<navMenu></navMenu>
+    <QmNavTop></QmNavTop>
 		<view class="code">
 			<image src="../../static/images/code.png" mode="aspectFit"></image>
 			<text>请使用微信扫一扫</text>
@@ -10,12 +10,6 @@
 </template>
 
 <script>
-	import navMenu from '@/components/navMeun/index.vue';
-	export default {
-		components: {
-			navMenu
-		},
-	}
 </script>
 
 <style lang="scss" scoped>

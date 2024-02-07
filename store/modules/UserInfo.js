@@ -1,7 +1,10 @@
 import {userApi} from '@/api'
 
 const state = {
-  userInfoState: null,
+  userInfoState: {
+    user_id: 0,
+    balance: 0,
+  },
   modelList: [],
   topicList: [],
   rolesList: [],

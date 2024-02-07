@@ -1,6 +1,6 @@
 <template>
     <view>
-		<navMenu></navMenu>
+      <QmNavTop></QmNavTop>
         <view class="list">
             <!-- <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view> -->
             <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">
@@ -16,12 +16,8 @@
 </template>
 
 <script>
-	import navMenu from '@/components/navMeun/index.vue';
 const app = getApp();
 export default {
-	components: {
-		navMenu
-	},
     data() {
         return {
             type: 'help',

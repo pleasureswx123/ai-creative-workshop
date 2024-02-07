@@ -1,6 +1,6 @@
 <template>
     <view class="page">
-		<navMenu></navMenu>
+      <QmNavTop></QmNavTop>
         <view class="bg-user">
             <view class="userinfo">
                 <view class="avatar" @tap="toSetting">
@@ -63,12 +63,8 @@
 </template>
 
 <script>
-	import navMenu from '@/components/navMeun/index.vue';
 const app = getApp();
 export default {
-	components: {
-		navMenu
-	},
     data() {
         return {
 			isLogin: false,

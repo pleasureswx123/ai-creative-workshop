@@ -7,6 +7,36 @@
 			}
 		},
 		{
+			"path": "pages/special/personal-photo",
+			"style": {
+				"navigationBarTitleText": "创作个人写真摄影"
+			}
+		},
+		{
+			"path": "pages/special/novel",
+			"style": {
+				"navigationBarTitleText": "小说推文"
+			}
+		},
+		{
+			"path": "pages/special/make-diagram",
+			"style": {
+				"navigationBarTitleText": "电商图制作"
+			}
+		},
+		{
+			"path": "pages/special/train-model",
+			"style": {
+				"navigationBarTitleText": "训练专属模型"
+			}
+		},
+		{
+			"path": "pages/special/digital-humans",
+			"style": {
+				"navigationBarTitleText": "数字人"
+			}
+		},
+		{
 			"path": "pages/photos/index",
 			"style": {
 				"navigationBarTitleText": "生成图片"
