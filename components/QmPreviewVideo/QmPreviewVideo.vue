@@ -1,7 +1,7 @@
 <template>
   <u-popup zIndex="100750" :show="show" mode="center" @close="show = false" overlayStyle="background: rgba(0,0,0,.1)">
     <view class="video-pop-wrapper">
-      <view class="video-box">
+      <view class="video-box" :style="[videoBoxStyle(info)]">
         <view class="close-box">
           <icon @tap="show = false" color="var(--txt-color1)" type="cancel" size="30" />
         </view>
@@ -23,6 +23,15 @@ export default {
     }
   },
   computed: {
+    videoBoxStyle(info) {
+      return info => {
+        const {width, height} = info || {};
+        const ratio = (width && height) ? `${width} / ${height}` : `16 / 9`;
+        return {
+          'aspect-ratio': ratio
+        }
+      }
+    },
     show: {
       get() {
         return this.showPreview
