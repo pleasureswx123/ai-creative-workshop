@@ -94,6 +94,17 @@ export default {
       }
     }
   },
+  watch: {
+    showPop: {
+      immediate: true,
+      handler(status) {
+        this.toggleBodyPositionStatus(status)
+      }
+    },
+  },
+  beforeDestroy() {
+    this.toggleBodyPositionStatus(false)
+  },
   methods: {
     async handleDownVideo() {
       this.downLoadFile(this.info.video_url);
@@ -167,7 +178,7 @@ export default {
     right: 0;
     padding: 0 30rpx;
     z-index: 90;
-    background-color: rgba(0,0,0,.85);
+    background-color: rgba(0,0,0,.65);
   }
   .ft-btn-box {
     display: flex;

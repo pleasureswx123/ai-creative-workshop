@@ -37,9 +37,6 @@ export default {
   },
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
-    popShowStatus() {
-      return this.showAction || this.showDetails;
-    }
   },
   components: {
     TipsTxt, CreationItem
@@ -70,7 +67,7 @@ export default {
     },
   },
   watch: {
-    popShowStatus: {
+    showAction: {
       immediate: true,
       handler(status) {
         this.toggleBodyPositionStatus(status)

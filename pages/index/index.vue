@@ -57,36 +57,12 @@
     
 			</view>
 		</view>
-    <QmHomeFooter></QmHomeFooter>
-		<!-- 瀑布流弹窗 -->
-		<view class="wallPopup">
-			<u-popup :show="wallShow" mode="bottom" @close="wallShow = false" closeable closeIconPos="top-right">
-				<u-swiper height="600px" :list="wallList" @change="e => currentNum = e.current" :autoplay="false" imgMode="aspectFit">
-					<view slot="indicator" class="indicator-num">
-						<text class="indicator-num__text">{{ currentNum + 1 }}/{{ wallList.length }}</text>
-					</view>
-				</u-swiper>
-				<view class="imgCont">
-					<view class="tit">{{wallCont.prompt}}</view>
-					<view class="imgDetail">
-						<text v-if="wallCont.task_name">{{wallCont.task_name}}</text>
-						<text v-if="wallCont.model_style_name">{{wallCont.model_style_name}}</text>
-						<text v-if="wallCont.lora_name">{{wallCont.lora_name}}</text>
-						<text v-if="wallCont.controlnet_type">{{wallCont.controlnet_type}}</text>
-						<text v-if="wallCont.img_style_name">{{wallCont.img_style_name}}</text>
-						<text v-if="wallCont.img_scale">{{wallCont.img_scale}}</text>
-						<text v-if="wallCont.img_scale">{{wallCont.jifen_consume}}</text>
-						<text v-if="wallCont.task_id">任务Id:{{wallCont.task_id}}</text>
-						<text v-if="wallCont.create_time">{{wallCont.create_time}}</text>
-					</view>
-					<view class="operateBtn">
-						<view class="btn" @click="onload">下载图片</view>
-						<view class="btn" @click="sameModel(wallCont.task_id)">一键同款</view>
-					</view>
-					
-				</view>
-			</u-popup>
-		</view>
+    
+    <QmHomeFooter />
+    <MyCreateDetails
+        v-if="showDetails"
+        :show.sync="showDetails"
+        :info="wallCont" />
 	</view>
 </template>
 
@@ -108,9 +84,7 @@ import {mapActions} from 'vuex';
 				leftGap: 10,
 				rightGap: 10,
 				columnGap: 10,
-				wallShow: false,
-				wallList: [],
-				currentNum: 0,
+				showDetails: false,
 				wallCont: {},
 				task_id: '',
 				countShow:false,
@@ -119,12 +93,6 @@ import {mapActions} from 'vuex';
     watch: {
       model_subclass_id() {
         this.initData()
-      },
-      wallShow: {
-        immediate: true,
-        handler(status) {
-          this.toggleBodyPositionStatus(status)
-        }
       },
     },
     beforeDestroy() {
@@ -188,16 +156,14 @@ import {mapActions} from 'vuex';
 					data: {
 						task_id: this.task_id
 					}
-				})
-				.then((res) => {
-					this.wallList = res.data.img_urls
+				}).then((res) => {
 					this.wallCont = res.data
 					this.task_id = res.data.task_id
 				});
 			},
 			wallInfo(task_id) {
 				this.task_id = task_id
-				this.wallShow = true
+				this.showDetails = true
 				this.getDrawInfo()
 			},
 			goUser() {
@@ -207,45 +173,6 @@ import {mapActions} from 'vuex';
           })
         })
 			},
-			onload() {
-				const url = this.wallList[this.currentNum]
-				uni.downloadFile({
-					url:url, //仅为示例，并非真实的资源
-					success: (res) => {
-						// console.log(res)
-						if (res.statusCode === 200) {
-							// #ifdef H5
-							const fileName =  url?.split?.('/')?.slice(-1)?.[0] || url;
-							const ele = document.createElement('a');
-							ele.href = res.tempFilePath;
-							ele.setAttribute('download', fileName);
-							ele.style.display = 'none';
-							document.body.appendChild(ele);
-							ele.click();
-							document.body.removeChild(ele);
-							// #endif
-							// #ifndef H5
-							uni.saveFile({
-							  tempFilePath: res.tempFilePath,
-							  success: (res) => {
-								console.log(res.savedFilePath);
-							  }
-							});
-							// #endif
-						}
-					},
-					fail: (err) => {
-					  console.log('download fail: ', err)
-					}
-				});
-			},
-			sameModel(task_id){
-        this.checkLoginStatus().then(() => {
-          uni.navigateTo({
-            url: '/pages/photos/index?task_id=' + task_id
-          })
-        })
-			}
 		}
 	}
 </script>
@@ -341,109 +268,5 @@ import {mapActions} from 'vuex';
 	.aiList {
 		box-sizing: border-box;
 		padding: 0 30rpx;
-	}
-	
-	.wallPopup {
-		position: relative;
-		/deep/.u-popup{
-			.u-transition{
-				height: 90%;
-			}
-		}
-		/deep/.u-popup__content {
-			width: 100%;
-			height: 100%;
-			background-color: #2A2A2A;
-			.u-swiper{
-				background-color: #2A2A2A!important;
-				height: 600px!important;
-			}
-		}
-		/deep/.u-icon__icon{
-			font-size: 18px!important;
-			line-height: 18px!important;
-		}
-		.imgCont {
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			box-sizing: border-box;
-			padding: 30rpx 40rpx;
-			background-color: rgba(0, 0, 0, .45);
-			z-index:1;
-			.tit {
-				font-size: 28rpx;
-				color: #fff;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-
-			.imgDetail {
-				margin: 20rpx 0 40rpx;
-				font-size: 24rpx; 
-				color: #fff;
-
-				text {
-					margin-right: 30rpx;
-				}
-			}
-
-			.operateBtn {
-				display: flex;
-				display: -webkit-flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				align-items: center;
-
-				.btn {
-					width: 46%;
-					height: 80rpx;
-					line-height: 80rpx;
-					font-size: 28rpx;
-					background-color: #fff;
-					text-align: center;
-					border-radius: 200rpx;
-					margin-bottom: 20rpx;
-				}
-			}
-		}
-
-		/deep/.u-swiper__indicator {
-			bottom: 0;
-			top: 26rpx;
-		}
-
-		.indicator {
-			@include flex(row);
-			justify-content: center;
-
-			&__dot {
-				height: 6px;
-				width: 6px;
-				border-radius: 100px;
-				background-color: rgba(255, 255, 255, 0.35);
-				margin: 0 5px;
-				transition: background-color 0.3s;
-
-				&--active {
-					background-color: #ffffff;
-				}
-			}
-		}
-
-		.indicator-num {
-			padding: 2px 0;
-			border-radius: 100px;
-			width: 35px;
-			@include flex;
-			justify-content: center;
-
-			&__text {
-				color: #FFFFFF;
-				font-size: 14px;
-			}
-		}
 	}
 </style>
