@@ -11,8 +11,9 @@
         <view>
           <view v-for="(item, index) in list1"
                 :key="item.id"
+                :class="{active: item.id === selectId}"
                 class="waterfall-item">
-            <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="$emit('getDetailsInfo', item.task_id)">
+            <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="handleSelect(item)">
               <image :src="item.image" mode="widthFix" :style="{width:item.width+'px'}"></image>
             </view>
           </view>
@@ -22,8 +23,9 @@
         <view>
           <view v-for="(item, index) in list2"
                 :key="item.id"
+                :class="{active: item.id === selectId}"
                 class="waterfall-item">
-            <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="$emit('getDetailsInfo', item.task_id)">
+            <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="handleSelect(item)">
               <image :src="item.image" mode="widthFix" :style="{width:item.width+'px'}"></image>
             </view>
           </view>
@@ -39,14 +41,27 @@
 
 <script>
 import {guid} from '@/uni_modules/uv-ui-tools/libs/function/index.js'
-import { homeApi } from '@/api'
 
 export default {
   props: {
-    modeId: {
-      type: String,
-      default: '100'
-    }
+    selectId: {
+      type: [String, Number],
+      default: ''
+    },
+    paramsInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    proxyList: {
+      type: Function,
+    },
+    getList: {
+      type: Function,
+      default: () => (() => {
+        return new Promise(() => {})
+      }),
+      required: true
+    },
   },
   data() {
     return {
@@ -77,14 +92,17 @@ export default {
       return {
         page: this.page,
         pagesize: 10,
-        model_subclass_id: this.modeId
+        ...this.paramsInfo,
       }
     }
   },
   watch: {
-    modeId() {
-      this.clearData();
-      this.getData();
+    paramsInfo: {
+      deep: true,
+      handler() {
+        this.clearData();
+        this.getData();
+      }
     },
   },
   created() {
@@ -94,6 +112,9 @@ export default {
     this.$refs?.waterfall?.clear?.();
   },
   methods: {
+    handleSelect(item) {
+      this.$emit('select', item)
+    },
     clearData() {
       this.page = 1;
       this.list = [];
@@ -109,11 +130,10 @@ export default {
       this.getData();
     },
     getData() {
-      homeApi.getHomeFeedsList(this.params).then(resData => {
-        const resList = (resData?.list || []).map(item => {
-          const task = item.task_info || {};
-          const {img_height: h, img_url: image, img_width: w, model_info: title} = task;
-          return {...task, w, h, image, allowEdit: false, title, id: guid()}
+      this.getList(this.params).then(resData => {
+        const resList = (this.proxyList ? ((resData?.list || []).map(this.proxyList)) : resData?.list).map(item => {
+          const id = item.id || guid();
+          return { ...item, id }
         });
         this.showNoMore = resList.length < 10
         this.list = [...this.list, ...resList];
@@ -159,5 +179,18 @@ $show-lines: 1;
     color: rgba(255,255,255,.8);
     font-size: 28rpx;
   }
+}
+.active {
+  //position: relative;
+  //&::after {
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  right: 0;
+  //  bottom: 0;
+  //  box-sizing: border-box;
+  //  border: 2rpx solid red;
+  //}
+  outline: 3rpx solid red;
 }
 </style>

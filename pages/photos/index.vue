@@ -26,7 +26,7 @@
         @showPopFunc="showImgStylePop = true"
         :info.sync="imgStyleInfo" />
     <ReferenceImgCard
-        @showPopFunc="showReferenceImgPop"
+        @showPopFunc="showReferenceImgPop = true"
         @setReferenceImgInfo="setReferenceImgInfo"
         :info.sync="referenceImgInfo" />
     <DescriptionTextareaCard
@@ -74,14 +74,33 @@
         :getList="getImgStyleList"
         :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
     
+    <QmWaterFallPop
+        v-if="showReferenceImgPop"
+        :show.sync="showReferenceImgPop"
+        :currentInfo.sync="referenceImgInfo"
+        title="选择要处理的图片"
+        :getList="getHistoryList"
+        :proxyList="item => {
+          const {img_height: h, img_url, img_width: w, task_id} = item || {};
+          const url = img_url || '';
+          const titles = url.split('/').slice(-1);
+          return {
+            ...item,
+            allowEdit: false,
+            image: url,
+            w, h,
+            url,
+            title: titles[0] || url,
+            id: task_id,
+            value: 0.8
+          }
+        }" />
+    
     <ControinetPop
         v-if="showControinetPop"
         :showStatus.sync="showControinetPop"
         ref="ControinetPopRef"
         @controninetlist="setControlNetInfo" />
-    <ReferenceImgPop
-        ref="ReferenceImgRef"
-        @createlist="setReferenceImgInfo" />
   
     <u-gap height="30" />
     <GeneratePhotoBtn
@@ -106,13 +125,12 @@ import ImgRatioCard from './components/ImgRatio.vue';
 import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
 import ControinetPop from './controinet/controinet.vue'
-import ReferenceImgPop from './create/create.vue'
 
 export default {
   components: { TaskTips, GeneratePhotoBtn,
     ModelSelectCard, DescriptionTextareaCard, ControlNetCard,
     LoraCard, ImgStyleCard, ReferenceImgCard, ImgRatioCard,
-    ControinetPop, ReferenceImgPop, },
+    ControinetPop, },
   data() {
     return {
       generateStatus: false,
@@ -120,10 +138,11 @@ export default {
       showModelSelectPop: false,
       showLoraPop: false,
       showImgStylePop: false,
+      showReferenceImgPop: false,
       maxlength: 1000,
       taskId: '',
       taskModelId: '',
-      modeId: 1,
+      modeId: 2,
       description: '',
       controlNetInfo: null,
       loraInfo: null,
@@ -153,7 +172,8 @@ export default {
   },
   methods: {
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
-    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getLoraList', 'getImgStyleList', 'getImgScale', 'getSameModel', 'createTask']),
+    ...mapActions('PhotoInfo', ['getModelClass', 'getModelStyleList', 'getModelList', 'getLoraList',
+      'getImgStyleList', 'getHistoryList', 'getImgScale', 'getSameModel', 'createTask']),
     showControlNetPop(){
       this.showControinetPop = true;
       this.$nextTick(() => {
@@ -163,9 +183,6 @@ export default {
     setControlNetInfo(info) {
       this.showControinetPop = false;
       this.controlNetInfo = info;
-    },
-    showReferenceImgPop() {
-      this.$refs.ReferenceImgRef.open()
     },
     setReferenceImgInfo({img_url: url}) {
       this.referenceImgInfo = {

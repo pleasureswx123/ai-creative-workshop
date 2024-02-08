@@ -20,7 +20,7 @@
             :key="item.id"
             :info="item"
             :active="currentId === item.id"
-            @select="info => { selectedInfo = info }" />
+            @select="handleSelect" />
       </view>
       <u-gap height="150rpx" />
     </scroll-view>
@@ -33,6 +33,7 @@ import TemplateItem from './Item/TemplateItem.vue';
 import ModelStyleItem from './Item/ModelStyleItem.vue';
 import LoraItem from './Item/LoraItem.vue';
 import ImgStyleItem from './Item/ImgStyleItem.vue';
+import HistoryItem from './Item/HistoryItem.vue';
 
 export default {
   components: {
@@ -41,6 +42,7 @@ export default {
     ModelStyleItem,
     LoraItem,
     ImgStyleItem,
+    HistoryItem,
   },
   props: {
     componentName: {
@@ -69,7 +71,6 @@ export default {
     },
     getList: {
       type: Function,
-      default: () => (() => {})
     },
     proxyList: { // 保证必须有id
       type: Function,
@@ -78,7 +79,6 @@ export default {
   data() {
     return {
       page: 1,
-      pagesize: 10,
       list: [],
       isHaveMore: true,
       selectedInfo: null
@@ -91,13 +91,13 @@ export default {
     params() {
       return {
         page: this.page,
-        pagesize: this.pagesize,
+        pagesize: 20,
         ...this.paramsInfo
       }
     },
   },
   created() {
-    this.initData();
+    this.getList && this.initData();
   },
   watch: {
     show: {
@@ -112,6 +112,9 @@ export default {
     }
   },
   methods: {
+    handleSelect(info) {
+      this.selectedInfo = info;
+    },
     initData() {
       this.initParams();
       this.getData().then(info => {
@@ -123,7 +126,6 @@ export default {
     },
     initParams() {
       this.page = 1;
-      this.pagesize = 10;
       this.list = [];
     },
     loadMore() {
