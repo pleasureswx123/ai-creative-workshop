@@ -1,4 +1,11 @@
 export default {
+  getHomeFeedsList(params = {}) {
+    return uni.$u.http.post(`/Home/FeedsList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getHomeInfo(params = {}) {
     return uni.$u.http.post(`/Home/Index`, params, {
       custom: {

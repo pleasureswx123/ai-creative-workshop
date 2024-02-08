@@ -51,7 +51,6 @@ export default {
       this.showAction = true;
     },
     toDetails({class_type, task_id}) {
-      this.detailsInfo = null;
       this.getDetailsInfo({class_type, task_id}).then(res => {
         this.detailsInfo = res || {};
         this.showDetails = true;
