@@ -123,7 +123,7 @@ export default {
       maxlength: 1000,
       taskId: '',
       taskModelId: '',
-      modeId: 1,
+      modeId: 2,
       description: '',
       controlNetInfo: null,
       loraInfo: null,
