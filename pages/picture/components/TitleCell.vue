@@ -9,7 +9,6 @@
     </view>
     <QmWaterFallPop
         v-if="showHistoryPop"
-        :paramsInfo="historyParamsInfo"
         :show.sync="showHistoryPop"
         :currentInfo.sync="historyInfo"
         title="选择要处理的图片"
@@ -61,11 +60,6 @@ export default {
     }
   },
   computed: {
-    historyParamsInfo() {
-      return {
-        pagesize: 5
-      }
-    },
     historyInfo: {
       get() {
         return this.historyCurrentInfo || null

@@ -76,7 +76,6 @@
     
     <QmWaterFallPop
         v-if="showHistoryPop"
-        :paramsInfo="historyParamsInfo"
         :show.sync="showHistoryPop"
         :currentInfo.sync="referenceImgInfo"
         title="选择要处理的图片"
@@ -156,11 +155,6 @@ export default {
   },
   computed: {
     ...mapState('PhotoInfo', ['modeClassInfo', 'currentModeInfo', 'ImgRatioInfo']),
-    historyParamsInfo() {
-      return {
-        pagesize: 5
-      }
-    },
     photosModelList() {
       return this.modeClassInfo.find(item => item.id === this.modeId);
     },
