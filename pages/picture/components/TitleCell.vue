@@ -2,17 +2,38 @@
   <view>
     <view class="cell-box">
       <view class="label" v-html="title"></view>
-      <view class="rt" v-if="isShowRight && (generateState === 1)" @tap="handleToHistory">
+      <view class="rt" v-if="isShowRight && (generateState === 1)" @tap="showHistoryPop = true">
         <text>从创作历史选择</text>
         <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
       </view>
     </view>
-    <create ref="secludcreate" @createlist="getResult"/>
+    <QmWaterFallPop
+        v-if="showHistoryPop"
+        :paramsInfo="historyParamsInfo"
+        :show.sync="showHistoryPop"
+        :currentInfo.sync="historyInfo"
+        title="选择要处理的图片"
+        :getList="getHistoryList"
+        :proxyList="item => {
+          const {img_height: h, img_url, img_width: w, task_id} = item || {};
+          const url = img_url || '';
+          const titles = url.split('/').slice(-1);
+          return {
+            ...item,
+            allowEdit: false,
+            image: url,
+            w, h,
+            url,
+            title: titles[0] || url,
+            id: task_id,
+            value: 0.8
+          }
+        }" />
   </view>
 </template>
 
 <script>
-import create from '@/pages/photos/create/create.vue';
+import { mapActions } from 'vuex';
 export default {
   inject: ['setImgUrl'],
   props: {
@@ -33,19 +54,32 @@ export default {
       default: 1
     }
   },
-  components: { create },
-  methods: {
-    getResult(info) {
-      const url = info.img_url;
-      url && this.setImgUrl(this.name, url)
-    },
-    handleToHistory() {
-      this.$refs.secludcreate.open();
-      // uni.$u.route({
-      //   url: 'pages/photos/create/create'
-      // })
+  data() {
+    return {
+      showHistoryPop: false,
+      historyCurrentInfo: null,
     }
-  }
+  },
+  computed: {
+    historyParamsInfo() {
+      return {
+        pagesize: 5
+      }
+    },
+    historyInfo: {
+      get() {
+        return this.historyCurrentInfo || null
+      },
+      set(info) {
+        const url = info.img_url;
+        url && this.setImgUrl(this.name, url);
+        this.historyCurrentInfo = info;
+      }
+    }
+  },
+  methods: {
+    ...mapActions('PhotoInfo', ['getHistoryList']),
+  },
 }
 </script>
 

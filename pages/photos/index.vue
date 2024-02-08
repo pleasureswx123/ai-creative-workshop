@@ -26,7 +26,7 @@
         @showPopFunc="showImgStylePop = true"
         :info.sync="imgStyleInfo" />
     <ReferenceImgCard
-        @showPopFunc="showReferenceImgPop = true"
+        @showPopFunc="showHistoryPop = true"
         @setReferenceImgInfo="setReferenceImgInfo"
         :info.sync="referenceImgInfo" />
     <DescriptionTextareaCard
@@ -75,8 +75,9 @@
         :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
     
     <QmWaterFallPop
-        v-if="showReferenceImgPop"
-        :show.sync="showReferenceImgPop"
+        v-if="showHistoryPop"
+        :paramsInfo="historyParamsInfo"
+        :show.sync="showHistoryPop"
         :currentInfo.sync="referenceImgInfo"
         title="选择要处理的图片"
         :getList="getHistoryList"
@@ -138,7 +139,7 @@ export default {
       showModelSelectPop: false,
       showLoraPop: false,
       showImgStylePop: false,
-      showReferenceImgPop: false,
+      showHistoryPop: false,
       maxlength: 1000,
       taskId: '',
       taskModelId: '',
@@ -155,6 +156,11 @@ export default {
   },
   computed: {
     ...mapState('PhotoInfo', ['modeClassInfo', 'currentModeInfo', 'ImgRatioInfo']),
+    historyParamsInfo() {
+      return {
+        pagesize: 5
+      }
+    },
     photosModelList() {
       return this.modeClassInfo.find(item => item.id === this.modeId);
     },

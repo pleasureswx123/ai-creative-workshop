@@ -135,7 +135,7 @@ export default {
           const id = item.id || guid();
           return { ...item, id }
         });
-        this.showNoMore = resList.length < 10
+        this.showNoMore = resList.length < this.params.pagesize;
         this.list = [...this.list, ...resList];
       })
     },
