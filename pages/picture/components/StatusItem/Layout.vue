@@ -2,13 +2,12 @@
   <view @tap="$emit('toDetails')">
     <ItemHd :info="info" :disabled="disabled" @cb="$emit('cb')"></ItemHd>
     <slot></slot>
-    <ItemFt :info="info"></ItemFt>
+    <QmTaskInfo :info="info"></QmTaskInfo>
   </view>
 </template>
 
 <script>
 import ItemHd from './Hd.vue';
-import ItemFt from './Ft.vue';
 
 export default {
   props: {
@@ -21,7 +20,7 @@ export default {
       default: false
     },
   },
-  components: { ItemHd, ItemFt },
+  components: { ItemHd },
 }
 </script>
 

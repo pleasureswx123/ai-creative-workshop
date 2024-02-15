@@ -31,7 +31,12 @@ export default {
 <style lang="scss" scoped>
 .ft {
   color: var(--txt-color1);
-  padding-top: 20rpx;
+  padding: 20rpx 0 10rpx;
+  
+  //background: linear-gradient(to right, #ff5500, #ffd200);
+  background: linear-gradient(to bottom, var(--txt-color1), var(--txt-color2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   .title {
     color: var(--txt-color1);
     font-size: 24rpx;
@@ -42,11 +47,13 @@ export default {
     overflow: hidden;
   }
   .btsolid {
-    margin: 20rpx 0;
-    height: 2rpx;
+    margin-top: 20rpx;
+    height: 20rpx;
     border-top: 1rpx solid var(--txt-color3);
   }
   .info {
+    font-size: 24rpx;
+    line-height: 1;
     display: inline-block;
     margin: 0 15rpx 15rpx 0;
     color: var(--txt-color2);

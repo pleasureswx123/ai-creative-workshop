@@ -43,6 +43,9 @@ export default {
   width: 100%;
   height: 100%;
   /deep/ {
+    .u-swiper {
+      background-color: transparent!important;
+    }
     .u-swiper__wrapper__item__wrapper__image {
       background-color: #000!important;
     }

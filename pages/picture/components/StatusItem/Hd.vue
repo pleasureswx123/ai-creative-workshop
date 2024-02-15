@@ -2,7 +2,7 @@
   <view class="hd">
     <view class="title">{{info.task_type_title}}</view>
     <view @tap.stop>
-      <u-button class="btn" :disabled="disabled" type="info" size="mini" @tap="$emit('cb')" :text="btnTxt" />
+      <view class="btn-box" :class="{disabled}" @tap="handleCb"><text>{{btnTxt}}</text></view>
     </view>
   </view>
 </template>
@@ -23,6 +23,13 @@ export default {
     btnTxt() {
       return this.isVideoTaskType(+this.info.task_type) ? '查看详情' : '图像处理';
     }
+  },
+  methods: {
+    handleCb() {
+      if(!this.disabled) {
+        this.$emit('cb');
+      }
+    }
   }
 }
 </script>
@@ -35,24 +42,21 @@ export default {
   padding: 0 30rpx;
   .title {
     color: var(--txt-color1);
-    font-size: 28rpx;
+    font-size: 26rpx;
     flex: 1;
     min-width: 0;
+    font-weight: bold;
   }
-  .btn {
-    //color: var(--txt-color2);
-    //background-color: var(--bg-color2);
+  .btn-box {
     background: var(--bg-color3);
     color: var(--txt-color4);
     font-size: 24rpx;
-    border: 1px solid var(--txt-color3);
-    //font-size: torpx(14);
-    //border: 1px solid rgba(0,0,0,1);
-    //color: rgba(0,0,0,1);
-    //border-radius: torpx(4);
-    //padding: 3rpx 15rpx;
-    /deep/ .u-button__text {
-      font-size: 24rpx!important;
+    line-height: 1;
+    padding: 8rpx 24rpx;
+    border-radius: 20rpx;
+    cursor: pointer;
+    &.disabled {
+      opacity: .5;
     }
   }
 }

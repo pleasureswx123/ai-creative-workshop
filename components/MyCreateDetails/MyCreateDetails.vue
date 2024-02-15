@@ -10,7 +10,7 @@
           <icon @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
         </view>
       </view>
-      <view class="pop-main-content">
+      <view class="pop-main-content" :class="{isVideo: isVideoTaskType(info.task_type)}">
         
         <template v-if="isVideoTaskType(info.task_type)">
           <VideoItem :info="info"></VideoItem>
@@ -21,7 +21,7 @@
         
       </view>
       <view class="footer-bar">
-        <DetailsFooter :info="info"></DetailsFooter>
+        <QmTaskInfo :info="info"></QmTaskInfo>
         <view class="ft-btn-box">
           <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
             <text>下载视频</text>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import DetailsFooter from './footer.vue';
 import VideoItem from './VideoItem.vue';
 import ImgItem from './ImgItem.vue';
 
@@ -73,7 +72,7 @@ export default {
     }
   },
   components: {
-    DetailsFooter, VideoItem, ImgItem
+    VideoItem, ImgItem
   },
   computed: {
     imgUrls() {
@@ -176,23 +175,24 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 30rpx;
+    padding: 0 0 50rpx;
     z-index: 90;
-    background-color: rgba(0,0,0,.65);
+    background-color: rgba(0,0,0,.5);
   }
   .ft-btn-box {
     display: flex;
     align-items: center;
-    padding: 30rpx 30rpx 50rpx;
+    padding: 0 60rpx;
+    height: 70rpx;
+    box-sizing: border-box;
     gap: 40rpx;
   }
   .btn-box {
-    padding-top: 10rpx;
     background-color: var(--txt-color1);
     color: var(--bg-color1);
     font-size: 24rpx;
-    height: 60rpx;
-    border-radius: 60rpx;
+    height: 70rpx;
+    border-radius: 70rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -208,6 +208,11 @@ export default {
   height: 100%;
   display: grid;
   place-items: center;
+  position: relative;
+  overflow: hidden;
+  &.isVideo {
+    height: calc(100% - 300rpx);
+  }
   //background-color: red;
 }
 </style>

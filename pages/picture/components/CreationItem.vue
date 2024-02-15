@@ -51,5 +51,6 @@ export default {
 .container {
   background-color: var(--bg-color2);
   margin-bottom: 20rpx;
+  border-radius: 10rpx;
 }
 </style>

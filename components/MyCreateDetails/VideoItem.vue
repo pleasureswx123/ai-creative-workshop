@@ -16,7 +16,8 @@ export default {
     boxStyle() {
       const [width, height] = this.info?.scale?.split('*') || [];
       return {
-        'aspect-ratio': (!!+width && !!+height) ? `${width} / ${height}` : '16 / 9'
+        // 'aspect-ratio': (!!+width && !!+height) ? `${width} / ${height}` : '16 / 9'
+        // 'aspect-ratio': '576 / 1024'
       }
     },
   },
@@ -27,7 +28,9 @@ export default {
 .pictrue-box {
   width: 100%;
   background-color: var(--txt-color5);
-  aspect-ratio: 16 / 9;
+  //aspect-ratio: 16 / 9;
+  height: 100%;
+  max-height: 100%;
   .video-box {
     display: block;
     width: 100%;
