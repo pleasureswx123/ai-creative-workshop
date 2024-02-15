@@ -1,7 +1,7 @@
 <template>
   <Layout :info="info" @cb="clickRightBtnEvent" @toDetails="toDetails">
-    <view class="pictrue-box">
-      <u-swiper height="400" :current="current" :list="imgUrls" imgMode="aspectFit"
+    <view class="pictrue-box" :style="boxStyle">
+      <u-swiper height="100%" :current="current" :list="imgUrls" imgMode="aspectFit"
           :autoplay="false" @change="change" @click="handleClick">
         <template v-if="isShowIndicator">
           <view slot="indicator" class="indicator">
@@ -32,6 +32,19 @@ export default {
     }
   },
   computed: {
+    boxStyle() {
+      const [width, height] = this.info?.scale?.split('*') || [];
+      if(width && height) {
+        return {
+          'aspect-ratio': `${width} / ${height}`
+        }
+      } else {
+        return {
+          width: '100%',
+          height: '400rpx'
+        }
+      }
+    },
     imgUrls() {
       let urls = this.info?.img_urls;
       if(!Array.isArray(urls)) {
@@ -72,6 +85,9 @@ export default {
 <style lang="scss" scoped>
 .pictrue-box {
   background: var(--txt-color5);
+  /deep/ .u-swiper {
+    background-color: transparent!important;
+  }
   /deep/ .u-swiper__wrapper__item__wrapper__image {
     background-color: var(--txt-color5)!important;
   }

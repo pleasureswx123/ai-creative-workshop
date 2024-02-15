@@ -1,6 +1,7 @@
 <template>
-  <view class="video-wrapper">
-    <img :src="info.cover_img" alt="" />
+  <view class="video-wrapper" :style="[videoBoxStyle(info)]">
+    <video v-if="info" :controls="true" object-fit="contain" :src="videoUrl" :poster="info.cover_img" />
+<!--    <img :src="info.cover_img" alt="" />-->
     <view class="play-box">
       <view class="play-btn">
         <uni-icons @tap="previewVideo(info)" custom-prefix="iconfont-qm" type="icon-qm-play" color="rgba(255,255,255,.8)" size="40" />
@@ -18,6 +19,20 @@ export default {
       default: () => ({}),
       required: true
     }
+  },
+  computed: {
+    videoBoxStyle(info) {
+      return info => {
+        const {width, height} = info || {};
+        const ratio = (width && height) ? `${width} / ${height}` : `16 / 9`;
+        return {
+          'aspect-ratio': ratio
+        }
+      }
+    },
+    videoUrl() {
+      return this.info?.video_url || this.info?.url || ''
+    }
   }
 }
 </script>
@@ -30,6 +45,12 @@ export default {
   padding: 8rpx;
   margin-bottom: 8rpx;
   position: relative;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  video {
+    width: 100%;
+    height: 100%;
+  }
   img {
     width: 100%;
     height: auto;
@@ -44,6 +65,7 @@ export default {
     left: 0;
     bottom: 0;
     background: rgba(0,0,0,.5);
+    display: none;
     .play-btn {
       position: absolute;
       top: 50%;

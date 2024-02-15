@@ -1,5 +1,5 @@
 <template>
-  <view class="pictrue-box">
+  <view class="pictrue-box" :style="boxStyle">
     <video class="video-box" object-fit="contain" :src="info.video_url" :poster="info.video_cover_img" />
   </view>
 </template>
@@ -10,6 +10,14 @@ export default {
     info: {
       type: Object,
       default: () => ({})
+    },
+  },
+  computed: {
+    boxStyle() {
+      const [width, height] = this.info?.scale?.split('*') || [];
+      return {
+        'aspect-ratio': (!!+width && !!+height) ? `${width} / ${height}` : '16 / 9'
+      }
     },
   },
 }
