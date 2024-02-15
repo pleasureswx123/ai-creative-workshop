@@ -151,7 +151,8 @@ $show-lines: 1;
 .waterfall-item {
   overflow: hidden;
   margin-top: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
+  outline: 1px none transparent;
   /deep/ uni-image>img {
     opacity: 1;
   }
@@ -170,14 +171,15 @@ $show-lines: 1;
   align-items: center;
   justify-content: center;
   .more-btn {
-    height: 80rpx;
-    line-height: 80rpx;
-    width: 50%;
-    border-radius: 16rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    padding: 0 80rpx;
+    border-radius: 60rpx;
     text-align: center;
-    border: 2rpx solid rgba(255,255,255,.8);
-    color: rgba(255,255,255,.8);
-    font-size: 28rpx;
+    border: 2rpx solid rgba(255,255,255,.1);
+    color: rgba(255,255,255,.6);
+    background-color: rgba(255,255,255, .1);
+    font-size: 24rpx;
   }
 }
 .active {
@@ -191,6 +193,6 @@ $show-lines: 1;
   //  box-sizing: border-box;
   //  border: 2rpx solid red;
   //}
-  outline: 3rpx solid red;
+  outline: 1px solid red;
 }
 </style>
