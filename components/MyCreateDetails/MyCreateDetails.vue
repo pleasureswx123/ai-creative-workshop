@@ -1,5 +1,5 @@
 <template>
-  <u-popup :show="showPop" mode="bottom" @close="showPop = false" overlayStyle="background: #000"
+  <u-popup :show="showPop" mode="bottom" @close="showPop = false" overlayStyle="background: rgba(0,0,0,.7)"
            :safeAreaInsetBottom="safeAreaInsetBottom">
     <view class="pop-container" v-if="info">
       <view class="top-bar">
@@ -21,7 +21,9 @@
         
       </view>
       <view class="footer-bar">
-        <QmTaskInfo :info="info"></QmTaskInfo>
+        <view class="footer-con">
+          <QmTaskInfo :info="info"></QmTaskInfo>
+        </view>
         <view class="ft-btn-box">
           <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
             <text>下载视频</text>
@@ -126,6 +128,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .pop-container {
   background: var(--bg-color1);
   color: var(--txt-color1);
@@ -213,6 +216,48 @@ export default {
   &.isVideo {
     height: calc(100% - 300rpx);
   }
-  //background-color: red;
+}
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .pop-container {
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .pop-container {
+    width: 960px;
+    margin: 0 auto;
+    background: transparent;
+  }
+  /deep/ .u-popup__content {
+    background-color: rgba(0,0,0,.1);
+  }
+  /deep/ {
+    .pictrue-box .u-swiper__wrapper__item,
+    .pictrue-box .u-swiper__wrapper__item__wrapper,
+    .pictrue-box .u-swiper__wrapper__item__wrapper__image,
+    .pictrue-box uni-image > div, .pictrue-box uni-image > img {
+      background-color: transparent!important;
+    }
+    
+    
+  }
+  .footer-bar {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 5px rgba(255,255,255,.3);
+    .footer-con {
+      flex: 1;
+      min-width: 0;
+    }
+    .ft-btn-box {
+      width: 300px;
+      justify-content: flex-end;
+    }
+  }
 }
 </style>

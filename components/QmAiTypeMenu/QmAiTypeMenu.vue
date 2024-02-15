@@ -85,12 +85,14 @@ export default {
 <style lang="scss" scoped>
 .aiType {
   padding: 0 40rpx 30rpx;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20rpx;
   .item-box {
     display: flex;
     gap: 30rpx;
     align-items: center;
     background-color: #1D1E23;
-    margin-bottom: 20rpx;
     padding: 30rpx;
     border-radius: 10rpx;
     position: relative;
@@ -124,6 +126,20 @@ export default {
     line-height: 44rpx;
     border-radius: 0 16rpx 0 16rpx;
     font-size: 22rpx;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .aiType {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .aiType {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>

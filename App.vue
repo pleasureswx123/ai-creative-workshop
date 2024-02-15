@@ -189,4 +189,12 @@ page {
 	uni-modal {
 	  z-index: 999999 !important;
 	}
+
+
+@media screen and (min-width: 960px) {
+  page {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
 </style>

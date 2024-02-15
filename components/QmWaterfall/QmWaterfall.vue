@@ -2,26 +2,15 @@
   <view class="waterfall">
     <uv-waterfall ref="waterfall"
                   v-model="list"
+                  :column-count="columnCount"
                   :add-time="10"
                   :left-gap="leftGap"
                   :right-gap="rightGap"
                   :column-gap="columnGap"
                   @changeList="changeList">
-      <template v-slot:list1>
+      <template v-for="num in columnCount" v-slot:[`list${num}`]>
         <view>
-          <view v-for="(item, index) in list1"
-                :key="item.id"
-                :class="{active: item.id === selectId}"
-                class="waterfall-item">
-            <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="handleSelect(item)">
-              <image :src="item.image" mode="widthFix" :style="{width:item.width+'px'}"></image>
-            </view>
-          </view>
-        </view>
-      </template>
-      <template v-slot:list2>
-        <view>
-          <view v-for="(item, index) in list2"
+          <view v-for="(item, index) in waterfall[`list${num}`]"
                 :key="item.id"
                 :class="{active: item.id === selectId}"
                 class="waterfall-item">
@@ -65,21 +54,27 @@ export default {
   },
   data() {
     return {
+      columnCount: 2,
       page: 1,
       list: [],// 瀑布流全部数据
-      list1: [],// 瀑布流第一列数据
-      list2: [],// 瀑布流第二列数据
+      waterfall: {},
       leftGap: 10,
       rightGap: 10,
       columnGap: 10,
       showNoMore: true,
     }
   },
+  created() {
+    this.initListData();
+    this.getData();
+  },
   computed: {
     imageStyle(item) {
       return item => {
-        const v = uni.upx2px(750) - this.leftGap - this.rightGap - this.columnGap;
-        const w = v / 2;
+        const val = uni.upx2px(750);
+        const num = val > 1200 ? 1200 : val;
+        const v = num - this.leftGap - this.rightGap - this.columnGap;
+        const w = v / this.columnCount;
         const rate = w / item.w;
         const h = rate * item.h;
         return {
@@ -105,13 +100,38 @@ export default {
       }
     },
   },
-  created() {
-    this.getData();
+  mounted() {
+    // #ifdef H5
+    this.resetColumnCount();
+    window.addEventListener('resize', this.restData)
+    // #endif
   },
   beforeDestroy() {
+    // #ifdef H5
+    window.removeEventListener('resize', this.restData);
+    // #endif
     this.$refs?.waterfall?.clear?.();
   },
   methods: {
+    restData() {
+      uni.$u.debounce(this.resetColumnCount, 800);
+    },
+    resetColumnCount() {
+      const {windowWidth} = uni.getSystemInfoSync();
+      if(750 < windowWidth && windowWidth < 960) {
+        this.columnCount = 3;
+      }
+      if(windowWidth > 960) {
+        this.columnCount = 4;
+      }
+      this.clearData();
+      this.getData();
+    },
+    initListData() {
+      for(let i = 0; i < this.columnCount; i++) {
+        this.$set(this.waterfall, `list${i + 1}`, [])
+      }
+    },
     handleSelect(item) {
       this.$emit('select', item)
     },
@@ -119,11 +139,10 @@ export default {
       this.page = 1;
       this.list = [];
       this.$refs?.waterfall?.clear?.();
-      this.list1 = [];
-      this.list2 = [];
+      this.initListData();
     },
     changeList(e) {
-      this[e.name].push(e.value);
+      this.waterfall[e.name].push(e.value);
     },
     loadMore() {
       this.page++;

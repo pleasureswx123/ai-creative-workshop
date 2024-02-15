@@ -78,4 +78,16 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .grid-box {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .grid-box {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 </style>
