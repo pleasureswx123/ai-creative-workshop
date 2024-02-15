@@ -4,6 +4,7 @@
       <view class="items-box" :class="{active: currentVal === item.id}" v-for="item in ratios" :key="item.id" @tap="change(item)">
         <view class="items-con">
           <view class="ratio-val" :style="{'aspect-ratio': getRatio(item.scale)}"><view>{{item.scale}}</view></view>
+<!--          image  url  https://via.placeholder.com/100x110.png/ff0000/fff-->
         </view>
         <view class="title">{{item.title}}</view>
       </view>
