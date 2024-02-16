@@ -1,4 +1,18 @@
 export default {
+  logout(params) {
+    return uni.$u.http.post(`/user/logout`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  bindCard(params) {
+    return uni.$u.http.post(`/user/bindCard`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getAiDetailsInfo(params) {
     return uni.$u.http.post(`/AiDraw/GetInfo`, params, {
       custom: {

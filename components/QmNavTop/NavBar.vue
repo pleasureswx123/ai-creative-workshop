@@ -22,18 +22,18 @@
               :key="item.id"
               @tap="handleJump(item)"
           >{{item.name}}</view>
-          <view class="item" @tap="handleJump({url: '/pages/picture/index'})">我的创作</view>
         </view>
         <view class="userinfo" v-if="!userInfoState.user_id">
           <view @tap="handleJump({url: '/pages/login/index'})">登录</view>
           <view>/</view>
           <view @tap="handleJump({url: '/pages/login/reg'})">注册</view>
         </view>
-        <view class="userinfo" v-else @tap="handleJump({url: '/pages/user/index'})">
-          <view class="avatar">
+        <view class="userinfo" v-else>
+          <view class="pointer" @tap="handleJump({url: '/pages/picture/index'})">我的创作</view>
+          <view class="avatar pointer" @tap="showUserInfoPop = !showUserInfoPop">
             <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
           </view>
-          <view class="userName">{{userInfoState.nickname || '未设置昵称' }}</view>
+          <UserInfoBox :show.sync="showUserInfoPop"></UserInfoBox>
         </view>
       </view>
     </view>
@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import {mapState} from 'vuex';
+import UserInfoBox from './UserInfoBox.vue';
 
 export default {
   props: {
@@ -51,8 +52,10 @@ export default {
       default: false
     }
   },
+  components: { UserInfoBox },
   data() {
     return {
+      showUserInfoPop: false,
       menuList: [
         {id: 1, name: '首页', url: '/pages/index/index' },
         {id: 2, name: '文生图片', url: '/pages/photos/index' },
@@ -84,7 +87,6 @@ export default {
   padding: 0 0 0 30rpx;
   height: 80rpx;
   position: relative;
-  overflow: hidden;
   background-color: #0D0D0D;
 }
 .qm-nav-box, .pc-nav-box {
@@ -103,6 +105,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 30rpx;
+  height: 100%;
   width: 1200px;
   margin: 0 auto;
 }
@@ -168,22 +171,21 @@ export default {
     align-items: center;
     font-size: 28rpx;
     color: var(--txt-color1);
-    cursor: pointer;
-    gap: 4rpx;
+    gap: 30rpx;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1000;
     .avatar {
       height: 65rpx;
       width: 65rpx;
-      background-color: #ffad08;
+      background-color: gray;
       border-radius: 50%;
       overflow: hidden;
-      margin-right: 10rpx;
       image {
         height: 100%;
         width: 100%;
       }
-    }
-    .userName {
-      font-size: 24rpx;
     }
   }
 }

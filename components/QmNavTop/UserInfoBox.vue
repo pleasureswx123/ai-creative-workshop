@@ -1,0 +1,261 @@
+<template>
+  <view class="userinfo-box">
+    <view class="mask-userinfo-pop" v-if="showNavListPop" @tap="showNavListPop = false"></view>
+    <view class="userinfo-inner-box" v-show="showNavListPop">
+      <view class="user-box">
+        <view class="avatar">
+          <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
+        </view>
+        <view class="info">
+          <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
+          <view class="user-id">MID:{{userInfoState.user_id}}</view>
+        </view>
+      </view>
+      <view class="integral-box">
+        <view>积分<text>{{userInfoState.balance}}</text></view>
+        <view class="btn" @click="changeIntegral">兑换</view>
+      </view>
+      <view class="nav-list">
+        <view class="item" v-for="item in navList" :key="item.id" @tap="jump(item)">
+          <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>
+          <view>{{item.name}}</view>
+        </view>
+      </view>
+    </view>
+    <u-popup
+        class="integral-pop"
+        :show="showIntegralPop"
+        mode="center"
+        @close="showIntegralPop = false"
+        closeIconPos="top-right">
+      <view class="integral-inner">
+        <view class="title">兑换积分</view>
+        <view class="desc">可以使用兑换码来获取平台积分，若您已拥有兑换码，可直接进行兑换。若尚未获得兑换码，可联系我们客服进行购买。</view>
+        <u--input placeholder="输入或粘贴兑换码" border="surround" v-model="integral" placeholderStyle="fontSize:14px"></u--input>
+        <view class="operateBtn">
+          <view class="btn" @click="showIntegralPop = false">取消</view>
+          <view class="btn confirm" @click="handleConfirm">确认兑换</view>
+        </view>
+      </view>
+    </u-popup>
+  </view>
+</template>
+
+<script>
+import {mapState, mapActions} from 'vuex';
+import {userApi} from '@/api'
+export default {
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      showIntegralPop: false,
+      integral: '',
+      navList: [
+        {id: 1, iconName: 'account', name: '个人中心', url: '/pages/user/index'},
+        {id: 2, iconName: 'file-text', name: '使用教程', url: '/pages/article/list?type=help'},
+        {id: 3, iconName: 'kefu-ermai', name: '联系我们', url: '/pages/article/code'},
+        {id: 4, iconName: 'order', name: '服务条款', url: '/pages/article/article?type=service'},
+        {id: 5, iconName: 'info-circle', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {id: 6, iconName: 'minus-square-fill', name: '退出登录'},
+      ]
+    }
+  },
+  computed: {
+    ...mapState('UserInfo', ['userInfoState']),
+    showNavListPop: {
+      get() {
+        return this.show
+      },
+      set(status) {
+        this.$emit('update:show', status);
+      }
+    }
+  },
+  methods: {
+    ...mapActions('UserInfo', ['getUserInfo']),
+    handleConfirm() {
+      const code = `${this.integral}`.trim();
+      if(!code) {
+        return
+      }
+      userApi.bindCard({code}).then(res => {
+        uni.showToast({
+          title: res.message,
+          duration: 2000
+        });
+        this.showIntegralPop = false;
+        this.showNavListPop = false;
+        this.getUserInfo();
+      })
+    },
+    changeIntegral() {
+      this.checkLoginStatus().then(() => {
+        this.showNavListPop = false;
+        this.showIntegralPop = true;
+      })
+    },
+    jump({id, url}) {
+      if(id === 6) {
+        return userApi.logout().then(res => {
+          uni.clearStorage();
+          uni.reLaunch({
+            url: '/pages/index/index'
+          })
+        });
+      }
+      uni.reLaunch({url});
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.userinfo-box {
+  position: relative;
+  height: 100rpx;
+  .userinfo-inner-box {
+    padding: 40rpx;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #1D1E23;
+    width: 200px;
+    box-sizing: border-box;
+  }
+  .mask-userinfo-pop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 10;
+  }
+}
+.nav-list {
+  color: #f5f5f5;
+  font-size: 28rpx;
+  .item {
+    height: 80rpx;
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    cursor: pointer;
+  }
+}
+.integral-box {
+  padding: 30rpx 10rpx;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #B2B2B2;
+  text {
+    margin-left: 10rpx;
+  }
+  .btn {
+    margin-left: auto;
+    background-color: #F60652;
+    border-radius: 8rpx;
+    padding: 8rpx 16rpx;
+    font-size: 24rpx;
+    color: #fff;
+  }
+}
+.integral-pop {
+  .integral-inner {
+    text-align: center;
+    color: #333;
+  }
+  .title {
+    font-size: 32rpx;
+    font-weight: 700;
+  }
+  .desc {
+    font-size: 28rpx;
+    margin: 20rpx 0;
+  }
+  /deep/ .u-popup__content {
+    width: 50%;
+    border-radius: 20rpx;
+    box-sizing: border-box;
+    padding: 80rpx 40rpx;
+  }
+  /deep/.u-input {
+    border: 1px solid #f5f5f5;
+    background-color: #f5f5f5;
+    margin: 30rpx 0;
+  }
+  .operateBtn {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: right;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20rpx;
+    .btn {
+      width: 200rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      border: 1px solid #F60652;
+      border-radius: 8rpx;
+      display: inline-block;
+      text-align: center;
+      font-size: 28rpx;
+      cursor: pointer;
+    }
+    .confirm {
+      background-color: #F60652;
+      color: #fff;
+    }
+  }
+}
+.user-box {
+  padding: 30rpx 0 10rpx;
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  .avatar {
+    height: 65rpx;
+    width: 65rpx;
+    background-color: gray;
+    border-radius: 50%;
+    overflow: hidden;
+    image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .info {
+    flex: 1;
+    min-width: 0;
+    .name {
+      font-size: 24rpx;
+      color: rgba(255,255,255,.7);
+      font-weight: 700;
+    }
+    .user-id {
+      font-size: 24rpx;
+      margin-top: 6rpx;
+      color: #818181;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .integral-pop /deep/ .u-popup__content {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .integral-pop /deep/ .u-popup__content {
+    width: 30%;
+  }
+}
+</style>

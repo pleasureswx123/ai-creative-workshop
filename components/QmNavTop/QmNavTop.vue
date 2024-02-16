@@ -190,7 +190,6 @@ export default {
 					width: 100%;
 				}
 			}
-	
 			.Infor {
 				.userName {
 					font-size: 24rpx;
