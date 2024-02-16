@@ -73,6 +73,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       .btn-txt {
         display: flex;
         align-items: center;

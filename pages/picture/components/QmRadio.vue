@@ -76,6 +76,7 @@ export default {
   color: var(--txt-color2);
   border-radius: 10rpx;
   font-size: 28rpx;
+  cursor: pointer;
   &.active {
     background: var(--bg-color1);
     color: var(--txt-color1);

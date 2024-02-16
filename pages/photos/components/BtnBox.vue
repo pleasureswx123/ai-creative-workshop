@@ -27,6 +27,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 80rpx;
+  cursor: pointer;
   .btn-txt {
     display: flex;
     align-items: center;

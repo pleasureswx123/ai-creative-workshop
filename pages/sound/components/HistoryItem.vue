@@ -10,8 +10,8 @@
         <uni-icons class="ml-5" custom-prefix="iconfont-qm" type="icon-qm-soundwave" color="var(--txt-color2)" size="20" />
       </view>
       <view class="duration">{{info.dub_duration}}</view>
-      <uni-icons @tap="playAudio" custom-prefix="iconfont-qm" type="icon-qm-play1" color="var(--txt-color1)" size="22" />
-      <uni-icons @tap="downloadAudio" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="22" />
+      <uni-icons @tap="playAudio" class="pointer" custom-prefix="iconfont-qm" type="icon-qm-play1" color="var(--txt-color1)" size="22" />
+      <uni-icons @tap="downloadAudio" class="pointer" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="22" />
     </view>
   </view>
 </template>

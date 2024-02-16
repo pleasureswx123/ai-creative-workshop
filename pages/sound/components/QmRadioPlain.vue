@@ -37,6 +37,7 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   gap: 20rpx;
   .item {
+    cursor: pointer;
     min-width: 0;
     display: flex;
     align-items: center;

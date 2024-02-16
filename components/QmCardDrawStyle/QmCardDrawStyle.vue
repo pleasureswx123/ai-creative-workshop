@@ -33,6 +33,7 @@ export default {
   box-sizing: border-box;
   border-radius: 10rpx;
   gap: 30rpx;
+  cursor: pointer;
   .img-box {
     height: 120rpx;
     width: 120rpx;

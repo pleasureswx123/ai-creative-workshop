@@ -36,6 +36,7 @@ export default {
   .txt-con {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   .txt {
     padding-left: 8rpx;

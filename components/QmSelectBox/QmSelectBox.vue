@@ -33,6 +33,7 @@ export default {
   padding: 0 10rpx 0 30rpx;
   height: 80rpx;
   font-size: 28rpx;
+  cursor: pointer;
   .con {
     flex: 1;
   }

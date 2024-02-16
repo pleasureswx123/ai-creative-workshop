@@ -87,6 +87,9 @@ export default {
       color: var(--txt-color2)!important;
       background: var(--bg-color1)!important;
     }
+    .icon-qm-copy5 {
+      cursor: pointer;
+    }
   }
 }
 .qm-textarea {

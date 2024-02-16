@@ -54,6 +54,7 @@ export default {
   display: flex;
   align-items: center;
   font-size: 28rpx;
+  cursor: pointer;
 }
 .sheet-box {
   /deep/ .u-action-sheet__header__icon-wrap {

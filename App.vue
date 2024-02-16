@@ -148,6 +148,9 @@
 image {
   vertical-align: middle;
 }
+.pointer {
+  cursor: pointer;
+}
 .ellipsis {
   max-width: 100%;
   overflow: hidden;

@@ -6,7 +6,7 @@
     <view class="info-box">
       <view class="info-hd">
         <view class="title">{{info.title}}</view>
-        <u-icon name="trash" size="30rpx" color="rgba(255,255,255,.5)" @tap="$emit('cb')"></u-icon>
+        <u-icon class="pointer" name="trash" size="30rpx" color="rgba(255,255,255,.5)" @tap="$emit('cb')"></u-icon>
       </view>
       <view>
         <slot></slot>

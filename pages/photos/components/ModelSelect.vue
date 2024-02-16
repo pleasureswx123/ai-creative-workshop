@@ -39,6 +39,7 @@ export default {
   padding-right: 20rpx;
   border-radius: 20rpx;
   overflow: hidden;
+  cursor: pointer;
   image {
     width: 150rpx;
     height: 100%;

@@ -39,6 +39,7 @@ export default {
     border: 2rpx solid #606060;
     border-left: none;
     font-size: 28rpx;
+    cursor: pointer;
     &:first-child {
       border-left: 2rpx solid #606060;
       border-radius: 70rpx 0 0 70rpx;

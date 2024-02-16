@@ -96,6 +96,7 @@ export default {
   background: var(--bg-color3);
   color: var(--txt-color4);
   gap: 4rpx;
+  cursor: pointer;
   &.disabled {
     background: var(--bg-color3);
     color: var(--txt-color4);

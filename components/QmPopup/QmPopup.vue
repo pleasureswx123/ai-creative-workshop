@@ -11,7 +11,7 @@
         <view class="top-bar">
           <text class="title">{{title}}</text>
           <view class="close-box">
-            <icon @tap="$emit('close')" color="var(--txt-color1)" type="cancel" size="30" />
+            <icon @tap="$emit('close')" class="pointer" color="var(--txt-color1)" type="cancel" size="30" />
           </view>
         </view>
         <u-gap height="30" />
@@ -23,7 +23,7 @@
           <slot></slot>
         </view>
         <view class="footer-bar">
-          <view class="btn-box" @tap="$emit('confirm')">确 定</view>
+          <view class="btn-box pointer" @tap="$emit('confirm')">确 定</view>
         </view>
       </view>
     </view>

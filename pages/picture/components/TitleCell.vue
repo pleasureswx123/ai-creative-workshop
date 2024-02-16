@@ -2,7 +2,7 @@
   <view>
     <view class="cell-box">
       <view class="label" v-html="title"></view>
-      <view class="rt" v-if="isShowRight && (generateState === 1)" @tap="showHistoryPop = true">
+      <view class="rt pointer" v-if="isShowRight && (generateState === 1)" @tap="showHistoryPop = true">
         <text>从创作历史选择</text>
         <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
       </view>

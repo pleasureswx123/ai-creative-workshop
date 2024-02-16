@@ -96,6 +96,7 @@ export default {
     padding: 30rpx;
     border-radius: 10rpx;
     position: relative;
+    cursor: pointer;
     .item-con {
       flex: 1;
       min-width: 0;

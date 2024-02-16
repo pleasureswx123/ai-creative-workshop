@@ -7,7 +7,7 @@
       </view>
       <view class="tips">{{uploadTipsTxt}}</view>
     </view>
-    <view v-else class="upload-box-container" @tap="handleUpload">
+    <view v-else class="upload-box-container pointer" @tap="handleUpload">
       <view class="upload-box">
         <view class="title">点击上传</view>
         <view class="icon-box">

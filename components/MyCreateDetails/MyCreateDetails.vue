@@ -7,7 +7,7 @@
           <view v-if="isShowIndicator" class="tips-sn">{{imgCurrent + 1}}/{{imgLen}}</view>
         </view>
         <view class="close-box">
-          <icon @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
+          <icon class="pointer" @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
         </view>
       </view>
       <view class="pop-main-content" :class="{isVideo: isVideoTaskType(info.task_type)}">
@@ -207,6 +207,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex: 1;
+    cursor: pointer;
   }
 }
 @supports (-webkit-touch-callout: none) {

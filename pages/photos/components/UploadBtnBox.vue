@@ -46,6 +46,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 20rpx;
+  cursor: pointer;
   .icon-box {
     height: 100%;
     width: 100rpx;

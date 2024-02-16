@@ -5,7 +5,7 @@
     <view class="page-main">
       <PicHeader title="选择视频工具" />
       <view class="grid-box">
-        <view class="card-box" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
+        <view class="card-box pointer" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
           <view class="img-box">
             <image :src="item.url"></image>
           </view>

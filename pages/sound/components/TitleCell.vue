@@ -31,6 +31,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--txt-color2);
+    cursor: pointer;
   }
 }
 </style>
