@@ -404,6 +404,9 @@ export default {
     scrollToBottom() {
       setTimeout(() => {
         let query = uni.createSelectorQuery().in(this);
+        if (!query) {
+          return
+        }
         query.select('.list').boundingClientRect((res) => {
           if (res) {
             this.setData({
@@ -465,6 +468,9 @@ export default {
     
     showCopyBtn(e) {
       let query = uni.createSelectorQuery().in(this);
+      if (!query) {
+        return
+      }
       query.select('.list').boundingClientRect((res) => {
         if (res) {
           let x = parseInt(e.touches[0].pageX);

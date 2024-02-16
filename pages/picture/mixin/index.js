@@ -48,7 +48,8 @@ export default {
       if(!this.taskType) {
         tipsTxt = '10万'
       }
-      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: `消耗${tipsTxt}`};
+      // const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: `消耗${tipsTxt}`};
+      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: ''};
       return this.generateState === 3 ? {btnTxt: '重新生成'} : temp;
     },
   },

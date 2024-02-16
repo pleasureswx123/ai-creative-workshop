@@ -85,6 +85,7 @@ export default {
         }
       }
       .tips-txt {
+        display: none;
         position: absolute;
         right: 30rpx;
         top: 50%;

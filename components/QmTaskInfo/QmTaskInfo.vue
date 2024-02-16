@@ -11,7 +11,7 @@
       <text v-if="info.controlnet_type">{{info.controlnet_type}}</text>
       <text v-if="info.img_style_name">{{info.img_style_name}}</text>
       <text v-if="info.scale">{{info.scale}}</text>
-      <text v-if="info.jifen_consume">{{info.jifen_consume}}</text>
+<!--      <text v-if="info.jifen_consume">{{info.jifen_consume}}</text>-->
       <text v-if="info.create_time">生成时间 {{info.create_time}}</text>
       <text v-if="info.task_id">任务ID {{info.task_id}}</text>
     </view>
