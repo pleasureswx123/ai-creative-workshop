@@ -75,4 +75,11 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: 750px) {
+  .video-wrapper {
+    width: 320px;
+    margin: 0 auto 8rpx;
+  }
+}
 </style>

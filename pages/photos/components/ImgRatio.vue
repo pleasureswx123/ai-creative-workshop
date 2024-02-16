@@ -60,6 +60,7 @@ export default {
     min-width: 0;
     padding: 20rpx;
     border: 2rpx solid #23242C;
+    cursor: pointer;
     &.active {
       border-color: #ff0000;
     }
@@ -93,6 +94,12 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .ratio-box {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 </style>

@@ -54,4 +54,9 @@ export default {
     }
   }
 }
+@media screen and (min-width: 750px) {
+  .radio-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
 </style>

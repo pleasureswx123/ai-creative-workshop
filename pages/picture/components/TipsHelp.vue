@@ -3,7 +3,7 @@
     <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="var(--txt-color2)" size="20" />
     <view>{{info.content}}</view>
     <view class="tips-img">
-      <image :src="info.img_url"></image>
+      <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
     </view>
   </view>
 </template>
@@ -29,18 +29,23 @@ export default {
   border: 1rpx solid var(--txt-color3);
   background: var(--bg-color2);
   position: relative;
+  box-sizing: border-box;
   .icon-qm-tips {
     position: absolute;
     transform: translate3d(-50rpx, 2rpx, 0);
   }
   .tips-img {
     margin-top: 20rpx;
-    aspect-ratio: 4 / 3;
     /deep/ image {
       width: 100%;
-      height: 100%;
+      height: auto;
       border-radius: 10rpx;
     }
+  }
+}
+@media screen and (min-width: 750px) {
+  .tips-img {
+    width: 320px;
   }
 }
 </style>

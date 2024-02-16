@@ -6,26 +6,29 @@
     <QmTabs
         :value.sync="modeId"
         :options="modeClassInfo" />
-    <view class="page-main-con">
-      <ModelSelectCard
-          @showPopFunc="showModelSelectPop = true"
-          :info="currentModeInfo" />
-      <DescriptionTextareaCard
-          title="画面描述词"
-          :maxlength="maxlength"
-          placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
-          :value.sync="description" />
-      <ControlNetCard
-          v-if="modeId === 1"
-          @showPopFunc="showControlNetPop"
-          :info.sync="controlNetInfo" />
-      <LoraCard
-          v-if="[1, 2].includes(modeId)"
-          @showPopFunc="showLoraPop = true"
-          :info.sync="loraInfo" />
-      <ImgStyleCard
-          @showPopFunc="showImgStylePop = true"
-          :info.sync="imgStyleInfo" />
+    <view class="page-grid-con">
+      <view>
+        <ModelSelectCard
+            @showPopFunc="showModelSelectPop = true"
+            :info="currentModeInfo" />
+        <DescriptionTextareaCard
+            title="画面描述词"
+            :maxlength="maxlength"
+            placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
+            :value.sync="description" />
+        <ControlNetCard
+            v-if="modeId === 1"
+            @showPopFunc="showControlNetPop"
+            :info.sync="controlNetInfo" />
+        <LoraCard
+            v-if="[1, 2].includes(modeId)"
+            @showPopFunc="showLoraPop = true"
+            :info.sync="loraInfo" />
+        <ImgStyleCard
+            @showPopFunc="showImgStylePop = true"
+            :info.sync="imgStyleInfo" />
+      </view>
+      <view>
       <ReferenceImgCard
           @showPopFunc="showHistoryPop = true"
           @setReferenceImgInfo="setReferenceImgInfo"
@@ -38,6 +41,7 @@
       <ImgRatioCard
           :value.sync="ratioId"
           :ratios="ImgRatioInfo" />
+      </view>
     </view>
   
     <QmPop
@@ -372,6 +376,13 @@ export default {
   .page-main-con {
     -moz-column-count: 2;
     column-count: 2;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .page-grid-con {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

@@ -119,4 +119,16 @@ export default {
     animation: rotate 3s linear infinite;
   }
 }
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .btn-box {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .btn-box {
+    width: 20%;
+  }
+}
 </style>
