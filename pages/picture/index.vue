@@ -94,7 +94,7 @@ export default {
   //gap: 20rpx;
   
   column-gap: 20rpx;
-  padding: 0;
+  padding-top: 30rpx;
   column-count: 1;
   column-fill: balance;
   

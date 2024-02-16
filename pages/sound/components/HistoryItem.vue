@@ -51,7 +51,6 @@ export default {
   padding: 20rpx 50rpx 30rpx;
   //border-top: 1rpx solid var(--txt-color2);
   //border-bottom: 1rpx solid var(--txt-color2);
-  margin-bottom: 30rpx;
   box-shadow: 0 0 5rpx var(--txt-color2);
 }
 .date {

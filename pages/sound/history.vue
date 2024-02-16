@@ -2,7 +2,9 @@
   <page-meta page-style="background: var(--bg-color1)" />
   <view class="page-container">
     <QmNavTop></QmNavTop>
-    <HistoryItem v-for="item in list" :info="item" :key="item.task_id" @playAudio="handlePlayAudio"></HistoryItem>
+    <view class="history-container">
+      <HistoryItem v-for="item in list" :info="item" :key="item.task_id" @playAudio="handlePlayAudio"></HistoryItem>
+    </view>
     <QmLoadMore :status="loadStatus"></QmLoadMore>
     <view class="btn-container">
       <view class="btn-box" @tap="jump">新的合成</view>
@@ -142,5 +144,19 @@ export default {
   background: var(--bg-color3);
   color: var(--txt-color4);
   gap: 4rpx;
+}
+
+.history-container {
+  padding-top: 30rpx;
+  display: grid;
+  gap: 30rpx;
+  grid-template-columns: repeat(1, 1fr);
+  margin-bottom: 50rpx;
+}
+
+@media screen and (min-width: 750px) {
+  .history-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>
