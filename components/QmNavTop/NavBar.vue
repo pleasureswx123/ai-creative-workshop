@@ -9,11 +9,40 @@
         <u-icon name="list" color="rgba(255,255,255,.7)" size="40"></u-icon>
       </view>
     </view>
+    <view class="pc-nav-box">
+      <view class="pc-inner-nav">
+        <view class="logo" @tap="goHome">
+          <image src="@/static/images/index/logo.png" mode="aspectFit" />
+          <text>超级语言</text>
+        </view>
+        <view class="menu-nav">
+          <view
+              class="item"
+              v-for="item in menuList"
+              :key="item.id"
+              @tap="handleJump(item)"
+          >{{item.name}}</view>
+        </view>
+        <view class="userinfo" v-if="!userInfoState.user_id">
+          <view @tap="handleJump({url: '/pages/login/index'})">登录</view>
+          <view>/</view>
+          <view @tap="handleJump({url: '/pages/login/reg'})">注册</view>
+        </view>
+        <view class="userinfo" v-else @tap="handleJump({url: '/pages/user/index'})">
+          <view class="avatar">
+            <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
+          </view>
+          <view class="userName">{{userInfoState.nickname || '未设置昵称' }}</view>
+        </view>
+      </view>
+    </view>
     <view class="qm-nav-box-place"></view>
   </view>
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
+
 export default {
   props: {
     value: {
@@ -21,7 +50,25 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      menuList: [
+        {id: 1, name: '首页', url: '/pages/index/index' },
+        {id: 2, name: '文生图片', url: '/pages/photos/index' },
+        {id: 3, name: '图片处理', url: '/pages/picture/tool' },
+        {id: 4, name: '生成配音', url: '/pages/sound/index' },
+        {id: 5, name: '智能对话', url: '/pages/ai/index' },
+        {id: 6, name: '生成视频', url: '/pages/picture/video-tool' },
+      ]
+    }
+  },
+  computed: {
+    ...mapState('UserInfo', ['userInfoState']),
+  },
   methods: {
+    handleJump({url}) {
+      uni.reLaunch({url});
+    },
     goHome() {
       uni.reLaunch({
         url: '/pages/index/index'
@@ -32,15 +79,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.qm-nav-box, .qm-nav-box-place {
+.qm-nav-box, .pc-nav-box, .qm-nav-box-place {
   padding: 0 0 0 30rpx;
   height: 80rpx;
   position: relative;
   overflow: hidden;
   background-color: #0D0D0D;
 }
-.qm-nav-box {
-  border-bottom: 1rpx solid rgba(255,255,255,.1);
+.qm-nav-box, .pc-nav-box {
+  border-bottom: 1rpx solid rgba(255, 255, 255, .1);
   position: fixed;
   top: 0;
   left: 0;
@@ -50,6 +97,15 @@ export default {
   display: flex;
   align-items: center;
   gap: 30rpx;
+}
+.pc-inner-nav {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  width: 1200px;
+  margin: 0 auto;
+}
+.qm-nav-box {
   .lf {
     display: flex;
     align-items: center;
@@ -77,5 +133,68 @@ export default {
   //  line-height: 28px!important;
   //  color: rgba(255,255,255,.7)!important;
   //}
+}
+.pc-nav-box {
+  gap: 100rpx;
+  padding: 0 30rpx;
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 30rpx;
+    color: rgba(255,255,255,.9);
+    gap: 20rpx;
+    margin-right: 30rpx;
+    image {
+      display: block;
+      width: 60rpx;
+      height: 58rpx;
+    }
+  }
+  .menu-nav {
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+    gap: 50rpx;
+    color: var(--txt-color2);
+    flex: 1;
+    min-width: 0;
+    .item {
+      cursor: pointer;
+    }
+  }
+  .userinfo {
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+    color: var(--txt-color1);
+    cursor: pointer;
+    gap: 4rpx;
+    .avatar {
+      height: 65rpx;
+      width: 65rpx;
+      background-color: #ffad08;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 10rpx;
+      image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .userName {
+      font-size: 24rpx;
+    }
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .pc-nav-box {
+    display: none;
+  }
+}
+@media screen and (min-width: 765px) {
+  .qm-nav-box {
+    display: none;
+  }
 }
 </style>
