@@ -2,9 +2,12 @@
   <view class="page-container">
     <QmNavTop></QmNavTop>
 <!--    <TipsTxt></TipsTxt>-->
-    <CreationItem
-        v-for="(item, index) in list" :key="index"
-        :info="item" @showToolAction="showToolAction" @toDetails="toDetails" />
+    <view class="page-main-con">
+      <CreationItem
+          class="page-item"
+          v-for="(item, index) in list" :key="index"
+          :info="item" @showToolAction="showToolAction" @toDetails="toDetails" />
+    </view>
     <QmLoadMore :status="loadStatus"></QmLoadMore>
   
     <u-action-sheet
@@ -83,5 +86,47 @@ export default {
   padding-bottom: calc(10rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
+}
+.page-main-con {
+  //display: grid;
+  //grid-template-columns: repeat(1, 1fr);
+  //grid-template-rows: masonry;
+  //gap: 20rpx;
+  
+  column-gap: 20rpx;
+  padding: 0;
+  column-count: 1;
+  column-fill: balance;
+  
+  //-moz-column-count: 1;
+  //column-count: 1;
+  //-moz-column-gap: 20px;
+  //column-gap: 20px;
+  //-moz-column-fill: balance;
+  //column-fill: balance;
+  .page-item {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  
+    margin: 0 0 20rpx;
+    page-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .page-main-con {
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .page-main-con {
+    -moz-column-count: 4;
+    column-count: 4;
+  }
 }
 </style>

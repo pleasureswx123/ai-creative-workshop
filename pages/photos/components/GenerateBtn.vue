@@ -96,6 +96,20 @@ export default {
   }
 }
 
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .footer-box {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .footer-box {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);

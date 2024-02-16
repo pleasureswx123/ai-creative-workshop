@@ -3,7 +3,7 @@
       :show="show"
       mode="bottom"
       @close="$emit('close')"
-      overlayStyle="background: rgba(0,0,0,.5)"
+      overlayStyle="background: rgba(0,0,0,.7)"
       :round="round"
       :safeAreaInsetBottom="safeAreaInsetBottom">
     <view class="pop-container">
@@ -148,5 +148,25 @@ export default {
 }
 .tips-wrapper {
   padding: 0 30rpx;
+}
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  /deep/ .u-popup__content {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .footer-bar .btn-box {
+    width: 40%!important;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  /deep/ .u-popup__content {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .footer-bar .btn-box {
+    width: 30%!important;;
+  }
 }
 </style>

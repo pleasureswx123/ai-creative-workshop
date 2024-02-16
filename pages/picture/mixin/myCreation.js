@@ -27,7 +27,7 @@ export default {
     initParams() {
       this.list = [];
       this.page = 1;
-      this.pagesize = 10;
+      this.pagesize = 100;
       this.loadStatus = '';
     },
     loadMore() {

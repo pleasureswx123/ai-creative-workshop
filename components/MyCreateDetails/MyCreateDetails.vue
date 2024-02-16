@@ -21,24 +21,26 @@
         
       </view>
       <view class="footer-bar">
-        <view class="footer-con">
-          <QmTaskInfo :info="info"></QmTaskInfo>
-        </view>
-        <view class="ft-btn-box">
-          <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
-            <text>下载视频</text>
+        <view class="footer-inner">
+          <view class="footer-con">
+            <QmTaskInfo :info="info"></QmTaskInfo>
           </view>
-          <template v-if="!isVideoTaskType(info.task_type)">
-            <view class="btn-box" @tap="handleDownImage">
-              <text>下载图片</text>
+          <view class="ft-btn-box">
+            <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
+              <text>下载视频</text>
             </view>
-            <view class="btn-box" @tap="jumpToTextToPicture">
-              <text>一键同款</text>
-            </view>
-          </template>
-<!--          <view v-if="![1,2].includes(info.task_type)" class="btn-box" @tap="handleDownImage">
-            <text>下载图片</text>
-          </view>-->
+            <template v-if="!isVideoTaskType(info.task_type)">
+              <view class="btn-box" @tap="handleDownImage">
+                <text>下载图片</text>
+              </view>
+              <view class="btn-box" @tap="jumpToTextToPicture">
+                <text>一键同款</text>
+              </view>
+            </template>
+            <!--          <view v-if="![1,2].includes(info.task_type)" class="btn-box" @tap="handleDownImage">
+                        <text>下载图片</text>
+                      </view>-->
+          </view>
         </view>
       </view>
     </view>
@@ -130,7 +132,7 @@ export default {
 <style lang="scss" scoped>
 
 .pop-container {
-  background: var(--bg-color1);
+  background: rgba(0,0,0,.5);
   color: var(--txt-color1);
   font-size: 28rpx;
   height: 100vh;
@@ -139,7 +141,7 @@ export default {
   .top-bar {
     width: 100%;
     box-sizing: border-box;
-    position: fixed;
+    position: absolute;
     top: 80rpx;
     left: 0;
     right: 0;
@@ -178,14 +180,19 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0 0 50rpx;
     z-index: 90;
+  }
+  .footer-inner {
+    padding: 10rpx 20rpx 50rpx 0;
     background-color: rgba(0,0,0,.5);
+    box-sizing: border-box;
+    .ft-btn-box {
+      padding: 0 30rpx;
+    }
   }
   .ft-btn-box {
     display: flex;
     align-items: center;
-    padding: 0 60rpx;
     height: 70rpx;
     box-sizing: border-box;
     gap: 40rpx;
@@ -218,16 +225,18 @@ export default {
   }
 }
 
+
 @media screen and (min-width: 750px) and (max-width: 960px){
-  .pop-container {
+  /deep/ .u-popup__content {
+    width: 80%;
+    margin: 0 auto;
   }
 }
 
-@media screen and (min-width: 960px) {
-  .pop-container {
-    width: 960px;
+@media screen and (min-width: 960px) and (max-width: 1200px) {
+  /deep/ .u-popup__content {
+    width: 50%;
     margin: 0 auto;
-    background: transparent;
   }
   /deep/ .u-popup__content {
     background-color: rgba(0,0,0,.1);
@@ -239,15 +248,12 @@ export default {
     .pictrue-box uni-image > div, .pictrue-box uni-image > img {
       background-color: transparent!important;
     }
-    
-    
   }
-  .footer-bar {
-    width: 80%;
+  .footer-inner {
+    width: 90%;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 20rpx;
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -5px 5px rgba(255,255,255,.3);
     .footer-con {
@@ -255,7 +261,40 @@ export default {
       min-width: 0;
     }
     .ft-btn-box {
-      width: 300px;
+      width: 200px;
+      justify-content: flex-end;
+    }
+  }
+}
+@media screen and (min-width: 1200px) {
+  /deep/ .u-popup__content {
+    width: 50%;
+    margin: 0 auto;
+  }
+  /deep/ .u-popup__content {
+    background-color: rgba(0,0,0,.1);
+  }
+  /deep/ {
+    .pictrue-box .u-swiper__wrapper__item,
+    .pictrue-box .u-swiper__wrapper__item__wrapper,
+    .pictrue-box .u-swiper__wrapper__item__wrapper__image,
+    .pictrue-box uni-image > div, .pictrue-box uni-image > img {
+      background-color: transparent!important;
+    }
+  }
+  .footer-inner {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -5px 5px rgba(255,255,255,.3);
+    .footer-con {
+      flex: 1;
+      min-width: 0;
+    }
+    .ft-btn-box {
+      width: 200px;
       justify-content: flex-end;
     }
   }

@@ -164,4 +164,16 @@ export default {
     background-color: transparent;
   }
 }
+
+@media screen and (min-width: 750px) and (max-width: 960px){
+  .item-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .item-wrapper {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
 </style>
