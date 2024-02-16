@@ -32,6 +32,13 @@ export default {
       }
     })
   },
+  delCreation(params = {}) {
+    return uni.$u.http.post(`/User/DelCreation`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getTopicList(params = {}) {
     return uni.$u.http.post(`/write/getTopicList`, params, {
       custom: {

@@ -1,6 +1,11 @@
 import {userApi} from '@/api'
 
 export default {
+  provide() {
+    return {
+      handleDelTask: this.handleDelTask
+    }
+  },
   data() {
     return {
       list: [],
@@ -24,6 +29,22 @@ export default {
     this.loadMore();
   },
   methods: {
+    handleDelTask({task_id}) {
+      uni.showModal({
+        title: '删除任务',
+        content: '该操作不可撤销，确认要删除任务吗？',
+        confirmText: '确定删除',
+        cancelText: '取消',
+        success: res => {
+          if (res.confirm) {
+            userApi.delCreation({task_id}).then(res => {
+              this.initParams();
+              this.loadMore();
+            }).catch(err => {})
+          }
+        }
+      });
+    },
     initParams() {
       this.list = [];
       this.page = 1;
