@@ -24,9 +24,9 @@
           >{{item.name}}</view>
         </view>
         <view class="userinfo" v-if="!userInfoState.user_id">
-          <view @tap="handleJump({url: '/pages/login/index'})">登录</view>
+          <view class="pointer" @tap="handleJump({url: '/pages/login/index'})">登录</view>
           <view>/</view>
-          <view @tap="handleJump({url: '/pages/login/reg'})">注册</view>
+          <view class="pointer" @tap="handleJump({url: '/pages/login/reg'})">注册</view>
         </view>
         <view class="userinfo" v-else>
           <view class="pointer" @tap="handleJump({url: '/pages/picture/index'})">我的创作</view>

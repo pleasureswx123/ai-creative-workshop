@@ -117,9 +117,9 @@ export default {
 <style lang="scss" scoped>
 .userinfo-box {
   position: relative;
-  height: 100rpx;
+  height: 100%;
   .userinfo-inner-box {
-    padding: 40rpx;
+    padding: 0 40rpx 40rpx;
     z-index: 100;
     position: absolute;
     top: 0;
@@ -136,6 +136,7 @@ export default {
     bottom: 0;
     background-color: rgba(0,0,0,.5);
     z-index: 10;
+    cursor: pointer;
   }
 }
 .nav-list {
@@ -165,6 +166,7 @@ export default {
     padding: 8rpx 16rpx;
     font-size: 24rpx;
     color: #fff;
+    cursor: pointer;
   }
 }
 .integral-pop {
