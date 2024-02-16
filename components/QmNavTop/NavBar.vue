@@ -22,6 +22,7 @@
               :key="item.id"
               @tap="handleJump(item)"
           >{{item.name}}</view>
+          <view class="item" @tap="handleJump({url: '/pages/picture/index'})">我的创作</view>
         </view>
         <view class="userinfo" v-if="!userInfoState.user_id">
           <view @tap="handleJump({url: '/pages/login/index'})">登录</view>
@@ -187,12 +188,12 @@ export default {
   }
 }
 
-@media screen and (max-width: 765px) {
+@media screen and (max-width: 790px) {
   .pc-nav-box {
     display: none;
   }
 }
-@media screen and (min-width: 765px) {
+@media screen and (min-width: 790px) {
   .qm-nav-box {
     display: none;
   }
