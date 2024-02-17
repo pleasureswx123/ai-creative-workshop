@@ -1,5 +1,5 @@
 import {pictureApi} from "@/api";
-import {mapState, mapActions} from 'vuex';
+import {mapState, mapActions, mapMutations} from 'vuex';
 import Layout from '../components/Layout.vue';
 import PicHeader from '../components/PicHeader.vue';
 import TitleCell from '../components/TitleCell.vue';
@@ -64,11 +64,13 @@ export default {
         const { currentImg } = data || {};
         this.sourceImg = currentImg;
       })
+      this.setTaskDetail();
       type && this.getMaterial({task_type: type});
     })
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask', 'getMaterial']),
+    ...mapMutations('PictureInfo', ['setTaskDetail']),
     toastTipsErrorTxt() {
       let result = '';
       try {
