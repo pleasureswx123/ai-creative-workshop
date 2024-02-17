@@ -16,7 +16,7 @@
           <text>超级语言</text>
         </view>
         <view class="menu-nav">
-          <view class="item" :class="{active: true}" v-for="item in menuList" :key="item.id" @tap="handleJump(item)">{{item.name}}</view>
+          <view class="item" v-for="item in menuList" :key="item.id" @tap="handleJump(item)">{{item.name}}</view>
         </view>
         <view class="userinfo" v-if="!userInfoState.user_id">
           <view class="pointer" @tap="handleJump({url: '/pages/login/index'})">登录</view>
