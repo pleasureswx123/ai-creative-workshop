@@ -57,7 +57,7 @@ export default {
           url: 'pages/special/novel'
         },
         8: {
-          iconName: 'icon-qm-MaterialSymbolsPhotoCameraFront',
+          iconName: 'icon-qm-MaterialSymbolsPhotoLibraryRounded',
           url: 'pages/special/make-diagram'
         },
         9: {
