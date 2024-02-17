@@ -49,9 +49,9 @@ export default {
 <style lang="scss" scoped>
 .banner-cont {
   width: 100%;
-  padding: 0 40rpx 0;
+  padding: 0 20rpx;
   box-sizing: border-box;
-  margin:20rpx 0 30rpx 0;
+  margin: 20rpx 0;
   .banner {
     border-radius: 10rpx;
     height: 344rpx;

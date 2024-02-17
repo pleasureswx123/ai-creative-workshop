@@ -28,7 +28,8 @@ export default {
     getInfo(id) {
       const temp = {
         1: {
-          iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
+          // iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
+          iconName: 'icon-qm-chat',
           url: 'pages/ai/index'
         },
         2: {
@@ -48,7 +49,7 @@ export default {
           url: 'pages/sound/index'
         },
         6: {
-          iconName: 'icon-qm-MaterialSymbolsAddAPhotoRounded',
+          iconName: 'icon-qm-MaterialSymbolsPhotoCameraFront',
           url: 'pages/picture/personal-photo-tool'
         },
         7: {
@@ -84,7 +85,7 @@ export default {
 
 <style lang="scss" scoped>
 .aiType {
-  padding: 0 40rpx 30rpx;
+  padding: 0 20rpx 20rpx;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20rpx;

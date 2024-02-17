@@ -20,8 +20,9 @@
           <template v-for="item in navList">
             <view v-if="item.type === 'line'" :key="item.id" :class="`line ${item.className || ''}`"></view>
             <view v-else :class="`item ${item.className || ''}`" :key="item.id" @tap="jump(item)">
-              <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>
-              <view>{{item.name}}</view>
+<!--              <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>-->
+              <uni-icons custom-prefix="iconfont-qm" :type="item.icon" color="rgba(255,255,255,.5)" size="18" />
+              <view class="name">{{item.name}}</view>
             </view>
           </template>
         </view>
@@ -62,22 +63,22 @@ export default {
       showIntegralPop: false,
       integral: '',
       navList: [
-        {id: 1, iconName: 'account', name: '个人中心', url: '/pages/user/index'},
-        {id: 2, iconName: 'grid', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
+        {id: 1, iconName: 'account', icon: 'icon-qm-account', name: '个人中心', url: '/pages/user/index'},
+        {id: 2, iconName: 'grid', icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
         {type: 'line', id: 'line1', className: 'mobile' },
-        {id: 3, iconName: 'chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
-        {id: 4, iconName: 'camera', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
-        {id: 5, iconName: 'photo', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
-        {id: 6, iconName: 'mic', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
-        {id: 7, iconName: 'play-right', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
-        {id: 12, iconName: 'camera-fill', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
+        {id: 3, iconName: 'chat', icon: 'icon-qm-chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
+        {id: 4, iconName: 'camera', icon: 'icon-qm-MaterialSymbolsLinkedCameraRounded', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
+        {id: 5, iconName: 'photo', icon: 'icon-qm-MdiImageEdit', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
+        {id: 6, iconName: 'mic', icon: 'icon-qm-MaterialSymbolsAutoDetectVoice', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
+        {id: 7, iconName: 'play-right', icon: 'icon-qm-MaterialSymbolsVideoCallRounded', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
+        {id: 12, iconName: 'camera-fill', icon: 'icon-qm-MaterialSymbolsPhotoCameraFront', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
         {type: 'line', id: 'line2' },
-        {id: 8, iconName: 'file-text', name: '使用教程', url: '/pages/article/list?type=help'},
-        {id: 9, iconName: 'kefu-ermai', name: '联系我们', url: '/pages/article/code'},
-        {id: 10, iconName: 'order', name: '服务条款', url: '/pages/article/article?type=service'},
-        {id: 11, iconName: 'info-circle', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {id: 8, iconName: 'file-text', icon: 'icon-qm-text1', name: '使用教程', url: '/pages/article/list?type=help'},
+        {id: 9, iconName: 'kefu-ermai', icon: 'icon-qm-call', name: '联系我们', url: '/pages/article/code'},
+        {id: 10, iconName: 'order', icon: 'icon-qm-txt', name: '服务条款', url: '/pages/article/article?type=service'},
+        {id: 11, iconName: 'info-circle', icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/article/article?type=privacy'},
         {type: 'line', id: 'line3' },
-        {id: 100, iconName: 'minus-square-fill', name: '退出登录'},
+        {id: 100, iconName: 'minus-square-fill', icon: 'icon-qm-exit', name: '退出登录'},
       ]
     }
   },
@@ -180,6 +181,10 @@ export default {
     align-items: center;
     gap: 20rpx;
     cursor: pointer;
+    .name {
+      flex: 1;
+      min-width: 0;
+    }
   }
   .line {
     height: 2rpx;
