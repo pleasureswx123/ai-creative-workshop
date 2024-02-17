@@ -3,6 +3,7 @@ import {pictureApi} from '@/api'
 const state = {
   toolsList: [], // 图片工具列表
   videoToolsList: [], // 视频工具列表
+  personalToolsList: [], // 个人写真工具列表
   taskDetail: {},
 };
 
@@ -24,6 +25,12 @@ const actions = {
   getVideoToolsList({dispatch, commit}, params = {}) {
     return pictureApi.getToolsList(params).then(res => {
       commit('setVideoToolsList', res?.list || [])
+      return Promise.resolve(res);
+    })
+  },
+  getPersonalToolsList({dispatch, commit}, params = {}) {
+    return pictureApi.getToolsList(params).then(res => {
+      commit('setPersonalToolsList', res?.list || [])
       return Promise.resolve(res);
     })
   },
@@ -77,7 +84,24 @@ const mutations = {
         ...({type: temp[item.id] || 'img-to-video'})
       }
     });
-  }
+  },
+  setPersonalToolsList(state, info = []) {
+    state.personalToolsList = info.map(item => {
+      const temp = {
+        12: 'photo-clothing',
+        13: 'photo-pictorials',
+        14: 'photo-classical',
+        15: 'photo-han',
+        17: 'photo-modern',
+      }
+      return {
+        ...item,
+        url: item.img_url,
+        name: item.title,
+        ...({type: temp[item.id] || 'clothing'})
+      }
+    });
+  },
 }
 
 export default {

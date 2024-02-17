@@ -50,6 +50,7 @@ export default {
         6: {
           iconName: 'icon-qm-MaterialSymbolsAddAPhotoRounded',
           url: 'pages/special/personal-photo'
+          // url: 'pages/picture/personal-photo-tool'
         },
         7: {
           iconName: 'icon-qm-MaterialSymbolsMenuBook',

@@ -3,7 +3,7 @@
       class="qm-textarea"
       :confirmType="null" v-model="current"
       placeholderStyle="color: red;"
-      placeholder="描述文字以短句、短语为佳，支持中、英文输入" count
+      :placeholder="placeholder" count
       maxlength="300" height="140"></u--textarea>
 </template>
 
@@ -13,6 +13,10 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '描述文字以短句、短语为佳，支持中、英文输入'
     }
   },
   data() {

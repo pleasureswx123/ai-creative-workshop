@@ -196,7 +196,7 @@ page {
 
 @media screen and (min-width: 960px) {
   page {
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 }

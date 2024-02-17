@@ -2,27 +2,33 @@
   <view class="userinfo-box">
     <view class="mask-userinfo-pop" v-if="showNavListPop" @tap="showNavListPop = false"></view>
     <view class="userinfo-inner-box" v-show="showNavListPop">
-      <view class="user-box">
-        <view class="avatar">
-          <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
+      <scroll-view scroll-y="true" class="scroll-Y">
+        <view class="user-box">
+          <view class="avatar">
+            <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
+          </view>
+          <view class="info">
+            <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
+            <view class="user-id">MID:{{userInfoState.user_id}}</view>
+          </view>
         </view>
-        <view class="info">
-          <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
-          <view class="user-id">MID:{{userInfoState.user_id}}</view>
+        <view class="integral-box">
+          <view>积分<text>{{userInfoState.balance}}</text></view>
+          <view class="btn" @click="changeIntegral">兑换</view>
         </view>
-      </view>
-      <view class="integral-box">
-        <view>积分<text>{{userInfoState.balance}}</text></view>
-        <view class="btn" @click="changeIntegral">兑换</view>
-      </view>
-      <view class="nav-list">
-        <view class="item" v-for="item in navList" :key="item.id" @tap="jump(item)">
-          <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>
-          <view>{{item.name}}</view>
+        <view class="nav-list">
+          <template v-for="item in navList">
+            <view v-if="item.type === 'line'" :key="item.id" :class="`line ${item.className || ''}`"></view>
+            <view v-else :class="`item ${item.className || ''}`" :key="item.id" @tap="jump(item)">
+              <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>
+              <view>{{item.name}}</view>
+            </view>
+          </template>
         </view>
-      </view>
+      </scroll-view>
     </view>
     <u-popup
+        v-if="showIntegralPop"
         class="integral-pop"
         :show="showIntegralPop"
         mode="center"
@@ -57,11 +63,20 @@ export default {
       integral: '',
       navList: [
         {id: 1, iconName: 'account', name: '个人中心', url: '/pages/user/index'},
-        {id: 2, iconName: 'file-text', name: '使用教程', url: '/pages/article/list?type=help'},
-        {id: 3, iconName: 'kefu-ermai', name: '联系我们', url: '/pages/article/code'},
-        {id: 4, iconName: 'order', name: '服务条款', url: '/pages/article/article?type=service'},
-        {id: 5, iconName: 'info-circle', name: '隐私协议', url: '/pages/article/article?type=privacy'},
-        {id: 6, iconName: 'minus-square-fill', name: '退出登录'},
+        {id: 2, iconName: 'grid', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
+        {type: 'line', id: 'line1', className: 'mobile' },
+        {id: 3, iconName: 'chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
+        {id: 4, iconName: 'camera', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
+        {id: 5, iconName: 'photo', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
+        {id: 6, iconName: 'mic', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
+        {id: 7, iconName: 'play-right', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
+        {type: 'line', id: 'line2' },
+        {id: 8, iconName: 'file-text', name: '使用教程', url: '/pages/article/list?type=help'},
+        {id: 9, iconName: 'kefu-ermai', name: '联系我们', url: '/pages/article/code'},
+        {id: 10, iconName: 'order', name: '服务条款', url: '/pages/article/article?type=service'},
+        {id: 11, iconName: 'info-circle', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {type: 'line', id: 'line3' },
+        {id: 100, iconName: 'minus-square-fill', name: '退出登录'},
       ]
     }
   },
@@ -75,6 +90,17 @@ export default {
         this.$emit('update:show', status);
       }
     }
+  },
+  watch: {
+    showNavListPop: {
+      immediate: true,
+      handler(status) {
+        this.toggleBodyPositionStatus(status)
+      }
+    }
+  },
+  beforeDestroy() {
+    this.toggleBodyPositionStatus(false)
   },
   methods: {
     ...mapActions('UserInfo', ['getUserInfo']),
@@ -100,7 +126,7 @@ export default {
       })
     },
     jump({id, url}) {
-      if(id === 6) {
+      if(id === 100) {
         return userApi.logout().then(res => {
           uni.clearStorage();
           uni.reLaunch({
@@ -117,16 +143,21 @@ export default {
 <style lang="scss" scoped>
 .userinfo-box {
   position: relative;
-  height: 100%;
+  height: 2rpx;
+  z-index: 100;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   .userinfo-inner-box {
-    padding: 0 40rpx 40rpx;
+    padding: 0 40rpx 10rpx;
     z-index: 100;
     position: absolute;
-    top: 0;
+    top: -80rpx;
     right: 0;
     background-color: #1D1E23;
-    width: 200px;
+    width: 400rpx;
     box-sizing: border-box;
+    
   }
   .mask-userinfo-pop {
     position: fixed;
@@ -148,6 +179,11 @@ export default {
     align-items: center;
     gap: 20rpx;
     cursor: pointer;
+  }
+  .line {
+    height: 2rpx;
+    background-color: rgba(0,0,0,.2);
+    border-bottom: 2rpx solid rgba(255,255,255,.1);
   }
 }
 .integral-box {
@@ -183,7 +219,7 @@ export default {
     margin: 20rpx 0;
   }
   /deep/ .u-popup__content {
-    width: 50%;
+    width: 80%;
     border-radius: 20rpx;
     box-sizing: border-box;
     padding: 80rpx 40rpx;
@@ -248,6 +284,9 @@ export default {
     }
   }
 }
+.scroll-Y {
+  max-height: 100vh;
+}
 
 @media screen and (min-width: 750px) and (max-width: 960px){
   .integral-pop /deep/ .u-popup__content {
@@ -258,6 +297,12 @@ export default {
 @media screen and (min-width: 960px) {
   .integral-pop /deep/ .u-popup__content {
     width: 30%;
+  }
+}
+
+@media screen and (min-width: 790px) {
+  .nav-list .mobile {
+    display: none;
   }
 }
 </style>

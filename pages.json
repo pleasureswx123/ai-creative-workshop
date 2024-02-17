@@ -8,8 +8,39 @@
 		},
 		{
 			"path": "pages/special/personal-photo",
+			//"path": "pages/picture/personal-photo-tool",
 			"style": {
 				"navigationBarTitleText": "创作个人写真摄影"
+			}
+		},
+		{
+			"path": "pages/picture/photo-clothing",
+			"style": {
+				"navigationBarTitleText": "秒变职业装"
+			}
+		},
+		{
+			"path": "pages/picture/photo-pictorials",
+			"style": {
+				"navigationBarTitleText": "通用摄影写真"
+			}
+		},
+		{
+			"path": "pages/picture/photo-classical",
+			"style": {
+				"navigationBarTitleText": "绝美古风"
+			}
+		},
+		{
+			"path": "pages/picture/photo-han",
+			"style": {
+				"navigationBarTitleText": "汉服摄影"
+			}
+		},
+		{
+			"path": "pages/picture/photo-modern",
+			"style": {
+				"navigationBarTitleText": "现代风格(随机姿态)"
 			}
 		},
 		{
