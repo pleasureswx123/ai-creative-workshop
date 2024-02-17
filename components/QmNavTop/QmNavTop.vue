@@ -52,6 +52,7 @@ export default {
         {id: 4, name: '生成配音', url: '/pages/sound/index' },
         {id: 5, name: '智能对话', url: '/pages/ai/index' },
         {id: 6, name: '生成视频', url: '/pages/picture/video-tool' },
+        {id: 7, name: '写真摄影', url: '/pages/picture/personal-photo-tool' },
       ]
     }
   },
@@ -182,12 +183,12 @@ export default {
   }
 }
 
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 870px) {
   .pc-nav-box {
     display: none;
   }
 }
-@media screen and (min-width: 790px) {
+@media screen and (min-width: 870px) {
   .qm-nav-box {
     display: none;
   }

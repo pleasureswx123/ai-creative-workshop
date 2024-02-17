@@ -7,9 +7,9 @@
       <view class="grid-box">
         <view class="card-box pointer" v-for="(item, index) in personalToolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
           <view class="img-box">
-            <image :src="item.url"></image>
+            <image :src="item.url" mode="aspectFill"></image>
           </view>
-          <view class="title">{{item.tips}}</view>
+          <view class="tips">{{item.tips}}</view>
           <view class="title">{{item.title}}</view>
         </view>
       </view>
@@ -68,6 +68,13 @@ export default {
       color: var(--txt-color1);
       text-align: center;
       line-height: 80rpx;
+    }
+    .tips {
+      font-size: 20rpx;
+      color: var(--txt-color1);
+      text-align: center;
+      line-height: 30rpx;
+      padding: 20rpx 20rpx 0;
     }
   }
   .img-box {

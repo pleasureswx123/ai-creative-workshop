@@ -92,7 +92,7 @@ const mutations = {
         13: 'photo-pictorials',
         14: 'photo-classical',
         15: 'photo-han',
-        17: 'photo-modern',
+        16: 'photo-modern',
       }
       return {
         ...item,

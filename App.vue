@@ -64,15 +64,6 @@
 			}
 			
 			
-			if (window.lang !== 'zh-cn') {
-				uni.setTabBarItem({ index: 0, text: this.$lang('对话') })
-				uni.setTabBarItem({ index: 1, text: this.$lang('创作') })
-				uni.setTabBarItem({ index: 2, text: this.$lang('模拟') })
-				uni.setTabBarItem({ index: 3, text: this.$lang('绘画') })
-				uni.setTabBarItem({ index: 4, text: this.$lang('我的') })
-			}
-			
-
 			// 初始化微信jssdk
 			util.request({
 					url: '/h5/getShareInfo',

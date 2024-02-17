@@ -70,6 +70,7 @@ export default {
         {id: 5, iconName: 'photo', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
         {id: 6, iconName: 'mic', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
         {id: 7, iconName: 'play-right', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
+        {id: 12, iconName: 'camera-fill', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
         {type: 'line', id: 'line2' },
         {id: 8, iconName: 'file-text', name: '使用教程', url: '/pages/article/list?type=help'},
         {id: 9, iconName: 'kefu-ermai', name: '联系我们', url: '/pages/article/code'},
@@ -300,7 +301,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 790px) {
+@media screen and (min-width: 870px) {
   .nav-list .mobile {
     display: none;
   }

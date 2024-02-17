@@ -7,8 +7,7 @@
 			}
 		},
 		{
-			"path": "pages/special/personal-photo",
-			//"path": "pages/picture/personal-photo-tool",
+			"path": "pages/picture/personal-photo-tool",
 			"style": {
 				"navigationBarTitleText": "创作个人写真摄影"
 			}

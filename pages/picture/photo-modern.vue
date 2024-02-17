@@ -40,7 +40,7 @@ export default {
     },
     params() {
       return {
-        task_type: 17,
+        task_type: 16,
         reference_image: this.sourceImg || '',
         prompt: (this.describe || '').trim() || ''
       }
