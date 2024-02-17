@@ -3,117 +3,119 @@
     <QmNavTop></QmNavTop>
     <u-gap height="30rpx"></u-gap>
     <TaskTips />
-    <QmTabs
-        :value.sync="modeId"
-        :options="modeClassInfo" />
-    <view class="page-grid-con">
-      <view>
-        <ModelSelectCard
-            @showPopFunc="showModelSelectPop = true"
-            :info="currentModeInfo" />
-        <DescriptionTextareaCard
-            title="画面描述词"
-            :maxlength="maxlength"
-            placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
-            :value.sync="description" />
-        <ControlNetCard
-            v-if="modeId === 1"
-            @showPopFunc="showControlNetPop"
-            :info.sync="controlNetInfo" />
-        <LoraCard
-            v-if="[1, 2].includes(modeId)"
-            @showPopFunc="showLoraPop = true"
-            :info.sync="loraInfo" />
-        <ImgStyleCard
-            @showPopFunc="showImgStylePop = true"
-            :info.sync="imgStyleInfo" />
-      </view>
-      <view>
-      <ReferenceImgCard
-          @showPopFunc="showHistoryPop = true"
-          @setReferenceImgInfo="setReferenceImgInfo"
-          :info.sync="referenceImgInfo" />
-      <DescriptionTextareaCard
-          title="负面描述词"
-          :maxlength="maxlength"
-          placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
-          :value.sync="badDescription" />
-      <ImgRatioCard
-          :value.sync="ratioId"
-          :ratios="ImgRatioInfo" />
-      </view>
-    </view>
-  
-    <QmPop
-        v-if="showModelSelectPop"
-        :title="`选择模型${currentModelInfo.title}`"
-        componentName="ModelStyleItem"
-        :paramsInfo="{class_id: modeId}"
-        :getList="getModelList"
-        :proxyList="item => ({ ...item, id: item.model_style_id })"
-        :show.sync="showModelSelectPop"
-        :currentInfo.sync="currentModeInfoData">
-      <template #tips>
-        <view class="tips-txt">
-          {{currentModelInfo.content}}
+    <template v-if="modeId">
+      <QmTabs
+          :value.sync="modeId"
+          :options="modeClassInfo" />
+      <view class="page-grid-con">
+        <view>
+          <ModelSelectCard
+              @showPopFunc="showModelSelectPop = true"
+              :info="currentModeInfo" />
+          <DescriptionTextareaCard
+              title="画面描述词"
+              :maxlength="maxlength"
+              placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
+              :value.sync="description" />
+          <ControlNetCard
+              v-if="modeId === 1"
+              @showPopFunc="showControlNetPop"
+              :info.sync="controlNetInfo" />
+          <LoraCard
+              v-if="[1, 2].includes(modeId)"
+              @showPopFunc="showLoraPop = true"
+              :info.sync="loraInfo" />
+          <ImgStyleCard
+              @showPopFunc="showImgStylePop = true"
+              :info.sync="imgStyleInfo" />
         </view>
-      </template>
-    </QmPop>
+        <view>
+        <ReferenceImgCard
+            @showPopFunc="showHistoryPop = true"
+            @setReferenceImgInfo="setReferenceImgInfo"
+            :info.sync="referenceImgInfo" />
+        <DescriptionTextareaCard
+            title="负面描述词"
+            :maxlength="maxlength"
+            placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
+            :value.sync="badDescription" />
+        <ImgRatioCard
+            :value.sync="ratioId"
+            :ratios="ImgRatioInfo" />
+        </view>
+      </view>
     
-    <QmPop
-        v-if="showLoraPop"
-        title="选择Lora模型"
-        componentName="LoraItem"
-        :paramsInfo="{class_id: modeId}"
-        :getList="getLoraList"
-        :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
-        :show.sync="showLoraPop"
-        :currentInfo.sync="loraInfo" />
+      <QmPop
+          v-if="showModelSelectPop"
+          :title="`选择模型${currentModelInfo.title}`"
+          componentName="ModelStyleItem"
+          :paramsInfo="{class_id: modeId}"
+          :getList="getModelList"
+          :proxyList="item => ({ ...item, id: item.model_style_id })"
+          :show.sync="showModelSelectPop"
+          :currentInfo.sync="currentModeInfoData">
+        <template #tips>
+          <view class="tips-txt">
+            {{currentModelInfo.content}}
+          </view>
+        </template>
+      </QmPop>
+      
+      <QmPop
+          v-if="showLoraPop"
+          title="选择Lora模型"
+          componentName="LoraItem"
+          :paramsInfo="{class_id: modeId}"
+          :getList="getLoraList"
+          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+          :show.sync="showLoraPop"
+          :currentInfo.sync="loraInfo" />
+      
+      <QmPop
+          v-if="showImgStylePop"
+          :show.sync="showImgStylePop"
+          :currentInfo.sync="imgStyleInfo"
+          title="选择样式"
+          componentName="ImgStyleItem"
+          :paramsInfo="{class_id: modeId}"
+          :getList="getImgStyleList"
+          :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
+      
+      <QmWaterFallPop
+          v-if="showHistoryPop"
+          :show.sync="showHistoryPop"
+          :currentInfo.sync="referenceImgInfo"
+          title="选择要处理的图片"
+          :getList="getHistoryList"
+          :proxyList="item => {
+            const {img_height: h, img_url, img_width: w, task_id} = item || {};
+            const url = img_url || '';
+            const titles = url.split('/').slice(-1);
+            return {
+              ...item,
+              allowEdit: false,
+              image: url,
+              w, h,
+              url,
+              title: titles[0] || url,
+              id: task_id,
+              value: 0.8
+            }
+          }" />
+      
+      <ControinetPop
+          v-if="showControinetPop"
+          :showStatus.sync="showControinetPop"
+          ref="ControinetPopRef"
+          @controninetlist="setControlNetInfo" />
     
-    <QmPop
-        v-if="showImgStylePop"
-        :show.sync="showImgStylePop"
-        :currentInfo.sync="imgStyleInfo"
-        title="选择样式"
-        componentName="ImgStyleItem"
-        :paramsInfo="{class_id: modeId}"
-        :getList="getImgStyleList"
-        :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
-    
-    <QmWaterFallPop
-        v-if="showHistoryPop"
-        :show.sync="showHistoryPop"
-        :currentInfo.sync="referenceImgInfo"
-        title="选择要处理的图片"
-        :getList="getHistoryList"
-        :proxyList="item => {
-          const {img_height: h, img_url, img_width: w, task_id} = item || {};
-          const url = img_url || '';
-          const titles = url.split('/').slice(-1);
-          return {
-            ...item,
-            allowEdit: false,
-            image: url,
-            w, h,
-            url,
-            title: titles[0] || url,
-            id: task_id,
-            value: 0.8
-          }
-        }" />
-    
-    <ControinetPop
-        v-if="showControinetPop"
-        :showStatus.sync="showControinetPop"
-        ref="ControinetPopRef"
-        @controninetlist="setControlNetInfo" />
-  
-    <u-gap height="30" />
-    <GeneratePhotoBtn
-        :value.sync="picNums"
-        :modeId="modeId"
-        :generateStatus="generateStatus"
-        @cb="startGenerate" />
+      <u-gap height="30" />
+      <GeneratePhotoBtn
+          :value.sync="picNums"
+          :modeId="modeId"
+          :generateStatus="generateStatus"
+          @cb="startGenerate" />
+    </template>
   </view>
 </template>
 
@@ -147,8 +149,8 @@ export default {
       showHistoryPop: false,
       maxlength: 1000,
       taskId: '',
-      taskModelId: '',
-      modeId: 2,
+      taskInfo: null,
+      modeId: '',
       description: '',
       controlNetInfo: null,
       loraInfo: null,
@@ -204,7 +206,7 @@ export default {
       this.checkLoginStatus().then(() => {
         const params = {
           task_type: 1,
-          model_parentclass_id: this.modeId || 1,
+          model_parentclass_id: this.modeId,
           model_style_id: this.currentModeInfo?.model_style_id || '',
           prompt: this.description || '',
           controlnet_type_id: this.controlNetInfo?.id || '',
@@ -246,86 +248,93 @@ export default {
         this.generateStatus = false;
       });
     },
+    setTaskInfo () {
+      const {
+        model_parentclass_id, model_style_img, model_style_content, model_style_id, model_style_title,
+        prompt, controlnet_type_id, controlnet_img_detect, controlnet_img, controlnet_weight,
+        lora_id, lora_title, lora_content, lora_img, lora_weight,
+        img_style_id, img_style_title, img_style_content, img_style_img,
+        reference_image, reference_image_weight,
+        negative_prompt, img_scale, batch_size
+      } = this.taskInfo || {};
+      this.setCurrentModeInfo({
+        img_url: model_style_img,
+        content: model_style_content,
+        model_style_id: model_style_id,
+        title: model_style_title
+      });
+      this.description = (prompt || '')?.slice(0, this.maxlength);
+      if (controlnet_type_id) {
+        this.controlNetInfo = {
+          id: controlnet_type_id,
+          title: controlnet_type_id,
+          url: controlnet_img_detect,
+          img: controlnet_img,
+          value: controlnet_weight || 0.8
+        }
+      }
+      if (lora_id) {
+        this.loraInfo = {
+          lora_id: lora_id,
+          title: lora_title,
+          content: lora_content,
+          img_url: lora_img,
+          value: lora_weight || 0.8,
+        }
+      }
+      if (img_style_id) {
+        this.imgStyleInfo = {
+          img_style_id: img_style_id,
+          title: img_style_title,
+          en_title: img_style_content,
+          img_url: img_style_img,
+        }
+      }
+      if (reference_image) {
+        this.referenceImgInfo = {
+          url: reference_image,
+          title: reference_image?.split?.('/')?.slice(-1)?.[0] || reference_image,
+          value: reference_image_weight || 0.8
+        }
+      }
+      if (negative_prompt) {
+        this.badDescription = (negative_prompt || '')?.slice(0, this.maxlength);
+      }
+      this.ratioId = img_scale || 5
+      this.picNums = batch_size || 1;
+    },
     getTaskInfo(id) {
       id && this.getSameModel({task_id: id}).then(res => {
-        const {
-          model_parentclass_id, model_style_img, model_style_content, model_style_id, model_style_title,
-          prompt, controlnet_type_id, controlnet_img_detect, controlnet_img, controlnet_weight,
-          lora_id, lora_title, lora_content, lora_img, lora_weight,
-          img_style_id, img_style_title, img_style_content, img_style_img,
-          reference_image, reference_image_weight,
-          negative_prompt, img_scale, batch_size
-        } = res || {};
-        this.taskModelId = model_parentclass_id;
-        this.modeId = model_parentclass_id;
-        this.setCurrentModeInfo({
-          img_url: model_style_img,
-          content: model_style_content,
-          model_style_id: model_style_id,
-          title: model_style_title
-        });
-        this.description = (prompt || '')?.slice(0, this.maxlength);
-        if(controlnet_type_id) {
-          this.controlNetInfo = {
-            id: controlnet_type_id,
-            title: controlnet_type_id,
-            url: controlnet_img_detect,
-            img: controlnet_img,
-            value: controlnet_weight || 0.8
-          }
+        this.taskInfo = res || null;
+        const modeId = res?.model_parentclass_id;
+        if(!this.modeId || (!!this.modeId && this.modeId !== modeId)) {
+          this.modeId = modeId;
         }
-        if(lora_id) {
-          this.loraInfo = {
-            lora_id: lora_id,
-            title: lora_title,
-            content: lora_content,
-            img_url: lora_img,
-            value: lora_weight || 0.8,
-          }
-        }
-        if(img_style_id) {
-          this.imgStyleInfo = {
-            img_style_id: img_style_id,
-            title: img_style_title,
-            en_title: img_style_content,
-            img_url: img_style_img,
-          }
-        }
-        if(reference_image) {
-          this.referenceImgInfo = {
-            url: reference_image,
-            title: reference_image?.split?.('/')?.slice(-1)?.[0] || reference_image,
-            value: reference_image_weight || 0.8
-          }
-        }
-        if(negative_prompt) {
-          this.badDescription = (negative_prompt || '')?.slice(0, this.maxlength);
-        }
-        this.ratioId = img_scale || 5
-        this.picNums = batch_size || 1;
       });
     },
+    resetData() {
+      this.controlNetInfo = null;
+      this.loraInfo = null;
+      this.imgStyleInfo = null;
+      // this.referenceImgInfo = null;
+      // this.badDescription = '';
+      // this.description = '';
+      this.ratioId = 5;
+      this.picNums = 1;
+    },
+    initData(id) {
+      Promise.all([this.getModelStyleList({page: 1, pagesize: 10, class_id: id}), this.getImgScale({class_id: id})]).then(res => {
+        this.resetData();
+        if(this.taskId && this.taskInfo && this.taskInfo.model_parentclass_id === id) {
+          this.setTaskInfo();
+        }
+      })
+    }
   },
   watch: {
     modeId: {
-      immediate: true,
       handler(id) {
-        setTimeout(() => {
-          this.getModelStyleList({page: 1, pagesize: 10, class_id: id || 1});
-          this.getImgScale({class_id: id}).then(res => {
-            this.ratioId = 5;
-          });
-          this.controlNetInfo = null;
-          this.loraInfo = null;
-          this.imgStyleInfo = null;
-          this.picNums = 1;
-          
-          if(this.taskId) {
-            if (!this.taskModelId || (this.taskModelId === id)) {
-              this.getTaskInfo(this.taskId);
-            }
-          }
-        }, 300)
+        id && this.initData(id);
       }
     }
   },
@@ -333,7 +342,15 @@ export default {
     this.taskId = options.task_id || '';
     this.checkLoginStatus();
     this.getModelClass().then(list => {
-      this.modeId = list?.[0]?.id || 0;
+      if(this.taskId) {
+        this.getTaskInfo(this.taskId);
+        return;
+      }
+      if(!this.modeId) {
+        this.modeId = list?.[0]?.id;
+      } else {
+        this.initData(this.modeId);
+      }
     });
   },
 }
