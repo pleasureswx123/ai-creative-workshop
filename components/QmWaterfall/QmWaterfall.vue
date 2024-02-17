@@ -65,7 +65,8 @@ export default {
     }
   },
   created() {
-    this.initListData();
+    this.setColumnCount();
+    this.clearData();
     this.getData();
   },
   computed: {
@@ -102,7 +103,6 @@ export default {
   },
   mounted() {
     // #ifdef H5
-    this.resetColumnCount();
     window.addEventListener('resize', this.restData)
     // #endif
   },
@@ -116,7 +116,7 @@ export default {
     restData() {
       uni.$u.debounce(this.resetColumnCount, 800);
     },
-    resetColumnCount() {
+    setColumnCount() {
       const {windowWidth} = uni.getSystemInfoSync();
       if(750 < windowWidth && windowWidth < 960) {
         this.columnCount = 3;
@@ -124,6 +124,9 @@ export default {
       if(windowWidth > 960) {
         this.columnCount = 4;
       }
+    },
+    resetColumnCount() {
+      this.setColumnCount();
       this.clearData();
       this.getData();
     },
