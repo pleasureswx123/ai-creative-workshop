@@ -3,15 +3,7 @@
     <view class="mask-userinfo-pop" v-if="showNavListPop" @tap="showNavListPop = false"></view>
     <view class="userinfo-inner-box" v-show="showNavListPop">
       <scroll-view scroll-y="true" class="scroll-Y">
-        <view class="user-box">
-          <view class="avatar">
-            <image v-if="userInfoState.avatar" :src="userInfoState.avatar" mode="aspectFit" />
-          </view>
-          <view class="info">
-            <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
-            <view class="user-id">MID:{{userInfoState.user_id}}</view>
-          </view>
-        </view>
+        <UserAvatarInfo></UserAvatarInfo>
         <view class="integral-box">
           <view>积分<text>{{userInfoState.balance}}</text></view>
           <view class="btn" @click="changeIntegral">兑换</view>
@@ -256,37 +248,6 @@ export default {
     .confirm {
       background-color: #F60652;
       color: #fff;
-    }
-  }
-}
-.user-box {
-  padding: 30rpx 0 10rpx;
-  display: flex;
-  align-items: center;
-  gap: 30rpx;
-  .avatar {
-    height: 65rpx;
-    width: 65rpx;
-    background-color: gray;
-    border-radius: 50%;
-    overflow: hidden;
-    image {
-      height: 100%;
-      width: 100%;
-    }
-  }
-  .info {
-    flex: 1;
-    min-width: 0;
-    .name {
-      font-size: 24rpx;
-      color: rgba(255,255,255,.7);
-      font-weight: 700;
-    }
-    .user-id {
-      font-size: 24rpx;
-      margin-top: 6rpx;
-      color: #818181;
     }
   }
 }
