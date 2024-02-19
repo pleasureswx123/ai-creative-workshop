@@ -1,4 +1,25 @@
 export default {
+  getJiFenRule(params) {
+    return uni.$u.http.post(`/User/JiFenRule`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getMyJiFenDetail(params) {
+    return uni.$u.http.post(`/User/MyJiFenDetail`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getMyJiFenRecord(params) {
+    return uni.$u.http.post(`/User/MyJiFenRecord`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   logout(params) {
     return uni.$u.http.post(`/user/logout`, params, {
       custom: {

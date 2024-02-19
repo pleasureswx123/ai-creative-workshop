@@ -1,121 +1,153 @@
 <template>
-    <view class="page">
-      <QmNavTop></QmNavTop>
-		<view class="title">积分明细</view>
-		<view class="list">
-			<view class="item" v-for="(item,index) in recordList" :key="index">
-				<view class="ceCont">
-					<view class="ceType">任务类型 - {{item.jifen_title}}</view>
-					<view class="ceCont">
-						<text>任务id：{{item.task_id}}</text>
-						<text>生成时间：{{item.create_time}}</text>
-					</view>
-				</view>
-				<view :class="[item.jifen_consume_type == 1 ? 'num' : 'numAdd']">{{item.jifen_val}}</view>
-			</view>
-			<view v-show="isLoadMore" class="isLoadMore">
-				<u-loadmore :status="status" />
-			</view>
-		</view>
+  <view class="page-container">
+    <QmNavTop></QmNavTop>
+    <view class="title-box">
+      <view>消耗历史记录</view>
+<!--      <view class="rule-btn" @tap="jumpRule">消耗规则</view>-->
     </view>
+    <view class="list-box">
+      <view class="item" v-for="(item,index) in list" :key="index">
+        <view class="info">
+          <view class="title">任务类型 - {{ item.jifen_title }}</view>
+          <view class="con">
+            <text>任务id：{{ item.task_id }}</text>
+            <text>生成时间：{{ item.create_time }}</text>
+          </view>
+        </view>
+        <view class="num" :class="{add: item.jifen_consume_type !== 1}">{{ item.jifen_val }}</view>
+      </view>
+    </view>
+    <u-gap height="30"></u-gap>
+    <QmLoadMore :status="loadStatus" @load="loadNextData"></QmLoadMore>
+  </view>
 </template>
 
 <script>
-const app = getApp();
+import { userApi } from '@/api';
+
 export default {
-    data() {
-        return {
-            recordList:[],
-			page:1,
-			pagesize:10,
-			status: 'loadmore',
-			isLoadMore: false //是否加载中
-        };
+  data() {
+    return {
+      list: [],
+      page: 1,
+      pagesize: 20,
+      loadStatus: '', // more/loading/noMore
+    };
+  },
+  onShow() {
+    this.initParams();
+    this.loadMore();
+  },
+  onPullDownRefresh() {
+    this.initParams();
+    this.loadMore().then(() => {
+      uni.stopPullDownRefresh();
+    });
+  },
+  onReachBottom() {
+    this.loadNextData();
+  },
+  methods: {
+    loadNextData() {
+      this.page += 1;
+      this.loadMore();
     },
-    onLoad() {
-		this.getRecord()
-	},
-	onReachBottom() { //上拉触底函数
-		this.getRecord()
-	},
-    methods: {
-        getRecord(){
-        	app.globalData.util.request({
-        		url: '/User/MyJiFenRecord',
-        		data:{
-        			page:this.page,
-					pagesize:this.pagesize
-        		}
-        	})
-        	.then((res) => {
-				if(res.data.list.length>0){
-					this.recordList = res.data.list
-					if(res.data.list.length < this.pagesize){
-						this.isLoadMore = true
-						this.status = 'nomore'
-					}else{
-						this.page +=1
-						this.isLoadMore = true
-						this.status = 'nomore'
-					}
-				}else{
-					this.isLoadMore = true
-					this.status = 'nomore'
-				}
-        	});
-        },
-    }
+    jumpRule() {
+      uni.navigateTo({
+        url: '/pages/user/integral-rule'
+      })
+    },
+    initParams() {
+      this.list = [];
+      this.page = 1;
+      this.loadStatus = '';
+    },
+    loadMore() {
+      if(this.loadStatus === 'noMore') {
+        return;
+      }
+      this.loadStatus = 'loading';
+      return userApi.getMyJiFenRecord({page: this.page, pagesize: this.pagesize}).then(res => {
+        const {list = []} = res || {};
+        this.list = [...this.list, ...(list || [])];
+        this.loadStatus = list.length < this.pagesize ? 'noMore' : 'more';
+      })
+    },
+  }
 };
 </script>
+
 <style lang="scss" scoped>
-page {
-    background: #0D0D0D;
+.page-container {
+  background: var(--bg-color1);
+  font-size: 24rpx;
+  padding: 0 30rpx 300rpx;
 }
-.page{
-	.title{
-		color: #fff;
-		font-size: 28rpx;
-		text-align: center;
-		height: 120rpx;
-		line-height: 120rpx;
-	}
-	.list{
-		background-color: #1D1E23;
-		.item{
-			border-bottom: 1px solid #3C3C3C;
-			display: flex;
-			display: -webkit-flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			align-items: center;
-			box-sizing: border-box;
-			width: 100%;
-			padding: 30rpx;
-			// height: 500px;
-			.ceType{
-				color: #fff;
-				font-size: 28rpx;
-				margin-bottom: 10rpx;
-			}
-			.ceCont{
-				color: #909399;
-				font-size: 24rpx;
-				text{
-					margin-right: 20rpx;
-				}
-			}
-			.num,.numAdd{
-				font-size: 28rpx;
-				font-weight: 700;
-				color: #F47421;
-			}
-			.numAdd{
-				color: #00DACD;
-			}
-		}
-		.isLoadMore{
-			padding: 20rpx 0;
-		}
-	}
+.title-box {
+  color: #fff;
+  font-size: 28rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .rule-btn {
+    position: absolute;
+    top: 50%;
+    right: 30rpx;
+    transform: translate3d(0, -50%, 0);
+    font-size: 28rpx;
+    color: rgba(255, 255, 255, .9);
+    height: 50rpx;
+    line-height: 50rpx;
+    border-radius: 12rpx;
+    border: 2rpx solid rgba(255, 255, 255, .9);
+    padding: 0 25rpx;
+    cursor: pointer;
+  }
+}
+.list-box {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20rpx;
+  .item {
+    border-radius: 20rpx;
+    background-color: #1D1E23;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 30rpx;
+    gap: 20rpx;
+  }
+  .info {
+    flex: 1;
+    min-width: 0;
+  }
+  .title {
+    color: #fff;
+    font-size: 28rpx;
+    margin-bottom: 10rpx;
+  }
+  .con {
+    color: #909399;
+    font-size: 24rpx;
+    display: flex;
+    align-items: center;
+    gap: 30rpx;
+  }
+  .num {
+    font-size: 28rpx;
+    font-weight: 700;
+    color: #F47421;
+    &.add{
+      color: #00DACD;
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .list-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 </style>

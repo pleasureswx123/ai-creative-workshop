@@ -4,15 +4,11 @@
     <view class="userinfo-inner-box" v-show="showNavListPop">
       <scroll-view scroll-y="true" class="scroll-Y">
         <UserAvatarInfo></UserAvatarInfo>
-        <view class="integral-box">
-          <view>积分<text>{{userInfoState.balance}}</text></view>
-          <view class="btn" @click="changeIntegral">兑换</view>
-        </view>
+        <UserVipStatus></UserVipStatus>
         <view class="nav-list">
           <template v-for="item in navList">
             <view v-if="item.type === 'line'" :key="item.id" :class="`line ${item.className || ''}`"></view>
             <view v-else :class="`item ${item.className || ''}`" :key="item.id" @tap="jump(item)">
-<!--              <u-icon :name="item.iconName" size="40" color="#f5f5f5"></u-icon>-->
               <uni-icons custom-prefix="iconfont-qm" :type="item.icon" color="rgba(255,255,255,.5)" size="18" />
               <view class="name">{{item.name}}</view>
             </view>
@@ -20,29 +16,13 @@
         </view>
       </scroll-view>
     </view>
-    <u-popup
-        v-if="showIntegralPop"
-        class="integral-pop"
-        :show="showIntegralPop"
-        mode="center"
-        @close="showIntegralPop = false"
-        closeIconPos="top-right">
-      <view class="integral-inner">
-        <view class="title">兑换积分</view>
-        <view class="desc">可以使用兑换码来获取平台积分，若您已拥有兑换码，可直接进行兑换。若尚未获得兑换码，可联系我们客服进行购买。</view>
-        <u--input placeholder="输入或粘贴兑换码" border="surround" v-model="integral" placeholderStyle="fontSize:14px"></u--input>
-        <view class="operateBtn">
-          <view class="btn" @click="showIntegralPop = false">取消</view>
-          <view class="btn confirm" @click="handleConfirm">确认兑换</view>
-        </view>
-      </view>
-    </u-popup>
+    <ConversionCode :show.sync="showIntegralPop" />
   </view>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
-import {userApi} from '@/api'
+import {userApi} from '@/api';
+
 export default {
   props: {
     show: {
@@ -53,29 +33,28 @@ export default {
   data() {
     return {
       showIntegralPop: false,
-      integral: '',
       navList: [
-        {id: 1, iconName: 'account', icon: 'icon-qm-account', name: '个人中心', url: '/pages/user/index'},
-        {id: 2, iconName: 'grid', icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
+        {id: 1, icon: 'icon-qm-account', name: '个人中心', url: '/pages/user/index'},
+        {id: 2, icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
         {type: 'line', id: 'line1', className: 'mobile' },
-        {id: 3, iconName: 'chat', icon: 'icon-qm-chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
-        {id: 4, iconName: 'camera', icon: 'icon-qm-MaterialSymbolsLinkedCameraRounded', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
-        {id: 5, iconName: 'photo', icon: 'icon-qm-MdiImageEdit', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
-        {id: 6, iconName: 'mic', icon: 'icon-qm-MaterialSymbolsAutoDetectVoice', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
-        {id: 7, iconName: 'play-right', icon: 'icon-qm-MaterialSymbolsVideoCallRounded', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
-        {id: 12, iconName: 'camera-fill', icon: 'icon-qm-MaterialSymbolsPhotoCameraFront', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
+        {id: 13, icon: 'icon-qm-flash1', name: '兑换会员' },
+        {id: 3, icon: 'icon-qm-chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
+        {id: 4, icon: 'icon-qm-MaterialSymbolsLinkedCameraRounded', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
+        {id: 5, icon: 'icon-qm-MdiImageEdit', name: '图片处理', url: '/pages/picture/tool', className: 'mobile' },
+        {id: 6, icon: 'icon-qm-MaterialSymbolsAutoDetectVoice', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
+        {id: 7, icon: 'icon-qm-MaterialSymbolsVideoCallRounded', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
+        {id: 12, icon: 'icon-qm-MaterialSymbolsPhotoCameraFront', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
         {type: 'line', id: 'line2' },
-        {id: 8, iconName: 'file-text', icon: 'icon-qm-text1', name: '使用教程', url: '/pages/article/list?type=help'},
-        {id: 9, iconName: 'kefu-ermai', icon: 'icon-qm-call', name: '联系我们', url: '/pages/article/code'},
-        {id: 10, iconName: 'order', icon: 'icon-qm-txt', name: '服务条款', url: '/pages/article/article?type=service'},
-        {id: 11, iconName: 'info-circle', icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {id: 8, icon: 'icon-qm-text1', name: '使用教程', url: '/pages/article/list?type=help'},
+        {id: 9, icon: 'icon-qm-call', name: '联系我们', url: '/pages/article/code'},
+        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/article/article?type=service'},
+        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/article/article?type=privacy'},
         {type: 'line', id: 'line3' },
-        {id: 100, iconName: 'minus-square-fill', icon: 'icon-qm-exit', name: '退出登录'},
+        {id: 100, icon: 'icon-qm-exit', name: '退出登录'},
       ]
     }
   },
   computed: {
-    ...mapState('UserInfo', ['userInfoState']),
     showNavListPop: {
       get() {
         return this.show
@@ -97,29 +76,13 @@ export default {
     this.toggleBodyPositionStatus(false)
   },
   methods: {
-    ...mapActions('UserInfo', ['getUserInfo']),
-    handleConfirm() {
-      const code = `${this.integral}`.trim();
-      if(!code) {
-        return
-      }
-      userApi.bindCard({code}).then(res => {
-        uni.showToast({
-          title: res.message,
-          duration: 2000
-        });
-        this.showIntegralPop = false;
-        this.showNavListPop = false;
-        this.getUserInfo();
-      })
-    },
-    changeIntegral() {
-      this.checkLoginStatus().then(() => {
-        this.showNavListPop = false;
-        this.showIntegralPop = true;
-      })
-    },
     jump({id, url}) {
+      if(id === 13) {
+        return this.checkLoginStatus().then(() => {
+          this.showNavListPop = false;
+          this.showIntegralPop = true;
+        })
+      }
       if(id === 100) {
         return userApi.logout().then(res => {
           uni.clearStorage();
@@ -143,12 +106,12 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   .userinfo-inner-box {
-    padding: 0 40rpx 10rpx;
+    padding: 0 20rpx 10rpx;
     z-index: 100;
     position: absolute;
     top: -80rpx;
     right: 0;
-    background-color: #1D1E23;
+    background-color: #000;
     width: 400rpx;
     box-sizing: border-box;
     
@@ -184,87 +147,8 @@ export default {
     border-bottom: 2rpx solid rgba(255,255,255,.1);
   }
 }
-.integral-box {
-  padding: 30rpx 10rpx;
-  display: flex;
-  align-items: center;
-  font-size: 24rpx;
-  color: #B2B2B2;
-  text {
-    margin-left: 10rpx;
-  }
-  .btn {
-    margin-left: auto;
-    background-color: #F60652;
-    border-radius: 8rpx;
-    padding: 8rpx 16rpx;
-    font-size: 24rpx;
-    color: #fff;
-    cursor: pointer;
-  }
-}
-.integral-pop {
-  .integral-inner {
-    text-align: center;
-    color: #333;
-  }
-  .title {
-    font-size: 32rpx;
-    font-weight: 700;
-  }
-  .desc {
-    font-size: 28rpx;
-    margin: 20rpx 0;
-  }
-  /deep/ .u-popup__content {
-    width: 80%;
-    border-radius: 20rpx;
-    box-sizing: border-box;
-    padding: 80rpx 40rpx;
-  }
-  /deep/.u-input {
-    border: 1px solid #f5f5f5;
-    background-color: #f5f5f5;
-    margin: 30rpx 0;
-  }
-  .operateBtn {
-    display: flex;
-    display: -webkit-flex;
-    justify-content: right;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 20rpx;
-    .btn {
-      width: 200rpx;
-      height: 50rpx;
-      line-height: 50rpx;
-      border: 1px solid #F60652;
-      border-radius: 8rpx;
-      display: inline-block;
-      text-align: center;
-      font-size: 28rpx;
-      cursor: pointer;
-    }
-    .confirm {
-      background-color: #F60652;
-      color: #fff;
-    }
-  }
-}
 .scroll-Y {
   max-height: 100vh;
-}
-
-@media screen and (min-width: 750px) and (max-width: 960px){
-  .integral-pop /deep/ .u-popup__content {
-    width: 50%;
-  }
-}
-
-@media screen and (min-width: 960px) {
-  .integral-pop /deep/ .u-popup__content {
-    width: 30%;
-  }
 }
 
 @media screen and (min-width: 870px) {

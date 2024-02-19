@@ -2,6 +2,7 @@
   <uni-load-more
       :status="status"
       :contentText="contentText"
+      @clickLoadMore="$emit('load')"
   ></uni-load-more>
 </template>
 
@@ -16,7 +17,7 @@ export default {
   data() {
     return {
       contentText: {
-        contentdown: '上拉显示更多',
+        contentdown: '点击加载更多',
         contentrefresh: '正在加载...',
         contentnomore: '没有更多数据了',
       }

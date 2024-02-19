@@ -4,6 +4,7 @@ const state = {
   userInfoState: {
     user_id: 0,
     balance: 0,
+    is_commission: 0
   },
   modelList: [],
   topicList: [],

@@ -142,6 +142,9 @@ image {
 .pointer {
   cursor: pointer;
 }
+.pd-tb-20 {
+  padding: 0 40rpx;
+}
 .ellipsis {
   max-width: 100%;
   overflow: hidden;

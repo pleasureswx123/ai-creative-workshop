@@ -51,7 +51,8 @@ export default {
   padding: 20rpx 50rpx 30rpx;
   //border-top: 1rpx solid var(--txt-color2);
   //border-bottom: 1rpx solid var(--txt-color2);
-  box-shadow: 0 0 5rpx var(--txt-color2);
+  box-shadow: 0 0 5rpx rgba(255,255,255,.2);
+  border-radius: 20rpx;
 }
 .date {
   color: var(--txt-color1);
@@ -66,7 +67,7 @@ export default {
 .voice-container {
   height: 85rpx;
   border-radius: 100rpx;
-  border: 1rpx solid var(--txt-color3);
+  border: 2rpx solid rgba(255,255,255,.1);
   background: var(--txt-color7);
   display: flex;
   align-items: center;

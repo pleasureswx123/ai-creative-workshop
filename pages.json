@@ -3,7 +3,38 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "超级语言"
+			}
+		},
+		{
+			"path": "pages/member/index",
+			"style": {
+				"navigationBarTitleText": "升级会员"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/user/integral-detail",
+			"style": {
+				"navigationBarTitleText": "算力详情"
+			}
+		},
+		{
+			"path": "pages/user/integral",
+			"style": {
+				"navigationBarTitleText": "积分明细",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/integral-rule",
+			"style": {
+				"navigationBarTitleText": "消耗规则"
 			}
 		},
 		{
@@ -69,7 +100,7 @@
 		{
 			"path": "pages/photos/index",
 			"style": {
-				"navigationBarTitleText": "生成图片"
+				"navigationBarTitleText": "文生图片"
 			}
 		},
 		{
@@ -201,14 +232,6 @@
 			}
 		},
 		{
-			"path": "pages/user/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
 			"path": "pages/user/setting/index",
 			"style": {
 				"navigationBarTitleText": ""
@@ -234,12 +257,6 @@
 		},
 		{
 			"path": "pages/user/feedback",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/user/integral",
 			"style": {
 				"navigationBarTitleText": ""
 			}

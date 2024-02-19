@@ -24,7 +24,7 @@ export default {
       audioContext: null,
       list: [],
       page: 1,
-      pagesize: 10,
+      pagesize: 20,
       loadStatus: '', // more/loading/noMore
     }
   },
@@ -53,7 +53,6 @@ export default {
     initParams() {
       this.list = [];
       this.page = 1;
-      this.pagesize = 10;
       this.loadStatus = '';
     },
     loadMore() {
@@ -148,7 +147,7 @@ export default {
 }
 
 .history-container {
-  padding-top: 30rpx;
+  padding: 30rpx;
   display: grid;
   gap: 30rpx;
   grid-template-columns: repeat(1, 1fr);
