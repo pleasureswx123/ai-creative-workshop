@@ -62,7 +62,11 @@ export default {
       const eventChannel = this.getOpenerEventChannel();
       eventChannel.on('acceptData', ({data}) => {
         const { currentImg } = data || {};
-        this.sourceImg = currentImg;
+        if(+type === 3) {
+          this.targetImg = currentImg;
+        } else {
+          this.sourceImg = currentImg;
+        }
       })
       this.setTaskDetail();
       type && this.getMaterial({task_type: type});
