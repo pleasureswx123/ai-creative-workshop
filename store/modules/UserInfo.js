@@ -4,7 +4,9 @@ const state = {
   userInfoState: {
     user_id: 0,
     balance: 0,
-    is_commission: 0
+    is_vip: 0,
+    vip_level: 1,
+    vip_expire_time: '',
   },
   modelList: [],
   topicList: [],

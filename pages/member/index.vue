@@ -1,6 +1,7 @@
 <template>
   <view class="page-container">
     <QmNavTop></QmNavTop>
+    <MemberInfo></MemberInfo>
     <MemberVipDesc></MemberVipDesc>
     <OrderGoodsList :list="goodsList"></OrderGoodsList>
     <OrderGoodsType :type.sync="type" :list="goodsType"></OrderGoodsType>

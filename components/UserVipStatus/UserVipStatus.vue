@@ -16,12 +16,17 @@ export default {
   computed: {
     ...mapState('UserInfo', ['userInfoState']),
     isVip() {
-      return !!this.userInfoState.is_commission
+      return !!(+this.userInfoState.is_vip)
+    },
+    vipLevel() {
+      return this.userInfoState.vip_level
     },
     statusInfo() {
       const vip = this.isVip;
+      const temp = ['', '普通会员', '白银会员', '黄金会员'];
+      const levelTxt = temp[`${this.vipLevel}`] || '';
       return {
-        tips: vip ? '黄金会员VIP' : '成为VIP会员解锁更多权益',
+        tips: vip ? `${levelTxt}VIP` : '成为VIP会员解锁更多权益',
         btnTxt: vip ? '查看' : '升级',
         cb: vip ? this.handleView : this.handleUpgrade
       }
