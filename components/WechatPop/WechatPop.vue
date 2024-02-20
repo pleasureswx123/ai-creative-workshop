@@ -180,6 +180,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 50rpx;
+  cursor: pointer;
   .btn {
     font-size: 30rpx;
     height: 80rpx;
