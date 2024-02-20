@@ -3,9 +3,9 @@
     <QmNavTop></QmNavTop>
     <MemberInfo></MemberInfo>
     <MemberVipDesc></MemberVipDesc>
-    <OrderGoodsList :list="goodsList"></OrderGoodsList>
-    <OrderGoodsType :type.sync="type" :list="goodsType"></OrderGoodsType>
-    <view class="btn-box">升级会员</view>
+    <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
+    <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
+    <view class="btn-box">{{goodsId}}-{{typeNum}}-升级会员</view>
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>
   </view>
 </template>
@@ -19,12 +19,15 @@ export default {
   },
   data() {
     return {
-      type: ''
+      goodsId: '',
+      typeNum: '',
     }
   },
   watch: {
-    type(num) {
-      num && this.getGoodsList({type: 'vip', num});
+    typeNum(num) {
+      if(num) {
+        this.getGoodsList({type: 'vip', num});
+      }
     }
   },
   onShow() {
