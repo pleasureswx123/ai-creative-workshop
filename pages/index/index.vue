@@ -7,6 +7,7 @@
     <QmHomeTypeTabs
         :value.sync="model_subclass_id" />
     <QmWaterfall
+        ref="waterfall"
         :paramsInfo="paramsInfo"
         :proxyList="item => {
           const task = item.task_info || {};
@@ -42,6 +43,9 @@ import {mapActions} from 'vuex';
           model_subclass_id: this.model_subclass_id
         }
       }
+    },
+    onReachBottom() {
+      this.$refs?.waterfall?.loadMore?.();
     },
 		onLoad() {
 			this.getHomeInfo();
