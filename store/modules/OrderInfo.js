@@ -35,6 +35,16 @@ const actions = {
       return Promise.resolve(res);
     })
   },
+  createOrder({dispatch, commit}, params = {}) {
+    return orderApi.createOrder(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
+  checkPay({dispatch, commit}, params = {}) {
+    return orderApi.checkPay(params).then(res => {
+      return Promise.resolve(res);
+    })
+  },
 };
 
 const mutations = {

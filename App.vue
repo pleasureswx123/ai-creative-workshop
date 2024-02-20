@@ -62,16 +62,8 @@
 					uni.setStorageSync('sitecode', sitecode)
 				}
 			}
-			
-			
 			// 初始化微信jssdk
-			util.request({
-					url: '/h5/getShareInfo',
-					data: {
-						url: window.location.href
-					}
-				})
-				.then((res) => {
+			util.request({url: '/h5/getShareInfo', data: {url: window.location.href}}).then((res) => {
 					const jssdkConfig = res.data.jssdk_config;
 					const page_title = res.data.page_title;
 					const login_phone = res.data.login_phone;

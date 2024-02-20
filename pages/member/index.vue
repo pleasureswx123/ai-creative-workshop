@@ -5,8 +5,9 @@
     <MemberVipDesc></MemberVipDesc>
     <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
     <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
-    <view class="btn-box">{{goodsId}}-{{typeNum}}-升级会员</view>
+    <view class="btn-box" @tap="handleUpgrader">{{btnTxt}}</view>
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>
+    <UpgradePop :value.sync="showUpgradePop" :info="orderInfo" :goodsId="goodsId"></UpgradePop>
   </view>
 </template>
 
@@ -15,10 +16,18 @@ import {mapState, mapActions} from 'vuex';
 
 export default {
   computed: {
-    ...mapState('OrderInfo', ['goodsList', 'goodsType', 'commonProblem']),
+    ...mapState('UserInfo', ['userInfoState']),
+    ...mapState('OrderInfo', ['goodsList', 'goodsType', 'commonProblem', 'orderInfo']),
+    isVip() {
+      return !!(+this.userInfoState.is_vip)
+    },
+    btnTxt() {
+      return this.isVip ? '购买会员' : '升级会员'
+    }
   },
   data() {
     return {
+      showUpgradePop: false,
       goodsId: '',
       typeNum: '',
     }
@@ -35,7 +44,15 @@ export default {
     this.getCommonProblem();
   },
   methods: {
-    ...mapActions('OrderInfo', ['getGoodsType', 'getGoodsList', 'getCommonProblem']),
+    ...mapActions('OrderInfo', ['getGoodsType', 'getGoodsList', 'getCommonProblem', 'confirmOrder']),
+    handleUpgrader() {
+      this.confirmOrder({
+        type: 'vip',
+        goods_id: this.goodsId,
+      }).then(res => {
+        this.showUpgradePop = true;
+      })
+    }
   }
 }
 </script>
