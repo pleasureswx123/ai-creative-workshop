@@ -91,7 +91,7 @@ export default {
     params() {
       return {
         page: this.page,
-        pagesize: 20,
+        pagesize: 40,
         ...this.paramsInfo
       }
     },
@@ -118,10 +118,10 @@ export default {
     initData() {
       this.initParams();
       this.getData().then(info => {
-        if(!this.currentInfo) {
-          this.selectedInfo = info;
-          info && this.$emit('update:currentInfo', info);
-        }
+        // if(!this.currentInfo) {
+        //   this.selectedInfo = info;
+        //   info && this.$emit('update:currentInfo', info);
+        // }
       });
     },
     initParams() {
@@ -146,8 +146,12 @@ export default {
       })
     },
     handleConfirm() {
-      this.$emit('update:currentInfo', this.selectedInfo);
-      this.$emit('update:show', false);
+      if(this.selectedInfo) {
+        this.$emit('update:currentInfo', this.selectedInfo);
+        this.$emit('update:show', false);
+      } else {
+        uni.$u.toast('请选择')
+      }
     }
   },
 }
