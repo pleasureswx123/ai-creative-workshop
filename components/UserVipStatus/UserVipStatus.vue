@@ -34,7 +34,9 @@ export default {
   },
   methods: {
     handleView() {
-      alert(`查看`)
+      uni.navigateTo({
+        url: '/pages/member/index'
+      })
     },
     handleUpgrade() {
       uni.navigateTo({
