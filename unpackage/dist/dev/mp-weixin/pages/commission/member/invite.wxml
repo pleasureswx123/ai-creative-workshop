@@ -1,1 +1,0 @@
-<block wx:if="{{qrcode}}"><view class="qrcode"><image src="{{qrcode}}" data-event-opts="{{[['longpress',[['saveImage',['$event']]]]]}}" bindlongpress="__e"></image><view class="title">{{$root.f0}}</view></view></block>

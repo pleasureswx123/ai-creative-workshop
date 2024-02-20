@@ -1,8 +1,9 @@
 <template>
     <view>
+      <QmNavTop></QmNavTop>
         <view class="list">
             <!-- <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view> -->
-            <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">
+            <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">
 				<view class="text-cut">{{item.title}}</view>
 				<view class="flex">
 					<image :src="item.icon" v-if="item.icon" mode=""></image>
@@ -69,7 +70,7 @@ page {
 	background-color: #fff;
     color: #333;
     border-radius: 10rpx;
-	margin-bottom: 30rpx;
+	margin-top: 30rpx;
 	.text-cut{
 		font-size: 28rpx;
 		font-weight: 700;

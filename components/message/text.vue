@@ -11,7 +11,7 @@
 	const mdi = new MarkdownIt({
 		linkify: true,
 		highlight(code, language) {
-			code = code.replace('![cursor](/static/img/cursor.gif)', '')
+			code = code.replace('![cursor](/static/images/cursor.gif)', '')
 			const validLang = !!(language && hljs.getLanguage(language))
 			if (validLang) {
 				const lang = language ?? ''
@@ -53,7 +53,7 @@
 			message() {
 				var text = this.text.replace(/(^\s*)|(\s*$)/g, '')
 				if (this.writing) {
-					text += '![cursor](/static/img/cursor.gif)'
+					text += '![cursor](/static/images/cursor.gif)'
 				}
 				return mdi.render(text)
 			}

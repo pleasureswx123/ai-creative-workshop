@@ -3,6 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="referrer" content="no-referrer" />
+		<meta name="renderer" content="webkit">
+		<meta name="format-detection" content="telphone=no, email=no"/>
+		<meta name="author" contect="root, pleasureswx123@163.com" />
+		<meta http-equiv="Content-Language" content="zh-cn"/>
+		<link rel="icon" type="image/jpg" href="./static/images/ic_ai.jpg" />
 		<title>
 			<%= htmlWebpackPlugin.options.title %>
 		</title>
@@ -64,7 +70,11 @@
 			}
 		</script> -->
 		<script src="/web.php/login/lang"></script>
+		<link rel="manifest" href="<%= BASE_URL %>static/json/manifest.json" />
 		<link rel="stylesheet" href="<%= BASE_URL %>static/index.<%= VUE_APP_INDEX_CSS_HASH %>.css" />
+		<!--<link rel="stylesheet" href="./two.css" media="(min-width: 1200px)">
+		<link rel="stylesheet" href="./two.css" media="(min-width: 992px)">
+		<link rel="stylesheet" href="./two.css" media="(min-width: 768px)">-->
 	</head>
 	<body>
 		<noscript>
@@ -72,5 +82,13 @@
 		</noscript>
 		<div id="app"></div>
 		<!-- built files will be auto injected -->
+		<script type="text/javascript">
+			if ("serviceWorker" in navigator && 'PushManager' in window ) {
+				window.addEventListener('load', async () => {
+					navigator.serviceWorker.register("./static/js/sw.js").then(function (registration) {
+					});
+				})
+			}
+		</script>
 	</body>
 </html>

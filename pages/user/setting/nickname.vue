@@ -48,15 +48,15 @@ export default {
     }
 };
 </script>
-<style>
+<style lang="scss" scoped>
 page {
 	
-	background-color: #f7f7f8;
+	background-color: #000;
 }
 .form {
     margin: 0;
     box-sizing: border-box;
-	background: #fff;
+	/* background: #fff; */
 }
 .form-input {
     width: 100%;
@@ -71,11 +71,15 @@ page {
     width: 160rpx;
     font-weight: bold;
     padding-left: 60rpx;
+	color: #fff;
 }
 .form-input .input {
     width: 400rpx;
     height: 80rpx;
     line-height: 80rpx;
+	/deep/.uni-input-input{
+		color: #B2B2B2;
+	}
 }
 
 .btn-submit {

@@ -162,7 +162,7 @@
 		}
 	};
 </script>
-<style>
+<style lang="scss" scoped>
 	.page {
 		padding: 40rpx 100rpx;
 		position: absolute;

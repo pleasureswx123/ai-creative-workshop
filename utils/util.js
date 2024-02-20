@@ -11,7 +11,6 @@ util.request = function (option) {
     if (!url) {
         return false;
     }
-
     // 是否显示loading
     option.loading = typeof option.loading != 'undefined' ? option.loading : true;
     if (option.loading) {
@@ -29,7 +28,8 @@ util.request = function (option) {
             dataType: 'json',
             header: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Site': uni.getStorageSync('sitecode')
+                'X-Site': uni.getStorageSync('sitecode'),
+                'X-Token': uni.getStorageSync('token'),
             },
             timeout: option.timeout ? option.timeout : 60000,
             success: function (res) {
@@ -41,7 +41,7 @@ util.request = function (option) {
                 if (res.data.errno > 0) {
                     if (res.data.errno === 403) {
 						if (option.url != '/user/checkLogin') {
-							util.toLogin(res.data.message)
+							// util.toLogin(res.data.message)
 						}
 					} else {
                         if (res.data.message) {
@@ -97,7 +97,8 @@ util.upload = function (option = null) {
             name: option.name ? option.name : 'image',
             formData: option.data ? option.data : {},
             header: {
-                'X-Site': uni.getStorageSync('sitecode')
+                'X-Site': uni.getStorageSync('sitecode'),
+                'X-Token': uni.getStorageSync('token'),
             },
             success: function (response) {
                 const res = JSON.parse(response.data);
@@ -166,6 +167,7 @@ util.toLogin = function (message = '') {
             uni.navigateTo({
                 url: '/pages/login/index'
             })
+			document.body.style.position = null
         })
     } else {
         uni.navigateTo({

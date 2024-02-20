@@ -3,7 +3,214 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "超级语言"
+			}
+		},
+		{
+			"path": "pages/member/index",
+			"style": {
+				"navigationBarTitleText": "会员中心"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		{
+			"path": "pages/user/integral-detail",
+			"style": {
+				"navigationBarTitleText": "算力详情"
+			}
+		},
+		{
+			"path": "pages/user/integral",
+			"style": {
+				"navigationBarTitleText": "积分明细",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/integral-rule",
+			"style": {
+				"navigationBarTitleText": "消耗规则"
+			}
+		},
+		{
+			"path": "pages/picture/personal-photo-tool",
+			"style": {
+				"navigationBarTitleText": "创作个人写真摄影"
+			}
+		},
+		{
+			"path": "pages/picture/photo-clothing",
+			"style": {
+				"navigationBarTitleText": "秒变职业装"
+			}
+		},
+		{
+			"path": "pages/picture/photo-pictorials",
+			"style": {
+				"navigationBarTitleText": "通用摄影写真"
+			}
+		},
+		{
+			"path": "pages/picture/photo-classical",
+			"style": {
+				"navigationBarTitleText": "绝美古风"
+			}
+		},
+		{
+			"path": "pages/picture/photo-han",
+			"style": {
+				"navigationBarTitleText": "汉服摄影"
+			}
+		},
+		{
+			"path": "pages/picture/photo-modern",
+			"style": {
+				"navigationBarTitleText": "现代风格(随机姿态)"
+			}
+		},
+		{
+			"path": "pages/special/novel",
+			"style": {
+				"navigationBarTitleText": "小说推文"
+			}
+		},
+		{
+			"path": "pages/special/make-diagram",
+			"style": {
+				"navigationBarTitleText": "电商图制作"
+			}
+		},
+		{
+			"path": "pages/special/train-model",
+			"style": {
+				"navigationBarTitleText": "训练专属模型"
+			}
+		},
+		{
+			"path": "pages/special/digital-humans",
+			"style": {
+				"navigationBarTitleText": "数字人"
+			}
+		},
+		{
+			"path": "pages/photos/index",
+			"style": {
+				"navigationBarTitleText": "文生图片"
+			}
+		},
+		{
+			"path": "pages/picture/index",
+			"style": {
+				"navigationBarTitleText": "我的创作",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/picture/video-tool",
+			"style": {
+				"navigationBarTitleText": "视频处理"
+			}
+		},
+		{
+			"path": "pages/picture/img-to-video",
+			"style": {
+				"navigationBarTitleText": "图生视频"
+			}
+		},
+		{
+			"path": "pages/picture/img-to-dance",
+			"style": {
+				"navigationBarTitleText": "一张照片来跳舞"
+			}
+		},
+		{
+			"path": "pages/picture/img-to-draw",
+			"style": {
+				"navigationBarTitleText": "视频转绘"
+			}
+		},
+		{
+			"path": "pages/picture/tool",
+			"style": {
+				"navigationBarTitleText": "图片处理"
+			}
+		},
+		{
+			"path": "pages/picture/ai-face",
+			"style": {
+				"navigationBarTitleText": "智能换脸"
+			}
+		},
+		{
+			"path": "pages/picture/hd-redraw",
+			"style": {
+				"navigationBarTitleText": "高清重绘"
+			}
+		},
+		{
+			"path": "pages/picture/remove-bg",
+			"style": {
+				"navigationBarTitleText": "去除背景"
+			}
+		},
+		{
+			"path": "pages/picture/replace-bg",
+			"style": {
+				"navigationBarTitleText": "更换背景"
+			}
+		},
+		{
+			"path": "pages/picture/ai-expand",
+			"style": {
+				"navigationBarTitleText": "智能扩图"
+			}
+		},
+		{
+			"path": "pages/picture/part-redraw",
+			"style": {
+				"navigationBarTitleText": "局部重绘"
+			}
+		},
+		{
+			"path": "pages/picture/replace-bg-txt",
+			"style": {
+				"navigationBarTitleText": "更换背景(语义)"
+			}
+		},
+		{
+			"path": "pages/sound/index",
+			"style": {
+				"navigationBarTitleText": "生成配音"
+			}
+		},
+		{
+			"path": "pages/sound/history",
+			"style": {
+				"navigationBarTitleText": "历史配音",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/ai/index",
+			"style": {
+				"navigationBarTitleText": "智能对话"
+			}
+		},
+		{
+			"path": "pages/ai/digit-chat",
+			"style": {
+				"navigationBarTitleText": "对话"
+			}
+		},
+		{
+			"path": "pages/ai/assistant-chat",
+			"style": {
+				"navigationBarTitleText": "创作助手"
 			}
 		},
 		{
@@ -22,14 +229,6 @@
 			"path": "pages/login/reset",
 			"style": {
 				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/user/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white"
 			}
 		},
 		{
@@ -70,6 +269,12 @@
 		},
 		{
 			"path": "pages/article/list",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/article/code",
 			"style": {
 				"navigationBarTitleText": ""
 			}
@@ -218,51 +423,41 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path" : "pages/photos/lora/lora",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/operate/operate",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/photos/user/user",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
-	"tabBar": {
-		"color": "#666666",
-		"selectedColor": "#04BABE",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [
-			{
-				"pagePath": "pages/index/index",
-				"text": "对话",
-				"iconPath": "static/images/tabbar/ic_chat.png",
-				"selectedIconPath": "static/images/tabbar/ic_chat_active.png"
-			},
-			{
-				"pagePath": "pages/write/index",
-				"text": "创作",
-				"iconPath": "static/images/tabbar/ic_write.png",
-				"selectedIconPath": "static/images/tabbar/ic_write_active.png"
-			},
-			{
-				"pagePath": "pages/cosplay/index",
-				"text": "模拟",
-				"iconPath": "static/images/tabbar/ic_cosplay.png",
-				"selectedIconPath": "static/images/tabbar/ic_cosplay_active.png"
-			},
-			{
-				"pagePath": "pages/draw/chat",
-				"text": "绘画",
-				"iconPath": "static/images/tabbar/ic_draw.png",
-				"selectedIconPath": "static/images/tabbar/ic_draw_active.png"
-			},
-			{
-				"pagePath": "pages/user/index",
-				"text": "我的",
-				"iconPath": "static/images/tabbar/ic_user.png",
-				"selectedIconPath": "static/images/tabbar/ic_user_active.png"
-			}
-		]
-	},
 	"globalStyle": {
+		"backgroundColor": "#000000",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#04BABE",
-		"navigationBarTextStyle": "white",
-		"navigationStyle": "custom"
+		"navigationBarBackgroundColor": "#000000",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom",
+		"rpxCalcMaxDeviceWidth": 750,
+		"rpxCalcBaseDeviceWidth": 375,
+		"rpxCalcIncludeWidth": 750
 	},
 	"subPackages": []
 }

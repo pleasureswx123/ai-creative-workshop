@@ -43,7 +43,7 @@ export default {
                 url: this.qrcode,
                 success: function (res) {
                     uni.saveImageToPhotosAlbum({
-                        filePath: res.tempFilePath,
+                        filePath: res.tempFilePath[0],
                         success: function () {
                             app.globalData.util.message('已保存到相册');
                         },

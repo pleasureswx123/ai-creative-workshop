@@ -1,7 +1,7 @@
 <template>
 	<view class="page" v-if="pageIsLoad">
 		<view class="title">{{ '欢迎登录' | lang }}</view>
-		<view class="btn-group" v-if="loginType === 'wechat'">
+<!--		<view class="btn-group" v-if="loginType === 'wechat'">
 			<button class="btn" @tap="wxLogin" :style="'margin-top:' + (login_wechat && !login_phone ? '300rpx;' : '160rpx;')">
 				<image class="icon" src="/static/images/login/ic_wechat.png"></image>
 				<text>{{ '微信授权登录' | lang }}</text>
@@ -9,9 +9,10 @@
 			<button class="btn btn-phone" @tap="switchToPhone" v-if="login_phone">
 				<text>{{ '手机号登录' | lang }}</text>
 			</button>
-		</view>
+		</view>-->
 		
-		<view class="container" v-if="loginType === 'phone'">
+<!--		<view class="container" v-if="loginType === 'phone'">-->
+		<view class="container">
 		
 			<view class="form">
 				<view class="form-item">
@@ -183,6 +184,9 @@
 	};
 </script>
 <style>
+	page{
+		background: #0d0d0d;
+	}
 	.page {
 		padding: 40rpx 100rpx;
 		position: absolute;
@@ -194,7 +198,7 @@
 		box-sizing: border-box;
 	}
 	.title {
-		font-size: 48rpx;
+		font-size: 56rpx;
 		text-align: center;
 		margin-top: 100rpx;
 		letter-spacing: 4rpx;
@@ -249,12 +253,12 @@
 		bottom: 0;
 		text-align: center;
 		cursor: pointer;
-		background: #fff;
+		/* background: #fff; */
 		padding: 20rpx 0 50rpx 0;
 	}
-	.agree text {
+	/* .agree text {
 		color: #000;
-	}
+	} */
 	
 	.container {
 		width: 750rpx;
@@ -311,5 +315,7 @@
 		top: 26rpx;
 		z-index: 10;
 	}
-
+	.form .form-item text{
+		font-size: 32rpx;
+	}
 </style>

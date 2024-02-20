@@ -1,5 +1,6 @@
 <template>
     <view class="panel">
+      <QmNavTop></QmNavTop>
         <view class="content">
 			<view class="title">{{title}}</view>
             <!-- <view v-if="content" v-html="content"></view> -->
@@ -79,14 +80,14 @@ page {
     background: #f7f7f8;
 }
 .panel {
-    margin: 30rpx;
-    padding: 30rpx;
-    background: #fff;
-    border-radius: 20rpx;
+    
 }
 .content {
-    line-height: 1.6;
     color: #666;
+	margin: 30rpx;
+	padding: 30rpx;
+	background: #fff;
+	border-radius: 20rpx;
 	.title{
 		font-weight: 700;
 		color: #333;

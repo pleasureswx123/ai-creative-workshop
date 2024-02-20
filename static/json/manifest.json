@@ -1,0 +1,16 @@
+{
+  "name": "秋米科技",
+  "short_name": "秋米科技",
+  "start_url": "/",
+  "display": "fullscreen", // 应用的显示方式；可以是 `fullscreen`、`standalone`、`minimal-ui` 或者 `browser`。
+  "background_color": "#000",
+  "description": "秋米科技",
+  "lang":"zh-CN",
+  "orientation": "portrait-primary",
+  "theme_color": "#000000",
+  "icons": [{
+    "src": "static/images/ic_ai_logo.png",
+    "sizes": "32x32",
+    "type": "image/png"
+  }]
+}

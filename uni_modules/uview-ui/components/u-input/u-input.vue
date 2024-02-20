@@ -53,7 +53,7 @@
             >
                 <u-icon
                     name="close"
-                    size="11"
+                    size="20"
                     color="#ffffff"
                     customStyle="line-height: 12px"
                 ></u-icon>

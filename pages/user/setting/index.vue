@@ -34,7 +34,7 @@
 			</view> -->
 		</view>
 		<view class="logout">
-			<button class="btn-logout text-danger" @tap="doLogout">{{ '退出登录' | lang }}</button>
+			<button class="btn-logout text-danger" @tap="doLogout">{{ '确定' | lang }}</button>
 		</view>
 
 	</view>
@@ -131,12 +131,8 @@
 			},
 			
 			doLogout() {
-				app.globalData.util.request({
-					url: '/user/logout'
-				}).then((res) => {
-					uni.reLaunch({
-						url: '/pages/index/index'
-					})
+				uni.navigateTo({
+					url: '/pages/user/index'
 				})
 			}
 		}
@@ -145,7 +141,7 @@
 <style>
 	page {
 		min-height: 100%;
-		background-color: #f7f7f8;
+		background-color: #000;
 	}
 
 	.container {
@@ -182,11 +178,11 @@
 	}
 
 	.form {
-		background: #fff;
+		/* background: #fff; */
 	}
 
 	.form .a-item {
-		border-top: 1rpx solid #eee;
+		border-top: 1px solid #555555;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -209,8 +205,8 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		font-size: 28rpx;
-		color: #333;
+		font-size: 32rpx;
+		color: #F60652;
 	}
 
 	.form .a-item .arrow {
