@@ -19,8 +19,7 @@
       <div
           class="item"
           v-for="(item, index) in info.balanceList"
-          :key="index"
-      >
+          :key="index">
       <view>{{item.title}}</view>
       <view class="balance">{{item.balance}}</view>
       <view class="desc">{{item.desc}}</view>
@@ -215,6 +214,7 @@ export default {
       text-align: center;
       border-radius: 16rpx;
       color: #F0C298;
+      cursor: pointer;
     }
   }
 }

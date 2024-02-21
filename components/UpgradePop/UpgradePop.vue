@@ -25,48 +25,13 @@
           <view class="title">总金额</view>
           <view>￥{{info.pay_price}}</view>
         </view>
-        
-        <view class="upgrade-ft">
-          <view class="tips-box">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-wechatpay" color="#039703" size="18" />
-            <view>即将跳转到微信安全支付</view>
-          </view>
-          <view class="btn-box" @tap="handleBuy">确定购买</view>
-          <view class="tips-box" @tap="agree = !agree">
-            <uni-icons v-if="agree" custom-prefix="iconfont-qm" type="icon-qm-checked1" color="rgba(255,255,255,.8)" size="16" />
-            <uni-icons v-else custom-prefix="iconfont-qm" type="icon-qm-unchecked" color="rgba(255,255,255,.5)" size="16" />
-            <view>购买即视为同意 <text @tap.stop="handleView">《会员和积分服务协议》</text></view>
-          </view>
-        </view>
+        <QmPayBuy :params="params"></QmPayBuy>
       </view>
     </u-popup>
-    <WechatPop :value.sync="showPayPop" :info="payPopInfo"></WechatPop>
   </view>
 </template>
 
 <script>
-const aaa = {
-  "id": 6,
-  "title": "超级语言白银会员VIP",
-  "price": 143,
-  "num": 3,
-  "pay_price": 429,
-  "desc": [
-    "V3.5语言模型无限用",
-    "SDXL/SD1.5无限出图",
-    "ControlNet控图免费",
-    "服务器排队优先特杈",
-    "无限创作储存空间"
-  ],
-  "vip_expiration_date": "2024-02-20~2024-05-20"
-};
-
-const a = {
-  "order_id": 18,
-  "total_fee": 143,
-  "pay_url": "weixin://wxpay/bizpayurl?pr=aZ6QHKpzz"
-};
-import {mapState, mapActions} from 'vuex';
 const app = getApp();
 export default {
   props: {
@@ -88,19 +53,10 @@ export default {
   data() {
     return {
       agree: true,
-      showPayPop: false,
-      payOrderInfo: {},
     }
   },
   computed: {
-    ...mapState('OrderInfo', ['orderInfo']),
-    payPopInfo() {
-      return {
-        ...this.orderInfo,
-        ...this.payOrderInfo,
-      }
-    },
-    createOrderParams() {
+    params() {
       return {
         type: 'vip',
         goods_id: this.goodsId
@@ -132,63 +88,6 @@ export default {
   beforeDestroy() {
     this.toggleBodyPositionStatus(false)
   },
-  methods: {
-    ...mapActions('OrderInfo', ['createOrder']),
-    handleBuy() {
-      let platform = 'web';
-      // if (!this.qmIsWechat() && this.qmIsMobile()) {
-      if (this.qmIsWechat()) {
-        platform = 'h5';
-      }
-      this.createOrder(Object.assign({}, this.createOrderParams, {
-        platform
-      })).then(res => {
-        if (res.pay_url) {
-          platform = 'web';
-        }
-        if(platform === 'h5') {
-          const config = res || {};
-          app.globalData.jssdk.chooseWXPay({
-            timestamp: config.timestamp,
-            nonceStr: config.nonceStr,
-            package: config.package,
-            signType: config.signType,
-            paySign: config.paySign,
-            success: () => {
-              uni.showModal({
-                title: '提示',
-                content: '支付成功',
-                showCancel: false,
-                confirmText: '确定',
-                complete: () => {
-                  uni.reLaunch({
-                    url: '/pages/index/index'
-                  });
-                }
-              });
-            },
-            fail: () => {
-              uni.showModal({
-                title: '提示',
-                content: '发起支付失败',
-                showCancel: false,
-                confirmText: '确定',
-                complete: () => {}
-              });
-            }
-          });
-        } else {
-          this.payOrderInfo = res;
-          this.showPayPop = true;
-        }
-      });
-    },
-    handleView() {
-      // uni.navigateTo({
-      //   url: '/pages/user/integral-rule'
-      // })
-    }
-  },
 }
 </script>
 
@@ -214,21 +113,6 @@ export default {
     color: rgba(255,255,255,.8);
   }
 }
-.upgrade-ft {
-  padding: 30rpx 0;
-}
-.btn-box {
-  margin: 30rpx 0;
-  height: 80rpx;
-  line-height: 80rpx;
-  border-radius: 10rpx;
-  box-shadow: 0 8rpx 8rpx 0 rgba(0, 0, 0, .25);
-  text-align: center;
-  font-size: 30rpx;
-  color: #46290F;
-  background: linear-gradient(91deg, #F1CDAD 6%, #EEA25C 103%);
-  cursor: pointer;
-}
 .flex-box {
   display: flex;
   align-items: center;
@@ -249,15 +133,6 @@ export default {
   border-top: 2rpx solid rgba(255,255,255,.1);
   border-bottom: 2rpx solid rgba(255,255,255,.1);
   padding: 10rpx 0 20rpx;
-}
-.tips-box {
-  font-size: 24rpx;
-  display: flex;
-  gap: 10rpx;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  color: rgba(255,255,255,.5)
 }
 .pointer-row {
   color: #fff;

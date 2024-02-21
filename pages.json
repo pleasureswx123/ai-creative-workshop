@@ -26,6 +26,12 @@
 			}
 		},
 		{
+			"path": "pages/user/integral-package",
+			"style": {
+				"navigationBarTitleText": "选择算力包"
+			}
+		},
+		{
 			"path": "pages/user/integral",
 			"style": {
 				"navigationBarTitleText": "积分明细",
