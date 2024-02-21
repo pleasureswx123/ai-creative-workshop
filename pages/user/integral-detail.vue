@@ -20,10 +20,10 @@
           class="item"
           v-for="(item, index) in info.balanceList"
           :key="index">
-      <view>{{item.title}}</view>
-      <view class="balance">{{item.balance}}</view>
-      <view class="desc">{{item.desc}}</view>
-      <view class="btn" @tap="jumpType(item.type)">{{item.btnTxt}}</view>
+        <view>{{item.title}}</view>
+        <view class="balance">{{item.balance}}</view>
+        <view class="desc">{{item.desc}}</view>
+        <view class="btn" @tap="jumpType(item.type)">{{item.btnTxt}}</view>
       </div>
     </div>
     
