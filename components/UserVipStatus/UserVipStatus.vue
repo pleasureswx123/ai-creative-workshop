@@ -27,7 +27,7 @@ export default {
       const levelTxt = temp[`${this.vipLevel}`] || '';
       return {
         tips: vip ? `${levelTxt}VIP` : '成为VIP会员解锁更多权益',
-        btnTxt: vip ? '查看' : '升级',
+        btnTxt: vip ? '会员中心' : '升级',
         cb: vip ? this.handleView : this.handleUpgrade
       }
     }

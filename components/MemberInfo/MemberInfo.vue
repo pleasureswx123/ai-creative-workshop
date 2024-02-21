@@ -25,14 +25,15 @@ export default {
       return this.userInfoState.vip_level
     },
     infos() {
-      const {} = this.userInfoState || {};
+      const {vip_expire_time, permanent_balance, balance, computing_reset_time} = this.userInfoState || {};
       const temp = ['', '普通会员', '白银会员', '黄金会员'];
       const levelTxt = temp[`${this.vipLevel}`] || '';
       return [
         {title: '当前状态', value: levelTxt, className: 'cl-wrapper'},
-        {title: '会员期限', value: '2023/3/15 ~ 2023/6/15'},
-        {title: '本月度算力余额', value: '950万'},
-        {title: '算力重置日期', value: '4月14日'},
+        {title: '会员期限', value: vip_expire_time},
+        {title: '永久算力余额', value: permanent_balance},
+        {title: '月度算力余额', value: balance},
+        {title: '月度算力重置日期', value: computing_reset_time},
       ]
     }
   },
