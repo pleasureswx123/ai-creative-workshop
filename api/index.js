@@ -5,6 +5,9 @@ import photoApi from './photo';
 import homeApi from './home';
 import orderApi from './order';
 
+import NovelApi from './novel';
+
+
 export {
   userApi,
   soundApi,
@@ -12,4 +15,6 @@ export {
   photoApi,
   homeApi,
   orderApi,
+  // 小说推文
+  NovelApi
 }
