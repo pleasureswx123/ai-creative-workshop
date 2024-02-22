@@ -8,6 +8,12 @@
 			}
 		},
 		{
+			"path": "pages/service/tutorial",
+			"style": {
+				"navigationBarTitleText": "使用教程"
+			}
+		},
+		{
 			"path": "pages/member/index",
 			"style": {
 				"navigationBarTitleText": "会员中心"

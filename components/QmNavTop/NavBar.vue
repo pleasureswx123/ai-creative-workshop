@@ -121,7 +121,7 @@ export default {
         6: '/pages/picture/tool',
         7: '/pages/sound/index',
         8: '/pages/picture/video-tool',
-        9: '/pages/article/list?type=help',
+        9: '/pages/service/tutorial',
         10: '/pages/article/code',
         11: '/pages/article/article?type=service',
         12: '/pages/article/article?type=privacy',

@@ -56,7 +56,7 @@ export default {
         {id: 5, name: '智能对话', url: '/pages/ai/index' },
         {id: 6, name: '生成视频', url: '/pages/picture/video-tool' },
         {id: 7, name: '写真摄影', url: '/pages/picture/personal-photo-tool' },
-        {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/article/list?type=help' },
+        {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial' },
       ]
     }
   },
