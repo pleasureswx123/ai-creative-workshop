@@ -11,6 +11,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex';
+import { memberInfo } from '@/config';
 
 export default {
   computed: {
@@ -23,8 +24,7 @@ export default {
     },
     statusInfo() {
       const vip = this.isVip;
-      const temp = ['', '普通会员', '白银会员', '黄金会员'];
-      const levelTxt = temp[`${this.vipLevel}`] || '';
+      const levelTxt = memberInfo[`${this.vipLevel}`] || '';
       return {
         tips: vip ? `${levelTxt}VIP` : '成为VIP会员解锁更多权益',
         btnTxt: vip ? '会员中心' : '升级',

@@ -12,6 +12,8 @@
 
 <script>
 import {mapState, mapActions} from 'vuex';
+import { memberInfo } from '@/config';
+
 export default {
   created() {
     this.getUserInfo();
@@ -26,8 +28,7 @@ export default {
     },
     infos() {
       const {vip_expire_time, permanent_balance, balance, computing_reset_time} = this.userInfoState || {};
-      const temp = ['', '普通会员', '白银会员', '黄金会员'];
-      const levelTxt = temp[`${this.vipLevel}`] || '';
+      const levelTxt = memberInfo[`${this.vipLevel}`] || '';
       return [
         {title: '当前状态', value: levelTxt, className: 'cl-wrapper'},
         {title: '会员期限', value: vip_expire_time},
