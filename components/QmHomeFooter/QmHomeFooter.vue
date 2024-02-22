@@ -27,7 +27,7 @@ export default {
   methods: {
     goContact(){
       uni.navigateTo({
-        url: '/pages/article/code'
+        url: '/pages/service/contact'
       })
     },
     jumpArticle(type) {

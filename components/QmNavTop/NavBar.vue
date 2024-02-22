@@ -122,7 +122,7 @@ export default {
         7: '/pages/sound/index',
         8: '/pages/picture/video-tool',
         9: '/pages/service/tutorial',
-        10: '/pages/article/code',
+        10: '/pages/service/contact',
         11: '/pages/service/article?type=service',
         12: '/pages/service/article?type=privacy',
       };

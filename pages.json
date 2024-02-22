@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/service/contact",
+			"style": {
+				"navigationBarTitleText": "联系我们"
+			}
+		},
+		{
 			"path": "pages/member/index",
 			"style": {
 				"navigationBarTitleText": "会员中心"
