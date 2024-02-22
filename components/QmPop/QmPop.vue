@@ -61,6 +61,10 @@ export default {
       type: Boolean,
       default: false
     },
+    initStatus: {
+      type: Boolean,
+      default: false
+    },
     currentInfo: {
       type: Object,
       default: () => (null)
@@ -118,10 +122,10 @@ export default {
     initData() {
       this.initParams();
       this.getData().then(info => {
-        // if(!this.currentInfo) {
-        //   this.selectedInfo = info;
-        //   info && this.$emit('update:currentInfo', info);
-        // }
+        if(!this.currentInfo && this.initStatus) {
+          this.selectedInfo = info;
+          info && this.$emit('update:currentInfo', info);
+        }
       });
     },
     initParams() {
