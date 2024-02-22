@@ -123,8 +123,8 @@ export default {
         8: '/pages/picture/video-tool',
         9: '/pages/service/tutorial',
         10: '/pages/article/code',
-        11: '/pages/article/article?type=service',
-        12: '/pages/article/article?type=privacy',
+        11: '/pages/service/article?type=service',
+        12: '/pages/service/article?type=privacy',
       };
       const url = temp[`${id}`] || '';
       if(url) {

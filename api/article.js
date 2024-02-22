@@ -6,4 +6,11 @@ export default {
       }
     })
   },
+  getArticle(params = {}) {
+    return uni.$u.http.post(`/article/getArticle`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

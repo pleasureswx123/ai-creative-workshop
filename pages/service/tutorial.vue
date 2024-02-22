@@ -34,13 +34,12 @@ export default {
   methods: {
     getList() {
       articleApi.getArticleList({type: 'help'}).then(res => {
-        debugger
         this.list = res.list || [];
       })
     },
     jumpArticle(id) {
       uni.navigateTo({
-        url: `/pages/article/article?type=help&id=${id}`
+        url: `/pages/service/article?type=help&id=${id}`
       })
     },
   }

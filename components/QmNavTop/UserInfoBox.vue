@@ -50,8 +50,8 @@ export default {
         {type: 'line', id: 'line2' },
         {id: 8, icon: 'icon-qm-text1', name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial'},
         {id: 9, icon: 'icon-qm-call', name: '联系我们', url: '/pages/article/code'},
-        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/article/article?type=service'},
-        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/service/article?type=service'},
+        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/service/article?type=privacy'},
         {type: 'line', id: 'line3' },
         {id: 100, icon: 'icon-qm-exit', name: '退出登录'},
       ]
