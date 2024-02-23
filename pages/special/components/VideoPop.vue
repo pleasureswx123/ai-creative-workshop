@@ -46,6 +46,6 @@ export default {
 		background-color:var(--bg-color2);
 		border-radius:20rpx;
 		padding:30rpx 30rpx;
-		margin-bottom:30rpx;
+		margin-bottom:20rpx;
 	}
 </style>

@@ -1,11 +1,13 @@
 <template>
 	<NovelPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title" :setShow="false" :titleShow="false">
-	  <view class="flex">
-		  <view class="videoPop" v-for="(item,index) in capList">{{item.title}}</view>
-	  </view>
-		  <view class="videoPop noPop" @click="$emit('update:show', false)">不需要字幕</view>
+      :title="title">
+	  <scroll-view scroll-y="true" style="height: 200px">
+		  <view class="flex">
+			  <view class="videoPop" v-for="(item,index) in eraList">{{item.title}}</view>
+		  </view>
+		  <u-gap height="120rpx" />
+	  </scroll-view>
 	</NovelPop>
 </template>
 
@@ -24,23 +26,23 @@ export default {
 	},
 	data() {
 	  return {
-		capList:[]
+		eraList:[]
 	  }
 	},
 	mounted() {
-		this.getCapList()
+		this.getVideoTask()
 	},
 	methods: {
-		getCapList() {
-			NovelApi.getTypeface({
+		getVideoTask() {
+			NovelApi.getDub({
 				data:{page:1,
-        			pagesize:10,},
+        		pagesize:10,},
 				no_sign: 1,
 				sourceCode:"100001",
 				sign:"52d89ffef49b65edaf5d232104d42fac",
 				timestamp:"1545454552",
 			}).then(res => {
-				this.capList = res.list
+				this.eraList = res.list
 			})
 		},
 	},
@@ -50,17 +52,14 @@ export default {
 <style lang="scss" scoped>
 	.flex{
 		display: grid;
-		grid-template-columns: repeat(2,1fr);
+		grid-template-columns: repeat(3,1fr);
 		gap: 10px;
 	}
 	.videoPop{
-		// background-color:var(--bg-color2);
-		border:1px solid #fff;
-		border-radius:20rpx;
-		padding:20rpx 30rpx;
+		background-color:var(--bg-color2);
+		border-radius:10rpx;
+		padding:30rpx 0;
+		margin-bottom:10rpx;
 		text-align: center;
-	}
-	.noPop{
-		margin:30rpx 0 0 0
 	}
 </style>

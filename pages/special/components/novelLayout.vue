@@ -1,10 +1,10 @@
 <template>
   <view class="title-box" @click="$emit('onLayout',`${onEmit}`)">
 	<view class="title">
-		<u-icon :name="account"></u-icon>{{title}}
+		<i :class="account"></i>{{title}}
 	</view>
 	<view class="title choose">
-		{{choose}}<i class="iconfont">&#xe604;</i></u-icon>
+		{{choose}}<i class="iconfont icon-arrow-right-copy-copy-copy"></i></u-icon>
 	</view>
   </view>
 </template>
@@ -36,14 +36,14 @@ export default {
 .title-box {
   display: flex;
   align-items: center;
-  padding: 10rpx 0;
+  padding: 15rpx 0;
   gap: 20rpx;
   justify-content: space-between;
   border-bottom:1px solid rgb(54,56,73);
   .title {
     min-width: 0;
     color: var(--txt-color1);
-    font-size: 28rpx;
+    font-size: 24rpx;
     line-height: 70rpx;
     max-width: 100%;
     overflow: hidden;
@@ -51,18 +51,19 @@ export default {
     white-space: nowrap;
 	display: flex;
 	align-items: center;
-	/deep/.u-icon__icon{
+	.iconfont{
 		margin-right:10rpx;
-		font-size: 40rpx!important;;
 	}
   }
   .choose{
-	   color: var(--txt-color2);
-	   font-size:24rpx;
-	   /deep/.u-icon__icon{
+	   color: var(--txt-color1);
+	   opacity: 0.7;
+	   .iconfont{
 	   	margin-right:0;
-	   	font-size: 40rpx!important;;
 	   }
   }
 }
+.title-box:last-child{
+	  border:none;
+  }
 </style>

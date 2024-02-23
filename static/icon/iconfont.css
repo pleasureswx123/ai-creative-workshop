@@ -5,7 +5,7 @@
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,5 +49,20 @@
 
 .icon-bianji:before {
   content: "\e62c";
+}
+
+.icon-danrenpeiyin:before {
+  content: "\e62e";
+}
+.icon-jia:before {
+  content: "\e600";
+  color:#ccc;
+}
+.icon-jiqiren:before {
+  content: "\e601";
+  font-size:24px;
+   background-image: -webkit-linear-gradient(180deg, #1971C2 20%, #2792d1 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 

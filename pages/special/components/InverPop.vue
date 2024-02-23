@@ -3,8 +3,8 @@
       @close="$emit('update:show', false)"
       :title="title" :setShow="false">
 	  <view class="flex">
-		  <view class="videoPop" v-for="(item,index) in bgmList">
-		  	{{item.title}}
+		  <view class="videoPop" v-for="(item,index) in inverList">
+		  	{{item.scale}}
 		  </view>
 	  </view>
 	  
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import {NovelApi} from '@/api'
 export default {
 	props: {
 		title: {
@@ -25,23 +26,34 @@ export default {
 	},
 	data() {
 	  return {
-		bgmList:[
-			{title:'4:3'},
-			{title:'3:4'},
-			{title:'16:9'},
-			{title:'16:9'},
-			{title:'16:9'}
-		]
+		inverList:[]
 	  }
+	},
+	mounted() {
+		this.getInverScale()
+	},
+	methods: {
+		getInverScale() {
+			NovelApi.getVideoScale({
+				data:{page:1,
+        			pagesize:10,},
+				no_sign: 1,
+				sourceCode:"100001",
+				sign:"52d89ffef49b65edaf5d232104d42fac",
+				timestamp:"1545454552",
+			}).then(res => {
+				this.inverList = res.list
+			})
+		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
 	.flex{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		display: grid;
+		grid-template-columns: repeat(5,1fr);
+		gap: 15px;
 	}
 	.videoPop{
 		background-color:var(--bg-color2);

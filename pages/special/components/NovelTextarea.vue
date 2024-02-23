@@ -72,7 +72,7 @@ export default {
 	}
 	.qm-textarea {
 	  background: var(--bg-color2);
-	  padding:12rpx 0!important;
+	  padding:16rpx 0!important;
 	  border-color: var(--txt-color3)!important;
 	  /deep/ {
 	    .u-textarea__field {

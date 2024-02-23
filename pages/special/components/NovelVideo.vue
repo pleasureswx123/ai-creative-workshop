@@ -9,8 +9,6 @@
 			 @onLayout="onLayout"></novelLayout>
 		</view>
 	</view>
-	
-
 </template>
 
 <script>
@@ -27,37 +25,37 @@
 		data() {
 			return {
 				videoPop: false,
+				burList:[{
+					title: '画面风格',
+					choose: '前往选择',
+					onEmit: 'screenPop',
+					account: 'iconfont icon-fengge'
+				}, {
+					title: '年代风格',
+					choose: '选填',
+					onEmit: 'eraPop',
+					account: 'iconfont icon-shizhongfill'
+				}],
 				tabList: [{
 					title: '选择配音',
 					choose: '前往选择',
 					onEmit: 'videoPop',
-					account: 'account'
+					account: 'iconfont icon-danrenpeiyin'
 				}, {
 					title: '背景音乐',
-					choose: '前往选择（选填）',
+					choose: '前往选择(选填)',
 					onEmit: 'bgmPop',
-					account: 'account'
+					account: 'iconfont icon-beijingyinlemian'
 				}, {
 					title: '视频字幕',
-					choose: '前往选择（选填）',
+					choose: '前往选择(选填)',
 					onEmit: 'captionsPop',
-					account: 'account'
+					account: 'iconfont icon-zimu'
 				}, {
 					title: '视频比例',
 					choose: '前往选择',
 					onEmit: 'inverPop',
-					account: 'account'
-				}],
-				burList:[{
-					title: '画面风格',
-					choose: '前往选择',
-					onEmit: 'videoPop',
-					account: 'account'
-				}, {
-					title: '年代风格',
-					choose: '选填',
-					onEmit: 'bgmPop',
-					account: 'account'
+					account: 'iconfont icon-shipin-tianchong'
 				}]
 			}
 		}
@@ -69,7 +67,7 @@
 		border-radius: 10rpx;
 		position: relative;
 		background: var(--bg-color2);
-		padding: 0 30rpx 30rpx;
+		padding: 0 30rpx 0;
 		margin-bottom:20rpx ;
 		.btn {
 			width: 100%;

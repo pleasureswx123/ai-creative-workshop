@@ -18,8 +18,8 @@
         <view class="pop-main-content">
           <slot></slot>
         </view>
-        <view class="footer-bar" :show="setShow" v-if="setShow">
-          <view class="btn-box pointer" @tap="$emit('close')">取 消</view>
+        <view class="footer-bar" v-if="setShow">
+          <view class="btn-box cancle" @tap="$emit('close')">取 消</view>
           <view class="btn-box pointer" @tap="$emit('confirm')">确 定</view>
         </view>
       </view>
@@ -53,7 +53,7 @@ export default {
 	titleShow:{
 		type: Boolean,
 		default: true
-	},
+	}
   },
   watch: {
     show: {
@@ -81,9 +81,12 @@ export default {
   font-size: 28rpx;
   position: relative;
   overflow: hidden;
-  max-height: 50vh;
   padding-bottom:20rpx;
   .pop-body-container {
+	  height: 100%;
+	  width: 100%;
+	  display: flex;
+	  flex-direction: column;
     .pop-main-content {
       padding: 0 30rpx;
       flex: 1;
@@ -120,22 +123,22 @@ export default {
     }
   }
   .footer-bar {
-     position: fixed;
+     position: absolute;
      bottom: 0;
      left: 0;
      right: 0;
      padding: 0 30rpx;
      height: 150rpx;
      box-sizing: border-box;
-     display: grid;
      place-items: center;
      z-index: 100;
-	 display:flex;
-  // padding:140rpx 0 0;
+	 background:var(--bg-color1);
+	 display: flex;
+	 width: 100%;
+	 gap:10px;
     .btn-box {
-      width: 45%;
-      background: #1971C2;
-      margin: 0 auto;
+	  width: 50%;
+      background: #6978fd;
       height: 80rpx;
       border-radius: 10rpx;
       text-align: center;
@@ -144,6 +147,9 @@ export default {
       font-size: 28rpx;
       font-weight: bold;
     }
+	.cancle{
+		background: #3b3f57;
+	}
   }
 }
 @supports (-webkit-touch-callout: none) {
@@ -171,7 +177,7 @@ export default {
     margin: 0 auto;
   }
   .footer-bar .btn-box {
-    width: 30%!important;;
+    // width: 30%!important;
   }
 }
 </style>
