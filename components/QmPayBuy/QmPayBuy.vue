@@ -50,19 +50,40 @@ export default {
   },
   methods: {
     ...mapActions('OrderInfo', ['createOrder', 'confirmOrder']),
+    $_isMobile: function() {
+      let width = document.documentElement.getBoundingClientRect().width;
+      return width - 1 < 992
+    },
+    // weixinPay: function (t) {
+    //   var e = this;
+    //   Jt({
+    //     order_id: t,
+    //     pay_type: this.pay_type
+    //   }).then((function (t) {
+    //         t.data.code_url && "wx_wap" === e.pay_type ? window.location.href = t.data.code_url + "&redirect_url=https://gptai.chaojiyuyan.com/web/" : e.pay_url = t.data.code_url
+    //       }
+    //   )).catch((function (t) {
+    //         403 === t.errno && e.showLogin()
+    //       }
+    //   ))
+    // },
+    // aaa: function () {
+    //   this.getVipList(),
+    //       "desktop" === this.$store.state.app.device ? (this.vip_id = 3, this.pay_type = "wx_qr", this.createOrder()) : this.pay_type = "wx_wap"
+    // },
     handleBuy() {
       this.confirmOrder(this.params).then(() => {
-        let platform = 'web';
-        // if (!this.qmIsWechat() && this.qmIsMobile()) {
-        if (this.qmIsWechat()) {
-          platform = 'h5';
-        }
+        const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
         this.createOrder(Object.assign({}, this.params, {
-          platform
+          platform: 'h5', trade_type
         })).then(res => {
-          if (res.pay_url) {
-            platform = 'web';
+          if (trade_type === 'mweb') {
+            window.location.href = `${res.pay_url}&redirect_url=${window.location.href}` // encodeURIComponent
+          } else {
+            this.payOrderInfo = res;
+            this.show = true;
           }
+          return;
           if(platform === 'h5') {
             const config = res || {};
             app.globalData.jssdk.chooseWXPay({
