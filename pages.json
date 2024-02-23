@@ -3,7 +3,26 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "超级语言"
+				"navigationBarTitleText": "超级语言",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/service/tutorial",
+			"style": {
+				"navigationBarTitleText": "使用教程"
+			}
+		},
+		{
+			"path": "pages/service/article",
+			"style": {
+				"navigationBarTitleText": "文章内容"
+			}
+		},
+		{
+			"path": "pages/service/contact",
+			"style": {
+				"navigationBarTitleText": "联系我们"
 			}
 		},
 		{
@@ -22,6 +41,12 @@
 			"path": "pages/user/integral-detail",
 			"style": {
 				"navigationBarTitleText": "算力详情"
+			}
+		},
+		{
+			"path": "pages/user/integral-package",
+			"style": {
+				"navigationBarTitleText": "选择算力包"
 			}
 		},
 		{

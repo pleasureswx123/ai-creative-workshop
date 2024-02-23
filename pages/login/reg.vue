@@ -157,7 +157,7 @@
 
 			toDoc(type) {
 				uni.navigateTo({
-					url: '/pages/article/article?type=' + type
+					url: '/pages/service/article?type=' + type
 				})
 			},
 

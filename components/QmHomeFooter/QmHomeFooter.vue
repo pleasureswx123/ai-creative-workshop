@@ -9,7 +9,7 @@
     </view>
     <text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
     <view class="">
-      <text @tap="toDoc('service')">用户协议和</text><text @tap="toDoc('privacy')">隐私政策</text>
+      <text @tap="jumpArticle('service')">用户协议和</text><text @tap="jumpArticle('privacy')">隐私政策</text>
     </view>
     <text @tap="goMiit">京ICP备2023009914号-5</text>
     <view>
@@ -27,12 +27,12 @@ export default {
   methods: {
     goContact(){
       uni.navigateTo({
-        url: '/pages/article/code'
+        url: '/pages/service/contact'
       })
     },
-    toDoc(type) {
+    jumpArticle(type) {
       uni.navigateTo({
-        url: '/pages/article/article?type=' + type
+        url: '/pages/service/article?type=' + type
       })
     },
     goMiit() {

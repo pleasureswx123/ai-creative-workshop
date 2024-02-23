@@ -3,10 +3,11 @@
     <QmNavTop></QmNavTop>
     <MemberInfo></MemberInfo>
     <MemberVipDesc></MemberVipDesc>
-    <OrderGoodsList :list="goodsList"></OrderGoodsList>
-    <OrderGoodsType :type.sync="type" :list="goodsType"></OrderGoodsType>
-    <view class="btn-box">升级会员</view>
+    <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
+    <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
+    <view class="btn-box" @tap="handleUpgrader">{{btnTxt}}</view>
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>
+    <UpgradePop :value.sync="showUpgradePop" :info="orderInfo" :goodsId="goodsId"></UpgradePop>
   </view>
 </template>
 
@@ -15,16 +16,27 @@ import {mapState, mapActions} from 'vuex';
 
 export default {
   computed: {
-    ...mapState('OrderInfo', ['goodsList', 'goodsType', 'commonProblem']),
+    ...mapState('UserInfo', ['userInfoState']),
+    ...mapState('OrderInfo', ['goodsList', 'goodsType', 'commonProblem', 'orderInfo']),
+    isVip() {
+      return !!(+this.userInfoState.is_vip)
+    },
+    btnTxt() {
+      return this.isVip ? '购买会员' : '升级会员'
+    }
   },
   data() {
     return {
-      type: ''
+      showUpgradePop: false,
+      goodsId: '',
+      typeNum: '',
     }
   },
   watch: {
-    type(num) {
-      num && this.getGoodsList({type: 'vip', num});
+    typeNum(num) {
+      if(num) {
+        this.getGoodsList({type: 'vip', num});
+      }
     }
   },
   onShow() {
@@ -32,7 +44,15 @@ export default {
     this.getCommonProblem();
   },
   methods: {
-    ...mapActions('OrderInfo', ['getGoodsType', 'getGoodsList', 'getCommonProblem']),
+    ...mapActions('OrderInfo', ['getGoodsType', 'getGoodsList', 'getCommonProblem', 'confirmOrder']),
+    handleUpgrader() {
+      this.confirmOrder({
+        type: 'vip',
+        goods_id: this.goodsId,
+      }).then(res => {
+        this.showUpgradePop = true;
+      })
+    }
   }
 }
 </script>

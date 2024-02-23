@@ -18,7 +18,6 @@
         <view class="tips-wrapper" v-if="$slots.tips">
           <slot name="tips"></slot>
         </view>
-        <u-gap height="30" />
         <view class="pop-main-content">
           <slot></slot>
         </view>
@@ -147,7 +146,7 @@ export default {
   }
 }
 .tips-wrapper {
-  padding: 0 30rpx;
+  padding: 0 30rpx 30rpx;
 }
 
 @media screen and (min-width: 750px) and (max-width: 960px){

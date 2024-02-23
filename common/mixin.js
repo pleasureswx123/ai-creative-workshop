@@ -6,7 +6,31 @@ export default {
       isLoginStatus: false
     }
   },
+  computed: {
+    qmSystem() {
+      const system = uni.getSystemInfoSync().system.toLowerCase();
+      let result = 'other';
+      if (system.indexOf('android') > -1) {
+        result = 'android';
+      } else if (system.indexOf('ios') > -1) {
+        result = 'ios';
+      } else if (system.indexOf('macos') > -1) {
+        result = 'macos';
+      } else if (system.indexOf('windows') > -1) {
+        result = 'windows';
+      }
+      return result;
+    }
+  },
   methods: {
+    qmIsWechat() {
+      const ua = navigator.userAgent.toLowerCase();
+      return !!(ua.match(/micromessenger/i) && !ua.match(/windows/i) && !ua.match(/macos/i) && !ua.match(/macwechat/i));
+    },
+    qmIsMobile() {
+      const ua = navigator.userAgent.toLowerCase();
+      return !!(ua.match(/mobile/i))
+    },
     isVideoTaskType(taskType) {
       return [2, 10, 11].includes(+taskType)
     },

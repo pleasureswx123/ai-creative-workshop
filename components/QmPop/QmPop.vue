@@ -61,6 +61,10 @@ export default {
       type: Boolean,
       default: false
     },
+    initStatus: {
+      type: Boolean,
+      default: false
+    },
     currentInfo: {
       type: Object,
       default: () => (null)
@@ -91,7 +95,7 @@ export default {
     params() {
       return {
         page: this.page,
-        pagesize: 20,
+        pagesize: 40,
         ...this.paramsInfo
       }
     },
@@ -118,7 +122,7 @@ export default {
     initData() {
       this.initParams();
       this.getData().then(info => {
-        if(!this.currentInfo) {
+        if(!this.currentInfo && this.initStatus) {
           this.selectedInfo = info;
           info && this.$emit('update:currentInfo', info);
         }
@@ -146,8 +150,12 @@ export default {
       })
     },
     handleConfirm() {
-      this.$emit('update:currentInfo', this.selectedInfo);
-      this.$emit('update:show', false);
+      if(this.selectedInfo) {
+        this.$emit('update:currentInfo', this.selectedInfo);
+        this.$emit('update:show', false);
+      } else {
+        uni.$u.toast('请选择')
+      }
     }
   },
 }

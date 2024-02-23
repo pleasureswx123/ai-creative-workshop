@@ -7,8 +7,8 @@
       <view class="info">
         <view class="name-box">
           <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
-          <view class="icon-wrapper">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-vip1" color="rgb(255 174 26)" size="16" />
+          <view v-if="isVip" :class="`vip-level-${vipLevel}`">
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-vip1" color="rgba(255,255,255,.6)" size="16" />
           </view>
         </view>
         <view class="user-id">MID:{{userInfoState.user_id}}</view>
@@ -49,6 +49,12 @@ export default {
   },
   computed: {
     ...mapState('UserInfo', ['userInfoState']),
+    isVip() {
+      return !!(+this.userInfoState.is_vip)
+    },
+    vipLevel() {
+      return this.userInfoState.vip_level
+    },
   },
   methods: {
     jumpSetting() {
@@ -147,6 +153,27 @@ export default {
 }
 .icon-wrapper {
   background: linear-gradient(135deg, #f9d001 7%, #d36c00 103%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.vip-level-1 {
+  background: linear-gradient(135deg, #f9d001 7%, #914e07 103%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.vip-level-2 {
+  background: linear-gradient(135deg, #fbf5d6 7%, #6f3900 103%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+.vip-level-3 {
+  background: linear-gradient(135deg, #a17e24 7%, #5c4203 103%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

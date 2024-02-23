@@ -1,18 +1,17 @@
 <template>
-    <view>
-      <QmNavTop></QmNavTop>
-        <view class="list">
-            <!-- <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view> -->
-            <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">
-				<view class="text-cut">{{item.title}}</view>
-				<view class="flex">
-					<image :src="item.icon" v-if="item.icon" mode=""></image>
-					<text>{{item.content_introduce}}</text>
-				</view>
-			</view>
+  <view>
+    <QmNavTop></QmNavTop>
+    <view class="list">
+      <!-- <view class="item" v-for="(item, index) in list" @tap="toArticle" :data-id="item.id">{{ index + 1}}、{{ item.title }}</view> -->
+      <view class="item" v-for="(item, index) in list" :key="index" @tap="toArticle" :data-id="item.id">
+        <view class="text-cut">{{ item.title }}</view>
+        <view class="flex">
+          <image :src="item.icon" v-if="item.icon" mode=""></image>
+          <text class="info">{{ item.content_introduce }}</text>
         </view>
+      </view>
     </view>
-
+  </view>
 </template>
 
 <script>
@@ -78,16 +77,16 @@ page {
 	}
 	.flex{
 		display: flex;
-		display: -webkit-flex;
-		justify-content: normal;
-		flex-wrap: wrap;
 		align-items: normal;
+    gap: 20rpx;
 		image{
 			width: 240rpx;
 			height: 180rpx;
+      display: block;
 		}
-		text{
-			margin-left: 20rpx;
+		.info {
+      flex: 1;
+      min-width: 0;
 			color: #888;
 			font-size: 28rpx;
 		}

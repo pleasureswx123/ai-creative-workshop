@@ -28,6 +28,7 @@
           :paramsInfo="{task_type: 10}"
           :getList="getTemplate"
           :show.sync="showPop"
+          :initStatus="true"
           :currentInfo.sync="currentTemplateInfo">
       </QmPop>
       <TipsHelp :info="taskDetail" />

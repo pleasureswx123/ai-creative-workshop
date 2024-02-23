@@ -1,25 +1,28 @@
 <template>
-  <view style="color: #fff;">
-    <scroll-view class="scroll-view_H" scroll-x="true">
+  <view :key="id">
+    <scroll-view
+        class="scroll-view_H"
+        scroll-x="true"
+        :scroll-into-view="currentGoodsElId">
       <view
           class="scroll-view-item_H"
-          v-for="item in list"
-          :key="item.id">
-        <view
-            class="item-box"
-            :class="{active: item.id === 3}"
-        >
-          <view class="title">{{item.title}}</view>
+          v-for="(item, index) in list"
+          :key="`${item.id}-${index}`"
+          :class="{active: item.id === currentValue}"
+          :id="`goods${item.id}`">
+        <view class="item-box"
+              @tap="currentValue = item.id">
+          <view class="title">{{ item.title }}</view>
           <view class="line"></view>
           <view class="desc-box">
-            <view class="desc-row" v-for="(desc, index) in item.desc" :key="index">{{desc}}</view>
+            <view class="desc-row" v-for="(desc, index) in item.desc" :key="index">{{ desc }}</view>
           </view>
           <view class="item-ft">
             <view class="price-box">
-              <view class="price">￥<text>{{item.price}}</text>/月</view>
-              <view class="market-price">￥{{item.market_price}}</view>
+              <view class="price">￥<text>{{ item.price }}</text>/月</view>
+              <view class="market-price">￥{{ item.market_price }}</view>
             </view>
-            <view class="num">{{item.computing_power}}</view>
+            <view class="num">{{ item.computing_power }}</view>
           </view>
         </view>
       </view>
@@ -28,23 +31,9 @@
 </template>
 
 <script>
-const a = {
-  "id": 6,
-  "title": "白银会员",
-  "price": 143,
-  "market_price": 159,
-  "num": 3,
-  "hint": null,
-  "desc": [
-    "V3.5语言模型无限用",
-    "SDXL/SD1.5无限出图",
-    "ControlNet控图免费"
-  ],
-  "is_default": 0
-};
 export default {
   props: {
-    type: {
+    value: {
       type: [String, Number],
       default: ''
     },
@@ -53,6 +42,37 @@ export default {
       default: () => ([])
     }
   },
+  data() {
+    return {
+      id: Date.now()
+    }
+  },
+  computed: {
+    currentGoodsElId() {
+      return this.currentValue ? `goods${this.currentValue}` : '';
+    },
+    currentValue: {
+      get() {
+        return this.value
+      },
+      set(value) {
+        this.$emit('update:value', value);
+      }
+    }
+  },
+  watch: {
+    list() {
+      this.id = Date.now();
+      this.initType();
+    }
+  },
+  methods: {
+    initType() {
+      const temp = this.list.find(item => +item.is_default === 1);
+      // const temp = this.list.find(item => item.num === '3');
+      this.currentValue = temp ? temp.id : (this.list?.[1]?.id);
+    }
+  }
 }
 </script>
 
@@ -61,6 +81,7 @@ export default {
   white-space: nowrap;
   width: 100%;
   padding: 20rpx 0 40rpx;
+  user-select: none;
 }
 .scroll-view-item_H {
   display: inline-block;
@@ -69,6 +90,15 @@ export default {
   padding: 0 20rpx;
   box-sizing: border-box;
   vertical-align: middle;
+  &.active {
+    .item-box {
+      border: 2rpx solid #F0BB8B;
+      background: rgba(240, 187, 139, 0.1);
+      .title {
+        color: #F0BB8B;
+      }
+    }
+  }
   .item-box {
     width: 100%;
     height: 100%;
@@ -81,13 +111,6 @@ export default {
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    &.active {
-      border: 2rpx solid #F0BB8B;
-      background: rgba(240, 187, 139, 0.1);
-      .title {
-        color: #F0BB8B;
-      }
-    }
   }
 }
 .item-box {

@@ -27,4 +27,18 @@ export default {
       }
     })
   },
+  createOrder(params = {}) {
+    return uni.$u.http.post(`/Order/createOrder`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  checkPay(params = {}) {
+    return uni.$u.http.post(`/Order/checkPay`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

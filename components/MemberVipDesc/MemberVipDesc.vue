@@ -13,7 +13,7 @@
       <view class="vip-desc">
         <view class="info-row" v-for="(txt, index) in tips" :key="index">
           <uni-icons custom-prefix="iconfont-qm" type="icon-qm-good" color="#F0BB8B" size="15" />
-          <view>{{txt}}</view>
+          <view class="txt">{{txt}}</view>
         </view>
       </view>
     </view>
@@ -96,11 +96,14 @@ export default {
     gap: 10rpx;
     font-size: 30rpx;
     line-height: 55rpx;
-    background: linear-gradient(97deg, #F1CDAD 9%, #EEA25C 101%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+    .txt {
+      color: #fff;
+      background: linear-gradient(97deg, #F1CDAD 9%, #EEA25C 101%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
   }
 }
 </style>

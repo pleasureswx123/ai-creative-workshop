@@ -4,6 +4,7 @@ import pictureApi from './picture';
 import photoApi from './photo';
 import homeApi from './home';
 import orderApi from './order';
+import articleApi from './article';
 
 export {
   userApi,
@@ -12,4 +13,5 @@ export {
   photoApi,
   homeApi,
   orderApi,
+  articleApi,
 }

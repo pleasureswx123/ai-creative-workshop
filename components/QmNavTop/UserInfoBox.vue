@@ -10,7 +10,10 @@
             <view v-if="item.type === 'line'" :key="item.id" :class="`line ${item.className || ''}`"></view>
             <view v-else :class="`item ${item.className || ''}`" :key="item.id" @tap="jump(item)">
               <uni-icons custom-prefix="iconfont-qm" :type="item.icon" color="rgba(255,255,255,.5)" size="18" />
-              <view class="name">{{item.name}}</view>
+              <view class="name">
+                <text>{{item.name}}</text>
+                <view v-if="item.tag" class="tag">{{item.tagTxt}}</view>
+              </view>
             </view>
           </template>
         </view>
@@ -45,10 +48,10 @@ export default {
         {id: 7, icon: 'icon-qm-MaterialSymbolsVideoCallRounded', name: '生成视频', url: '/pages/picture/video-tool', className: 'mobile' },
         {id: 12, icon: 'icon-qm-MaterialSymbolsPhotoCameraFront', name: '写真摄影', url: '/pages/picture/personal-photo-tool', className: 'mobile' },
         {type: 'line', id: 'line2' },
-        {id: 8, icon: 'icon-qm-text1', name: '使用教程', url: '/pages/article/list?type=help'},
-        {id: 9, icon: 'icon-qm-call', name: '联系我们', url: '/pages/article/code'},
-        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/article/article?type=service'},
-        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/article/article?type=privacy'},
+        {id: 8, icon: 'icon-qm-text1', name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial'},
+        {id: 9, icon: 'icon-qm-call', name: '联系我们', url: '/pages/service/contact'},
+        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/service/article?type=service'},
+        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/service/article?type=privacy'},
         {type: 'line', id: 'line3' },
         {id: 100, icon: 'icon-qm-exit', name: '退出登录'},
       ]
@@ -139,6 +142,14 @@ export default {
     .name {
       flex: 1;
       min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      
+      display: flex;
+      align-items: center;
+      gap: 10rpx;
     }
   }
   .line {
@@ -150,8 +161,18 @@ export default {
 .scroll-Y {
   max-height: 100vh;
 }
+.tag {
+  font-size: 20rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  width: 60rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #f60652;
+  border-radius: 14rpx;
+}
 
-@media screen and (min-width: 870px) {
+@media screen and (min-width: 960px) {
   .nav-list .mobile {
     display: none;
   }

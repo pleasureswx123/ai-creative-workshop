@@ -16,7 +16,10 @@
           <text>超级语言</text>
         </view>
         <view class="menu-nav">
-          <view class="item" v-for="item in menuList" :key="item.id" @tap="handleJump(item)">{{item.name}}</view>
+          <view class="item" :class="{tag: !!item.tag}" v-for="item in menuList" :key="item.id" @tap="handleJump(item)">
+            <text>{{item.name}}</text>
+            <view class="tag-inner" v-if="!!item.tag">{{item.tagTxt}}</view>
+          </view>
         </view>
         <view class="userinfo" v-if="!userInfoState.user_id">
           <view class="pointer" @tap="handleJump({url: '/pages/login/index'})">登录</view>
@@ -53,6 +56,7 @@ export default {
         {id: 5, name: '智能对话', url: '/pages/ai/index' },
         {id: 6, name: '生成视频', url: '/pages/picture/video-tool' },
         {id: 7, name: '写真摄影', url: '/pages/picture/personal-photo-tool' },
+        {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial' },
       ]
     }
   },
@@ -159,6 +163,24 @@ export default {
       &.active {
         color: red;
       }
+      &.tag {
+        position: relative;
+        .tag-inner {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 20rpx;
+          height: 28rpx;
+          line-height: 28rpx;
+          width: 60rpx;
+          text-align: center;
+          color: #fff;
+          background-color: #f60652;
+          border-radius: 14rpx;
+          transform: scale(.9) translate3d(50%, -40%, 0);
+          transform-origin: right top;
+        }
+      }
     }
   }
   .userinfo {
@@ -183,12 +205,12 @@ export default {
   }
 }
 
-@media screen and (max-width: 870px) {
+@media screen and (max-width: 960px) {
   .pc-nav-box {
     display: none;
   }
 }
-@media screen and (min-width: 870px) {
+@media screen and (min-width: 960px) {
   .qm-nav-box {
     display: none;
   }

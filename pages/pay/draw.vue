@@ -114,66 +114,64 @@ export default {
         },
 		
         doPayDraw: function () {
-            if (this.paying) {
-                return false;
-            }
-            var goods_id = this.goods_id;
-            if (goods_id == 0) {
-                app.globalData.util.message('请选择充值套餐');
-                return false;
-            }
+          if (this.paying) {
+            return false;
+          }
+          var goods_id = this.goods_id;
+          if (goods_id == 0) {
+            app.globalData.util.message('请选择充值套餐');
+            return false;
+          }
+          this.setData({
+            paying: true
+          });
+          setTimeout(() => {
             this.setData({
-                paying: true
+              paying: false
             });
-			setTimeout(() => {
-			    this.setData({
-			        paying: false
-				});
-			}, 2000);
-			
-			var trade_type = 'jsapi';
-			if (!app.globalData.util.isWechat() && app.globalData.util.isMobile()) {
-				trade_type = 'native';
-			}
-            app.globalData.util
-                .request({
-                    url: '/order/createOrder',
-                    data: {
-						platform: 'h5',
-						trade_type: trade_type,
-						type: this.type,
-                        goods_id: goods_id
+          }, 2000);
+          var trade_type = 'jsapi';
+          if (!app.globalData.util.isWechat() && app.globalData.util.isMobile()) {
+            trade_type = 'native';
+          }
+          app.globalData.util.request({
+                url: '/order/createOrder',
+                data: {
+                  platform: 'h5',
+                  trade_type: trade_type,
+                  type: this.type,
+                  goods_id: goods_id
+                }
+              }).then((res) =>
+          {
+                if (res.data.pay_url) {
+                  trade_type = 'native';
+                }
+                if (trade_type == 'jsapi') {
+                  const config = res.data;
+                  app.globalData.jssdk.chooseWXPay({
+                    timestamp: config.timestamp,
+                    nonceStr: config.nonceStr,
+                    package: config.package,
+                    signType: config.signType,
+                    paySign: config.paySign,
+                    success: function (res) {
+                      app.globalData.util.message('支付成功', 'error', function () {
+                        uni.redirectTo({
+                          url: '/pages/user/index'
+                        });
+                      });
+                    },
+                    fail: function (res) {
+                      app.globalData.util.message('发起支付失败', 'error');
                     }
-                })
-                .then((res) => {
-					if (res.data.pay_url) {
-						trade_type = 'native';
-					}
-					if (trade_type == 'jsapi') {
-						const config = res.data;
-						app.globalData.jssdk.chooseWXPay({
-							timestamp: config.timestamp,
-							nonceStr: config.nonceStr,
-							package: config.package,
-							signType: config.signType,
-							paySign: config.paySign,
-							success: function (res) {
-								app.globalData.util.message('支付成功', 'error', function () {
-									uni.redirectTo({
-										url: '/pages/user/index'
-									});
-								});
-							},
-							fail: function (res) {
-								app.globalData.util.message('发起支付失败', 'error');
-							}
-						});
-					} else if (trade_type == 'native') {
-						uni.navigateTo({
-							url: '/pages/pay/pay?total_fee=' + res.data.total_fee + '&order_id=' + res.data.order_id + '&pay_url=' + encodeURIComponent(res.data.pay_url)
-						})
-					}
-                });
+                  });
+                } else if (trade_type == 'native') {
+                  uni.navigateTo({
+                    url: '/pages/pay/pay?total_fee=' + res.data.total_fee + '&order_id=' + res.data.order_id + '&pay_url=' + encodeURIComponent(res.data.pay_url)
+                  })
+                }
+              });
         }
     }
 };

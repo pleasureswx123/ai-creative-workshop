@@ -32,12 +32,13 @@
           :paramsInfo="{task_type: 11}"
           :getList="getTemplate"
           :show.sync="showPop"
+          :initStatus="true"
           :currentInfo.sync="currentDrawStyle">
-        <template #tips>
+<!--        <template #tips>
           <view class="tips-txt">
             基于SD1.5训练或微调的各种大模型，对各种画风Lora的兼容表现更好，兼顾出图质量和速度。
           </view>
-        </template>
+        </template>-->
       </QmPop>
   
       <TitleCell
