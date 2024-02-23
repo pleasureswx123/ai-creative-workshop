@@ -200,6 +200,7 @@ export default {
       const ele = document.createElement('a');
       ele.href = url;
       ele.setAttribute('download', this.getFileName(url));
+      ele.setAttribute('target', '_blank');
       ele.style.display = 'none';
       document.body.appendChild(ele);
       ele.click();
