@@ -196,6 +196,16 @@ export default {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
     downLoadFile(url) {
+      // #ifdef H5
+      const ele = document.createElement('a');
+      ele.href = url;
+      ele.setAttribute('download', this.getFileName(url));
+      ele.style.display = 'none';
+      document.body.appendChild(ele);
+      ele.click();
+      document.body.removeChild(ele);
+      return
+      // #endif
       uni.downloadFile({url,
         success: (res) => {
           if (res.statusCode === 200) {

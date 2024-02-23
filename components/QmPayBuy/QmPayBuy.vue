@@ -79,7 +79,7 @@ export default {
                   confirmText: '确定',
                   complete: () => {
                     uni.reLaunch({
-                      url: '/pages/index/index'
+                      url: '/pages/member/index'
                     });
                   }
                 });
@@ -90,7 +90,11 @@ export default {
                   content: '发起支付失败',
                   showCancel: false,
                   confirmText: '确定',
-                  complete: () => {}
+                  complete: () => {
+                    uni.reLaunch({
+                      url: '/pages/member/index'
+                    });
+                  }
                 });
               }
             });

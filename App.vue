@@ -3,9 +3,6 @@
 	import util from "./utils/util.js"
 	import siteinfo from "./siteinfo.js"
 	export default {
-		data() {
-			return {};
-		},
     onShow() {
       let isDarkMode = true;
       const root = document.documentElement;
@@ -30,90 +27,50 @@
       root.style.setProperty('--txt-color6', `var(${txtColor6})`);
       root.style.setProperty('--txt-color7', `var(${txtColor7})`);
     },
-		onLaunch: function() {
-			this.globalData.siteroot = siteinfo.host + '/web.php';
-			const system = uni.getSystemInfoSync().system.toLowerCase();
-			if (system.indexOf('android') > -1) {
-				this.globalData.system = 'android';
-			} else if (system.indexOf('ios') > -1) {
-				this.globalData.system = 'ios';
-			} else if (system.indexOf('macos') > -1) {
-				this.globalData.system = 'macos';
-			} else if (system.indexOf('windows') > -1) {
-				this.globalData.system = 'windows';
-			} else {
-				this.globalData.system = 'other';
-			}
-			// uni.hideTabBar()
-			
-			// 站点sitecode
-			var search = window.location.search
-			if(search && search.indexOf('?') != -1) {
-				var sitecode = '';
-				if(search.length == 5) {
-					sitecode = search.substr(1, 4)
-				} else if (search.length > 5) {
-					var char = search.charAt(5)
-					if(char == '&' || char == '#' || char == '=' || char == '/') {
-						sitecode = search.substr(1, 4)
-					}
-				}
-				if (sitecode) {
-					uni.setStorageSync('sitecode', sitecode)
-				}
-			}
-			// 初始化微信jssdk
-			util.request({url: '/h5/getShareInfo', data: {url: window.location.href}}).then((res) => {
-					const jssdkConfig = res.data.jssdk_config;
-					const page_title = res.data.page_title;
-					const login_phone = res.data.login_phone;
-					const login_wechat = res.data.login_wechat;
-					const share_title = res.data.share_title;
-					const share_link = res.data.share_link;
-					const share_desc = res.data.share_desc;
-					const share_image = res.data.share_image;
-					const tabbar = res.data.tabbar;
-					
-					this.globalData.page_title = page_title;
-					this.globalData.login_phone = login_phone;
-					this.globalData.login_wechat = login_wechat;
-					this.globalData.tabbar = res.data.tabbar;
-					if (!util.isWechat() && util.isMobile()) {
-						this.globalData.login_wechat = 0;
-					}
-					if (jssdkConfig) {
-						jssdk.config(jssdkConfig);
-						jssdk.ready(function() {
-							jssdk.updateAppMessageShareData({
-								title: share_title,
-								desc: share_desc,
-								link: share_link,
-								imgUrl: share_image,
-								success: function() {
-									// 设置成功
-								}
-							})
-							jssdk.updateTimelineShareData({
-								title: share_title,
-								link: share_link,
-								imgUrl: share_image,
-								success: function() {
-									// 设置成功
-								}
-							})
-						});
-					}
-					
-					this.globalData.jssdk = jssdk
-					
-					if (tabbar) {
-						const tabItems = document.getElementsByClassName('uni-tabbar__item');
-						for(let i=0; i < tabItems.length; i++) {
-							tabItems[i].style.display = tabbar[i] ? 'block' : 'none'
-						}
-					}
-				});
-		},
+    onLaunch: function () {
+      this.globalData.siteroot = siteinfo.host + '/web.php';
+      const system = uni.getSystemInfoSync().system.toLowerCase();
+      this.globalData.system = ~system.indexOf('android') ? 'android' : (~system.indexOf('ios') ? 'ios' : (~system.indexOf('macos') ? 'macos' : (~system.indexOf('windows') ? 'windows' : 'other')));
+      const search = window.location.search;
+      if (search && ~search.indexOf('?')) {
+        let sitecode = '', len = search.length;
+        (len === 5) && (sitecode = search.substr(1, 4));
+        (len > 5 && ['&', '#', '=', '/'].includes(search.charAt(5))) && (sitecode = search.substr(1, 4));
+        sitecode && uni.setStorageSync('sitecode', sitecode);
+      }
+      // 初始化微信jssdk
+      util.request({url: '/h5/getShareInfo', data: {url: window.location.href}}).then((res) => {
+        const { jssdk_config: jssdkConfig, tabbar, page_title, login_phone, login_wechat,
+          share_title: title, share_link: link, share_desc: desc, share_image: imgUrl } = res?.data || {};
+        this.globalData.page_title = page_title;
+        this.globalData.login_phone = login_phone;
+        this.globalData.login_wechat = login_wechat;
+        this.globalData.tabbar = tabbar;
+        (!util.isWechat() && util.isMobile()) && (this.globalData.login_wechat = 0);
+        if (jssdkConfig) {
+          jssdk.config(jssdkConfig);
+          jssdk.ready(function () {
+            jssdk.updateAppMessageShareData({
+              title, desc, link, imgUrl, success() {
+                console.log('jssdk-updateAppMessageShareData: 设置成功');
+              }
+            })
+            jssdk.updateTimelineShareData({
+              title, link, imgUrl, success() {
+                console.log('jssdk-updateTimelineShareData: 设置成功');
+              }
+            })
+          });
+        }
+        this.globalData.jssdk = jssdk;
+        if (tabbar) {
+          const tabItems = document.getElementsByClassName('uni-tabbar__item');
+          for (let i = 0, itemLen = tabItems.length; i < itemLen; i++) {
+            tabItems[i].style.display = tabbar[i] ? 'block' : 'none'
+          }
+        }
+      });
+    },
 		globalData: {
 			siteroot: '',
 			system: '',
@@ -165,21 +122,15 @@ page {
   background: var(--bg-color1)!important;
   font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
 }
-	button::after {
-		display: none;
-	}
-	
-	.uni-tabbar .uni-tabbar__item {
-		display: none;
-	}
-	uni-modal {
-	  z-index: 999999 !important;
-	}
-	uni-modal {
-	  z-index: 999999 !important;
-	}
-
-
+button::after {
+  display: none;
+}
+.uni-tabbar .uni-tabbar__item {
+  display: none;
+}
+uni-modal {
+  z-index: 999999 !important;
+}
 @media screen and (min-width: 960px) {
   page {
     max-width: 1200px;

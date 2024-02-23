@@ -93,6 +93,12 @@ export default {
   }
 }
 
+@supports not(aspect-ratio: 16 / 9){
+  .pictrue-box {
+    height: 300px!important;
+  }
+}
+
 .indicator {
   @include flex(row);
   justify-content: center;
