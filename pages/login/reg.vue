@@ -1,5 +1,6 @@
 <template>
 	<view class="page">
+    <view class="page-content">
 		<view class="title">{{ '注册账号' | lang }}</view>
 
 		<view class="container">
@@ -40,6 +41,7 @@
 
 		<sendsms v-if="sendSmsShow" :phone="phone" type="reg" :sitecode="sitecode" @success="sendSmsSuccess" @close="sendSmsClose">
 		</sendsms>
+	  </view>
 	</view>
 </template>
 
@@ -340,4 +342,15 @@
 	.form .form-item text{
 		color: #F60652;
 	}
+  
+  .page-content {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .page-content {
+      width: 500px;
+      margin: 0 auto;
+    }
+  }
 </style>

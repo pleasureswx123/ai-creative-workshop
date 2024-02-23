@@ -1,54 +1,56 @@
 <template>
 	<view class="page-container">
-    <view class="tabs-box">
-      <view
-          class="item"
-          v-for="item in tabs"
-          :class="{active: loginStatus === item.value}"
-          @tap="loginStatus = item.value"
-          :key="item.value">{{item.name}}</view>
+    <view class="page-content">
+      <view class="tabs-box">
+        <view
+            class="item"
+            v-for="item in tabs"
+            :class="{active: loginStatus === item.value}"
+            @tap="loginStatus = item.value"
+            :key="item.value">{{item.name}}</view>
+      </view>
+      <view class="container">
+        <view class="form">
+            <view class="form-item">
+              <image class="icon" src="/static/images/login/ic_phone.png" />
+              <input type="text" v-model.trim="phone" maxlength="11" class="input" placeholder="手机号" />
+            </view>
+            <template v-if="loginStatus === 'sms'">
+              <view class="form-item">
+                <image class="icon" src="/static/images/login/ic_code.png"></image>
+                <input type="text" v-model.trim="code" maxlength="6" class="input" placeholder="短信验证码" />
+                <view type="text" class="sendcode" size="small" @click="doSendSms" :disabled="sendSmsCountdown > 0">{{ sendSmsCountdown > 0 ? `${sendSmsCountdown}s 后可重发` : '发送验证码' }}</view>
+              </view>
+            </template>
+            <template v-if="loginStatus === 'psw'">
+              <view class="form-item">
+                <image class="icon" src="/static/images/login/ic_pwd.png" />
+                <input :type="`${pwdShow ? 'text' : 'password'}`" v-model.trim="password" maxlength="20" class="input" placeholder="登录密码" :value="password" />
+                <image class="eye" @tap="pwdShow = !pwdShow" :src="`/static/images/login/${pwdShow ? 'ic_eye' : 'ic_eye_open'}.png`" />
+              </view>
+            </template>
+            <view class="form-item">
+              <button class="btn btn-submit" @tap="doLogin">{{ '登录 / 注册' | lang }}</button>
+            </view>
+          <view class="form-item" style="justify-content: space-between; color: #555555; font-size: 28rpx;">
+            <text @tap="jumpUrl('/pages/login/reg')">{{ '注册账号' | lang }}</text>
+            <text @tap="jumpUrl('/pages/login/reset')">{{ '忘记密码' | lang }}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="page-ft">
+        登录即表示同意<text @tap="jumpUrl('/pages/service/article?type=service')">《服务协议》</text>和<text @tap="jumpUrl('/pages/service/article?type=privacy')">《隐私政策》</text>
+      </view>
+      <sendsms
+          v-if="sendSmsShow"
+          :phone="phone"
+          type="login"
+          sitecode=""
+          @success="sendSmsSuccess"
+          @close="sendSmsShow = false">
+      </sendsms>
     </view>
-		<view class="container">
-			<view class="form">
-          <view class="form-item">
-            <image class="icon" src="/static/images/login/ic_phone.png" />
-            <input type="text" v-model.trim="phone" maxlength="11" class="input" placeholder="手机号" />
-          </view>
-          <template v-if="loginStatus === 'sms'">
-            <view class="form-item">
-              <image class="icon" src="/static/images/login/ic_code.png"></image>
-              <input type="text" v-model.trim="code" maxlength="6" class="input" placeholder="短信验证码" />
-              <view type="text" class="sendcode" size="small" @click="doSendSms" :disabled="sendSmsCountdown > 0">{{ sendSmsCountdown > 0 ? `${sendSmsCountdown}s 后可重发` : '发送验证码' }}</view>
-            </view>
-          </template>
-          <template v-if="loginStatus === 'psw'">
-            <view class="form-item">
-              <image class="icon" src="/static/images/login/ic_pwd.png" />
-              <input :type="`${pwdShow ? 'text' : 'password'}`" v-model.trim="password" maxlength="20" class="input" placeholder="登录密码" :value="password" />
-              <image class="eye" @tap="pwdShow = !pwdShow" :src="`/static/images/login/${pwdShow ? 'ic_eye' : 'ic_eye_open'}.png`" />
-            </view>
-          </template>
-          <view class="form-item">
-            <button class="btn btn-submit" @tap="doLogin">{{ '登录 / 注册' | lang }}</button>
-          </view>
-				<view class="form-item" style="justify-content: space-between; color: #555555; font-size: 28rpx;">
-					<text @tap="jumpUrl('/pages/login/reg')">{{ '注册账号' | lang }}</text>
-					<text @tap="jumpUrl('/pages/login/reset')">{{ '忘记密码' | lang }}</text>
-				</view>
-			</view>
-		</view>
-		
-		<view class="page-ft">
-      登录即表示同意<text @tap="jumpUrl('/pages/service/article?type=service')">《服务协议》</text>和<text @tap="jumpUrl('/pages/service/article?type=privacy')">《隐私政策》</text>
-		</view>
-    <sendsms
-        v-if="sendSmsShow"
-        :phone="phone"
-        type="login"
-        sitecode=""
-        @success="sendSmsSuccess"
-        @close="sendSmsShow = false">
-    </sendsms>
 	</view>
 </template>
 
@@ -112,7 +114,6 @@ export default {
       });
     },
     doLogin() {
-      debugger
       if(!this.phone) {
         this.msg('请输入手机号');
         return
@@ -184,6 +185,7 @@ export default {
       color: rgba(255,255,255,.5);
       letter-spacing: 4rpx;
       transition: transform 300ms ease-in-out;
+      cursor: pointer;
       &.active {
         color: #fff;
         transform: scale(1.2);
@@ -278,6 +280,17 @@ export default {
         background: #f8f8f8;
       }
     }
+  }
+}
+
+.page-content {
+  width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .page-content {
+    width: 500px;
+    margin: 0 auto;
   }
 }
 </style>
