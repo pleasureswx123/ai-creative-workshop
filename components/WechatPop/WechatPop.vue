@@ -2,6 +2,7 @@
   <view v-if="showPay">
     <u-popup
         round="20rpx"
+        :closeOnClickOverlay="false"
         :show="show"
         :mode="popMode"
         @close="show = false">
@@ -19,8 +20,8 @@
         </view>
         <view class="code-tips">请扫码支付</view>
         <view class="btn-box">
-          <view class="btn" @tap="show = false">取消</view>
-          <view class="btn confirm">已完成支付</view>
+          <view class="btn" @tap="cancelPay">取消</view>
+          <view class="btn confirm" @tap="finishPay">已完成支付</view>
         </view>
       </view>
     </u-popup>
@@ -61,6 +62,9 @@ export default {
     popMode() {
       return this.isMobile ? 'bottom' : 'center';
     },
+    orderId() {
+      return this.info?.order_id;
+    },
     show: {
       get() {
         return this.value
@@ -84,37 +88,71 @@ export default {
   },
   methods: {
     ...mapActions('OrderInfo', ['checkPay']),
+    finishPay() {
+      this.clearPay();
+      if(!this.orderId) {
+        return false;
+      }
+      this.handlePay().then(resData => {
+        if (resData?.ispay) {
+          this.paySuccessTips();
+        } else {
+          this.payFailTips();
+        }
+      });
+    },
     clearPay() {
       if(this.timer) {
         clearInterval(this.timer);
         this.timer = null;
       }
     },
+    cancelPay() {
+      this.clearPay();
+      this.show = false;
+    },
+    handlePay() {
+      return new Promise((resolve, reject) => {
+        this.checkPay({order_id: this.orderId}).then(resData => {
+          resolve(resData);
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    tipsModal(content) {
+      uni.showModal({
+        title: '提示',
+        content,
+        showCancel: false,
+        confirmText: '确定',
+        complete: function () {
+          uni.reLaunch({
+            url: '/pages/member/index'
+          });
+        }
+      });
+    },
+    payFailTips() {
+      this.tipsModal('未能查询到支付结果，请确认已支付成功，或稍后刷新页面');
+    },
+    paySuccessTips() {
+      this.tipsModal('支付成功');
+    },
     payCb() {
       this.clearPay();
-      const id = this.info?.order_id;
-      if(!id) {
+      if(!this.orderId) {
         return false;
       }
       this.timer = setInterval(() => {
-        this.checkPay({order_id: id}).then(resData => {
-          if(resData?.ispay) {
+        this.handlePay().then(resData => {
+          if (resData?.ispay) {
             this.clearPay();
-            uni.showModal({
-              title: '提示',
-              content: '支付成功',
-              showCancel: false,
-              confirmText: '确定',
-              complete: function () {
-                uni.reLaunch({
-                  url: '/pages/index/index'
-                });
-              }
-            });
+            this.paySuccessTips();
           }
         }).catch(err => {
           this.clearPay();
-        })
+        });
       }, 3000)
     }
   }
