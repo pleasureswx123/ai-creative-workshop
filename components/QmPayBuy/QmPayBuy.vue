@@ -73,7 +73,8 @@ export default {
     // },
     handleBuy() {
       this.confirmOrder(this.params).then(() => {
-        const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
+        // const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
+        const trade_type = 'native';
         this.createOrder(Object.assign({}, this.params, {
           platform: 'h5', trade_type
         })).then(res => {
