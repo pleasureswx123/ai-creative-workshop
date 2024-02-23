@@ -8,6 +8,12 @@
 			}
 		},
 		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
 			"path": "pages/service/tutorial",
 			"style": {
 				"navigationBarTitleText": "使用教程"
@@ -236,12 +242,6 @@
 			"path": "pages/ai/assistant-chat",
 			"style": {
 				"navigationBarTitleText": "创作助手"
-			}
-		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": ""
 			}
 		},
 		{
