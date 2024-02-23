@@ -4,14 +4,14 @@
 		<view>
 			<NovelTextarea></NovelTextarea>
 			<view class="novel">
-				<NovelVideo @onLayout="onLayout"></NovelVideo>
+				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>
 			</view>
 			<view class="next">
 				<view class="nextBtn">下一步</view>
 				<view class="tips">(消耗40积分)</view>
 			</view>
 		</view>
-		<ScreenPop title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
+		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
 		<EraPop title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
 		<VideoPop title="配音选择" v-if="videoPop" :show.sync="videoPop"></VideoPop>
 		<BgmPop title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
@@ -53,6 +53,10 @@
 		methods: {
 			onLayout(name) {
 				this[`${name}`] = true
+			},
+			setNovelData(data){
+				this.$refs.NovelVideo.burList[0].choose = data.title
+				this.screenPop = false
 			}
 		},
 	}

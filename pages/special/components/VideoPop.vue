@@ -43,7 +43,7 @@ export default {
 
 <style lang="scss" scoped>
 	.videoPop{
-		background-color:var(--bg-color2);
+		background-color:#3b3f57;
 		border-radius:20rpx;
 		padding:30rpx 30rpx;
 		margin-bottom:20rpx;

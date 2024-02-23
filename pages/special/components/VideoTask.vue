@@ -49,7 +49,7 @@ export default {
 		.videoPop {
 			display: flex;
 			align-items: center;
-			background-color: var(--bg-color2);
+			background-color: #3b3f57;
 			border-radius: 10px;
 			padding: 10px 15px;
 			margin-bottom: 10px;

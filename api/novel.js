@@ -27,4 +27,11 @@ export default {
       }
     })
   },
+  getMusic(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/getMusic`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

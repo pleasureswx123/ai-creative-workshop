@@ -54,7 +54,7 @@ export default {
 		gap: 10px;
 	}
 	.videoPop{
-		// background-color:var(--bg-color2);
+		background-color:var(--bg-color2);
 		border:1px solid #fff;
 		border-radius:20rpx;
 		padding:20rpx 30rpx;

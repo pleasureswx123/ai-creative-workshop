@@ -65,4 +65,12 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.icon-zanting:before {
+  content: "\e635";
+  font-size:30px;
+}
 
+.icon-bofang2:before {
+  content: "\e630";
+  font-size:30px;
+}

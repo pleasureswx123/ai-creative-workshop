@@ -41,6 +41,17 @@ export default {
 	},
 	methods: {
 		misic(id) {
+			console.log(id)
+			if(this.id = 1){
+				uni.navigateTo({
+				   url: './music' // 要跳转到的页面路径
+				})
+			}
+			if(this.id = 2){
+				uni.navigateTo({
+				   url: './Material' // 要跳转到的页面路径
+				})
+			}
 			if(this.id = 3){
 				this.$emit('update:show', false)
 			}
@@ -51,7 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 	.videoPop{
-		background-color:var(--bg-color2);
+		background-color:#3b3f57;
 		border-radius:20rpx;
 		padding:30rpx 30rpx;
 		margin-bottom:30rpx;

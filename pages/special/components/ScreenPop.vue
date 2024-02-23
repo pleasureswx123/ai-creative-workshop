@@ -1,6 +1,6 @@
 <template>
-	<NovelPop :show="show"  @close="$emit('update:show', false)" :title="title">
-		<scroll-view scroll-y="true" style="height: 330px" @scrolltolower="onLoadMore">
+	<NovelPop :show="show"  @close="$emit('update:show', false)" :title="title" @confirm="handConfirm">
+		<scroll-view scroll-y="true" style="height: 300px">
 		  <view class="item-wrapper">
 			  <view class="item-box" v-for="(item,index) in screenList" :key="index" @click="onSelected(index)">
 				<view class="pic-box" :class="{active: activeIndex === index}">
@@ -34,7 +34,9 @@ export default {
 	data() {
 	  return {
 		activeIndex: 0,
-		screenList:[]
+		screenList:[],
+		page:1,
+		pagesize:10
 	  }
 	},
 	mounted() {
@@ -43,8 +45,9 @@ export default {
 	methods: {
 		getScreenStyle() {
 			NovelApi.getScreen({
-				data:{page:1,
-	        	pagesize:10,},
+				data:{
+				page:this.page,
+	        	pagesize:this.pagesize},
 				no_sign: 1,
 				sourceCode:"100001",
 				sign:"52d89ffef49b65edaf5d232104d42fac",
@@ -55,6 +58,9 @@ export default {
 		},
 		onSelected(index){
 			this.activeIndex = index
+		},
+		handConfirm(){
+			 this.$emit('setNovelData',this.screenList[this.activeIndex])
 		}
 	},
 }
@@ -77,7 +83,6 @@ export default {
 		background-color: #ccc;
 		border:1px solid var(--bg-color1);
 	  &.active {
-		
 		border:1px solid #6978fd;
 	  }
 	    uni-image {
