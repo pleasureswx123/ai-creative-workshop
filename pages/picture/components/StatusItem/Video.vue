@@ -51,12 +51,9 @@ export default {
     height: 100%;
   }
 }
-
 @supports not(aspect-ratio: 16 / 9){
   .video-wrapper {
     height: 300px!important;
   }
 }
-
-//height: 300rpx;
 </style>

@@ -25,7 +25,7 @@
             <view class="icon-wrapper">
               <uni-icons custom-prefix="iconfont-qm" type="icon-qm-flash3" color="rgb(255 174 26)" size="16" />
             </view>
-            <text>{{userInfoState.balance}}</text>
+            <text>{{userInfoState.sum_balance}}</text>
           </view>
         </view>
       </view>

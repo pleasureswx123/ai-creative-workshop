@@ -27,7 +27,7 @@ export default {
       return this.userInfoState.vip_level
     },
     infos() {
-      const {vip_expire_time, permanent_balance, balance, computing_reset_time} = this.userInfoState || {};
+      const {vip_expire_time, permanent_balance = 0, balance = 0, computing_reset_time} = this.userInfoState || {};
       const levelTxt = memberInfo[`${this.vipLevel}`] || '';
       return [
         {title: '当前状态', value: levelTxt, className: 'cl-wrapper'},
