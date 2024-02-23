@@ -9,11 +9,6 @@ import zpMixins from '@/uni_modules/zp-mixins/index.js';
 
 import './lang.js';
 
-// Api函数polyfill（目前为实验版本，如不需要，可删除！）';
-import Polyfill from './polyfill/polyfill';
-
-Polyfill.init();
-
 Vue.prototype.$store = store;
 
 Vue.use(uView)
