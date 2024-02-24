@@ -225,7 +225,163 @@ export default {
     getFileName(url) {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
-    downLoadFile(url) {
+    async downLoadFile(url, options = {}) {
+      const fileName = this.getFileName(url);
+      const {timeout = 50000, retries = 3, onDownloadComplete} = options;
+      let attempts = 0;
+      const downloadWithRetry = async () => {
+        try {
+          const response = await fetch(`${url}?_t=${Date.now()}`, {timeout});
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          // try {
+          //   const contentLength = Number(response.headers.get('Content-Length'));
+          //   const reader = response.body.getReader();
+          // } catch (e) {
+          //   console.log('reader', e)
+          // }
+          const blob = await response.blob();
+          const urlBlob = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = urlBlob;
+          link.setAttribute('download', fileName || 'download');
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          setTimeout(() => {
+            URL.revokeObjectURL(urlBlob);
+            document.body.removeChild(link);
+          }, 100);
+          if (typeof onDownloadComplete === 'function') {
+            onDownloadComplete();
+          }
+        } catch (error) {
+          attempts++;
+          if (attempts < retries) {
+            console.warn(`Download attempt ${attempts} failed. Retrying...`);
+            await downloadWithRetry();
+          } else {
+            console.error('File download failed after multiple attempts:', error);
+            throw error;
+          }
+        }
+      };
+      try {
+        await downloadWithRetry();
+      } catch (error) {
+        console.error('There was a problem with the download:', error);
+        throw error;
+      }
+    },
+    async downLoadFile123(url, options = {}) {
+      debugger
+      // const aa = downloadFile('https://example.com/file.pdf', {
+      //   onDownloadComplete: () => {
+      //     console.log('File download complete!');
+      //     // 在这里执行其他操作
+      //   },
+      //   onDownloadProgress: progress => {
+      //     console.log(`Download progress: ${progress}%`);
+      //   },
+      //   onCancel: () => {
+      //     console.log('Download cancelled');
+      //   }
+      // }).then(() => {
+      //   console.log('File download initiated');
+      // }).catch(error => {
+      //   console.error('File download failed:', error);
+      // });
+      // aa.cancel();
+      const fileName = this.getFileName(url);
+      const {timeout = 50000, retries = 3, onDownloadComplete, onDownloadProgress, onCancel} = options;
+      let cancelled = false;
+      let attempts = 0;
+      const downloadWithRetry = async () => {
+        try {
+          if (cancelled) {
+            if (typeof onCancel === 'function') {
+              onCancel();
+            }
+            return;
+          }
+          const response = await fetch(`${url}?_t=${Date.now()}`, {timeout});
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          try {
+            const contentLength = Number(response.headers.get('Content-Length'));
+            let receivedLength = 0;
+            const reader = response.body.getReader();
+            debugger
+            const handleData = ({done, value}) => {
+              if (cancelled) {
+                reader.cancel();
+                if (typeof onCancel === 'function') {
+                  onCancel();
+                }
+                return;
+              }
+              if (done) {
+                if (typeof onDownloadProgress === 'function') {
+                  onDownloadProgress(100);
+                }
+                return;
+              }
+              receivedLength += value.length;
+              if (typeof onDownloadProgress === 'function' && contentLength) {
+                const progress = Math.round((receivedLength / contentLength) * 100);
+                onDownloadProgress(progress);
+              }
+              return reader.read().then(handleData);
+            };
+            reader.read().then(handleData);
+            if (!cancelled) {
+              debugger
+              const blob = await response.blob();
+              const urlBlob = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = urlBlob;
+              link.setAttribute('download', fileName || 'download');
+              link.style.display = 'none';
+              document.body.appendChild(link);
+              link.click();
+              setTimeout(() => {
+                URL.revokeObjectURL(urlBlob);
+                document.body.removeChild(link);
+              }, 100);
+              if (typeof onDownloadComplete === 'function') {
+                onDownloadComplete();
+              }
+            }
+          } catch (e) {
+            console.log('reader', e)
+          }
+        } catch (error) {
+          debugger
+          attempts++;
+          if (attempts < retries) {
+            console.warn(`Download attempt ${attempts} failed. Retrying...`);
+            await downloadWithRetry();
+          } else {
+            console.error('File download failed after multiple attempts:', error);
+            throw error;
+          }
+        }
+      };
+      try {
+        await downloadWithRetry();
+      } catch (error) {
+        console.error('There was a problem with the download:', error);
+        throw error;
+      }
+      return {
+        cancel: () => {
+          cancelled = true;
+        }
+      };
+    },
+    downLoadFile1(url) {
       // #ifdef H5
       return new Promise((resolve, reject) => {
         try {
