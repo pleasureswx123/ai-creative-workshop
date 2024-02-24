@@ -9,8 +9,8 @@
           <view class="img-box">
             <image :src="item.url" mode="aspectFill"></image>
           </view>
-          <view class="tips">{{item.tips}}</view>
           <view class="title">{{item.title}}</view>
+          <view class="tips">{{item.tips}}</view>
         </view>
       </view>
     </view>
@@ -63,18 +63,20 @@ export default {
     background-color: var(--bg-color2);
     overflow: hidden;
     box-shadow: 0 0 20rpx rgba(0,0,0,.1);
+    padding-bottom: 20rpx;
     .title {
+      padding-top: 20rpx;
       font-size: 24rpx;
       color: var(--txt-color1);
       text-align: center;
-      line-height: 80rpx;
+      line-height: 50rpx;
     }
     .tips {
       font-size: 20rpx;
       color: var(--txt-color1);
       text-align: center;
       line-height: 30rpx;
-      padding: 20rpx 20rpx 0;
+      padding: 0 20rpx;
     }
   }
   .img-box {
