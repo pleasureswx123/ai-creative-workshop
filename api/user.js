@@ -1,4 +1,18 @@
 export default {
+  login(params) {
+    return uni.$u.http.post(`/Login/login`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  phonelogin(params) {
+    return uni.$u.http.post(`Login/phonelogin`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getJiFenRule(params) {
     return uni.$u.http.post(`/User/JiFenRule`, params, {
       custom: {

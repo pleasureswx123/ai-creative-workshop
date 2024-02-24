@@ -1,5 +1,6 @@
 <template>
 	<view class="page">
+    <view class="page-content">
 		<view class="title">{{ '修改密码' | lang }}</view>
 
 		<view class="container">
@@ -32,6 +33,7 @@
 
 		<sendsms v-if="sendSmsShow" :phone="phone" type="reset" :sitecode="sitecode" @success="sendSmsSuccess" @close="sendSmsClose">
 		</sendsms>
+	  </view>
 	</view>
 </template>
 
@@ -304,4 +306,14 @@
 		top: 26rpx;
 		z-index: 10;
 	}
+  .page-content {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .page-content {
+      width: 500px;
+      margin: 0 auto;
+    }
+  }
 </style>

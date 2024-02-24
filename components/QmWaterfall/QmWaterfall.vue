@@ -128,7 +128,7 @@ export default {
     resetColumnCount() {
       this.setColumnCount();
       this.clearData();
-      this.getData();
+      return this.getData();
     },
     initListData() {
       for(let i = 0; i < this.columnCount; i++) {
@@ -152,7 +152,7 @@ export default {
       this.getData();
     },
     getData() {
-      this.getList(this.params).then(resData => {
+      return this.getList(this.params).then(resData => {
         const resList = (this.proxyList ? ((resData?.list || []).map(this.proxyList)) : resData?.list).map(item => {
           const id = item.id || guid();
           return { ...item, id }

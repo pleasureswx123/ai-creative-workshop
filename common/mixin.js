@@ -37,6 +37,36 @@ export default {
     toggleBodyPositionStatus(status) {
       document.body.style.overflow = status ? 'hidden' : '';
     },
+    async loadImage(url) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('Failed to load image'));
+        image.src = url;
+      });
+    },
+    async addWatermark(text, imageUrl, canvasId, outputImageFileName) {
+      // addWatermark('Watermark', 'input_image.jpg', 'canvas', 'output_image.jpg');
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      const image = await this.loadImage(imageUrl);
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image, 0, 0);
+      ctx.font = '30px Arial';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // 水印颜色和透明度
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2); // 将水印放在画布中央
+      // 生成新的带水印的图片并保存
+      const outputImage = canvas.toDataURL('image/jpeg');
+      const link = document.createElement('a');
+      link.href = outputImage;
+      link.download = outputImageFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
     checkLoginStatus() {
       return new Promise((resolve, reject) => {
         userApi.checkLogin().then(res => {
@@ -195,16 +225,317 @@ export default {
     getFileName(url) {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
-    downLoadFile(url) {
+    drawCanvas() {
+      // 获取元素
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const image = new Image();
+      image.src = 'your_image.jpg'; // 请替换为你的图片路径
+
+      // 定义涂抹参数
+      const radius = 10; // 涂抹半径
+      const color = 'rgba(0, 0, 0, 1)'; // 涂抹颜色，不透明表示覆盖
+
+      // 加载图片并绘制到Canvas
+      image.onload = function() {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+      };
+
+      // 添加涂抹事件监听器
+      let isDrawing = false;
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mousemove', draw);
+
+      // 开始涂抹
+      function startDrawing(event) {
+        isDrawing = true;
+        draw(event); // 开始涂抹时也需要绘制一次
+      }
+
+      // 结束涂抹
+      function stopDrawing() {
+        isDrawing = false;
+      }
+
+      // 涂抹
+      function draw(event) {
+        if (!isDrawing) return;
+
+        // 计算涂抹位置
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // 在canvas上绘制圆形
+        requestAnimationFrame(() => {
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = color;
+          ctx.fill();
+        });
+      }
+    },
+    createAudioAnalyser() {
+      // 创建音频上下文对象
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      // 获取音频元素
+      const audioElement = document.getElementById('audio');
+      // 创建音频源
+      const audioSrc = audioContext.createMediaElementSource(audioElement);
+      // 创建分析器
+      const analyser = audioContext.createAnalyser();
+      // 连接音频源和分析器
+      audioSrc.connect(analyser);
+      // 连接音频源和目的地（扬声器）
+      audioSrc.connect(audioContext.destination);
+      // 设置FFT大小
+      analyser.fftSize = 256;
+      // 获取频域数据长度
+      const bufferLength = analyser.frequencyBinCount;
+      // 创建存储频域数据的数组
+      const dataArray = new Uint8Array(bufferLength);
+      // 获取画布元素
+      const canvas = document.getElementById('visualizer');
+      // 获取2D绘图上下文
+      const canvasCtx = canvas.getContext('2d');
+      // 定义绘制函数
+      function draw() {
+        // 获取画布宽度和高度
+        const WIDTH = canvas.width;
+        const HEIGHT = canvas.height;
+        // 获取频域数据
+        analyser.getByteFrequencyData(dataArray);
+        // 清空画布
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+        // 计算每个频段的宽度
+        const barWidth = (WIDTH / bufferLength) * 2.5;
+        // 使用新的绘制方法，直接绘制整个波形图
+        canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        // 设置柱形颜色
+        canvasCtx.fillStyle = 'rgb(255, 0, 0)';
+        // 绘制每个频段的柱形
+        for (let i = 0; i < bufferLength; i++) {
+          const barHeight = dataArray[i] / 2;
+          // 绘制柱形
+          canvasCtx.fillRect(i * (barWidth + 1), HEIGHT - barHeight, barWidth, barHeight);
+        }
+        // 循环调用draw函数，实现动画效果
+        requestAnimationFrame(draw);
+      }
+      // // 给播放/暂停按钮添加点击事件监听器
+      // document.getElementById('playPauseButton').addEventListener('click', () => {
+      //   // 如果音频暂停
+      //   if (audioElement.paused) {
+      //     // 播放音频
+      //     audioElement.play();
+      //     // 调用绘制函数开始绘制波形图
+      //     draw();
+      //     // 更新按钮文本为暂停
+      //     document.getElementById('playPauseButton').textContent = 'Pause';
+      //   } else { // 如果音频正在播放
+      //     // 暂停音频
+      //     audioElement.pause();
+      //     // 更新按钮文本为播放
+      //     document.getElementById('playPauseButton').textContent = 'Play';
+      //   }
+      // });
+    },
+    async downLoadFile(url, options = {}) {
+      const fileName = this.getFileName(url);
+      const {timeout = 50000, retries = 3, onDownloadComplete} = options;
+      let attempts = 0;
+      const downloadWithRetry = async () => {
+        try {
+          const response = await fetch(`${url}?_t=${Date.now()}`, {timeout});
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          // try {
+          //   const contentLength = Number(response.headers.get('Content-Length'));
+          //   const reader = response.body.getReader();
+          // } catch (e) {
+          //   console.log('reader', e)
+          // }
+          const blob = await response.blob();
+          const urlBlob = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = urlBlob;
+          link.setAttribute('download', fileName || 'download');
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          setTimeout(() => {
+            URL.revokeObjectURL(urlBlob);
+            document.body.removeChild(link);
+          }, 100);
+          if (typeof onDownloadComplete === 'function') {
+            onDownloadComplete();
+          }
+        } catch (error) {
+          attempts++;
+          if (attempts < retries) {
+            console.warn(`Download attempt ${attempts} failed. Retrying...`);
+            await downloadWithRetry();
+          } else {
+            console.error('File download failed after multiple attempts:', error);
+            throw error;
+          }
+        }
+      };
+      try {
+        await downloadWithRetry();
+      } catch (error) {
+        console.error('There was a problem with the download:', error);
+        throw error;
+      }
+    },
+    async downLoadFile123(url, options = {}) {
+      debugger
+      // const aa = downloadFile('https://example.com/file.pdf', {
+      //   onDownloadComplete: () => {
+      //     console.log('File download complete!');
+      //     // 在这里执行其他操作
+      //   },
+      //   onDownloadProgress: progress => {
+      //     console.log(`Download progress: ${progress}%`);
+      //   },
+      //   onCancel: () => {
+      //     console.log('Download cancelled');
+      //   }
+      // }).then(() => {
+      //   console.log('File download initiated');
+      // }).catch(error => {
+      //   console.error('File download failed:', error);
+      // });
+      // aa.cancel();
+      const fileName = this.getFileName(url);
+      const {timeout = 50000, retries = 3, onDownloadComplete, onDownloadProgress, onCancel} = options;
+      let cancelled = false;
+      let attempts = 0;
+      const downloadWithRetry = async () => {
+        try {
+          if (cancelled) {
+            if (typeof onCancel === 'function') {
+              onCancel();
+            }
+            return;
+          }
+          const response = await fetch(`${url}?_t=${Date.now()}`, {timeout});
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          try {
+            const contentLength = Number(response.headers.get('Content-Length'));
+            let receivedLength = 0;
+            const reader = response.body.getReader();
+            debugger
+            const handleData = ({done, value}) => {
+              if (cancelled) {
+                reader.cancel();
+                if (typeof onCancel === 'function') {
+                  onCancel();
+                }
+                return;
+              }
+              if (done) {
+                if (typeof onDownloadProgress === 'function') {
+                  onDownloadProgress(100);
+                }
+                return;
+              }
+              receivedLength += value.length;
+              if (typeof onDownloadProgress === 'function' && contentLength) {
+                const progress = Math.round((receivedLength / contentLength) * 100);
+                onDownloadProgress(progress);
+              }
+              return reader.read().then(handleData);
+            };
+            reader.read().then(handleData);
+            if (!cancelled) {
+              debugger
+              const blob = await response.blob();
+              const urlBlob = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = urlBlob;
+              link.setAttribute('download', fileName || 'download');
+              link.style.display = 'none';
+              document.body.appendChild(link);
+              link.click();
+              setTimeout(() => {
+                URL.revokeObjectURL(urlBlob);
+                document.body.removeChild(link);
+              }, 100);
+              if (typeof onDownloadComplete === 'function') {
+                onDownloadComplete();
+              }
+            }
+          } catch (e) {
+            console.log('reader', e)
+          }
+        } catch (error) {
+          debugger
+          attempts++;
+          if (attempts < retries) {
+            console.warn(`Download attempt ${attempts} failed. Retrying...`);
+            await downloadWithRetry();
+          } else {
+            console.error('File download failed after multiple attempts:', error);
+            throw error;
+          }
+        }
+      };
+      try {
+        await downloadWithRetry();
+      } catch (error) {
+        console.error('There was a problem with the download:', error);
+        throw error;
+      }
+      return {
+        cancel: () => {
+          cancelled = true;
+        }
+      };
+    },
+    downLoadFile1(url) {
       // #ifdef H5
-      const ele = document.createElement('a');
-      ele.href = url;
-      ele.setAttribute('download', this.getFileName(url));
-      ele.style.display = 'none';
-      document.body.appendChild(ele);
-      ele.click();
-      document.body.removeChild(ele);
-      return
+      return new Promise((resolve, reject) => {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', `${url}?_t=${Date.now()}`, true);
+          xhr.responseType = 'blob';
+          xhr.onerror = () => {
+            reject()
+          }
+          xhr.onload = (e) => {
+            if (xhr.status === 200) {
+              try {
+                const blob = xhr.response;
+                const urlBlob = window.URL.createObjectURL(blob);
+                const ele = document.createElement('a');
+                ele.href = urlBlob;
+                ele.setAttribute('download', this.getFileName(url));
+                ele.style.display = 'none';
+                document.body.appendChild(ele);
+                ele.click();
+                setTimeout(() => {
+                  URL.revokeObjectURL(urlBlob);
+                  document.body.removeChild(ele);
+                  resolve();
+                }, 100);
+              } catch (e) {
+                reject()
+              }
+            }
+          };
+          xhr.send();
+        } catch (e) {
+          reject()
+        }
+      })
       // #endif
       uni.downloadFile({url,
         success: (res) => {

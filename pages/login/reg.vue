@@ -1,5 +1,6 @@
 <template>
 	<view class="page">
+    <view class="page-content">
 		<view class="title">{{ '注册账号' | lang }}</view>
 
 		<view class="container">
@@ -27,10 +28,10 @@
 				<view class="form-item">
 					<button class="btn btn-submit" @tap="doReg">{{ '立即注册' | lang }}</button>
 				</view>
-				<view class="form-item"
+<!--				<view class="form-item"
 					style="justify-content: center; color: #04babe; padding:0 36rpx; font-size: 30rpx;">
 					<text @tap="toBack">{{ '返回登录' | lang }}</text>
-				</view>
+				</view>-->
 			</view>
 		</view>
 
@@ -40,6 +41,7 @@
 
 		<sendsms v-if="sendSmsShow" :phone="phone" type="reg" :sitecode="sitecode" @success="sendSmsSuccess" @close="sendSmsClose">
 		</sendsms>
+	  </view>
 	</view>
 </template>
 
@@ -142,19 +144,21 @@
 					},
 				}).then((res) => {
 					app.globalData.util.message(res.message, 'success')
-					this.toBack()
+          
+          uni.navigateBack({
+            fail: function() {
+              uni.reLaunch({
+                url: '/pages/index/index'
+              })
+            }
+          })
 				})
 			},
 			toBack() {
-				uni.navigateBack({
-					fail: function() {
-						uni.reLaunch({
-							url: '/pages/index/index'
-						})
-					}
-				})
+        uni.navigateTo({
+          url: '/pages/login/index'
+        })
 			},
-
 			toDoc(type) {
 				uni.navigateTo({
 					url: '/pages/service/article?type=' + type
@@ -338,4 +342,15 @@
 	.form .form-item text{
 		color: #F60652;
 	}
+  
+  .page-content {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .page-content {
+      width: 500px;
+      margin: 0 auto;
+    }
+  }
 </style>

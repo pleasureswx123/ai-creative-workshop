@@ -1,6 +1,7 @@
 import {userApi} from '@/api'
 
 const state = {
+  userLoginInfo: null,
   userInfoState: {
     user_id: 0,
     balance: 0,
@@ -18,6 +19,22 @@ const getters = {
 };
 
 const actions = {
+  login({dispatch, commit}, params = {}) {
+    return userApi.login(params).then(res => {
+      commit('setUserLoginInfo', Object.assign(
+        {phone: params?.phone || ''},
+        res || {}));
+      return Promise.resolve(res);
+    })
+  },
+  phonelogin({dispatch, commit}, params = {}) {
+    return userApi.phonelogin(params).then(res => {
+      commit('setUserLoginInfo', Object.assign(
+        {phone: params?.phone || ''},
+        res || {}));
+      return Promise.resolve(res);
+    })
+  },
   getModelList({dispatch, commit}, params = {}) {
     return userApi.getModelList(params).then(res => {
       commit('setModelList', res?.aiList || [])
@@ -41,6 +58,12 @@ const actions = {
 };
 
 const mutations = {
+  setUserLoginInfo(state, info = {}) {
+    uni.setStorageSync('phone', info.phone);
+    uni.setStorageSync('token', info.token);
+    uni.setStorageSync('userInfo', info.userinfo);
+    state.userLoginInfo = info;
+  },
   setUserInfo(state, info = {}) {
     state.userInfoState = info
   },
