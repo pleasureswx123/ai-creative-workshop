@@ -6,6 +6,7 @@
     
     <QmHomeTypeTabs
         :value.sync="model_subclass_id" />
+    <view style="min-height: 90vh">
     <QmWaterfall
         ref="waterfall"
         :paramsInfo="paramsInfo"
@@ -16,7 +17,7 @@
         }"
         :getList="homeApi.getHomeFeedsList"
         @select="getDetailsInfo" />
-    
+    </view>
     <QmHomeFooter />
     <MyCreateDetails
         v-if="showDetails"
@@ -43,6 +44,11 @@ import {mapActions} from 'vuex';
           model_subclass_id: this.model_subclass_id
         }
       }
+    },
+    onPullDownRefresh() {
+      this.$refs?.waterfall?.resetColumnCount?.()?.then(() => {
+        uni.stopPullDownRefresh();
+      });
     },
     onReachBottom() {
       this.$refs?.waterfall?.loadMore?.();
