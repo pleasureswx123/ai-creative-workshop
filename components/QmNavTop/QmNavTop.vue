@@ -110,8 +110,8 @@ export default {
     gap: 10rpx;
     image {
       display: block;
-      width: 60rpx;
-      height: 58rpx;
+      width: 80rpx;
+      height: 80rpx;
     }
     .title {
       color: rgba(255,255,255,.7);
@@ -146,8 +146,8 @@ export default {
     cursor: pointer;
     image {
       display: block;
-      width: 60rpx;
-      height: 58rpx;
+      width: 80rpx;
+      height: 80rpx;
     }
   }
   .menu-nav {

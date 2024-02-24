@@ -39,8 +39,8 @@ export default {
   padding: 30rpx;
   .logo {
     display: block;
-    width: 80rpx;
-    height: 80rpx;
+    width: 160rpx;
+    height: 160rpx;
     margin: 0 auto 10rpx;
   }
   .name {
