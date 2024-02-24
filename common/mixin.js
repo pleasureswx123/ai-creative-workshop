@@ -37,32 +37,35 @@ export default {
     toggleBodyPositionStatus(status) {
       document.body.style.overflow = status ? 'hidden' : '';
     },
-    addWatermark(text, imageUrl, canvasId, outputImageFileName) {
+    async loadImage(url) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('Failed to load image'));
+        image.src = url;
+      });
+    },
+    async addWatermark(text, imageUrl, canvasId, outputImageFileName) {
       // addWatermark('Watermark', 'input_image.jpg', 'canvas', 'output_image.jpg');
       const canvas = document.getElementById(canvasId);
       const ctx = canvas.getContext('2d');
-      const image = new Image();
-      image.onload = function () {
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-        ctx.font = '30px Arial';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // 水印颜色和透明度
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
-        ctx.fillText(text, canvas.width / 2, canvas.height / 2); // 将水印放在画布中央
-        // 如果你想要将水印放在右下角，可以使用下面这行代码
-        // ctx.fillText(text, canvas.width - 100, canvas.height - 50);
-        // 生成新的带水印的图片并保存
-        const outputImage = canvas.toDataURL('image/jpeg');
-        const link = document.createElement('a');
-        link.href = outputImage;
-        link.download = outputImageFileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      };
-      image.src = imageUrl;
+      const image = await this.loadImage(imageUrl);
+      canvas.width = image.width;
+      canvas.height = image.height;
+      ctx.drawImage(image, 0, 0);
+      ctx.font = '30px Arial';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // 水印颜色和透明度
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2); // 将水印放在画布中央
+      // 生成新的带水印的图片并保存
+      const outputImage = canvas.toDataURL('image/jpeg');
+      const link = document.createElement('a');
+      link.href = outputImage;
+      link.download = outputImageFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
     checkLoginStatus() {
       return new Promise((resolve, reject) => {
