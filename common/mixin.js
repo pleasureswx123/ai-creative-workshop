@@ -76,9 +76,6 @@ export default {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
     async downLoadFile(url, options = {}) {
-      if(this.qmIsWechat) {
-        return
-      }
       const fileName = this.getFileName(url);
       const {timeout = 50000, retries = 3, onDownloadComplete} = options;
       let attempts = 0;

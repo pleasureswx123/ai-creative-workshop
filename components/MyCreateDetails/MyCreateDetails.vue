@@ -39,9 +39,9 @@
                 </view>
                 <view>下载图片</view>
               </view>
-              <view class="btn-box" @tap="jumpToTextToPicture">
+<!--              <view class="btn-box" @tap="jumpToTextToPicture">
                 <text>一键同款</text>
-              </view>
+              </view>-->
             </template>
           </view>
         </view>
