@@ -1,13 +1,13 @@
 <template>
   <page-meta page-style="background: #000000" />
   <view class="page-container">
-    <view class="page-header" :style="`height: ${navType === 'digit' ? '162' : '234'}rpx`">
+    <view class="page-header" ref="header">
       <QmNavTop></QmNavTop>
       <QmNavTabs :value.sync="navType"></QmNavTabs>
       <QmSubTabs v-if="navType === 'assistant'" :list="topicList" :value.sync="topicId"></QmSubTabs>
       <QmSubTabs v-if="navType === 'chat'" :list="modelList" :value.sync="modelId"></QmSubTabs>
     </view>
-    <view class="page-main" :style="`height: calc(100% - ${navType === 'digit' ? '162' : '234'}rpx)`">
+    <view class="page-main" :style="mainStyle">
       <template v-if="navType === 'chat'">
         <QmChat :modelId="modelId"></QmChat>
       </template>
@@ -41,6 +41,7 @@ export default {
       topicId: 'all',
       navType: 'chat', // chat || assistant || digit
       modelId: '',
+      mainStyle: {}
     }
   },
   computed: {
@@ -48,18 +49,39 @@ export default {
   },
   onShow() {
     this.checkLogin();
-    this.getTopicList();
-    this.getModelList();
+    Promise.all([this.getTopicList(), this.getModelList()]).then(res => {
+      this.getHt().then(res => {
+        this.mainStyle = res;
+        debugger
+      });
+    })
   },
   watch: {
     navType(type) {
       if(type === 'digit') {
         this.getRolesList();
       }
+      this.getHt().then(res => {
+        this.mainStyle = res;
+      });
     }
   },
   methods: {
     ...mapActions('UserInfo', ['getModelList', 'getTopicList', 'getRolesList', 'getUserInfo']),
+    async getHt() {
+      let headerHt = 0;
+      await this.$nextTick(() => {
+        headerHt = this.$refs.header.$el.getBoundingClientRect().height;
+      });
+      const res = {
+        position: 'fixed',
+        top: `${headerHt}px`,
+        left: 0,
+        right: 0,
+        bottom: 0
+      };
+      return res;
+    },
     checkLogin() {
       userApi.checkLogin().then(() => {
         this.getUserInfo();
@@ -79,7 +101,7 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  height: 100vh;
+  bottom: 0;
   .page-header {
     overflow: hidden;
   }
@@ -93,11 +115,6 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
-}
-@supports (-webkit-touch-callout: none) {
-  .page-container {
-    height: 100dvh;
   }
 }
 </style>

@@ -5,7 +5,7 @@
     <view class="page-main">
       <PicHeader title="选择个人写真工具" />
       <view class="grid-box">
-        <view class="card-box pointer" v-for="(item, index) in personalToolsList" :data-type="item.type" :key="`${index}-${item.id}`" @tap="handleClick(item)">
+        <view class="card-box pointer" v-for="(item, index) in personalToolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
           <view class="img-box">
             <image :src="item.url" mode="aspectFill"></image>
           </view>

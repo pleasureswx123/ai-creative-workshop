@@ -7,7 +7,7 @@
       <view class="info">
         <view class="name-box">
           <view class="name">{{userInfoState.nickname || '未设置昵称' }}</view>
-          <view v-if="isVip" :class="`vip-level-${vipLevel}`">
+          <view v-if="isVip" :class="'vip-level-' + vipLevel">
             <uni-icons custom-prefix="iconfont-qm" type="icon-qm-vip1" color="rgba(255,255,255,.6)" size="16" />
           </view>
         </view>

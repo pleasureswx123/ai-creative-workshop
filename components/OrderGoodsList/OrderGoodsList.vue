@@ -7,7 +7,7 @@
       <view
           class="scroll-view-item_H"
           v-for="(item, index) in list"
-          :key="`${item.id}-${index}`"
+          :key="item.id"
           :class="{active: item.id === currentValue}"
           :id="`goods${item.id}`">
         <view class="item-box"

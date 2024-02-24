@@ -11,7 +11,7 @@
       <template v-for="num in columnCount" v-slot:[`list${num}`]>
         <view>
           <view v-for="(item, index) in waterfall[`list${num}`]"
-                :key="`${item.id}-${index}`"
+                :key="item.task_id"
                 :class="{active: item.id === selectId}"
                 class="waterfall-item">
             <view class="waterfall-item__image" :style="[imageStyle(item)]" @tap="handleSelect(item)">

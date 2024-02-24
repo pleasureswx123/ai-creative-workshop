@@ -5,7 +5,7 @@
       <view
           class="item"
           v-for="(item, index) in list"
-          :key="`${item.id}-${index}`"
+          :key="item.id"
           @tap="jumpArticle(item.id)">
         <view class="title">{{item.title}}</view>
         <view class="info">

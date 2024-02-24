@@ -1,6 +1,6 @@
 <template>
   <view class="radio-container">
-    <view class="item" v-for="(item, index) in list" :key="`${index}-${item.id}`" :class="{active: currentVal === item.id}"
+    <view class="item" v-for="(item, index) in list" :key="index" :class="{active: currentVal === item.id}"
           @tap="currentVal = item.id"
           >{{item.name}}</view>
   </view>

@@ -4,7 +4,7 @@
     <view>
       <view class="row-item" v-for="(item, index) in infos" :key="index">
         <view class="title">{{item.title}}</view>
-        <view :class="`${item.className || ''}`">{{item.value}}</view>
+        <view :class="item.className || ''">{{item.value}}</view>
       </view>
     </view>
   </view>

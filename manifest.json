@@ -42,17 +42,23 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wx030d0e8dfb2ce2dc",
+        "appid" : "wx6a1336f898b5006f",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
+        },
+        "optimization" : {
+            "subPackages" : true
         },
         "usingComponents" : true,
+        "lazyCodeLoading" : "requiredComponents",
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "你的位置信息将用于小程序位置接口的效果展示"
             }
         },
-        "plugins" : {}
+        "plugins" : {},
+        "requiredPrivateInfos" : [ "chooseLocation", "getLocation" ]
     },
     "mp-alipay" : {
         "usingComponents" : true

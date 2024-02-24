@@ -7,8 +7,8 @@
         <UserVipStatus></UserVipStatus>
         <view class="nav-list">
           <template v-for="item in navList">
-            <view v-if="item.type === 'line'" :key="item.id" :class="`line ${item.className || ''}`"></view>
-            <view v-else :class="`item ${item.className || ''}`" :key="item.id" @tap="jump(item)">
+            <view v-if="item.type === 'line'" :key="item.id" class="line" :class="item.className || ''"></view>
+            <view v-else class="item" :class="item.className || ''" :key="item.id" @tap="jump(item)">
               <uni-icons custom-prefix="iconfont-qm" :type="item.icon" color="rgba(255,255,255,.5)" size="18" />
               <view class="name">
                 <text>{{item.name}}</text>
