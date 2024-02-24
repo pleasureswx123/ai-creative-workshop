@@ -1,78 +1,79 @@
 <template>
   <page-meta page-style="background: #000000" />
   <view class="page-container" @click="hideCopyBtn">
-    <view class="page-content">
+    <view ref="header">
       <QmNavTop></QmNavTop>
       <QmSubTabs :list="modelList" :value.sync="modelId"></QmSubTabs>
-      <view class="main-content">
-        <scroll-view v-if="lists && lists.length > 0" style="height: 100%;"
-                     :scroll-x="false" :scroll-y="true" :scroll-with-animation="false"
-                     :scroll-top="scrollTop">
-          <view class="list">
-            <block v-for="(item, index) in lists" :key="index">
-              <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
-                <view class="avatar">
-                  <image mode="widthFix" src="@/static/images/ic_ai.jpg" />
-                </view>
-                <view class="text markdown-body">
-                  <textComponent :text="item.message"></textComponent>
-                  <view class="tools">
-                    <view>
-                      <view class="btn" @click="copyText(item.message)">
-                        <image class="icon" src="@/static/images/ic_copy.png"></image>
-                        <span>{{ '复制内容' | lang }}</span>
-                      </view>
-                    </view>
-                    <view>
-                      <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)" style="margin-right: 0;">
-                        <image class="icon" src="@/static/images/ic_retry.png"></image>
-                      </view>
-                    </view>
-                  </view>
-                </view>
-              </view>
-        
-              <view class="message" v-else style="background: #fff">
-                <view class="avatar" style="background: #9aa37e">
-                  <image mode="widthFix" :src="userAvatar" />
-                </view>
-                <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
-                  <textComponent :text="item.message"></textComponent>
-                </view>
-              </view>
-            </block>
-            <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
+    </view>
+    <view class="main-content" :style="mainStyle">
+      <scroll-view v-if="lists && lists.length > 0" style="height: 100%;"
+                   :scroll-x="false" :scroll-y="true" :scroll-with-animation="false"
+                   :scroll-top="scrollTop">
+        <view class="list">
+          <block v-for="(item, index) in lists" :key="index">
+            <view class="message" :data-index="index" v-if="item.user == 'AI'" style="background: #f7f7f8">
               <view class="avatar">
-                <image src="@/static/images/ic_ai.jpg" />
+                <image mode="widthFix" src="@/static/images/ic_ai.jpg" />
               </view>
               <view class="text markdown-body">
-                <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
+                <textComponent :text="item.message"></textComponent>
                 <view class="tools">
                   <view>
-                    <view class="btn" @click="stopFetch">
-                      <image class="icon" src="@/static/images/ic_stop.png"></image>
-                      <span>{{ '停止回复' | lang }}</span>
+                    <view class="btn" @click="copyText(item.message)">
+                      <image class="icon" src="@/static/images/ic_copy.png"></image>
+                      <span>{{ '复制内容' | lang }}</span>
+                    </view>
+                  </view>
+                  <view>
+                    <view class="btn" :title="'重新回答' | lang" @tap="retry(index - 1)" style="margin-right: 0;">
+                      <image class="icon" src="@/static/images/ic_retry.png"></image>
                     </view>
                   </view>
                 </view>
               </view>
             </view>
       
-            <view class="btn-copy" :style="'left:' + copyBtnLeft +'px;top:' + copyBtnTop + 'px;'" @tap="copyText(copyBtnText)">{{ '复制' | lang }}</view>
+            <view class="message" v-else style="background: #fff">
+              <view class="avatar" style="background: #9aa37e">
+                <image mode="widthFix" :src="userAvatar" />
+              </view>
+              <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
+                <textComponent :text="item.message"></textComponent>
+              </view>
+            </view>
+          </block>
+          <view class="message" style="background: #f7f7f8" v-if="writing || writingText">
+            <view class="avatar">
+              <image src="@/static/images/ic_ai.jpg" />
+            </view>
+            <view class="text markdown-body">
+              <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
+              <view class="tools">
+                <view>
+                  <view class="btn" @click="stopFetch">
+                    <image class="icon" src="@/static/images/ic_stop.png"></image>
+                    <span>{{ '停止回复' | lang }}</span>
+                  </view>
+                </view>
+              </view>
+            </view>
           </view>
-        </scroll-view>
-        <scroll-view v-else :scroll-x="false" :scroll-y="true"
-                     :scroll-with-animation="false" style="height: 100%; background: #f7f7f8;">
-          <welcome
-              module="cosplay"
-              :title="welcomeTitle"
-              :desc="welcomeDesc"
-              :tips="welcomeTips"
-              @use="quickMessage"
-          ></welcome>
-        </scroll-view>
-      </view>
-      
+    
+          <view class="btn-copy" :style="'left:' + copyBtnLeft +'px;top:' + copyBtnTop + 'px;'" @tap="copyText(copyBtnText)">{{ '复制' | lang }}</view>
+        </view>
+      </scroll-view>
+      <scroll-view v-else :scroll-x="false" :scroll-y="true"
+                   :scroll-with-animation="false" style="height: 100%; background: #f7f7f8;">
+        <welcome
+            module="cosplay"
+            :title="welcomeTitle"
+            :desc="welcomeDesc"
+            :tips="welcomeTips"
+            @use="quickMessage"
+        ></welcome>
+      </scroll-view>
+    </view>
+    <view class="page-footer" ref="footer">
       <SendMsg
           :value.sync="message"
           :isLogin="isLogin"
@@ -105,6 +106,7 @@ export default {
   components: {QmSubTabs, SendMsg, TextComponent, Welcome},
   data() {
     return {
+      mainStyle: {},
       modelId: '',
       role_id: 0,
       isLogin: false,
@@ -146,7 +148,11 @@ export default {
       siteroot: app.globalData.siteroot.replace('/web.php', '')
     });
     this.getRoleInfo(currentId);
-    this.getModelList();
+    this.getModelList().then(() => {
+      this.getHt().then(res => {
+        this.mainStyle = res;
+      });
+    });
     this.checkLogin();
   },
   watch: {
@@ -157,6 +163,22 @@ export default {
   methods: {
     ...mapActions('UserInfo', ['getModelList']),
     ...mapActions('RoleInfo', ['getRoleInfo']),
+    async getHt() {
+      let headerHt = 0;
+      let footerHt = 0;
+      await this.$nextTick(() => {
+        headerHt = this.$refs.header.$el.getBoundingClientRect().height;
+        footerHt = this.$refs.footer.$el.getBoundingClientRect().height;
+      });
+      const res = {
+        position: 'fixed',
+        top: `${headerHt}px`,
+        left: 0,
+        right: 0,
+        bottom: `${footerHt}px`
+      };
+      return res;
+    },
     async sendText() {
       if (this.writing) {
         return
@@ -407,36 +429,21 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  height: 100vh;
-  background: #fff;
-  overflow: hidden;
-}
-@supports (-webkit-touch-callout: none) {
-  .page-container {
-    height: 100dvh;
-  }
-}
-.page-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
   bottom: 0;
+  background: #fff;
+  overflow: hidden;
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 .main-content {
   width: 100%;
-  flex: 1;
-  min-height: 0;
   box-sizing: border-box;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
-  
 }
 
 .empty {

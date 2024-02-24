@@ -311,36 +311,6 @@
 			}
 		},
 		{
-			"path": "pages/pay/chat",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/pay/draw",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/pay/model4"
-		},
-		{
-			"path": "pages/pay/pay"
-		},
-		{
-			"path": "pages/pay/vip",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
 			"path": "pages/task/index",
 			"style": {
 				"navigationBarBackgroundColor": "#04BABE",
@@ -388,95 +358,6 @@
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationBarTextStyle": "black"
-			}
-		},
-		{
-			"path": "pages/commission/index",
-			"style": {
-				"navigationBarBackgroundColor": "#f7f7f8",
-				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/commission/bill",
-			"style": {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/apply",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/member/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/member/tuser",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/member/invite",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/share",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/withdraw/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/withdraw/list",
-			"style": {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/commission/order/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path" : "pages/photos/lora/lora",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
-			}
-		},
-		{
-			"path" : "pages/operate/operate",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
-			}
-		},
-		{
-			"path" : "pages/photos/user/user",
-			"style" : 
-			{
-				"navigationBarTitleText" : "",
-				"enablePullDownRefresh" : false
 			}
 		}
 	],

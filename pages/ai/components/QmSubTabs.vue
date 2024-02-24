@@ -11,7 +11,7 @@
     <scroll-view class="tabs-inner-box" scroll-x="true">
       <view
           v-for="(item, index) in list"
-          :key="`${item.type}-${index}`"
+          :key="item.type"
           :data-id="item.type"
           class="item" :class="{active: currentValue === index}"
           @tap="currentValue = index"
@@ -90,7 +90,7 @@ export default {
       .flag {
         display: none;
         position: absolute;
-        top: 4rpx;
+        top: 8rpx;
         right: 0;
         background: #F60652;
         font-size: 16rpx;

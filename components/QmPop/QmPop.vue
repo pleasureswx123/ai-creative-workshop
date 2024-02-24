@@ -14,6 +14,57 @@
         style="height: 100%"
         @scrolltolower="loadMore">
       <view class="item-wrapper" :style="styleStr">
+        <!-- #ifdef MP-WEIXIN -->
+        <template v-if="componentName === 'StyleItem'">
+          <StyleItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <template v-if="componentName === 'TemplateItem'">
+          <TemplateItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <template v-if="componentName === 'ModelStyleItem'">
+          <ModelStyleItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <template v-if="componentName === 'LoraItem'">
+          <LoraItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <template v-if="componentName === 'ImgStyleItem'">
+          <ImgStyleItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <template v-if="componentName === 'HistoryItem'">
+          <HistoryItem
+              v-for="item in list"
+              :key="item.id"
+              :info="item"
+              :active="currentId === item.id"
+              @select="handleSelect" />
+        </template>
+        <!-- #endif -->
+        <!-- #ifndef MP-WEIXIN -->
         <component
             :is="componentName"
             v-for="item in list"
@@ -21,6 +72,7 @@
             :info="item"
             :active="currentId === item.id"
             @select="handleSelect" />
+        <!-- #endif -->
       </view>
       <u-gap height="150rpx" />
     </scroll-view>
