@@ -225,6 +225,72 @@ export default {
     getFileName(url) {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
+    createAudioAnalyser() {
+      // 创建音频上下文对象
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      // 获取音频元素
+      const audioElement = document.getElementById('audio');
+      // 创建音频源
+      const audioSrc = audioContext.createMediaElementSource(audioElement);
+      // 创建分析器
+      const analyser = audioContext.createAnalyser();
+      // 连接音频源和分析器
+      audioSrc.connect(analyser);
+      // 连接音频源和目的地（扬声器）
+      audioSrc.connect(audioContext.destination);
+      // 设置FFT大小
+      analyser.fftSize = 256;
+      // 获取频域数据长度
+      const bufferLength = analyser.frequencyBinCount;
+      // 创建存储频域数据的数组
+      const dataArray = new Uint8Array(bufferLength);
+      // 获取画布元素
+      const canvas = document.getElementById('visualizer');
+      // 获取2D绘图上下文
+      const canvasCtx = canvas.getContext('2d');
+      // 定义绘制函数
+      function draw() {
+        // 获取画布宽度和高度
+        const WIDTH = canvas.width;
+        const HEIGHT = canvas.height;
+        // 获取频域数据
+        analyser.getByteFrequencyData(dataArray);
+        // 清空画布
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+        // 计算每个频段的宽度
+        const barWidth = (WIDTH / bufferLength) * 2.5;
+        // 使用新的绘制方法，直接绘制整个波形图
+        canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        // 设置柱形颜色
+        canvasCtx.fillStyle = 'rgb(255, 0, 0)';
+        // 绘制每个频段的柱形
+        for (let i = 0; i < bufferLength; i++) {
+          const barHeight = dataArray[i] / 2;
+          // 绘制柱形
+          canvasCtx.fillRect(i * (barWidth + 1), HEIGHT - barHeight, barWidth, barHeight);
+        }
+        // 循环调用draw函数，实现动画效果
+        requestAnimationFrame(draw);
+      }
+      // // 给播放/暂停按钮添加点击事件监听器
+      // document.getElementById('playPauseButton').addEventListener('click', () => {
+      //   // 如果音频暂停
+      //   if (audioElement.paused) {
+      //     // 播放音频
+      //     audioElement.play();
+      //     // 调用绘制函数开始绘制波形图
+      //     draw();
+      //     // 更新按钮文本为暂停
+      //     document.getElementById('playPauseButton').textContent = 'Pause';
+      //   } else { // 如果音频正在播放
+      //     // 暂停音频
+      //     audioElement.pause();
+      //     // 更新按钮文本为播放
+      //     document.getElementById('playPauseButton').textContent = 'Play';
+      //   }
+      // });
+    },
     async downLoadFile(url, options = {}) {
       const fileName = this.getFileName(url);
       const {timeout = 50000, retries = 3, onDownloadComplete} = options;
