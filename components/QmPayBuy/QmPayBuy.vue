@@ -73,13 +73,14 @@ export default {
     // },
     handleBuy() {
       this.confirmOrder(this.params).then(() => {
-        // const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
-        const trade_type = 'native';
+        const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
+        // const trade_type = 'native';
         this.createOrder(Object.assign({}, this.params, {
           platform: 'h5', trade_type
         })).then(res => {
           if (trade_type === 'mweb') {
-            window.location.href = `${res.pay_url}&redirect_url=${window.location.href}` // encodeURIComponent
+            window.location.href= `${res.pay_url}&redirect_url=${encodeURIComponent(window.location.href)}`;
+            // window.location.href = `${res.pay_url}&redirect_url=${window.location.href}`
           } else {
             this.payOrderInfo = res;
             this.show = true;

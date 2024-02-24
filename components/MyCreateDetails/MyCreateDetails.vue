@@ -27,19 +27,22 @@
           </view>
           <view class="ft-btn-box">
             <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
-              <text>下载视频</text>
+              <view class="icon-box" v-if="downloadStatus">
+                <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#333" size="18" />
+              </view>
+              <view>下载视频</view>
             </view>
             <template v-if="!isVideoTaskType(info.task_type)">
               <view class="btn-box" @tap="handleDownImage">
-                <text>下载图片</text>
+                <view class="icon-box" v-if="downloadStatus">
+                  <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#333" size="18" />
+                </view>
+                <view>下载图片</view>
               </view>
               <view class="btn-box" @tap="jumpToTextToPicture">
                 <text>一键同款</text>
               </view>
             </template>
-            <!--          <view v-if="![1,2].includes(info.task_type)" class="btn-box" @tap="handleDownImage">
-                        <text>下载图片</text>
-                      </view>-->
           </view>
         </view>
       </view>
@@ -72,6 +75,7 @@ export default {
   },
   data() {
     return {
+      downloadStatus: false,
       imgCurrent: 0
     }
   },
@@ -110,11 +114,22 @@ export default {
   },
   methods: {
     async handleDownVideo() {
-      this.downLoadFile(this.info.video_url);
+      this.download(this.info.video_url);
     },
     handleDownImage() {
       const src = this.info.img_urls?.[this.imgCurrent] || '';
-      src && this.downLoadFile(src);
+      src && this.download(src);
+    },
+    download(url) {
+      if(this.downloadStatus) {
+        return;
+      }
+      this.downloadStatus = true;
+      this.downLoadFile(url).then(() => {}, () => {
+        uni.$u.toast('下载失败');
+      }).finally(() => {
+        this.downloadStatus = false;
+      });
     },
     jumpToTextToPicture() {
       const {task_id} = this.info || {};
@@ -208,6 +223,7 @@ export default {
     justify-content: center;
     flex: 1;
     cursor: pointer;
+    gap: 6rpx;
   }
 }
 @supports (-webkit-touch-callout: none) {
@@ -298,6 +314,26 @@ export default {
       width: 200px;
       justify-content: flex-end;
     }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-box {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon-qm-loading-1 {
+    animation: rotate 1s linear infinite;
   }
 }
 </style>

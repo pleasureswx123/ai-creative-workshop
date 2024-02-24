@@ -197,15 +197,40 @@ export default {
     },
     downLoadFile(url) {
       // #ifdef H5
-      const ele = document.createElement('a');
-      ele.href = url;
-      ele.setAttribute('download', this.getFileName(url));
-      ele.setAttribute('target', '_blank');
-      ele.style.display = 'none';
-      document.body.appendChild(ele);
-      ele.click();
-      document.body.removeChild(ele);
-      return
+      return new Promise((resolve, reject) => {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', `${url}?_t=${Date.now()}`, true);
+          xhr.responseType = 'blob';
+          xhr.onerror = () => {
+            reject()
+          }
+          xhr.onload = (e) => {
+            if (xhr.status === 200) {
+              try {
+                const blob = xhr.response;
+                const urlBlob = window.URL.createObjectURL(blob);
+                const ele = document.createElement('a');
+                ele.href = urlBlob;
+                ele.setAttribute('download', this.getFileName(url));
+                ele.style.display = 'none';
+                document.body.appendChild(ele);
+                ele.click();
+                setTimeout(() => {
+                  URL.revokeObjectURL(urlBlob);
+                  document.body.removeChild(ele);
+                  resolve();
+                }, 100);
+              } catch (e) {
+                reject()
+              }
+            }
+          };
+          xhr.send();
+        } catch (e) {
+          reject()
+        }
+      })
       // #endif
       uni.downloadFile({url,
         success: (res) => {
