@@ -1,6 +1,6 @@
 <template>
 	<NovelPop :show="show" @close="$emit('update:show', false)" :title="title" :setShow="false">
-	  <view class="videoPop" v-for="(item,index) in bgmList" @click="misic(item.id)">
+	  <view class="videoPop" v-for="(item,index) in bgmList" @click="misic(item.id,item.url)">
 		  <i :class="item.account"></i>
 		  {{item.title}}
 	  </view>
@@ -25,36 +25,32 @@ export default {
 			{
 				title:'推荐音乐',
 				account:'iconfont icon-jia',
-				id:1
+				id:1,
+				url:'./music'
 			},
 			{
 				title:'音乐素材库',
 				account:'iconfont icon-jia',
-				id:2
+				id:2,
+				url: './Material'
 			},
 			{
 				title:'不需要',
-				id:3
+				id:3,
+				url:''
 			}
 		]
 	  }
 	},
 	methods: {
-		misic(id) {
-			console.log(id)
-			if(this.id = 1){
-				uni.navigateTo({
-				   url: './music' // 要跳转到的页面路径
-				})
-			}
-			if(this.id = 2){
-				uni.navigateTo({
-				   url: './Material' // 要跳转到的页面路径
-				})
-			}
+		misic(id,url) {
+			uni.navigateTo({
+			   url: url // 要跳转到的页面路径
+			})
 			if(this.id = 3){
 				this.$emit('update:show', false)
 			}
+			
 		}
 	},
 }

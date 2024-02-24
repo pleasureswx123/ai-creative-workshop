@@ -1,10 +1,14 @@
 <template>
 	<scroll-view scroll-y="true" style="height: 300px">
 		<view class="videoList">
-			<view class="videoPop" v-for="(item,index) in videoList">
+			<view class="videoPop" v-for="(item,index) in videoList" @click="play(item,index)" :class="{active: activeIndex === index}">
 				<view class="videoBg">
 					<i class="iconfont icon-jiqiren"></i>
-					<i class="iconfont icon-bofang"></i>
+					<!-- <i class="iconfont icon-bofang"></i> -->
+					<view class="iconPlay">
+					  <i class="iconfont icon-zanting1" v-if="musicId ==item.id"></i>
+					  <i class="iconfont icon-bofang" v-else></i>
+					</view>
 				</view>
 				<view class="word">
 					<view class="title">{{item.title}}</view>
@@ -21,11 +25,17 @@ import {NovelApi} from '@/api'
 export default {
 	data() {
 		return {
-			videoList: []
+			videoList: [],
+			activeIndex:0,
+			musicId:'',
+			innerAudioContext:null
 		}
 	},
 	mounted() {
 		this.getVideoTask()
+	},
+	beforeDestroy() {
+	  this.destroyAudio();
 	},
 	methods: {
 		getVideoTask() {
@@ -40,6 +50,21 @@ export default {
 				this.videoList = res.list
 			})
 		},
+		destroyAudio() {
+		  if(this.innerAudioContext) {
+		    this.innerAudioContext.pause();
+		    this.innerAudioContext.destroy();
+		    this.innerAudioContext = null;
+		  }
+		},
+		play(item,index){
+			this.activeIndex = index
+			this.destroyAudio();
+			this.musicId = item.id;
+			this.innerAudioContext = uni.createInnerAudioContext();
+			this.innerAudioContext.autoplay = true;
+			this.innerAudioContext.src = item.url;
+		}
 	},
 }
 </script>
@@ -53,6 +78,9 @@ export default {
 			border-radius: 10px;
 			padding: 10px 15px;
 			margin-bottom: 10px;
+			&.active{
+				background-color: #2877ff;
+			}
 			.videoBg {
 				width: 90rpx;
 				height: 90rpx;

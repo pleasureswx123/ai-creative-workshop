@@ -1,12 +1,12 @@
 <template>
 	<NovelPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title">
+      :title="title" @confirm="handConfirm">
 	  <view class="videoPop">
 		  <NovelSlider :value.sync="volume" type="volume" :min="speedMin" :max="soundMax" :step="soundStep"></NovelSlider>
 		  <NovelSlider :value.sync="speed" type="speed" :min="speedMin" :max="speedMax" :step="speedStep"></NovelSlider>
 	  </view>
-	  <VideoTask></VideoTask>
+	  <VideoTask ref="task"></VideoTask>
 	</NovelPop>
 </template>
 
@@ -37,6 +37,12 @@ export default {
 		soundStep:1,
 		speedStep:1,
 	  }
+	},
+	methods: {
+		handConfirm() {
+			this.activeIndex = this.$refs.task.activeIndex
+			this.$emit('setTaskData',this.$refs.task.videoList[this.activeIndex].title)
+		}
 	},
 }
 </script>

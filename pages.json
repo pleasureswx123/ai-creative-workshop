@@ -84,10 +84,17 @@
 			"style": {
 				"navigationBarTitleText": "推荐音乐"
 			}
-		},{
+		},
+		{
 			"path": "pages/special/Material",
 			"style": {
 				"navigationBarTitleText": "音乐素材选择"
+			}
+		},
+		{
+			"path": "pages/special/clause",
+			"style": {
+				"navigationBarTitleText": "分句处理"
 			}
 		},
 		{

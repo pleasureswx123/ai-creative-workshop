@@ -7,16 +7,16 @@
 				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>
 			</view>
 			<view class="next">
-				<view class="nextBtn">下一步</view>
+				<view class="nextBtn" @tap="nextStep">下一步</view>
 				<view class="tips">(消耗40积分)</view>
 			</view>
 		</view>
 		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
 		<EraPop title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
-		<VideoPop title="配音选择" v-if="videoPop" :show.sync="videoPop"></VideoPop>
+		<VideoPop @setTaskData="setTaskData" title="配音选择" v-if="videoPop" :show.sync="videoPop"></VideoPop>
 		<BgmPop title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
-		<CaptionsPop title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
-		<InverPop title="视频比例" v-if="inverPop" :show.sync="inverPop"></InverPop>
+		<CaptionsPop @setCapData="setCapData" title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
+		<InverPop @setInverData="setInverData" title="视频比例" v-if="inverPop" :show.sync="inverPop"></InverPop>
 	</view>
 </template>
 
@@ -47,8 +47,15 @@
 				captionsPop:false,
 				inverPop:false,
 				screenPop:false,
-				eraPop:false
+				eraPop:false,
+				musicStr:""
 			}
+		},
+		created (){
+			uni.$on('setMusic',data =>{
+				this.musicStr = data
+				this.$refs.NovelVideo.tabList[1].choose = this.musicStr.title
+			 })
 		},
 		methods: {
 			onLayout(name) {
@@ -57,6 +64,23 @@
 			setNovelData(data){
 				this.$refs.NovelVideo.burList[0].choose = data.title
 				this.screenPop = false
+			},
+			setTaskData(data){
+				this.$refs.NovelVideo.tabList[0].choose = data
+				this.videoPop = false
+			},
+			setCapData(data){
+				this.$refs.NovelVideo.tabList[2].choose = data.title
+				this.captionsPop = false
+			},
+			setInverData(data){
+				this.$refs.NovelVideo.tabList[3].choose = data.scale
+				this.inverPop = false
+			},
+			nextStep(){
+				uni.navigateTo({
+				   url: './clause' // 要跳转到的页面路径
+				})
 			}
 		},
 	}

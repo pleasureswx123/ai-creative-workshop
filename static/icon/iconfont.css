@@ -74,3 +74,19 @@
   content: "\e630";
   font-size:30px;
 }
+
+.icon-meiyoushuju:before {
+  content: "\e6d2";
+  font-size:100px;
+  color:#fff;
+}
+.icon-shangchuan:before {
+  content: "\e636";
+  color:#fff;
+  font-size:24px;
+}
+
+.icon-zanting1:before {
+  content: "\e65f";
+  color:#fff;
+}

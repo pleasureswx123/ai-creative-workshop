@@ -3,7 +3,7 @@
       @close="$emit('update:show', false)"
       :title="title" :setShow="false">
 	  <view class="flex">
-		  <view class="videoPop" v-for="(item,index) in inverList">
+		  <view class="videoPop" v-for="(item,index) in inverList" @tap="handConfirm(index)">
 		  	{{item.scale}}
 		  </view>
 	  </view>
@@ -45,6 +45,9 @@ export default {
 				this.inverList = res.list
 			})
 		},
+		handConfirm(index){
+			this.$emit('setInverData',this.inverList[index])
+		}
 	},
 }
 </script>

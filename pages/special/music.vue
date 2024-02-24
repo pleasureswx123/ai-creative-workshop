@@ -8,7 +8,7 @@
 				  <view>{{item.title}}</view>
 				  <u-count-down
 				          ref="countDown"
-				          :time="musicTime"
+				          :time="time"
 				          format="mm:ss"
 				          :autoStart="false"
 				      >
@@ -18,13 +18,13 @@
 			  <view class="iconPlay">
 				  <i class="iconfont icon-zanting" v-if="musicId ==item.id" @click="pause(item,index)"></i>
 				  <i class="iconfont icon-bofang2" v-else @click="play(item,index)"></i>
-				</view>
+			  </view>
 		  </view>
 		</view>
 		<u-gap height="100" />
 		<view class="footer-bar">
-		  <view class="btn-box cancle" @tap="$emit('close')">取 消</view>
-		  <view class="btn-box pointer" @tap="$emit('confirm')">确 定</view>
+		  <view class="btn-box cancle" @tap="close">取 消</view>
+		  <view class="btn-box pointer" @tap="confirm">确 定</view>
 		</view>
 	</view>
 </template>
@@ -32,16 +32,6 @@
 <script>
 import {NovelApi} from '@/api'
 export default {
-	props: {
-		title: {
-		  type: String,
-		  default: '标题' 
-		},
-		show: {
-		  type: Boolean,
-		  default: false
-		},
-	},
 	data() {
 	  return {
 		musicList:[],
@@ -53,7 +43,7 @@ export default {
 		},
 		innerAudioContext:null,
 		musicId:'',
-		musicTime:0
+		time:0
 	  }
 	},
 	mounted() {
@@ -84,6 +74,13 @@ export default {
 			this.page+=1
 			this.getMusicList()
 		},
+		confirm(){
+			uni.$emit('setMusic',this.musicList[this.activeIndex])
+			uni.navigateTo({
+			   url: './novel' // 要跳转到的页面路径
+			})
+			this.innerAudioContext.destroy()
+		},
 		pause(item,index){
 			this.musicId = ''
 			this.innerAudioContext.destroy()
@@ -104,7 +101,7 @@ export default {
 				 const time = this.innerAudioContext.duration.toFixed(0)
 				 const min = Math.floor(time/60)
 				 const second = time%60
-				 this.duration = (min>10?min:'0'+min)+':'+(second>10?second:'0'+second)
+				 this.musicTime = (min>10?min:'0'+min)+':'+(second>10?second:'0'+second)
 			});
 			this.innerAudioContext.onTimeUpdate(() => {
 				const time = this.innerAudioContext.currentTime.toFixed(0)
@@ -120,6 +117,12 @@ export default {
 				this.$refs.countDown[index].start()
 			})
 		},
+		close(){
+			uni.navigateTo({
+			   url: './novel' // 要跳转到的页面路径
+			})
+			this.innerAudioContext.destroy()
+		}
 	},
 }
 </script>

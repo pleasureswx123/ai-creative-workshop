@@ -3,7 +3,7 @@
       @close="$emit('update:show', false)"
       :title="title" :setShow="false" :titleShow="false">
 	  <view class="flex">
-		  <view class="videoPop" v-for="(item,index) in capList">{{item.title}}</view>
+		  <view class="videoPop" v-for="(item,index) in capList" @tap="capConfirm(index)">{{item.title}}</view>
 	  </view>
 		  <view class="videoPop noPop" @click="$emit('update:show', false)">不需要字幕</view>
 	</NovelPop>
@@ -43,6 +43,9 @@ export default {
 				this.capList = res.list
 			})
 		},
+		capConfirm(index){
+			this.$emit('setCapData',this.capList[index])
+		}
 	},
 }
 </script>
