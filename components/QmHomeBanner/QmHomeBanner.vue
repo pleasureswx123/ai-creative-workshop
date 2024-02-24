@@ -11,7 +11,14 @@
             :controls="false"
             :muted="true"
             :show-center-play-btn="false"
-            object-fit="cover" />
+            object-fit="cover"
+            x5-playsinline="true"
+            playsinline="true"
+            webkit-playsinline="true"
+            x-webkit-airplay="true"
+            x5-video-player-type="h5"
+            x5-video-player-fullscreen=""
+            x5-video-orientation="portraint" />
       </view>
       <view class="bannerText">
         <text class="eng">{{bannerInfo.slogan_en}}</text>

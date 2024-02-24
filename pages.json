@@ -105,6 +105,12 @@
 			}
 		},
 		{
+			"path": "pages/picture/photo-cartoon",
+			"style": {
+				"navigationBarTitleText": "漫画人物"
+			}
+		},
+		{
 			"path": "pages/special/novel",
 			"style": {
 				"navigationBarTitleText": "小说推文"
