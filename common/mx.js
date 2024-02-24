@@ -278,6 +278,219 @@ export default {
         });
       }
     },
+    imgEdit() {
+      // <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+// 获取画布元素和绘制上下文
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+// 初始化变量
+      let image = null; // 存储加载的图像对象
+      let scaleFactor = 1; // 缩放比例
+      let lastScaleFactor = 1; // 上一次缩放比例
+      let offsetX = 0; // X轴偏移量
+      let offsetY = 0; // Y轴偏移量
+      let lastX = 0; // 上一个触摸点的X坐标
+      let lastY = 0; // 上一个触摸点的Y坐标
+      let isDrawing = false; // 标志是否正在涂抹
+// 加载图片函数
+      function loadImage(event) {
+        const input = event.target;
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function () {
+          const img = new Image();
+          img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            image = img;
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+// 初始化 Hammer.js
+      const mc = new Hammer(canvas);
+// 启用缩放和拖动手势识别
+      mc.get('pinch').set({enable: true});
+      mc.get('pan').set({enable: true});
+// 监听缩放事件
+      mc.on('pinchstart pinchmove', function (event) {
+        scaleFactor = Math.max(1, lastScaleFactor * event.scale); // 计算缩放比例
+        drawImage();
+      });
+// 监听拖动事件
+      mc.on('panstart', function (event) {
+        lastX = event.center.x;
+        lastY = event.center.y;
+      });
+      mc.on('panmove', function (event) {
+        offsetX += event.deltaX;
+        offsetY += event.deltaY;
+        drawImage();
+      });
+// 涂抹开始事件处理函数
+      function startDrawing(event) {
+        isDrawing = true; // 标志涂抹开始
+        lastX = event.center.x;
+        lastY = event.center.y;
+      }
+// 涂抹移动事件处理函数
+      function draw(event) {
+        if (isDrawing) {
+          const currentX = event.center.x;
+          const currentY = event.center.y;
+          // 绘制涂抹路径
+          ctx.strokeStyle = "black";
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(lastX, lastY);
+          ctx.lineTo(currentX, currentY);
+          ctx.stroke();
+          // 更新上一个触摸点的坐标
+          lastX = currentX;
+          lastY = currentY;
+        }
+      }
+// 涂抹结束事件处理函数
+      function stopDrawing() {
+        isDrawing = false; // 标志涂抹结束
+      }
+// 绘制图像函数
+      function drawImage() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (image) {
+          ctx.drawImage(image, offsetX, offsetY, image.width * scaleFactor, image.height * scaleFactor);
+        }
+      }
+// 添加事件监听器
+      canvas.addEventListener('touchstart', startDrawing);
+      canvas.addEventListener('touchmove', draw);
+      canvas.addEventListener('touchend', stopDrawing);
+      document.getElementById('uploadInput').addEventListener('change', loadImage);
+    },
+    imageEdit() {
+      // 获取画布元素和绘制上下文
+      let canvas = document.getElementById('canvas');
+      let ctx = canvas.getContext('2d');
+// 初始化变量
+      let image; // 存储加载的图像对象
+      let scaleFactor = 1; // 缩放比例
+      let offsetX = 0; // X轴偏移量
+      let offsetY = 0; // Y轴偏移量
+      let lastX = 0; // 上一个触摸点的X坐标
+      let lastY = 0; // 上一个触摸点的Y坐标
+      let isPinching = false; // 标志是否正在进行双指缩放
+      let isDrawing = false; // 标志是否正在涂抹
+// 加载图片函数
+      function loadImage(event) {
+        let input = event.target;
+        let reader = new FileReader();
+        reader.onload = function () {
+          let img = new Image();
+          img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            image = img;
+          }
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+// 双指缩放开始事件处理函数
+      function pinchStart(event) {
+        // 判断触摸点是否至少有两个
+        if (event.touches.length >= 2) {
+          isPinching = true; // 标记双指缩放开始
+          // 获取两个触摸点的中点坐标
+          let touch1 = event.touches[0];
+          let touch2 = event.touches[1];
+          lastX = (touch1.clientX + touch2.clientX) / 2;
+          lastY = (touch1.clientY + touch2.clientY) / 2;
+        }
+      }
+// 双指缩放移动事件处理函数
+      function pinchMove(event) {
+        // 判断是否处于双指缩放状态，以及触摸点数量是否至少为两个
+        if (isPinching && event.touches.length >= 2) {
+          let touch1 = event.touches[0];
+          let touch2 = event.touches[1];
+          let currentX = (touch1.clientX + touch2.clientX) / 2;
+          let currentY = (touch1.clientY + touch2.clientY) / 2;
+          // 计算当前两个触摸点之间的距离变化
+          let distance = Math.sqrt((currentX - lastX) ** 2 + (currentY - lastY) ** 2);
+          let delta = distance - Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
+          // 根据距离变化调整缩放比例
+          scaleFactor += delta / 100;
+          // 重新绘制图像
+          drawImage();
+          // 更新上一个触摸点的坐标
+          lastX = currentX;
+          lastY = currentY;
+        }
+      }
+// 双指缩放结束事件处理函数
+      function pinchEnd(event) {
+        if (isPinching) {
+          isPinching = false; // 标志双指缩放结束
+        }
+      }
+// 涂抹开始事件处理函数
+      function startDrawing(event) {
+        if (event.touches.length === 1) {
+          isDrawing = true; // 标志涂抹开始
+          // 获取触摸点的坐标作为涂抹起点
+          let touch = event.touches[0];
+          lastX = touch.clientX;
+          lastY = touch.clientY;
+        }
+      }
+// 涂抹移动事件处理函数
+      function draw(event) {
+        if (isDrawing && event.touches.length === 1) {
+          // 获取当前触摸点的坐标
+          let touch = event.touches[0];
+          let currentX = touch.clientX;
+          let currentY = touch.clientY;
+          // 绘制涂抹路径
+          ctx.strokeStyle = "black";
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(lastX - canvas.offsetLeft, lastY - canvas.offsetTop);
+          ctx.lineTo(currentX - canvas.offsetLeft, currentY - canvas.offsetTop);
+          ctx.stroke();
+          // 更新上一个触摸点的坐标
+          lastX = currentX;
+          lastY = currentY;
+        }
+      }
+// 涂抹结束事件处理函数
+      function stopDrawing() {
+        isDrawing = false; // 标志涂抹结束
+      }
+// 绘制图像函数
+      function drawImage() {
+        // 清除画布
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 绘制缩放后的图像
+        ctx.drawImage(image, offsetX, offsetY, image.width * scaleFactor, image.height * scaleFactor);
+      }
+// 添加事件监听器
+      canvas.addEventListener('touchstart', startDrawing);
+      canvas.addEventListener('touchmove', draw);
+      canvas.addEventListener('touchend', stopDrawing);
+      canvas.addEventListener('touchstart', pinchStart);
+      canvas.addEventListener('touchmove', pinchMove);
+      canvas.addEventListener('touchend', pinchEnd);
+      document.getElementById('uploadInput').addEventListener('change', loadImage);
+
+    },
     createAudioAnalyser() {
       // 创建音频上下文对象
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
