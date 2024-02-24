@@ -225,6 +225,59 @@ export default {
     getFileName(url) {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
+    drawCanvas() {
+      // 获取元素
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const image = new Image();
+      image.src = 'your_image.jpg'; // 请替换为你的图片路径
+
+      // 定义涂抹参数
+      const radius = 10; // 涂抹半径
+      const color = 'rgba(0, 0, 0, 1)'; // 涂抹颜色，不透明表示覆盖
+
+      // 加载图片并绘制到Canvas
+      image.onload = function() {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+      };
+
+      // 添加涂抹事件监听器
+      let isDrawing = false;
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mousemove', draw);
+
+      // 开始涂抹
+      function startDrawing(event) {
+        isDrawing = true;
+        draw(event); // 开始涂抹时也需要绘制一次
+      }
+
+      // 结束涂抹
+      function stopDrawing() {
+        isDrawing = false;
+      }
+
+      // 涂抹
+      function draw(event) {
+        if (!isDrawing) return;
+
+        // 计算涂抹位置
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        // 在canvas上绘制圆形
+        requestAnimationFrame(() => {
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, 2 * Math.PI);
+          ctx.fillStyle = color;
+          ctx.fill();
+        });
+      }
+    },
     createAudioAnalyser() {
       // 创建音频上下文对象
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
