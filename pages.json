@@ -8,6 +8,12 @@
 			}
 		},
 		{
+			"path": "pages/electronic/index",
+			"style": {
+				"navigationBarTitleText": "电商图制作"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录"
