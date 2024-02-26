@@ -1,7 +1,7 @@
 <template>
   <LayoutPage>
     <TabsBox :value.sync="type" :options="tabsList"></TabsBox>
-    
+    <PhotoModify></PhotoModify>
     <Describe :value.sync="description"></Describe>
     <ProduceBtn :value.sync="pages" :loading="loading" @cb="handleComfirm"></ProduceBtn>
     <Setting :value.sync="setting"></Setting>

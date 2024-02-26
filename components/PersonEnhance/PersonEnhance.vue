@@ -53,7 +53,7 @@ export default {
   box-sizing: border-box;
   border: 2rpx solid #373A40;
   font-size: 24rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 10rpx;
   .title {
     height: 60rpx;
     line-height: 60rpx;
