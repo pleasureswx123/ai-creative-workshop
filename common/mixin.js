@@ -76,6 +76,10 @@ export default {
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
     async downLoadFile(url, options = {}) {
+      // Content-Type: application/octet-stream
+      // Content-Disposition: attachment; filename="example.txt"
+      // window.open(`${url}?type=download`);
+      // return
       const fileName = this.getFileName(url);
       const {timeout = 50000, retries = 3, onDownloadComplete} = options;
       let attempts = 0;

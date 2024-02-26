@@ -713,6 +713,49 @@ export default {
         }
       };
     },
+    async downLoadFile999(url, options = {}) {
+      const fileName = this.getFileName(url);
+      const {timeout = 50000, retries = 3, onDownloadComplete} = options;
+      let attempts = 0;
+      const downloadWithRetry = async () => {
+        try {
+          const response = await fetch(`${url}?_t=${Date.now()}`, {timeout});
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const blob = await response.blob();
+          const urlBlob = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = urlBlob;
+          link.setAttribute('download', fileName || 'download');
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          setTimeout(() => {
+            URL.revokeObjectURL(urlBlob);
+            document.body.removeChild(link);
+          }, 100);
+          if (typeof onDownloadComplete === 'function') {
+            onDownloadComplete();
+          }
+        } catch (error) {
+          attempts++;
+          if (attempts < retries) {
+            console.warn(`Download attempt ${attempts} failed. Retrying...`);
+            await downloadWithRetry();
+          } else {
+            console.error('File download failed after multiple attempts:', error);
+            throw error;
+          }
+        }
+      };
+      try {
+        await downloadWithRetry();
+      } catch (error) {
+        console.error('There was a problem with the download:', error);
+        throw error;
+      }
+    },
     downLoadFile1(url) {
       // #ifdef H5
       return new Promise((resolve, reject) => {
