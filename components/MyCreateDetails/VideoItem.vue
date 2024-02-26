@@ -1,6 +1,6 @@
 <template>
   <view class="pictrue-box" :style="boxStyle">
-    <video class="video-box" object-fit="contain" :show-center-play-btn="false" :src="info.video_url" :poster="info.video_cover_img" />
+    <video class="video-box" object-fit="contain" :src="info.video_url" :poster="info.video_cover_img" />
   </view>
 </template>
 
