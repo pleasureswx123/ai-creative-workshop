@@ -91,7 +91,6 @@ export default {
         return {...item, id: item.img_style_id, value: 0.8}
       });
       this.listBak = this.list;
-      debugger
     });
   },
   methods: {
