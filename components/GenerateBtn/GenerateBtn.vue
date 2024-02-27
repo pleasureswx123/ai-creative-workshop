@@ -93,12 +93,12 @@ export default {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  background: var(--bg-color3);
+  background: var(--red-color1);
   color: var(--txt-color4);
   gap: 4rpx;
   cursor: pointer;
   &.disabled {
-    background: var(--bg-color3);
+    background: var(--red-color1);
     color: var(--txt-color4);
   }
   .tips-txt {

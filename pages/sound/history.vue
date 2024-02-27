@@ -15,6 +15,7 @@
 <script>
 import {mapActions} from 'vuex';
 import HistoryItem from './components/HistoryItem.vue';
+
 export default {
   components: {
     HistoryItem
@@ -140,7 +141,7 @@ export default {
   justify-content: center;
   margin: 0 auto;
   position: relative;
-  background: var(--bg-color3);
+  background: var(--red-color1);
   color: var(--txt-color4);
   gap: 4rpx;
   cursor: pointer;
