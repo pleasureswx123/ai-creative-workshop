@@ -1,9 +1,11 @@
 <template>
   <view class="photo-modify-wrapper">
-    <view style="height: 200px;">{{actionType}}-{{brushSize}}-{{imgSrc}}</view>
-    
+    <view style="height: 200px;">{{actionType}}-{{brushSize}}-{{imgInfo}}
+    </view>
     <SelectUploadPhoto v-if="!imgSrc" :src.sync="imgSrc"></SelectUploadPhoto>
-    <PhotoCanvas v-else :src.sync="imgSrc" :actionType="actionType" :brushSize="brushSize"></PhotoCanvas>
+    <template v-if="imgSrc && !!imgInfo">
+      <PhotoCanvas :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
+    </template>
     <BrushSize v-if="actionType === 'brush'" :value.sync="brushSize"></BrushSize>
     <PhotoModifyTool :value.sync="actionType"></PhotoModifyTool>
   </view>
@@ -16,6 +18,18 @@ export default {
       actionType: 'brush',
       brushSize: 3,
       imgSrc: '',
+      imgInfo: null
+    }
+  },
+  watch: {
+    imgSrc(src) {
+      src ? uni.getImageInfo({
+        src, success: res => {
+          if (res.errMsg === 'getImageInfo:ok') {
+            this.imgInfo = res;
+          }
+        }
+      }) : (this.imgInfo = null);
     }
   }
 }

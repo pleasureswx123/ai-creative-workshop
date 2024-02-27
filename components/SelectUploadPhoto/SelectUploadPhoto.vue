@@ -123,6 +123,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   .history-select-btn {
     position: absolute;
     top: 0;
@@ -130,6 +131,7 @@ export default {
     height: 60rpx;
     line-height: 60rpx;
     padding: 0 20rpx;
+    cursor: pointer;
   }
   .select-photo-inner {
     font-size: 30rpx;
