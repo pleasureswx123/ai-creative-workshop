@@ -100,16 +100,26 @@ export default {
       this.ctx.draw(true);
     },
     onMouseDown(e) {
+      debugger
       const params = {
         x: e.clientX,
         y: e.clientY,
       }
-      this.startDrawing(params);
+      // this.startDrawing(params);
     },
     onMouseMove() {},
     onMouseUp() {},
     onTouchStart(e) {
+      debugger
       this.startDrawing(e.touches[0]);
+    },
+    getTouchCoordinates(e) {
+      const clientX = e.touches ? e.touches[0].x : e.clientX;
+      const clientY = e.touches ? e.touches[0].y : e.clientY;
+      const rect = e.target.getBoundingClientRect();
+      const offsetX = clientX - rect.left;
+      const offsetY = clientY - rect.top;
+      return { x: offsetX, y: offsetY };
     },
     startDrawing({x, y}) {
       this.toggleBodyPositionStatus(true);
@@ -211,6 +221,7 @@ export default {
       })
     },
     onClick(e) {
+      alert(2222)
       const x = e.detail.x;
       const y = e.detail.y;
       if (this.actionType === 'eraser') {

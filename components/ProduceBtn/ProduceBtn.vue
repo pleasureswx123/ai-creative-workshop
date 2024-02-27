@@ -54,7 +54,7 @@ export default {
     align-items: center;
     justify-content: center;
     border-radius: 10rpx;
-    background: #1971C2;
+    background: var(--red-color1);
     font-size: 30rpx;
     font-weight: bold;
     cursor: pointer;

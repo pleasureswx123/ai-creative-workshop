@@ -2,7 +2,7 @@
   <view class="setting-box">
     <view class="btn-box" @tap="status = !status">
       <view class="checkbox-box">
-        <uni-icons v-if="status" custom-prefix="iconfont-qm" type="icon-qm-checked" color="#1971C2" size="20" />
+        <uni-icons v-if="status" custom-prefix="iconfont-qm" type="icon-qm-checked" color="var(--red-color1)" size="20" />
         <uni-icons v-else custom-prefix="iconfont-qm" type="icon-qm-check" color="#494B59" size="20" />
       </view>
       <view class="btn">高级设置</view>
@@ -62,7 +62,7 @@ export default {
       height: 60rpx;
       line-height: 60rpx;
       border-radius: 10rpx;
-      background: #1971C2;
+      background: var(--red-color1);
       padding: 0 20rpx;
     }
   }

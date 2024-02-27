@@ -175,7 +175,7 @@ export default {
           width: 60rpx;
           text-align: center;
           color: #fff;
-          background-color: #f60652;
+          background-color: var(--red-color1);
           border-radius: 14rpx;
           transform: scale(.9) translate3d(50%, -40%, 0);
           transform-origin: right top;

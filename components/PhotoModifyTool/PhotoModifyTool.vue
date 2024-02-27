@@ -79,7 +79,7 @@ export default {
     gap: 10rpx;
     cursor: pointer;
     &.active {
-      background: #1971C2;
+      background: var(--red-color1);
     }
   }
 }

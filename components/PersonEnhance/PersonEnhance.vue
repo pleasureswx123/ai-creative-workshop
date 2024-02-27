@@ -73,7 +73,7 @@ export default {
       border-radius: 6rpx;
       &.active {
         font-weight: bold;
-        background: #1971C2;
+        background: var(--red-color1);
       }
     }
   }

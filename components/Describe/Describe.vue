@@ -68,7 +68,7 @@ export default {
       font-size: 24rpx;
       line-height: 1;
       border-radius: 16rpx;
-      background: #1971C2;
+      background: var(--red-color1);
       padding: 6rpx 15rpx;
       cursor: pointer;
     }

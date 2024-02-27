@@ -87,7 +87,7 @@ export default {
       display: block;
     }
     &.active {
-      background: #1971C2;
+      background: var(--red-color1);
       .checked {
         display: block;
       }

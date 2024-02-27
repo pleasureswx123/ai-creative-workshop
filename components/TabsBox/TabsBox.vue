@@ -56,7 +56,7 @@ export default {
     font-weight: bold;
     cursor: pointer;
     &.active {
-      background: #1971C2;
+      background: var(--red-color1);
     }
   }
 }
