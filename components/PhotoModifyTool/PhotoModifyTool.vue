@@ -5,7 +5,7 @@
         v-for="item in tools"
         :key="item.type"
         :class="{active: actionType === item.type}"
-        @tap="actionType = item.type">
+        @tap="handleActions(item)">
       <uni-icons custom-prefix="iconfont-qm" :type="item.iconName" color="#fff" size="20" />
       <view v-if="item.name">{{item.name}}</view>
     </view>
@@ -27,7 +27,7 @@ export default {
         {name: '', type: 'reset', iconName: 'icon-qm-sync'},
         {name: '橡皮擦', type: 'eraser', iconName: 'icon-qm-eraser'},
         {name: '笔刷', type: 'brush', iconName: 'icon-qm-brush7'},
-        {name: '移动图片', type: 'hand', iconName: 'icon-qm-hand2'},
+        // {name: '移动图片', type: 'hand', iconName: 'icon-qm-hand2'},
       ]
     }
   },
@@ -38,6 +38,20 @@ export default {
       },
       set(action) {
         this.$emit('update:value', action)
+      }
+    }
+  },
+  methods: {
+    handleActions({type}) {
+      this.actionType = type;
+      if(type === 'undo') {
+        this.$emit('undo')
+      }
+      if(type === 'reset') {
+        this.$emit('reset')
+      }
+      if(type === 'eraser') {
+        this.$emit('eraser')
       }
     }
   }
