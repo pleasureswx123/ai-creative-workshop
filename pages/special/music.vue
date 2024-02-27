@@ -75,11 +75,13 @@ export default {
 			this.getMusicList()
 		},
 		confirm(){
-			uni.$emit('setMusic',this.musicList[this.activeIndex])
 			uni.navigateTo({
-			   url: './novel' // 要跳转到的页面路径
+			   url: './novel',// 要跳转到的页面路径
+			   success:res=>{
+			   	res.eventChannel.emit('setMusic',this.musicList[this.activeIndex])
+			   }
 			})
-			this.innerAudioContext.destroy()
+			
 		},
 		pause(item,index){
 			this.musicId = ''

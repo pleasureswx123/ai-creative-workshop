@@ -2,7 +2,7 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view>
-			<NovelTextarea></NovelTextarea>
+			<NovelTextarea ref="novelText"></NovelTextarea>
 			<view class="novel">
 				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>
 			</view>
@@ -12,9 +12,9 @@
 			</view>
 		</view>
 		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
-		<EraPop title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
+		<EraPop @setEraData="setEraData" title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
 		<VideoPop @setTaskData="setTaskData" title="配音选择" v-if="videoPop" :show.sync="videoPop"></VideoPop>
-		<BgmPop title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
+		<BgmPop @setMusic="setMusic" title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
 		<CaptionsPop @setCapData="setCapData" title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
 		<InverPop @setInverData="setInverData" title="视频比例" v-if="inverPop" :show.sync="inverPop"></InverPop>
 	</view>
@@ -29,6 +29,7 @@
 	import InverPop from './components/InverPop.vue';
 	import ScreenPop from './components/ScreenPop.vue';
 	import EraPop from './components/EraPop.vue';
+	import {NovelApi} from '@/api'
 	export default {
 		components: {
 			NovelTextarea,
@@ -48,13 +49,16 @@
 				inverPop:false,
 				screenPop:false,
 				eraPop:false,
-				musicStr:""
+				screenId:''
 			}
 		},
-		created (){
-			uni.$on('setMusic',data =>{
-				this.musicStr = data
-				this.$refs.NovelVideo.tabList[1].choose = this.musicStr.title
+		onShow (){
+			const eventChannel = this.getOpenerEventChannel();
+			this.eventChannel=eventChannel
+			eventChannel.on('setMusic',data =>{
+				this.$nextTick(() =>{
+					this.$refs.NovelVideo.tabList[1].choose = data.title
+				})
 			 })
 		},
 		methods: {
@@ -63,7 +67,12 @@
 			},
 			setNovelData(data){
 				this.$refs.NovelVideo.burList[0].choose = data.title
+				this.screenId = data.id
 				this.screenPop = false
+			},
+			setEraData(data){
+				this.$refs.NovelVideo.burList[1].choose = data.title
+				this.eraPop = false
 			},
 			setTaskData(data){
 				this.$refs.NovelVideo.tabList[0].choose = data
@@ -78,10 +87,23 @@
 				this.inverPop = false
 			},
 			nextStep(){
-				uni.navigateTo({
-				   url: './clause' // 要跳转到的页面路径
+				// uni.navigateTo({
+				//    url: './clause'
+				// })
+				NovelApi.createTask({
+					data:{page:1,pagesize:10},
+					no_sign: 1,
+					sourceCode:"100001",
+					sign:"52d89ffef49b65edaf5d232104d42fac",
+					timestamp:"1545454552",
+					title:this.$refs.novelText.novelValue,
+					screen_style:this.screenId
+					
+				}).then(res => {
+					this.capList = res.list
 				})
-			}
+			},
+			
 		},
 	}
 </script>

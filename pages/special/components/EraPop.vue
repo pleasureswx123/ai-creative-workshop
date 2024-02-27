@@ -1,10 +1,15 @@
 <template>
 	<NovelPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title">
+      :title="title" @confirm="setEraData">
 	  <scroll-view scroll-y="true" style="height: 200px">
 		  <view class="flex">
-			  <view class="videoPop" v-for="(item,index) in eraList">{{item.title}}</view>
+			  <view class="videoPop"
+			   v-for="(item,index) in eraList"
+				:class="{active: activeIndex === index}"
+				@tap="choose(index)"
+				
+				>{{item.title}}</view>
 		  </view>
 		  <u-gap height="120rpx" />
 	  </scroll-view>
@@ -26,15 +31,16 @@ export default {
 	},
 	data() {
 	  return {
-		eraList:[]
+		eraList:[],
+		activeIndex:0
 	  }
 	},
 	mounted() {
-		this.getVideoTask()
+		this.getTimeStyle()
 	},
 	methods: {
-		getVideoTask() {
-			NovelApi.getDub({
+		getTimeStyle() {
+			NovelApi.getTimeStyle({
 				data:{page:1,
         		pagesize:10,},
 				no_sign: 1,
@@ -45,6 +51,12 @@ export default {
 				this.eraList = res.list
 			})
 		},
+		choose(index){
+			this.activeIndex = index
+		},
+		setEraData(){
+			this.$emit('setEraData',this.eraList[this.activeIndex])
+		}
 	},
 }
 </script>
@@ -58,8 +70,11 @@ export default {
 	.videoPop{
 		background-color:#3b3f57;
 		border-radius:10rpx;
-		padding:30rpx 0;
+		padding:20rpx 0;
 		margin-bottom:10rpx;
 		text-align: center;
+		&.active{
+			background-color:#6978fd;
+		}
 	}
 </style>

@@ -98,6 +98,30 @@
 			}
 		},
 		{
+			"path": "pages/special/finish",
+			"style": {
+				"navigationBarTitleText": "视频生成"
+			}
+		},
+		{
+			"path": "pages/special/storyboard",
+			"style": {
+				"navigationBarTitleText": "AI分镜中"
+			}
+		},
+		{
+			"path": "pages/special/role",
+			"style": {
+				"navigationBarTitleText": "角色调整"
+			}
+		},
+		{
+			"path": "pages/special/config",
+			"style": {
+				"navigationBarTitleText": "素材配置"
+			}
+		},
+		{
 			"path": "pages/special/make-diagram",
 			"style": {
 				"navigationBarTitleText": "电商图制作"

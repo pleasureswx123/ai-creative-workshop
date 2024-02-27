@@ -34,4 +34,18 @@ export default {
       }
     })
   },
+  getTimeStyle(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/GetTimeStyle`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  createTask(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/CreateTask`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

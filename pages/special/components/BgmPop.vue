@@ -45,7 +45,7 @@ export default {
 	methods: {
 		misic(id,url) {
 			uni.navigateTo({
-			   url: url // 要跳转到的页面路径
+			   url: url 
 			})
 			if(this.id = 3){
 				this.$emit('update:show', false)
