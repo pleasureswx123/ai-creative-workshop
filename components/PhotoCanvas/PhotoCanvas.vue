@@ -4,18 +4,19 @@
       <view class="del-btn" @tap.stop>
         <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
       </view>
-      <view class="img-box">
+      <view class="img-box" :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}">
+        <img :src="imgSrc" />
         <canvas
             class="canvas"
-            :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}"
+            ref="myCanvas"
+            canvas-id="myCanvas"
             @touchstart="onTouchStart"
             @touchmove="onTouchMove"
             @touchend="onTouchEnd"
             @mousedown="onMouseDown"
             @mousemove="onMouseMove"
             @mouseup="onMouseUp"
-            @click="onClick"
-            canvas-id="myCanvas" />
+            @click="onClick" />
       </view>
     </view>
   </view>
@@ -381,14 +382,16 @@ export default {
   .img-box {
     width: 100%;
     height: 100%;
-    img {
+    margin: 0 auto;
+    position: relative;
+    img, .canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
-      display: block;
-      object-fit: contain;
-    }
-    .canvas {
-      margin: 0 auto;
     }
   }
 }
