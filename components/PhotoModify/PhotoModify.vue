@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       actionType: 'brush',
-      brushSize: 3,
+      brushSize: 10,
       imgSrc: '',
       imgInfo: null
     }

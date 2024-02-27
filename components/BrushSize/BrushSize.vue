@@ -3,7 +3,7 @@
     <view class="brush-inner">
       <u-slider
           v-model="currentValue"
-          step="1" min="1" max="5"
+          step="1" min="1" max="100"
           activeColor="#1971C2"
           inactiveColor="var(--txt-color5)"
           block-size="20"

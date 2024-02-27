@@ -66,7 +66,7 @@ export default {
     return {
       ctx: null,
       isDrawing: false,
-      selectedColor: '#000000',
+      selectedColor: '#000',
       history: [],
       redoStack: [],
       points: [],
@@ -135,6 +135,7 @@ export default {
       this.animationFrameId = requestAnimationFrame(() => {
         if (this.points.length < 2) return; // 至少需要两个点来绘制
         this.ctx.beginPath();
+        this.ctx.setStrokeStyle(this.selectedColor);
         this.ctx.moveTo(this.points[0].x, this.points[0].y);
         
         for (let i = 1; i < this.points.length; i++) {
