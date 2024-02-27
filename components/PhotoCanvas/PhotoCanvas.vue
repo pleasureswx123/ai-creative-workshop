@@ -11,6 +11,10 @@
             @touchstart="onTouchStart"
             @touchmove="onTouchMove"
             @touchend="onTouchEnd"
+            @mousedown="onMouseDown"
+            @mousemove="onMouseMove"
+            @mouseup="onMouseUp"
+            @click="onClick"
             canvas-id="myCanvas" />
       </view>
     </view>
@@ -70,13 +74,11 @@ export default {
       history: [],
       redoStack: [],
       points: [],
-      eraserMode: false, // 标志是否橡皮擦模式
-      lastDrawData: null, // 上一次绘制的图像数据
-      drawingData: [] // 存储绘制的线条数据
+      drawingData: [],
+      selectedLineId: null,
     }
   },
   beforeDestroy() {
-    // 在组件销毁前清理资源
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
@@ -95,112 +97,39 @@ export default {
       this.ctx.fillStyle = '#fff';
       this.ctx.fillRect(0, 0, width, height);
       this.ctx.drawImage(this.imgSrc, 0, 0, width, height);
-      this.ctx.draw(true, () => {
-        // uni.canvasToTempFilePath({
-        //   width: this.canvasW,
-        //   height: this.canvasH,
-        //   destWidth: this.canvasW * 2, //此处需放大2倍，不然保存的图失真
-        //   destHeight: this.canvasH * 2,
-        //   canvasId: 'myCanvas',
-        //   quality: 1,
-        //   complete: function (res) {
-        //     // 在H5平台下，tempFilePath 为 base64, // 图片提示跨域 H5保存base64失败，APP端正常输出临时路径
-        //     this.canvasImg = res.tempFilePath;
-        //   },
-        // })
-      })
+      this.ctx.draw(true);
     },
-    reset() {
-      this.initCanvas();
-      this.history = []; // 重置历史记录
-      this.redoStack = []; // 重置重做栈
-      this.points = [];
+    onMouseDown(e) {
+      const params = {
+        x: e.clientX,
+        y: e.clientY,
+      }
+      this.startDrawing(params);
     },
+    onMouseMove() {},
+    onMouseUp() {},
     onTouchStart(e) {
+      this.startDrawing(e.touches[0]);
+    },
+    startDrawing({x, y}) {
       this.toggleBodyPositionStatus(true);
       this.isDrawing = true;
-      const { x, y } = e.touches[0];
       this.points = [];
       this.points.push({ x, y });
       this.saveState();
     },
-    onTouchMove(e) {
-      if (!this.isDrawing) return;
-      const { x, y } = e.touches[0];
-      this.points.push({ x, y });
-      this.draw(); // 直接绘制
-    },
-    draw() {
-      cancelAnimationFrame(this.animationFrameId);
-      this.animationFrameId = requestAnimationFrame(() => {
-        if (this.points.length < 2) return; // 至少需要两个点来绘制
-        this.ctx.beginPath();
-        this.ctx.setStrokeStyle(this.selectedColor);
-        this.ctx.moveTo(this.points[0].x, this.points[0].y);
-        
-        for (let i = 1; i < this.points.length; i++) {
-          const point = this.points[i];
-          const prevPoint = this.points[i - 1];
-          const centerX = (point.x + prevPoint.x) / 2;
-          const centerY = (point.y + prevPoint.y) / 2;
-          this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-          // this.ctx.lineTo(endX, endY);
-        }
-        this.ctx.lineWidth = this.brushSize;
-        this.ctx.stroke();
-        this.ctx.closePath();
-        this.ctx.draw(true);
-        // this.ctx.globalCompositeOperation = 'source-over';
-        // this.points = [this.points[this.points.length - 1]];
-      })
-    },
-    onTouchEnd() {
-      this.toggleBodyPositionStatus(false);
-      if (this.points.length > 1) {
-        this.drawingData.push(this.points.slice());
-      }
-      this.isDrawing = false;
-      this.points = [];
-    },
-    eraseLastDrawing() {
-      if (this.drawingData.length > 0) {
-        // 如果是橡皮擦模式，并且存在绘制的线条数据，则删除最后一条线条
-        this.drawingData.pop();
-        this.ctx.clearRect(0, 0, this.$refs.myCanvas.width, this.$refs.myCanvas.height); // 清空画布
-        this.history.push(this.lastDrawData); // 保存当前状态
-        this.redoStack = []; // 清空重做栈
-        // 重新绘制除最后一条线条以外的其他线条
-        this.drawingData.forEach(points => {
-          this.ctx.beginPath();
-          this.ctx.moveTo(points[0].x, points[0].y);
-          for (let i = 1; i < points.length; i++) {
-            const point = points[i];
-            const prevPoint = points[i - 1];
-            const centerX = (point.x + prevPoint.x) / 2;
-            const centerY = (point.y + prevPoint.y) / 2;
-            this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-          }
-          this.ctx.lineWidth = this.lineWidth;
-          this.ctx.stroke();
-          this.ctx.closePath();
-        });
-        this.ctx.draw(true);
-      }
-    },
     saveState() {
-      this.ctx.draw(true, () => {
-        uni.canvasGetImageData({
-          canvasId: 'myCanvas',
-          x: 0,
-          y: 0,
-          width: this.imgInfo.width,
-          height: this.imgInfo.height,
-          success: res => {
-            this.history.push(res.data);
-            // 每次保存新的绘制状态时，清空重做栈
-            this.redoStack = [];
-          }
-        });
+      uni.canvasGetImageData({
+        canvasId: 'myCanvas',
+        x: 0,
+        y: 0,
+        width: this.imgInfo.width,
+        height: this.imgInfo.height,
+        success: res => {
+          this.history.push(res.data);
+          // 每次保存新的绘制状态时，清空重做栈
+          this.redoStack = [];
+        }
       });
     },
     undo() {
@@ -224,14 +153,174 @@ export default {
       if (this.redoStack.length > 0) {
         const lastState = this.redoStack.pop();
         this.history.push(lastState);
-        this.ctx.putImageData(lastState, 0, 0);
-        this.ctx.draw(true);
+        uni.canvasPutImageData({
+          canvasId: 'myCanvas',
+          data: lastState,
+          x: 0,
+          y: 0,
+          width: this.imgInfo.width,
+          height: this.imgInfo.height,
+          success: () => {
+            this.ctx.draw(true);
+          }
+        }, this);
       }
+    },
+    reset() {
+      this.initCanvas();
+      this.history = []; // 重置历史记录
+      this.redoStack = []; // 重置重做栈
+      this.points = [];
+      this.drawingData = [];
+    },
+    onTouchMove(e) {
+      if (!this.isDrawing) return;
+      const { x, y } = e.touches[0];
+      this.points.push({ x, y });
+      this.drawPoints();
+    },
+    onTouchEnd() {
+      this.toggleBodyPositionStatus(false);
+      this.isDrawing = false;
+      if (this.points.length > 1) {
+        const lineId = Date.now().toString();
+        this.drawingData.push({ id: lineId, points: this.points.slice() });
+      }
+    },
+    drawPoints() {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = requestAnimationFrame(() => {
+        if (this.points.length < 2) return; // 至少需要两个点来绘制
+        this.ctx.beginPath();
+        this.ctx.setStrokeStyle(this.selectedColor);
+        this.ctx.moveTo(this.points[0].x, this.points[0].y);
+      
+        for (let i = 1; i < this.points.length; i++) {
+          const point = this.points[i];
+          const prevPoint = this.points[i - 1];
+          const centerX = (point.x + prevPoint.x) / 2;
+          const centerY = (point.y + prevPoint.y) / 2;
+          this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+          // this.ctx.lineTo(endX, endY);
+        }
+        this.ctx.lineWidth = this.brushSize;
+        this.ctx.stroke();
+        this.ctx.closePath();
+        this.ctx.draw(true);
+        // this.ctx.globalCompositeOperation = 'source-over';
+      })
+    },
+    onClick(e) {
+      const x = e.detail.x;
+      const y = e.detail.y;
+      if (this.actionType === 'eraser') {
+        this.selectedLineId = this.getNearestLineId(x, y);
+        this.eraseLine();
+      }
+    },
+    eraseLine() {
+      if (this.selectedLineId) {
+        const index = this.drawingData.findIndex(line => line.id === this.selectedLineId);
+        if (index !== -1) {
+          this.saveState();
+          this.drawingData.splice(index, 1);
+          this.initCanvas();
+          this.drawingData.forEach(line => {
+            this.drawPolyline(line.points);
+          });
+          this.ctx.draw(true);
+          this.selectedLineId = null;
+        }
+      }
+    },
+    drawPolyline(points) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        const point = points[i];
+        const prevPoint = points[i - 1];
+        const centerX = (point.x + prevPoint.x) / 2;
+        const centerY = (point.y + prevPoint.y) / 2;
+        this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+      }
+      this.ctx.lineWidth = this.lineWidth;
+      this.ctx.stroke();
+      this.ctx.closePath();
+    },
+    getNearestLineId(x, y) {
+      let minDist = Infinity;
+      let nearestLineId = null;
+      this.drawingData.forEach(line => {
+        line.points.forEach((point, index, points) => {
+          const start = points[index];
+          const end = points[index + 1];
+          if(start && end) {
+            const dist = this.pointToLineDistance({ x, y }, start, end );
+            if (dist < minDist) {
+              minDist = dist;
+              nearestLineId = line.id;
+            }
+          }
+        });
+      });
+      return nearestLineId;
+    },
+    pointToLineDistance(pt, lineStart, lineEnd) {
+      const {x, y} = pt;
+      const {x: x1, y: y1} = lineStart;
+      const {x: x2, y: y2} = lineEnd;
+      const A = x - x1;
+      const B = y - y1;
+      const C = x2 - x1;
+      const D = y2 - y1;
+      const dot = A * C + B * D;
+      const lenSq = C * C + D * D;
+      let param = -1;
+      if (lenSq !== 0) {
+        param = dot / lenSq;
+      }
+      let xx, yy;
+      if (param < 0) {
+        xx = x1;
+        yy = y1;
+      } else if (param > 1) {
+        xx = x2;
+        yy = y2;
+      } else {
+        xx = x1 + param * C;
+        yy = y1 + param * D;
+      }
+      const dx = x - xx;
+      const dy = y - yy;
+      return Math.sqrt(dx * dx + dy * dy);
+    },
+    getNearestLineId1(x, y) {
+      let minDist = Infinity;
+      let nearestLineId = null;
+      this.drawingData.forEach(line => {
+        line.points.forEach(point => {
+          const dist = Math.sqrt((point.x - x) ** 2 + (point.y - y) ** 2);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestLineId = line.id;
+          }
+        });
+      });
+      return nearestLineId;
     },
     saveImage() {
       uni.canvasToTempFilePath({
         canvasId: 'myCanvas',
+        // x: 0,
+        // y: 0,
+        // width: this.canvasW,
+        // height: this.canvasH,
+        // destWidth: this.canvasW * 2, //此处需放大2倍，不然保存的图失真
+        // destHeight: this.canvasH * 2,
+        // quality: 1,
         success: res => {
+          // this.canvasImg = res.tempFilePath;
+          // 在H5平台下，res.tempFilePath 为 base64
           uni.saveImageToPhotosAlbum({
             filePath: res.tempFilePath,
             success: () => {
