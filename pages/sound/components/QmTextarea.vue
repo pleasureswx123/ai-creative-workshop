@@ -4,7 +4,7 @@
         class="qm-textarea"
         :confirmType="null" v-model="current"
         placeholderStyle="color: red;"
-        placeholder="描述文字以短句、短语为佳，支持中、英文输入"
+        placeholder="支持中、英文输入"
         :maxlength="maxlength" height="140"></u--textarea>
     <view class="textarea-tips-box">
       <view class="count-tips">{{current.length}}/{{maxlength}}</view>
