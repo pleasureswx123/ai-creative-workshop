@@ -1,14 +1,14 @@
 <template>
   <view>
     <view class="select-box" @tap="showNumsSheet = true">
-      <text>{{value}} 张</text>
+      <text>{{nums}} 张</text>
       <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arrowdown1" color="var(--txt-color2)" size="16" />
     </view>
     <u-action-sheet
         description="最多只可选择2张" round="16" class="sheet-box"
         :actions="numsList" title="请选择数量" cancelText="取消"
         :closeOnClickOverlay="true" :closeOnClickAction="true"
-        :show="showNumsSheet" @select="selectNums" @close="closeSelectNums" />
+        :show="showNumsSheet" @select="selectNums" @close="showNumsSheet = false" />
   </view>
 </template>
 
@@ -16,8 +16,8 @@
 export default {
   props: {
     value: {
-      type: Number,
-      default:  1
+      type: [String, Number],
+      default: 1
     },
   },
   data() {
@@ -31,12 +31,19 @@ export default {
       ],
     }
   },
+  computed: {
+    nums: {
+      get() {
+        return this.value || ''
+      },
+      set(val) {
+        this.$emit('update:value', val)
+      }
+    }
+  },
   methods: {
-    closeSelectNums() {
-      this.showNumsSheet = false;
-    },
     selectNums({value}) {
-      this.$emit('update:value', value);
+      this.nums = value;
     },
   }
 }
@@ -44,16 +51,14 @@ export default {
 
 <style lang="scss" scoped>
 .select-box {
-  border-radius: 10rpx;
   height: 80rpx;
   line-height: 80rpx;
   padding: 0 20rpx;
-  color: #fff;
-  background-color: #4a4b59;
+  background: #494B59;
+  border-radius: 10rpx;
   gap: 6rpx;
   display: flex;
   align-items: center;
-  font-size: 28rpx;
   cursor: pointer;
 }
 .sheet-box {

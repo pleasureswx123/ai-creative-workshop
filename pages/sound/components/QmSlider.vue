@@ -5,7 +5,7 @@
       <u-slider
           v-model="currentValue"
           step="1" min="0" max="4"
-          activeColor="red"
+          activeColor="var(--red-color1)"
           inactiveColor="var(--txt-color5)"
           block-size="20"
           block-color="var(--txt-color6)"></u-slider>

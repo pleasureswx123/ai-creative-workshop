@@ -50,4 +50,8 @@ html, body {
   --txt-color5-dark: rgba(0,0,0,.9);
   --txt-color6-dark: rgba(255,255,255,1);
   --txt-color7-dark: rgba(0,0,0,.5);
+
+
+  --red-color1: rgba(246, 6, 82, 1);
+  --red-color2: rgba(246, 6, 82, .3);
 }

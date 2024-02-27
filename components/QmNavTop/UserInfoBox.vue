@@ -168,7 +168,7 @@ export default {
   width: 60rpx;
   text-align: center;
   color: #fff;
-  background-color: #f60652;
+  background-color: var(--red-color1);
   border-radius: 14rpx;
 }
 

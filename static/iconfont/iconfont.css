@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont-qm"; /* Project id 4418983 */
-  src: url('@/static/iconfont/iconfont.ttf?t=1708167249538') format('truetype');
+  src: url('@/static/iconfont/iconfont.ttf?t=1708937645231') format('truetype');
 }
 
 .iconfont-qm {
@@ -9,6 +9,78 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qm-undo:before {
+  content: "\e705";
+}
+
+.icon-qm-undo1:before {
+  content: "\e706";
+}
+
+.icon-qm-brush:before {
+  content: "\e6fc";
+}
+
+.icon-qm-brush1:before {
+  content: "\e6fd";
+}
+
+.icon-qm-brush2:before {
+  content: "\e6fe";
+}
+
+.icon-qm-brush3:before {
+  content: "\e6ff";
+}
+
+.icon-qm-brush4:before {
+  content: "\e700";
+}
+
+.icon-qm-brush5:before {
+  content: "\e701";
+}
+
+.icon-qm-brush6:before {
+  content: "\e702";
+}
+
+.icon-qm-brush7:before {
+  content: "\e703";
+}
+
+.icon-qm-brush8:before {
+  content: "\e704";
+}
+
+.icon-qm-brush9:before {
+  content: "\e6f5";
+}
+
+.icon-qm-sync:before {
+  content: "\e6f6";
+}
+
+.icon-qm-hand:before {
+  content: "\e6f7";
+}
+
+.icon-qm-editpen:before {
+  content: "\e6f8";
+}
+
+.icon-qm-hand1:before {
+  content: "\e6f9";
+}
+
+.icon-qm-eraser:before {
+  content: "\e6fa";
+}
+
+.icon-qm-hand2:before {
+  content: "\e6fb";
 }
 
 .icon-qm-warning11:before {

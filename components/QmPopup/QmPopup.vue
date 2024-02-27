@@ -128,7 +128,7 @@ export default {
     z-index: 100;
     .btn-box {
       width: 80%;
-      background: red;
+      background: var(--red-color1);
       margin: 0 auto;
       height: 80rpx;
       border-radius: 10rpx;
