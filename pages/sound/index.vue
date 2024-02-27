@@ -8,7 +8,7 @@
         <text @tap="jumpHistory">历史配音</text>
       </template>
     </TitleCell>
-    <QmTextarea :value.sync.trim="describe"></QmTextarea>
+    <QmTextarea :value.sync.trim="describe" :maxlength="300"></QmTextarea>
     <TitleCell title="选择音色">
       <template #right>
         <TryListen ref="listen" :url="dubUrl"></TryListen>
