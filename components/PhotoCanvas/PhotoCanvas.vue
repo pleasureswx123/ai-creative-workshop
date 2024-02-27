@@ -55,18 +55,31 @@ export default {
     }
   },
   mounted() {
-    this.draw();
+    this.initCanvasInfo();
+  },
+  data() {
+    return {
+      isDrawing: false,
+      canvasCtx: null
+    }
+  },
+  beforeDestroy() {
+    this.canvasCtx = null;
   },
   methods: {
-    async draw() {
-      const canvasCtx = uni.createCanvasContext('myCanvas', this);
+    initCanvasInfo() {
+      this.canvasCtx = uni.createCanvasContext('myCanvas', this);
       const {width, height} = this.imgInfo || {};
-      canvasCtx.clearRect(0, 0, width, height);
-      canvasCtx.fillStyle = '#fff';
-      canvasCtx.fillRect(0, 0, width, height);
-      canvasCtx.drawImage(this.imgSrc, 0, 0, width, height);
-      canvasCtx.draw(true, () => {
-        debugger
+      this.canvasCtx.clearRect(0, 0, width, height);
+      this.canvasCtx.fillStyle = '#fff';
+      this.canvasCtx.fillRect(0, 0, width, height);
+      this.canvasCtx.drawImage(this.imgSrc, 0, 0, width, height);
+      this.canvasCtx.draw(true, () => {
+        
+        // canvas.addEventListener('mousedown', this.startDrawing);
+        // canvas.addEventListener('mouseup', this.stopDrawing);
+        // canvas.addEventListener('mousemove', this.draw);
+        
         // uni.canvasToTempFilePath({
         //   width: this.canvasW,
         //   height: this.canvasH,
@@ -80,6 +93,27 @@ export default {
         //   },
         // })
       })
+    },
+    startDrawing(event) {
+      this.isDrawing = true;
+      this.draw(event);
+    },
+    stopDrawing() {
+      this.isDrawing = false;
+    },
+    draw(event) {
+      if (!this.isDrawing) return;
+      // 计算涂抹位置
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      // 在canvas上绘制圆形
+      requestAnimationFrame(() => {
+        this.canvasCtx.beginPath();
+        this.canvasCtx.arc(x, y, this.brushSize, 0, 2 * Math.PI);
+        this.canvasCtx.fillStyle = color;
+        this.canvasCtx.fill();
+      });
     }
   }
 }

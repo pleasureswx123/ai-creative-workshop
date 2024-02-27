@@ -10,13 +10,13 @@
       <PersonEnhance :value.sync="enhanceType"></PersonEnhance>
       <PhotoStyle :value.sync="photoStyleId"></PhotoStyle>
     </template>
-    <view>{{type}}</view>
+<!--    <view>{{type}}</view>
     <view>{{description}}</view>
     <view>{{pages}}</view>
     <view>{{setting}}</view>
     <view>{{directions}}</view>
     <view>{{enhanceType}}</view>
-    <view>{{photoStyleId}}</view>
+    <view>{{photoStyleId}}</view>-->
   </LayoutPage>
 </template>
 

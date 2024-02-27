@@ -1,7 +1,5 @@
 <template>
   <view class="photo-modify-wrapper">
-    <view style="height: 200px;">{{actionType}}-{{brushSize}}-{{imgInfo}}
-    </view>
     <SelectUploadPhoto v-if="!imgSrc" :src.sync="imgSrc"></SelectUploadPhoto>
     <template v-if="imgSrc && !!imgInfo">
       <PhotoCanvas :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
