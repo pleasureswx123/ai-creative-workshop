@@ -12,7 +12,7 @@
         <view>购买即视为同意 <text @tap.stop="handleView">《会员和积分服务协议》</text></view>
       </view>
     </view>
-    <WechatPop :value.sync="show" :info="payPopInfo"></WechatPop>
+    <WechatPop :value.sync="show" :info="payPopInfo" :type="params.type"></WechatPop>
   </view>
 </template>
 

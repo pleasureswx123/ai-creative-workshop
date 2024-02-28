@@ -4,18 +4,19 @@
       <view class="del-btn" @tap.stop>
         <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
       </view>
-      <view class="img-box" :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}">
+      <view class="photo-content" :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}">
         <img :src="imgSrc" />
         <canvas
+            :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}"
             class="canvas"
             ref="myCanvas"
             canvas-id="myCanvas"
             @touchstart="onTouchStart"
-            @touchmove="onTouchMove"
-            @touchend="onTouchEnd"
-            @mousedown="onMouseDown"
-            @mousemove="onMouseMove"
-            @mouseup="onMouseUp"
+            @touchmove="onMove"
+            @touchend="stopDrawing"
+            @mousedown="onTouchStart"
+            @mousemove="onMove"
+            @mouseup="stopDrawing"
             @click="onClick" />
       </view>
     </view>
@@ -55,25 +56,22 @@ export default {
       set(src) {
         this.$emit('update:src', src || '')
       }
-    }
-  },
-  watch: {
-    actionType(type) {
-      if(type) {
-      
-      }
+    },
+    lineIds() {
+      return this.drawingData.map(item => item.id);
     }
   },
   mounted() {
-    this.initCanvasInfo();
+    this.createCanvas();
+    this.reset();
   },
   data() {
     return {
       ctx: null,
       isDrawing: false,
-      selectedColor: '#000',
+      // globalAlpha: '.5',
+      selectedColor: '#fff',
       history: [],
-      redoStack: [],
       points: [],
       drawingData: [],
       selectedLineId: null,
@@ -86,67 +84,105 @@ export default {
     this.ctx = null;
   },
   methods: {
-    initCanvasInfo() {
+    createCanvas() {
       this.ctx = uni.createCanvasContext('myCanvas', this);
       this.ctx.lineWidth = this.brushSize;
       this.ctx.lineCap = 'round';
-      this.initCanvas();
+      // this.ctx.globalAlpha = this.globalAlpha;
     },
     initCanvas() {
       const {width, height} = this.imgInfo || {};
       this.ctx.clearRect(0, 0, width, height);
-      this.ctx.fillStyle = '#fff';
+      this.ctx.fillStyle = 'transparent';
       this.ctx.fillRect(0, 0, width, height);
-      this.ctx.drawImage(this.imgSrc, 0, 0, width, height);
-      this.ctx.draw(true);
+      // this.ctx.drawImage(this.imgSrc, 0, 0, width, height);
     },
-    onMouseDown(e) {
-      debugger
-      const params = {
-        x: e.clientX,
-        y: e.clientY,
+    stopDrawing() {
+      if (this.points.length > 1) {
+        this.saveState(data => {
+          const lineId = Date.now().toString();
+          this.drawingData.push({ id: lineId, size: this.brushSize, points: [...(this.points || [])].slice() });
+          this.history.push({data, id: lineId });
+        });
       }
-      // this.startDrawing(params);
+      this.isDrawing = false;
+      this.points = [];
+      this.$nextTick(() => {
+        this.toggleBodyPositionStatus(false);
+      })
     },
-    onMouseMove() {},
-    onMouseUp() {},
+    onMove(e) {
+      if (!this.isDrawing) return;
+      this.points.push(this.getTouchCoordinates(e));
+      this.drawPoints();
+    },
     onTouchStart(e) {
-      debugger
-      this.startDrawing(e.touches[0]);
+      this.startDrawing(this.getTouchCoordinates(e));
     },
     getTouchCoordinates(e) {
-      const clientX = e.touches ? e.touches[0].x : e.clientX;
-      const clientY = e.touches ? e.touches[0].y : e.clientY;
-      const rect = e.target.getBoundingClientRect();
-      const offsetX = clientX - rect.left;
-      const offsetY = clientY - rect.top;
-      return { x: offsetX, y: offsetY };
+      const params = e?.touches?.[0];
+      let {x, y} = params || {};
+      if (!params) {
+        const {left, top} = this.$refs.myCanvas.$el.getBoundingClientRect();
+        x = e.clientX - left;
+        y = e.clientY - top;
+      }
+      return {x, y}
+    },
+    onClick(e) {
+      const {x, y} = this.$refs.myCanvas.$el.getBoundingClientRect();
+      const params = {
+        x: e.detail.x - x,
+        y: e.detail.y - y
+      }
+      if (this.actionType === 'eraser') {
+        this.selectedLineId = this.getNearestLineId(params.x, params.y);
+        this.eraseLine();
+      }
     },
     startDrawing({x, y}) {
       this.toggleBodyPositionStatus(true);
       this.isDrawing = true;
       this.points = [];
       this.points.push({ x, y });
-      this.saveState();
     },
-    saveState() {
-      uni.canvasGetImageData({
-        canvasId: 'myCanvas',
-        x: 0,
-        y: 0,
-        width: this.imgInfo.width,
-        height: this.imgInfo.height,
-        success: res => {
-          this.history.push(res.data);
-          // 每次保存新的绘制状态时，清空重做栈
-          this.redoStack = [];
-        }
-      });
+    saveState(cb) {
+      this.ctx.draw(true, () => {
+        uni.canvasGetImageData({
+          canvasId: 'myCanvas',
+          x: 0,
+          y: 0,
+          width: this.imgInfo.width,
+          height: this.imgInfo.height,
+          success: res => {
+            cb && cb(res.data);
+            console.log('set history', this.history.length)
+          },
+          fail: (err) => {
+            console.error('1Failed to undo:', err);
+          }
+        });
+      })
     },
     undo() {
-      if (this.history.length > 0) {
-        const lastState = this.history.pop();
-        this.redoStack.push(lastState);
+      console.log('undo history', this.history.length)
+      let lastState = '';
+      if(this.history.length === 1) {
+        const temp = this.history[0] || {};
+        lastState = temp.data
+      } else if(this.history.length > 1) {
+        const temp = this.history.pop() || {};
+        lastState = temp.data;
+        const id = temp.id;
+        if(id) {
+          const index = this.drawingData.findIndex(line => line.id === id);
+          (~index) && (this.drawingData.splice(index, 1));
+        }
+      }
+      if(!lastState) {
+        return
+      }
+      this.ctx.draw(false, () => {
         uni.canvasPutImageData({
           canvasId: 'myCanvas',
           data: lastState,
@@ -156,54 +192,35 @@ export default {
           height: this.imgInfo.height,
           success: () => {
             this.ctx.draw(true);
+          },
+          fail: (err) => {
+            console.error('Failed to undo:', err);
           }
-        }, this);
-      }
+        });
+      })
     },
     redo() {
-      if (this.redoStack.length > 0) {
-        const lastState = this.redoStack.pop();
-        this.history.push(lastState);
-        uni.canvasPutImageData({
-          canvasId: 'myCanvas',
-          data: lastState,
-          x: 0,
-          y: 0,
-          width: this.imgInfo.width,
-          height: this.imgInfo.height,
-          success: () => {
-            this.ctx.draw(true);
-          }
-        }, this);
-      }
     },
     reset() {
       this.initCanvas();
+      this.initCanvasData();
+    },
+    initCanvasData() {
+      this.isDrawing = false;
       this.history = []; // 重置历史记录
-      this.redoStack = []; // 重置重做栈
       this.points = [];
       this.drawingData = [];
-    },
-    onTouchMove(e) {
-      if (!this.isDrawing) return;
-      const { x, y } = e.touches[0];
-      this.points.push({ x, y });
-      this.drawPoints();
-    },
-    onTouchEnd() {
-      this.toggleBodyPositionStatus(false);
-      this.isDrawing = false;
-      if (this.points.length > 1) {
-        const lineId = Date.now().toString();
-        this.drawingData.push({ id: lineId, points: this.points.slice() });
-      }
+      this.selectedLineId = null;
+      this.saveState(data => {
+        this.history = [{data, id: 'init'}];
+      });
     },
     drawPoints() {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = requestAnimationFrame(() => {
         if (this.points.length < 2) return; // 至少需要两个点来绘制
         this.ctx.beginPath();
-        this.ctx.setStrokeStyle(this.selectedColor);
+        this.ctx.strokeStyle = (this.selectedColor);
         this.ctx.moveTo(this.points[0].x, this.points[0].y);
       
         for (let i = 1; i < this.points.length; i++) {
@@ -221,33 +238,30 @@ export default {
         // this.ctx.globalCompositeOperation = 'source-over';
       })
     },
-    onClick(e) {
-      alert(2222)
-      const x = e.detail.x;
-      const y = e.detail.y;
-      if (this.actionType === 'eraser') {
-        this.selectedLineId = this.getNearestLineId(x, y);
-        this.eraseLine();
-      }
-    },
     eraseLine() {
       if (this.selectedLineId) {
         const index = this.drawingData.findIndex(line => line.id === this.selectedLineId);
         if (index !== -1) {
-          this.saveState();
           this.drawingData.splice(index, 1);
+          // const sn = this.history.findIndex(item => item.id === this.selectedLineId);
+          // ~sn && this.history.splice(sn, 1);
           this.initCanvas();
           this.drawingData.forEach(line => {
-            this.drawPolyline(line.points);
+            this.drawPolyline(line.points, line.size);
           });
-          this.ctx.draw(true);
-          this.selectedLineId = null;
+          this.saveState(data => {
+            this.selectedLineId = null;
+            this.history.push({data, id: 'erase' });
+          })
         }
       }
     },
-    drawPolyline(points) {
+    drawPolyline(points, size) {
+      if (points.length < 2) return;
       this.ctx.beginPath();
+      this.ctx.strokeStyle = (this.selectedColor);
       this.ctx.moveTo(points[0].x, points[0].y);
+      
       for (let i = 1; i < points.length; i++) {
         const point = points[i];
         const prevPoint = points[i - 1];
@@ -255,11 +269,25 @@ export default {
         const centerY = (point.y + prevPoint.y) / 2;
         this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
       }
-      this.ctx.lineWidth = this.lineWidth;
+      this.ctx.lineWidth = size;
       this.ctx.stroke();
       this.ctx.closePath();
     },
     getNearestLineId(x, y) {
+      let minDist = Infinity;
+      let nearestLineId = null;
+      this.drawingData.forEach(line => {
+        line.points.forEach(point => {
+          const dist = Math.sqrt((point.x - x) ** 2 + (point.y - y) ** 2);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestLineId = line.id;
+          }
+        });
+      });
+      return nearestLineId;
+    },
+    getNearestLineId123(x, y) {
       let minDist = Infinity;
       let nearestLineId = null;
       this.drawingData.forEach(line => {
@@ -305,20 +333,6 @@ export default {
       const dx = x - xx;
       const dy = y - yy;
       return Math.sqrt(dx * dx + dy * dy);
-    },
-    getNearestLineId1(x, y) {
-      let minDist = Infinity;
-      let nearestLineId = null;
-      this.drawingData.forEach(line => {
-        line.points.forEach(point => {
-          const dist = Math.sqrt((point.x - x) ** 2 + (point.y - y) ** 2);
-          if (dist < minDist) {
-            minDist = dist;
-            nearestLineId = line.id;
-          }
-        });
-      });
-      return nearestLineId;
     },
     saveImage() {
       uni.canvasToTempFilePath({
@@ -379,7 +393,7 @@ export default {
     padding: 0 20rpx;
     z-index: 10;
   }
-  .img-box {
+  .photo-content {
     width: 100%;
     height: 100%;
     margin: 0 auto;
@@ -392,6 +406,9 @@ export default {
       bottom: 0;
       width: 100%;
       height: 100%;
+    }
+    .canvas {
+      opacity: .5;
     }
   }
 }
