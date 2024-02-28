@@ -62,7 +62,7 @@ export default {
     border: 2rpx solid #23242C;
     cursor: pointer;
     &.active {
-      border-color: #ff0000;
+      border-color: var(--red-color1);
     }
     .items-con {
       aspect-ratio: 16 / 16;

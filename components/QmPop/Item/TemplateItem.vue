@@ -45,7 +45,7 @@ export default {
   position: relative;
   overflow: hidden;
   &.active {
-    border-color: #ff0000;
+    border-color: var(--red-color1);
   }
   .video-wrapper {
     width: 100%;

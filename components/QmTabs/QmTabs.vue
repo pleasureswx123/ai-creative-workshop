@@ -48,8 +48,8 @@ export default {
       border-radius: 0 70rpx 70rpx 0;
     }
     &.active {
-      border-color: #ff2500;
-      background: #ff2500;
+      border-color: var(--red-color1);
+      background: var(--red-color1);
       color: #fff;
       font-weight: bold;
     }

@@ -120,7 +120,7 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
-    background-color: rgba(246, 6, 82, 1);
+    background-color: var(--red-color1);
     color:rgba(255, 255, 255, .9);
     text-align: center;
     width: 136rpx;

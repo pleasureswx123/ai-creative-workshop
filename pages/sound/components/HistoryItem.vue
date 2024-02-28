@@ -48,7 +48,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   background: var(--bg-color2);
-  padding: 20rpx 50rpx 30rpx;
+  padding: 20rpx 30rpx 30rpx;
   //border-top: 1rpx solid var(--txt-color2);
   //border-bottom: 1rpx solid var(--txt-color2);
   box-shadow: 0 0 5rpx rgba(255,255,255,.2);
@@ -62,7 +62,7 @@ export default {
 .content {
   color: var(--txt-color2);
   font-size: 28rpx;
-  padding-bottom: 40rpx;
+  padding-bottom: 20rpx;
 }
 .voice-container {
   height: 85rpx;

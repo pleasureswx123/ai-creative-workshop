@@ -92,7 +92,7 @@ export default {
         position: absolute;
         top: 8rpx;
         right: 0;
-        background: #F60652;
+        background: var(--red-color1);
         font-size: 16rpx;
         line-height: 16rpx;
         padding: 4rpx 8rpx;

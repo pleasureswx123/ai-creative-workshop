@@ -6,7 +6,7 @@
         <view class="title">{{info.title}}</view>
         <view class="content">{{info.content}}</view>
       </view>
-      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arrow-right" color="#ff0000" size="14" />
+      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arrow-right" color="var(--red-color1)" size="14" />
     </view>
   </BoxLayout>
 </template>

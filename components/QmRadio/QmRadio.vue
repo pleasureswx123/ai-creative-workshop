@@ -51,7 +51,7 @@ export default {
     font-size: 28rpx;
     &.active {
       color: #fff;
-      border-color: #ff0000;
+      border-color: var(--red-color1);
     }
   }
 }
