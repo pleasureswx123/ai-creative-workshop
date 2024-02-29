@@ -63,6 +63,7 @@ export default {
         },
       }
       const {txt, tips} = res?.[this.type] || {};
+	 
       return {
         label: txt || this.labelTxt,
         tips: tips?.[this.value] || ''

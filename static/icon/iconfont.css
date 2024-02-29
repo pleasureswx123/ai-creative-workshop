@@ -111,7 +111,12 @@
 .icon-a-hecheng2:before {
   content: "\e789";
 }
-.icon-AI:before {
-  content: "\e697";
-  font-size: 40px;
+
+.icon-ai70:before {
+  content: "\e6bc";
+  color: #fff;
+  display: inline-block;
+  transform: rotate(90deg);
+  font-size: 24px;
+  opacity: 0.7;
 }

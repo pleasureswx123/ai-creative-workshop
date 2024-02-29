@@ -9,10 +9,10 @@
 					<i class="iconfont icon-AI"></i>
 					<view class="">AI生成</view>
 				</view>
-				<view class="info">
+				<!-- <view class="info">
 					<view class="add">+</view>
 					<view class="">上传图片</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<view class="nextBtn" @tap="nextTop">下一步</view>

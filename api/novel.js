@@ -48,4 +48,11 @@ export default {
       }
     })
   },
+  articlesSplit(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/ArticlesSplit`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }
