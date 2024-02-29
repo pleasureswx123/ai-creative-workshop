@@ -12,7 +12,7 @@ module.exports = (vm) => {
     //
     // }
     config.header['X-Token'] = uni.getStorageSync('token') || '';
-    config.header['X-Site'] = uni.getStorageSync('sitecode'); // 渠道
+    config.header['X-Site'] = ''; // 渠道
     // if (config?.custom?.formUrl) {
     //   config.header['Content-Type'] = `application/x-www-form-urlencoded;charset=UTF-8`
     // }

@@ -35,11 +35,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('UserInfo', ['userInfoState']),
     ...mapState('OrderInfo', ['goodsList']),
-    isBindWechat() {
-      return !!(+this.userInfoState?.bind_wechat);
-    },
     list() {
       return (this.goodsList || []).map(item => {
         const descTxt = item.desc.join(' ');
@@ -57,9 +53,7 @@ export default {
     },
   },
   onShow() {
-    this.getUserInfo().then(() => {
-      this.bindWechat();
-    });
+    this.bindWechatAuth();
     this.setGoodsList();
     this.getGoodsList({type: 'goods'}).then((res) => {
       const temp = (this.list || []).find(item => +item.is_default === 1);
@@ -67,21 +61,8 @@ export default {
     });
   },
   methods: {
-    ...mapActions('UserInfo', ['getUserInfo', 'authAndBindWechat']),
     ...mapActions('OrderInfo', ['getGoodsList']),
     ...mapMutations('OrderInfo', ['setGoodsList']),
-    bindWechat() {
-      const {code} = this.getUrlCode();
-      if(!this.isBindWechat && code) {
-        this.authAndBindWechat({code}).then(res => {
-          uni.showToast({
-            title: '绑定成功',
-            duration: 2000
-          });
-          this.getUserInfo();
-        })
-      }
-    },
   }
 }
 </script>

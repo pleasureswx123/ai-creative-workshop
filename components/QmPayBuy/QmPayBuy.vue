@@ -58,10 +58,6 @@ export default {
   methods: {
     ...mapActions('OrderInfo', ['createOrder', 'confirmOrder']),
     ...mapActions('UserInfo', ['getUserInfo']),
-    $_isMobile: function() {
-      let width = document.documentElement.getBoundingClientRect().width;
-      return width - 1 < 992
-    },
     // weixinPay: function (t) {
     //   var e = this;
     //   Jt({
@@ -80,72 +76,95 @@ export default {
     //       "desktop" === this.$store.state.app.device ? (this.vip_id = 3, this.pay_type = "wx_qr", this.createOrder()) : this.pay_type = "wx_wap"
     // },
     handleBuy() {
-      if(this.qmIsWechat() && !this.isBindWechat) {
-        uni.showModal({
-          title: '提示',
-          content: '请先进行微信授权后再支付',
-          cancelText: '取消',
-          confirmText: '跳转授权',
-          success: () => {
-            this.getWechatCode();
-          }
-        });
-        return
-      }
-      this.confirmOrder(this.params).then(() => {
-        let trade_type = this.qmIsMobile() ? 'mweb' : 'native';
-        if(this.qmIsWechat()) {
-          trade_type = 'jsapi'
+      this.checkLoginStatus().then(() => {
+        if(this.qmIsWechat() && !this.isBindWechat) {
+          uni.showModal({
+            title: '提示',
+            content: '请先进行微信授权后再支付',
+            cancelText: '取消',
+            confirmText: '跳转授权',
+            success: () => {
+              this.getWechatCode();
+            }
+          });
+          return
         }
-        this.createOrder(Object.assign({}, this.params, {
-          platform: 'h5', trade_type
-        })).then(res => {
-          if (trade_type === 'jsapi') {
-            const config = res || {};
-            debugger
-            app.globalData.jssdk.chooseWXPay({
-              timestamp: config.timestamp,
-              nonceStr: config.nonceStr,
-              package: config.package,
-              signType: config.signType,
-              paySign: config.paySign,
-              success: () => {
-                uni.showModal({
-                  title: '提示',
-                  content: '支付成功',
-                  showCancel: false,
-                  confirmText: '确定',
-                  complete: () => {
-                    uni.reLaunch({
-                      url: '/pages/member/index'
-                    });
-                  }
-                });
-              },
-              fail: () => {
-                uni.showModal({
-                  title: '提示',
-                  content: '发起支付失败',
-                  showCancel: false,
-                  confirmText: '确定',
-                  complete: () => {
-                    uni.reLaunch({
-                      url: '/pages/member/index'
-                    });
-                  }
-                });
-              }
-            });
+        this.confirmOrder(this.params).then(() => {
+          let trade_type = this.qmIsMobile() ? 'mweb' : 'native';
+          if(this.qmIsWechat() && this.isBindWechat) {
+            trade_type = 'jsapi'
           }
-          if (trade_type === 'mweb') {
-            window.location.href= `${res.pay_url}&redirect_url=${encodeURIComponent(window.location.href)}`;
-          }
-          if(trade_type === 'native') {
-            this.payOrderInfo = res;
-            this.show = true;
-          }
+          this.createOrder(Object.assign({}, this.params, {
+            platform: 'h5', trade_type
+          })).then(res => {
+            if (trade_type === 'jsapi') {
+              const config = res || {};
+              const url = window.location.hash.slice(1);
+              const {appId, nonceStr, package: packageStr, paySign, signType, timeStamp} = res || {};
+              this.payReady({
+                appId,     //公众号ID，由商户传入
+                timeStamp,         //时间戳，自1970年以来的秒数
+                nonceStr, //随机串
+                package: packageStr,
+                signType,         //微信签名方式：
+                paySign //微信签名
+              }, url);
+              return
+              uni.showModal({
+                title: '提示',
+                content: `${JSON.stringify(res)}`,
+                cancelText: '取消',
+                confirmText: '确定',
+                success: () => {
+  
+                  app.globalData.jssdk.chooseWXPay({
+                    timestamp: config.timestamp,
+                    nonceStr: config.nonceStr,
+                    package: config.package,
+                    signType: config.signType,
+                    paySign: config.paySign,
+                    success: () => {
+                      uni.showModal({
+                        title: '提示',
+                        content: '支付成功',
+                        showCancel: false,
+                        confirmText: '确定',
+                        complete: () => {
+                          uni.reLaunch({
+                            url: '/pages/index/index'
+                          })
+                        }
+                      });
+                    },
+                    fail: () => {
+                      uni.showModal({
+                        title: '提示',
+                        content: '发起支付失败',
+                        showCancel: false,
+                        confirmText: '确定',
+                        complete: () => {
+                          uni.reLaunch({
+                            url: '/pages/index/index'
+                          })
+                        }
+                      });
+                    }
+                  });
+                  
+                  
+                }
+              });
+            }
+            if (trade_type === 'mweb') {
+              window.location.href= `${res.pay_url}&redirect_url=${encodeURIComponent(window.location.href)}`;
+            }
+            if(trade_type === 'native') {
+              this.payOrderInfo = res;
+              this.show = true;
+            }
+          });
         });
-      });
+      })
     },
     handleView() {
       // uni.navigateTo({

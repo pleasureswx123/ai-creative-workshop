@@ -1,4 +1,5 @@
 import {userApi} from "@/api";
+import {mapState, mapActions} from 'vuex';
 
 export default {
   data() {
@@ -7,6 +8,10 @@ export default {
     }
   },
   computed: {
+    ...mapState('UserInfo', ['userInfoState']),
+    isBindWechat() {
+      return !!(+this.userInfoState?.bind_wechat);
+    },
     qmSystem() {
       const system = uni.getSystemInfoSync().system.toLowerCase();
       let result = 'other';
@@ -23,8 +28,59 @@ export default {
     }
   },
   methods: {
+    ...mapActions('UserInfo', ['getUserInfo', 'authAndBindWechat']),
+    payReady(params, url) {
+      function onBridgeReady() {
+        WeixinJSBridge.invoke('getBrandWCPayRequest', params, function (res) {
+          if (res.err_msg == "get_brand_wcpay_request:ok") {
+            // 使用以上方式判断前端返回,微信团队郑重提示：
+            //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+            console.log(url);
+            uni.reLaunch({
+              url: '/pages/index/index'
+            });
+            setTimeout(() => {
+              uni.showToast({
+                title: '支付成功',
+                duration: 2000
+              });
+            })
+          }
+        });
+      }
+      if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+      } else {
+        onBridgeReady();
+      }
+    },
+    bindWechatAuth() {
+      this.getUserInfo().then(() => {
+        if(!this.isBindWechat && this.qmIsWechat()) {
+          const {code} = this.getUrlCode();
+          if(code) {
+            this.authAndBindWechat({code}).then(res => {
+              uni.showToast({
+                title: '绑定成功',
+                duration: 2000
+              });
+              this.getUserInfo();
+            }).catch(() => {
+              uni.reLaunch({
+                url: '/pages/index/index'
+              })
+            })
+          }
+        }
+      });
+    },
     getUrlCode() {
-      const url = location.search;
+      const url = window.location.search;
       const result = {};
       if (~url.indexOf('?')) {
         const str = url.substr(1);
@@ -38,10 +94,8 @@ export default {
     },
     getWechatCode() {
       if (this.qmIsWechat()) {
-        const temp = {appid: 'wx003ee6dc2b2b75c0', appsecret: '28a477fe7c64ddc97b62ddd5d2aaf225'};
-        let appid = temp.appid;
-        let local = window.location.href;
-        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
+        const local = window.location.href;
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx003ee6dc2b2b75c0&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
       }
     },
     qmIsWechat() {
