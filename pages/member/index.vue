@@ -18,6 +18,9 @@ export default {
   computed: {
     ...mapState('UserInfo', ['userInfoState']),
     ...mapState('OrderInfo', ['goodsList', 'goodsType', 'commonProblem', 'orderInfo']),
+    isBindWechat() {
+      return !!(+this.userInfoState?.bind_wechat);
+    },
     isVip() {
       return !!(+this.userInfoState.is_vip)
     },
@@ -40,11 +43,28 @@ export default {
     }
   },
   onShow() {
+    this.getUserInfo().then(() => {
+      this.bindWechat();
+    });
     this.getGoodsType();
     this.getCommonProblem();
   },
   methods: {
+    ...mapActions('UserInfo', ['getUserInfo', 'authAndBindWechat']),
     ...mapActions('OrderInfo', ['getGoodsType', 'getGoodsList', 'getCommonProblem', 'confirmOrder']),
+    bindWechat() {
+      const {code} = this.getUrlCode();
+      console.log(9999, code);
+      if(!this.isBindWechat && code) {
+        this.authAndBindWechat({code}).then(res => {
+          uni.showToast({
+            title: '绑定成功',
+            duration: 2000
+          });
+          this.getUserInfo();
+        })
+      }
+    },
     handleUpgrader() {
       this.confirmOrder({
         type: 'vip',

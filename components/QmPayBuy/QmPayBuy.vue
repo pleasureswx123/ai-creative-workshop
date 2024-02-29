@@ -41,6 +41,10 @@ export default {
   },
   computed: {
     ...mapState('OrderInfo', ['orderInfo']),
+    ...mapState('UserInfo', ['userInfoState']),
+    isBindWechat() {
+      return !!(+this.userInfoState?.bind_wechat);
+    },
     payPopInfo() {
       return {
         ...(this.orderInfo || {}),
@@ -48,8 +52,12 @@ export default {
       }
     },
   },
+  created() {
+    this.getUserInfo();
+  },
   methods: {
     ...mapActions('OrderInfo', ['createOrder', 'confirmOrder']),
+    ...mapActions('UserInfo', ['getUserInfo']),
     $_isMobile: function() {
       let width = document.documentElement.getBoundingClientRect().width;
       return width - 1 < 992
@@ -72,22 +80,29 @@ export default {
     //       "desktop" === this.$store.state.app.device ? (this.vip_id = 3, this.pay_type = "wx_qr", this.createOrder()) : this.pay_type = "wx_wap"
     // },
     handleBuy() {
+      if(this.qmIsWechat() && !this.isBindWechat) {
+        uni.showModal({
+          title: '提示',
+          content: '请先进行微信授权后再支付',
+          cancelText: '取消',
+          confirmText: '跳转授权',
+          success: () => {
+            this.getWechatCode();
+          }
+        });
+        return
+      }
       this.confirmOrder(this.params).then(() => {
-        const trade_type = this.qmIsMobile() ? 'mweb' : 'native';
-        // const trade_type = 'native';
+        let trade_type = this.qmIsMobile() ? 'mweb' : 'native';
+        if(this.qmIsWechat()) {
+          trade_type = 'jsapi'
+        }
         this.createOrder(Object.assign({}, this.params, {
           platform: 'h5', trade_type
         })).then(res => {
-          if (trade_type === 'mweb') {
-            window.location.href= `${res.pay_url}&redirect_url=${encodeURIComponent(window.location.href)}`;
-            // window.location.href = `${res.pay_url}&redirect_url=${window.location.href}`
-          } else {
-            this.payOrderInfo = res;
-            this.show = true;
-          }
-          return;
-          if(platform === 'h5') {
+          if (trade_type === 'jsapi') {
             const config = res || {};
+            debugger
             app.globalData.jssdk.chooseWXPay({
               timestamp: config.timestamp,
               nonceStr: config.nonceStr,
@@ -121,7 +136,11 @@ export default {
                 });
               }
             });
-          } else {
+          }
+          if (trade_type === 'mweb') {
+            window.location.href= `${res.pay_url}&redirect_url=${encodeURIComponent(window.location.href)}`;
+          }
+          if(trade_type === 'native') {
             this.payOrderInfo = res;
             this.show = true;
           }

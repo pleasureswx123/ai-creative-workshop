@@ -9,6 +9,7 @@ const state = {
     is_vip: 0,
     vip_level: 1,
     vip_expire_time: '',
+    bind_wechat: 0, // 1已经绑定微信  0未绑定
   },
   modelList: [],
   topicList: [],
@@ -53,6 +54,11 @@ const actions = {
   getUserInfo({dispatch, commit}, params = {}) {
     return userApi.getUserInfo(params).then(res => {
       commit('setUserInfo', res || {})
+    })
+  },
+  authAndBindWechat({dispatch, commit}, params = {}) {
+    return userApi.authAndBindWechat(params).then(res => {
+      return Promise.resolve(res);
     })
   }
 };

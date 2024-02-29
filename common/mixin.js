@@ -23,6 +23,27 @@ export default {
     }
   },
   methods: {
+    getUrlCode() {
+      const url = location.search;
+      const result = {};
+      if (~url.indexOf('?')) {
+        const str = url.substr(1);
+        const temp = str.split('&');
+        for (let i = 0, l = temp.length; i < l; i++) {
+          const [name, value] = temp[i].split('=');
+          name && (result[name] = value || '');
+        }
+      }
+      return result;
+    },
+    getWechatCode() {
+      if (this.qmIsWechat()) {
+        const temp = {appid: 'wx003ee6dc2b2b75c0', appsecret: '28a477fe7c64ddc97b62ddd5d2aaf225'};
+        let appid = temp.appid;
+        let local = window.location.href;
+        window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(local)}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
+      }
+    },
     qmIsWechat() {
       const ua = navigator.userAgent.toLowerCase();
       return !!(ua.match(/micromessenger/i) && !ua.match(/windows/i) && !ua.match(/macos/i) && !ua.match(/macwechat/i));
