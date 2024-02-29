@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont-qm"; /* Project id 4418983 */
-  src: url('@/static/iconfont/iconfont.ttf?t=1708937645231') format('truetype');
+  src: url('@/static/iconfont/iconfont.ttf?t=1709197411699') format('truetype');
 }
 
 .iconfont-qm {
@@ -9,6 +9,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-qm-woman:before {
+  content: "\e707";
 }
 
 .icon-qm-undo:before {

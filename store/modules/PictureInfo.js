@@ -61,6 +61,11 @@ const mutations = {
         6: 'ai-expand',
         8: 'part-redraw',
         9: 'replace-bg-txt',
+
+        19: 'woman-style1',
+        20: 'woman-style2',
+        21: 'woman-style3',
+        22: 'woman-style4',
       }
       return {
         ...item,
