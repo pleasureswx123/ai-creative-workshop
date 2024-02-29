@@ -7,7 +7,7 @@
       <view class="grid-box">
         <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
           <view class="img-box">
-            <image :src="item.url"></image>
+            <image :src="item.url" mode="aspectFill"></image>
           </view>
           <view class="title">{{item.title}}</view>
           <view class="go-btn">前往创作</view>

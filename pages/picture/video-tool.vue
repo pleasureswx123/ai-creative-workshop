@@ -57,7 +57,7 @@ export default {
 }
 .grid-box {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20rpx;
   margin-top: 30rpx;
   .card-box {
@@ -70,8 +70,8 @@ export default {
     background: #25262B;
     box-sizing: border-box;
     border: 2rpx solid #373A40;
-    display: flex;
-    align-items: center;
+    //display: flex;
+    //align-items: center;
     gap: 20rpx;
     .title {
       font-size: 24rpx;
@@ -90,11 +90,10 @@ export default {
   .card-info {
     flex: 1;
     min-width: 0;
-    padding-right: 10rpx;
+    //padding-right: 10rpx;
   }
   .img-box {
-    width: 374rpx;
-    height: 280rpx;
+    aspect-ratio: 4 / 3;
     image {
       display: block;
       width: 100%;
@@ -115,13 +114,13 @@ export default {
 
 @media screen and (min-width: 750px) and (max-width: 960px){
   .grid-box {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media screen and (min-width: 960px) {
   .grid-box {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 </style>
