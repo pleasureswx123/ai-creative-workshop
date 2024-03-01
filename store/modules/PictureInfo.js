@@ -66,6 +66,7 @@ const mutations = {
         20: 'woman-style2',
         21: 'woman-style3',
         22: 'woman-style4',
+        23: 'woman-style5',
       }
       return {
         ...item,
