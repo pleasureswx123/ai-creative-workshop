@@ -45,8 +45,8 @@ const mutations = {
   },
   setFeedsTabs(state, info = []) {
     state.feedsTabs = (info || []).map(item => {
-      const {title: name, model_subclass_id: id} = item || {};
-      return { name, id }
+      const {title: name, model_subclass_id: id, is_highlight} = item || {};
+      return { name, id, highlight: !!(+is_highlight) }
     });
   },
   setStayTunedInfo(state, info = []) {

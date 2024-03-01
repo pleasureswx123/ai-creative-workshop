@@ -4,8 +4,8 @@
     <QmHomeBanner></QmHomeBanner>
     <QmAiTypeMenu></QmAiTypeMenu>
     
-    <QmHomeTypeTabs
-        :value.sync="model_subclass_id" />
+    <QTabs :value.sync="model_subclass_id" />
+<!--    <QmHomeTypeTabs :value.sync="model_subclass_id" />-->
     <view style="min-height: 90vh">
     <QmWaterfall
         ref="waterfall"

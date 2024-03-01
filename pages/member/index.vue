@@ -2,10 +2,10 @@
   <view class="page-container">
     <QmNavTop></QmNavTop>
     <MemberInfo></MemberInfo>
-    <MemberVipDesc></MemberVipDesc>
+<!--    <MemberVipDesc></MemberVipDesc>
     <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
     <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
-    <view class="btn-box" @tap="handleUpgrader">{{btnTxt}}</view>
+    <view class="btn-box" @tap="handleUpgrader">{{btnTxt}}</view>-->
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>
     <UpgradePop :value.sync="showUpgradePop" :info="orderInfo" :goodsId="goodsId"></UpgradePop>
   </view>
