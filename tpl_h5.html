@@ -134,7 +134,13 @@
 					checkAutoPlay();
 				});
 				// 监听页面点击事件
-				document.addEventListener('click', function () {
+				document.addEventListener('mousedown', function () {
+					// 如果自动播放未启用，则尝试启用
+					if (!isAutoPlayEnabled) {
+						video.play();
+					}
+				});
+				document.addEventListener('touchstart', function () {
 					// 如果自动播放未启用，则尝试启用
 					if (!isAutoPlayEnabled) {
 						video.play();
