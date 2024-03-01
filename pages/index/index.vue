@@ -64,9 +64,11 @@ import {mapActions} from 'vuex';
         });
       },
       getDetailsInfo(item) {
-        const {task_id, image} = item || {};
-        // this.previewImage(image);
-        // return
+        const {task_id, detail_img_url, type} = item || {};
+        if(type === 2) {
+          this.previewImage(detail_img_url);
+          return
+        }
         userApi.getAiDetailsInfo({task_id}).then(resData => {
           this.detailsInfo = resData;
           this.showDetails = true;
