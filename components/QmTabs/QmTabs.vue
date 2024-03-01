@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 .tabs-wrapper {
-  padding: 30rpx 30rpx;
+  padding: 30rpx 0;
   display: flex;
   .tabs-item {
     height: 80rpx;

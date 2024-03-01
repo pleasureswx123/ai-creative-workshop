@@ -1,10 +1,10 @@
 <template>
   <view class="page-container">
     <QmNavTop />
-    <QmTabs
-        :value.sync="current"
-        :options="stayTunedInfo" />
     <view class="page-content">
+      <QmTabs
+          :value.sync="current"
+          :options="stayTunedInfo" />
       <VideoItem :info="currentVideoInfo" />
     </view>
   
