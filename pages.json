@@ -104,6 +104,12 @@
 			}
 		},
 		{
+			"path": "pages/special/tabulation",
+			"style": {
+				"navigationBarTitleText": "我的创作"
+			}
+		},
+		{
 			"path": "pages/special/storyboard",
 			"style": {
 				"navigationBarTitleText": "AI分镜中"

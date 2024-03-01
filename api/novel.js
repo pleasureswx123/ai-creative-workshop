@@ -55,4 +55,18 @@ export default {
       }
     })
   },
+  getTaskInfo(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/getTaskInfo`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  myTaskList(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/MyTaskList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

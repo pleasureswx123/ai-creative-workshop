@@ -106,7 +106,7 @@
 			},
 			getUserInfo(){
 				userApi.getUserInfo({}).then(data => {
-					this.user_id = data.user_id
+					uni.setStorageSync('user_id',JSON.stringify(data.user_id))
 				}).catch(() => {
 					
 				})
@@ -132,8 +132,9 @@
 					uni.$u.toast('请选择视频比例');
 					return false
 				}
+				let user_id = JSON.parse(uni.getStorageSync('user_id'))
 				let data = {
-					user_id:this.user_id,
+					user_id:user_id,
 					text:this.$refs.novelText.current || '',
 					title:this.$refs.novelText.novelValue,
 					screen_style:this.screenId,
