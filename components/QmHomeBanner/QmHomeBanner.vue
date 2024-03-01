@@ -1,7 +1,9 @@
 <template>
   <view class="banner-cont">
     <view class="banner">
-      <image class="img" v-if="bannerInfo.url_type === 'image'" src="bannerInfo.url" mode="aspectFill"></image>
+      <template v-if="bannerInfo.url_type === 'image'">
+        <Imgs :imgs="bannerInfo.url_data"></Imgs>
+      </template>
       <QmVideo v-if="bannerInfo.url_type === 'video'" :src="bannerInfo.url"></QmVideo>
       <view class="bannerText">
         <text class="eng">{{bannerInfo.slogan_en}}</text>
@@ -15,8 +17,10 @@
 
 <script>
 import {mapState} from 'vuex';
+import Imgs from './Imgs.vue';
 
 export default {
+  components: { Imgs },
   computed: {
     ...mapState('HomeInfo', ['bannerInfo']),
   },

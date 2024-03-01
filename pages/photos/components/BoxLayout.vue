@@ -3,7 +3,7 @@
     <BoxTitle :title="title">
       <slot name="HdRight"></slot>
     </BoxTitle>
-    <view class="box-content">
+    <view>
       <slot></slot>
     </view>
   </view>
@@ -24,9 +24,13 @@ export default {
 
 <style lang="scss" scoped>
 .box-container {
-  padding: 0 30rpx;
-  margin-bottom: 20rpx;
-  .box-content {
-  }
+  background: #25262B;
+  box-sizing: border-box;
+  border: 2rpx solid #373A40;
+  padding: 0 30rpx 30rpx;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  color: #fff;
+  font-size: 28rpx;
 }
 </style>

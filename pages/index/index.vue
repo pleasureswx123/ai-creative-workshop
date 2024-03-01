@@ -4,8 +4,8 @@
     <QmHomeBanner></QmHomeBanner>
     <QmAiTypeMenu></QmAiTypeMenu>
     
-    <QmHomeTypeTabs
-        :value.sync="model_subclass_id" />
+    <QTabs :value.sync="model_subclass_id" />
+<!--    <QmHomeTypeTabs :value.sync="model_subclass_id" />-->
     <view style="min-height: 90vh">
     <QmWaterfall
         ref="waterfall"
@@ -58,7 +58,17 @@ import {mapActions} from 'vuex';
 		},
 		methods: {
       ...mapActions('HomeInfo', ['getHomeInfo']),
-      getDetailsInfo({task_id}) {
+      previewImage(src) {
+        uni.previewImage({
+          urls: [src]
+        });
+      },
+      getDetailsInfo(item) {
+        const {task_id, detail_img_url, type} = item || {};
+        if(type === 2) {
+          this.previewImage(detail_img_url);
+          return
+        }
         userApi.getAiDetailsInfo({task_id}).then(resData => {
           this.detailsInfo = resData;
           this.showDetails = true;

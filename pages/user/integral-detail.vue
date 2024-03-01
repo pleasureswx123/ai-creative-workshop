@@ -23,7 +23,7 @@
         <view>{{item.title}}</view>
         <view class="balance">{{item.balance}}</view>
         <view class="desc">{{item.desc}}</view>
-        <view class="btn" @tap="jumpType(item.type)">{{item.btnTxt}}</view>
+        <view v-if="!item.hideBtn" class="btn" @tap="jumpType(item.type)">{{item.btnTxt}}</view>
       </div>
     </div>
     
@@ -63,6 +63,7 @@ export default {
           }
           return {
             ...item,
+            hideBtn: (+item.type) === 1,
             btnTxt: temp[`${item.type}`] || ''
           }
         })

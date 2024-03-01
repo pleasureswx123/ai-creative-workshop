@@ -24,9 +24,9 @@ export default {
   .title {
     flex: 1;
     min-width: 0;
-    color: var(--txt-color1);
+    color: #fff;
     font-size: 28rpx;
-    line-height: 70rpx;
+    line-height: 80rpx;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -1,9 +1,8 @@
 <template>
   <view class="page-container">
     <QmNavTop></QmNavTop>
-    <u-gap height="30rpx"></u-gap>
     <TaskTips />
-    <template v-if="modeId">
+    <view class="page-body" v-if="modeId">
       <QmTabs
           :value.sync="modeId"
           :options="modeClassInfo" />
@@ -12,7 +11,7 @@
           <ModelSelectCard
               @showPopFunc="showModelSelectPop = true"
               :info="currentModeInfo" />
-          <DescriptionTextareaCard
+          <Describe
               title="画面描述词"
               :maxlength="maxlength"
               placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
@@ -25,23 +24,22 @@
               v-if="[1, 2].includes(modeId)"
               @showPopFunc="showLoraPop = true"
               :info.sync="loraInfo" />
-          <ImgStyleCard
-              @showPopFunc="showImgStylePop = true"
-              :info.sync="imgStyleInfo" />
+          <PhotoStyle :value.sync="photoStyleId"></PhotoStyle>
         </view>
         <view>
         <ReferenceImgCard
             @showPopFunc="showHistoryPop = true"
             @setReferenceImgInfo="setReferenceImgInfo"
             :info.sync="referenceImgInfo" />
-        <DescriptionTextareaCard
+        <Describe
             title="负面描述词"
             :maxlength="maxlength"
+            :isShowLanguageBtn="false"
             placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
             :value.sync="badDescription" />
-        <ImgRatioCard
+        <QmRatio
             :value.sync="ratioId"
-            :ratios="ImgRatioInfo" />
+            :list="ImgRatioInfo" />
         </view>
       </view>
     
@@ -70,16 +68,6 @@
           :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
           :show.sync="showLoraPop"
           :currentInfo.sync="loraInfo" />
-      
-      <QmPop
-          v-if="showImgStylePop"
-          :show.sync="showImgStylePop"
-          :currentInfo.sync="imgStyleInfo"
-          title="选择样式"
-          componentName="ImgStyleItem"
-          :paramsInfo="{class_id: modeId}"
-          :getList="getImgStyleList"
-          :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })" />
       
       <QmWaterFallPop
           v-if="showHistoryPop"
@@ -115,7 +103,7 @@
           :modeId="modeId"
           :generateStatus="generateStatus"
           @cb="startGenerate" />
-    </template>
+    </view>
   </view>
 </template>
 
@@ -124,20 +112,17 @@ import {mapState, mapActions, mapMutations} from 'vuex';
 import TaskTips from './components/TaskTips.vue';
 
 import ModelSelectCard from './components/ModelSelect.vue';
-import DescriptionTextareaCard from './components/DescriptionTextarea.vue';
 import ControlNetCard from './components/ControlNet.vue';
 import LoraCard from './components/Lora.vue';
-import ImgStyleCard from './components/ImgStyle.vue';
 import ReferenceImgCard from './components/ReferenceImg.vue';
-import ImgRatioCard from './components/ImgRatio.vue';
 import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
 import ControinetPop from './controinet/controinet.vue'
 
 export default {
   components: { TaskTips, GeneratePhotoBtn,
-    ModelSelectCard, DescriptionTextareaCard, ControlNetCard,
-    LoraCard, ImgStyleCard, ReferenceImgCard, ImgRatioCard,
+    ModelSelectCard, ControlNetCard,
+    LoraCard, ReferenceImgCard,
     ControinetPop, },
   data() {
     return {
@@ -145,7 +130,6 @@ export default {
       showControinetPop: false,
       showModelSelectPop: false,
       showLoraPop: false,
-      showImgStylePop: false,
       showHistoryPop: false,
       maxlength: 1000,
       taskId: '',
@@ -154,7 +138,7 @@ export default {
       description: '',
       controlNetInfo: null,
       loraInfo: null,
-      imgStyleInfo: null,
+      photoStyleId: '',
       referenceImgInfo: null,
       badDescription: '',
       ratioId: 5, // 默认出图比例为 头像
@@ -215,7 +199,7 @@ export default {
           controlnet_weight: this.controlNetInfo?.value || '',
           lora_id: this.loraInfo?.lora_id || '',
           lora_weight: this.loraInfo?.value || '',
-          img_style_id: this.imgStyleInfo?.img_style_id || '',
+          img_style_id: this.photoStyleId || '',
           reference_image: this.referenceImgInfo?.url || '',
           reference_image_weight: this.referenceImgInfo?.value || '',
           negative_prompt: this.badDescription || '',
@@ -283,12 +267,7 @@ export default {
         }
       }
       if (img_style_id) {
-        this.imgStyleInfo = {
-          img_style_id: img_style_id,
-          title: img_style_title,
-          en_title: img_style_content,
-          img_url: img_style_img,
-        }
+        this.photoStyleId = img_style_id;
       }
       if (reference_image) {
         this.referenceImgInfo = {
@@ -315,7 +294,7 @@ export default {
     resetData() {
       this.controlNetInfo = null;
       this.loraInfo = null;
-      this.imgStyleInfo = null;
+      this.img_style_id = '';
       // this.referenceImgInfo = null;
       // this.badDescription = '';
       // this.description = '';
@@ -362,6 +341,9 @@ export default {
   padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
+  .page-body {
+    padding: 0 20rpx;
+  }
 }
 
 
@@ -400,6 +382,7 @@ export default {
   .page-grid-con {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 30rpx;
   }
 }
 </style>

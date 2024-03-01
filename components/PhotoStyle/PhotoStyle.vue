@@ -110,16 +110,17 @@ export default {
 
 <style lang="scss" scoped>
 .photo-style-wrapper {
-  padding: 0 10rpx 10rpx;
+  padding: 0 30rpx 30rpx;
   border-radius: 10rpx;
   background: #25262B;
   box-sizing: border-box;
   border: 2rpx solid #373A40;
-  font-size: 24rpx;
+  font-size: 28rpx;
   margin-bottom: 30rpx;
+  color: #fff;
   .title {
-    height: 60rpx;
-    line-height: 60rpx;
+    height: 80rpx;
+    line-height: 80rpx;
   }
   .photo-style-box {
     display: grid;
@@ -136,7 +137,7 @@ export default {
       border-radius: 10rpx;
       box-sizing: border-box;
       &.active {
-        background: #1971C2;
+        background: var(--red-color1);
         .name {
           font-weight: bold;
         }

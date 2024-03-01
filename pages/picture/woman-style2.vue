@@ -36,7 +36,7 @@ export default {
     },
     params() {
       return {
-        task_type: 20,
+        task_type: this.taskType,
         reference_image: this.sourceImg || ''
       }
     }

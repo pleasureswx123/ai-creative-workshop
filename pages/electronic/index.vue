@@ -36,7 +36,7 @@ export default {
       setting: true,
       directions: [],
       enhanceType: '',
-      photoStyleId: ''
+      photoStyleId: 1
     }
   },
   watch: {

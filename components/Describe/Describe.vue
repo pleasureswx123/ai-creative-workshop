@@ -2,7 +2,7 @@
   <view class="describe-box">
     <view class="describe-hd">
       <view class="title">{{title}}</view>
-      <view v-if="isShowLanguageBtn" class="btn">中英文转换</view>
+<!--      <view v-if="isShowLanguageBtn" class="btn">中英文转换</view>-->
     </view>
     <view class="textarea-container">
       <u--textarea

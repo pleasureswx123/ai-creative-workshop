@@ -1,9 +1,9 @@
 <template>
-  <BoxLayout title="使用ControINet">
+  <BoxLayout title="使用ControINet(可不选)">
     <CardInfo v-if="!!info" @cb="$emit('update:info', null)" :info="info">
       <SliderBox :value.sync="currentValue"></SliderBox>
     </CardInfo>
-    <BtnBox v-else txt="添加控制网" @cb="$emit('showPopFunc')"></BtnBox>
+    <BtnBox v-else txt="人物姿态等高级控制" @cb="$emit('showPopFunc')"></BtnBox>
   </BoxLayout>
 </template>
 
