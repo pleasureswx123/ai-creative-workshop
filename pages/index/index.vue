@@ -58,7 +58,15 @@ import {mapActions} from 'vuex';
 		},
 		methods: {
       ...mapActions('HomeInfo', ['getHomeInfo']),
-      getDetailsInfo({task_id}) {
+      previewImage(src) {
+        uni.previewImage({
+          urls: [src]
+        });
+      },
+      getDetailsInfo(item) {
+        const {task_id, image} = item || {};
+        // this.previewImage(image);
+        // return
         userApi.getAiDetailsInfo({task_id}).then(resData => {
           this.detailsInfo = resData;
           this.showDetails = true;
