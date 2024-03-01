@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 .btn-box {
   color: #fff;
-  background: #23242C;
+  background: var(--red-color2);
   border-radius: 10rpx;
   display: flex;
   align-items: center;

@@ -107,7 +107,7 @@ export default {
   .ratio-box {
     aspect-ratio: 16 / 9;
     padding: 10rpx;
-    border: 10rpx solid #000;
+    border: 4rpx solid #000;
     margin-bottom: 6rpx;
     image {
       border: 4rpx solid #141517;

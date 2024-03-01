@@ -29,7 +29,7 @@ export default {
 <style lang="scss" scoped>
 .slide-container {
   margin-top: 20rpx;
-  background-color: #23242C;
+  background-color: var(--red-color2);
   display: flex;
   height: 160rpx;
   align-items: center;

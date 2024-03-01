@@ -34,7 +34,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 30rpx;
-  background: #23242C;
+  background: var(--red-color2);
   height: 160rpx;
   padding-right: 20rpx;
   border-radius: 20rpx;

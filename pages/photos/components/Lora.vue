@@ -1,9 +1,9 @@
 <template>
-  <BoxLayout title="使用Lora">
+  <BoxLayout title="使用Lora(可不选)">
     <CardInfo v-if="!!info" @cb="$emit('update:info', null)" :info="info">
       <SliderBox :value.sync="currentValue"></SliderBox>
     </CardInfo>
-    <BtnBox v-else txt="添加风格" @cb="$emit('showPopFunc')"></BtnBox>
+    <BtnBox v-else txt="画风和主题控制" @cb="$emit('showPopFunc')"></BtnBox>
   </BoxLayout>
 </template>
 

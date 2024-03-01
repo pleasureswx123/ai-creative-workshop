@@ -1,5 +1,5 @@
 <template>
-  <BoxLayout title="参考图片">
+  <BoxLayout title="参考图片(可不选)">
     <template #HdRight>
       <view class="from-history" @tap="$emit('showPopFunc')">
         <text>创作历史选择</text>

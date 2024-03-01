@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .upload-box {
-  background-color: #23242C;
+  background-color: var(--red-color2);
   color: #fff;
   border-radius: 20rpx;
   padding: 20rpx;
