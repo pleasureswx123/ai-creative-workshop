@@ -178,6 +178,12 @@
 			}
 		},
 		{
+			"path": "pages/picture/text-to-video",
+			"style": {
+				"navigationBarTitleText": "文生视频"
+			}
+		},
+		{
 			"path": "pages/picture/woman-tool",
 			"style": {
 				"navigationBarTitleText": "女神风格"

@@ -1,8 +1,8 @@
 <template>
   <view class="describe-box">
     <view class="describe-hd">
-      <view class="title">画面描述</view>
-      <view class="btn">中英文转换</view>
+      <view class="title">{{title}}</view>
+      <view v-if="isShowLanguageBtn" class="btn">中英文转换</view>
     </view>
     <view class="textarea-container">
       <u--textarea
@@ -22,6 +22,14 @@
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      default: '画面描述'
+    },
+    isShowLanguageBtn: {
+      type: Boolean,
+      default: true
+    },
     value: {
       type: String,
       default: ''
@@ -56,6 +64,8 @@ export default {
   padding: 0 30rpx 30rpx;
   border-radius: 10rpx;
   margin-bottom: 30rpx;
+  color: #fff;
+  font-size: 28rpx;
   .describe-hd {
     display: flex;
     align-items: center;
@@ -63,6 +73,10 @@ export default {
     .title {
       flex: 1;
       min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .btn {
       font-size: 24rpx;
