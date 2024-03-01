@@ -92,72 +92,72 @@
 			}
 		</script>
 		<script type="text/javascript">
-			window.initVideoToCanvas = function (src) {
-				// 创建 video 元素
-				const video = document.createElement('video');
-				// 设置视频源
-				video.src = src;
-				// 设置循环播放
-				video.loop = true;
-				// 设置静音
-				video.muted = true;
-				// 设置 crossOrigin 属性
-				video.crossOrigin = 'anonymous';
-				// 隐藏 video 元素
-				video.style.display = 'none';
-				// 添加到 body 中
-				const canvasVideoBox = document.getElementById('canvasVideoBox');
-				const { width, height } = canvasVideoBox.getBoundingClientRect();
-				canvasVideoBox.appendChild(video);
-				// 创建 canvas 元素
-				const canvas = document.createElement('canvas');
-				// 获取 2D 上下文
-				const ctx = canvas.getContext('2d');
-				// 设置 canvas 大小
-				canvas.width = width;
-				canvas.height = height;
-				// 添加到 body 中
-				canvasVideoBox.appendChild(canvas);
-				// 检测是否可以自动播放
-				let isAutoPlayEnabled = false;
-				function checkAutoPlay() {
-					if (video.paused && (video.currentTime <= 0 || video.currentTime >= video.duration - 1)) {
-						// 视频已准备就绪，但仍处于暂停状态
-						isAutoPlayEnabled = true;
-						// 开始播放视频
-						video.play();
-					}
-				}
-				// 监听视频加载完成事件
-				video.addEventListener('loadeddata', function () {
-					// 检测是否可以自动播放
-					checkAutoPlay();
-				});
-				// 监听页面点击事件
-				document.addEventListener('mousedown', function () {
-					// 如果自动播放未启用，则尝试启用
-					if (!isAutoPlayEnabled) {
-						video.play();
-					}
-				});
-				document.addEventListener('touchstart', function () {
-					// 如果自动播放未启用，则尝试启用
-					if (!isAutoPlayEnabled) {
-						video.play();
-					}
-				});
-				// 渲染视频到 canvas
-				function renderVideo() {
-					// 在每一帧渲染前清空 canvas
-					ctx.clearRect(0, 0, canvas.width, canvas.height);
-					// 绘制视频帧到 canvas
-					ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-					// 请求下一帧渲染
-					requestAnimationFrame(renderVideo);
-				}
-				// 开始渲染视频
-				renderVideo();
-			}
+			// window.initVideoToCanvas = function (src) {
+			// 	// 创建 video 元素
+			// 	const video = document.createElement('video');
+			// 	// 设置视频源
+			// 	video.src = src;
+			// 	// 设置循环播放
+			// 	video.loop = true;
+			// 	// 设置静音
+			// 	video.muted = true;
+			// 	// 设置 crossOrigin 属性
+			// 	video.crossOrigin = 'anonymous';
+			// 	// 隐藏 video 元素
+			// 	video.style.display = 'none';
+			// 	// 添加到 body 中
+			// 	const canvasVideoBox = document.getElementById('canvasVideoBox');
+			// 	const { width, height } = canvasVideoBox.getBoundingClientRect();
+			// 	canvasVideoBox.appendChild(video);
+			// 	// 创建 canvas 元素
+			// 	const canvas = document.createElement('canvas');
+			// 	// 获取 2D 上下文
+			// 	const ctx = canvas.getContext('2d');
+			// 	// 设置 canvas 大小
+			// 	canvas.width = width;
+			// 	canvas.height = height;
+			// 	// 添加到 body 中
+			// 	canvasVideoBox.appendChild(canvas);
+			// 	// 检测是否可以自动播放
+			// 	let isAutoPlayEnabled = false;
+			// 	function checkAutoPlay() {
+			// 		if (video.paused && (video.currentTime <= 0 || video.currentTime >= video.duration - 1)) {
+			// 			// 视频已准备就绪，但仍处于暂停状态
+			// 			isAutoPlayEnabled = true;
+			// 			// 开始播放视频
+			// 			video.play();
+			// 		}
+			// 	}
+			// 	// 监听视频加载完成事件
+			// 	video.addEventListener('loadeddata', function () {
+			// 		// 检测是否可以自动播放
+			// 		checkAutoPlay();
+			// 	});
+			// 	// 监听页面点击事件
+			// 	document.addEventListener('mousedown', function () {
+			// 		// 如果自动播放未启用，则尝试启用
+			// 		if (!isAutoPlayEnabled) {
+			// 			video.play();
+			// 		}
+			// 	});
+			// 	// document.addEventListener('touchstart', function () {
+			// 	// 	// 如果自动播放未启用，则尝试启用
+			// 	// 	if (!isAutoPlayEnabled) {
+			// 	// 		video.play();
+			// 	// 	}
+			// 	// });
+			// 	// 渲染视频到 canvas
+			// 	function renderVideo() {
+			// 		// 在每一帧渲染前清空 canvas
+			// 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+			// 		// 绘制视频帧到 canvas
+			// 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+			// 		// 请求下一帧渲染
+			// 		requestAnimationFrame(renderVideo);
+			// 	}
+			// 	// 开始渲染视频
+			// 	renderVideo();
+			// }
 		</script>
 	</body>
 </html>

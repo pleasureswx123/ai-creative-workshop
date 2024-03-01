@@ -14,7 +14,10 @@ const actions = {
   getHomeInfo({dispatch, commit}, params = {}) {
     return homeApi.getHomeInfo(params).then(res => {
       const {channel, banner, huodong} = res || {};
-      commit('setAiTypeList', [Object.assign({}, huodong || {}, {highlight: true}), ...(channel || [])]);
+      commit('setAiTypeList', [
+        ...(huodong ? [Object.assign({}, huodong, {highlight: true})] : []),
+        ...(channel || [])
+      ]);
       commit('setBannerInfo', banner || {});
       return Promise.resolve(res);
     })
