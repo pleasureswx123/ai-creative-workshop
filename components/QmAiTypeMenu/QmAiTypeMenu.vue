@@ -2,6 +2,7 @@
   <view class="aiType">
     <view
         class="item-box"
+        :class="{highlight: !!item.highlight}"
         v-for="item in aiTypeList"
         :data-id="item.id"
         :key="item.id"
@@ -11,7 +12,6 @@
         <view class="con">{{item.content}}</view>
       </view>
       <uni-icons custom-prefix="iconfont-qm" :type="getIconName(item.id)" color="#77787B" size="30" />
-<!--      <image v-if="item.img" class="icon-img" :src="item.img" mode="aspectFit" />-->
       <view class="stay" v-if="[7,8,9, 10].includes(+item.id)">敬请期待</view>
     </view>
   </view>
@@ -68,6 +68,11 @@ export default {
           iconName: 'icon-qm-GgDigitalocean',
           url: 'pages/special/digital-humans'
         },
+        11: {
+          iconName: 'icon-qm-woman',
+          url: 'pages/picture/woman-tool',
+          
+        },
       };
       return temp[id] || {};
     },
@@ -98,6 +103,12 @@ export default {
     border-radius: 10rpx;
     position: relative;
     cursor: pointer;
+    &.highlight {
+      background-color: var(--red-color1);
+      .iconfont-qm {
+        color: #fff!important;
+      }
+    }
     .item-con {
       flex: 1;
       min-width: 0;
@@ -111,16 +122,12 @@ export default {
         font-size: 26rpx;
       }
     }
-    .icon-img {
-      width: 48rpx;
-      height: 48rpx;
-    }
   }
   .stay{
     position: absolute;
     right: 0;
     top: 0;
-    background-color: rgba(246, 6, 82, 1);
+    background-color: var(--red-color1);
     color:rgba(255, 255, 255, .9);
     text-align: center;
     width: 136rpx;

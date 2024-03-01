@@ -215,6 +215,6 @@ $show-lines: 1;
   //  box-sizing: border-box;
   //  border: 2rpx solid red;
   //}
-  outline: 1px solid red;
+  outline: 1px solid var(--red-color1);
 }
 </style>

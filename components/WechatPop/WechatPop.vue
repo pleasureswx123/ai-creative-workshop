@@ -11,7 +11,7 @@
           <uni-icons custom-prefix="iconfont-qm" type="icon-qm-wechatfill" color="#fff" size="50" />
         </view>
         <view class="title">请打开微信扫码支付</view>
-        <view class="sub-title">正在购买：{{info.title}}-{{info.num}}个月</view>
+        <view class="sub-title">正在购买：{{goodsTitle}}</view>
         <view class="pay-price">
           支付金额： <text>{{info.total_fee}}</text>元
         </view>
@@ -40,6 +40,10 @@ export default {
       type: Boolean,
       default: false
     },
+    type: {
+      type: String,
+      default: '' // vip goods
+    },
     info: {
       type: Object,
       default: () => {
@@ -53,6 +57,11 @@ export default {
     }
   },
   computed: {
+    goodsTitle() {
+      const {title, num} = this.info || {};
+      const monthStr = this.type === 'vip' ? `-${num}个月` : '';
+      return `${title}${monthStr}`
+    },
     showPay() {
       return !!this.popMode && !!this.show && !!this.info
     },

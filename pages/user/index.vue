@@ -85,7 +85,7 @@ export default {
     color: rgba(255,255,255,.9);
     box-sizing: border-box;
     .value {
-      color: #F60652;
+      color: var(--red-color1);
     }
   }
 }

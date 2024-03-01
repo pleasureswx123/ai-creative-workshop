@@ -4,6 +4,7 @@
       <u-tabs :current="currentValue" :list="list" @change="handleChange"
               lineWidth="60rpx"
               lineHeight="8rpx"
+              lineColor="var(--red-color1)"
               :activeStyle="{ color: '#303133', fontSize: '30rpx', fontWeight: 'bold' }"
               :inactiveStyle="{ color: '#606266', fontSize: '30rpx' }"
       ></u-tabs>

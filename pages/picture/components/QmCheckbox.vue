@@ -86,7 +86,7 @@ export default {
   font-size: 28rpx;
   gap: 10rpx;
   &.active {
-    background: var(--bg-color1);
+    background: var(--red-color1);
     color: var(--txt-color1);
   }
 }

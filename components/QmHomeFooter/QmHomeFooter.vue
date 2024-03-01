@@ -79,7 +79,7 @@ export default {
   }
   
   .primaryColor {
-    color: #F60652;
+    color: var(--red-color1);
   }
   
   text {

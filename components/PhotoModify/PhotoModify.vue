@@ -37,10 +37,10 @@ export default {
   },
   methods: {
     undo() {
-      this.$refs.photoCanvas.undo();
+      this.$refs?.photoCanvas?.undo?.();
     },
     reset() {
-      this.$refs.photoCanvas.reset();
+      this.$refs?.photoCanvas?.reset?.();
     },
     eraser() {
     

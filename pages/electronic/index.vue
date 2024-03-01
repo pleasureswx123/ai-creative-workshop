@@ -30,7 +30,7 @@ export default {
         {name: '商业出图', value: 1},
         {name: '人物修图', value: 2},
       ],
-      description: 'description',
+      description: '',
       pages: 1,
       loading: false,
       setting: true,

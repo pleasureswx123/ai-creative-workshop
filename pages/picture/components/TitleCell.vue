@@ -87,7 +87,7 @@ export default {
     color: var(--txt-color1);
     /deep/ em {
       font-style: normal;
-      color: red;
+      color: var(--red-color1);
       font-weight: bold;
     }
   }

@@ -49,8 +49,7 @@ export default {
     color: var(--txt-color2);
     font-size: 28rpx;
     &.active {
-      border-color: red;
-      //background: var(--bg-color1);
+      border-color: var(--red-color1);
       color: var(--txt-color1);
     }
   }

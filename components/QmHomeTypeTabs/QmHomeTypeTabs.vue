@@ -3,7 +3,7 @@
       :list="feedsTabs"
       @change="change"
       :activeStyle="{
-            color: '#F60652',
+            color: 'var(--red-color1)',
             fontWeight: 'bold',
             transform: 'scale(1.05)',
             fontSize:'28rpx'

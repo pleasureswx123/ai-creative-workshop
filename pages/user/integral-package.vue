@@ -53,6 +53,7 @@ export default {
     },
   },
   onShow() {
+    this.bindWechatAuth();
     this.setGoodsList();
     this.getGoodsList({type: 'goods'}).then((res) => {
       const temp = (this.list || []).find(item => +item.is_default === 1);

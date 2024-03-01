@@ -68,7 +68,7 @@ export default {
     }
   }
   .btn-box {
-    background: var(--bg-color3);
+    background: var(--red-color1);
     color: var(--txt-color4);
     font-size: 24rpx;
     line-height: 1;

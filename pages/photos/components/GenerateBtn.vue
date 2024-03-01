@@ -68,7 +68,7 @@ export default {
       padding: 0 20rpx;
       flex: 1;
       min-width: 0;
-      background-color: #ff0000;
+      background-color: var(--red-color1);
       position: relative;
       display: flex;
       align-items: center;

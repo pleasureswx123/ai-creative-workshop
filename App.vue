@@ -31,13 +31,13 @@
       this.globalData.siteroot = siteinfo.host + '/web.php';
       const system = uni.getSystemInfoSync().system.toLowerCase();
       this.globalData.system = ~system.indexOf('android') ? 'android' : (~system.indexOf('ios') ? 'ios' : (~system.indexOf('macos') ? 'macos' : (~system.indexOf('windows') ? 'windows' : 'other')));
-      const search = window.location.search;
-      if (search && ~search.indexOf('?')) {
-        let sitecode = '', len = search.length;
-        (len === 5) && (sitecode = search.substr(1, 4));
-        (len > 5 && ['&', '#', '=', '/'].includes(search.charAt(5))) && (sitecode = search.substr(1, 4));
-        sitecode && uni.setStorageSync('sitecode', sitecode);
-      }
+      // const search = window.location.search;
+      // if (search && ~search.indexOf('?')) {
+      //   let sitecode = '', len = search.length;
+      //   (len === 5) && (sitecode = search.substr(1, 4));
+      //   (len > 5 && ['&', '#', '=', '/'].includes(search.charAt(5))) && (sitecode = search.substr(1, 4));
+      //   sitecode && uni.setStorageSync('sitecode', sitecode);
+      // }
       // 初始化微信jssdk
       util.request({url: '/h5/getShareInfo', data: {url: window.location.href}}).then((res) => {
         const { jssdk_config: jssdkConfig, tabbar, page_title, login_phone, login_wechat,

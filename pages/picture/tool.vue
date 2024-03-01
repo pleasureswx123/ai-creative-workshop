@@ -5,11 +5,12 @@
     <view class="page-main">
       <PicHeader title="选择图片工具" />
       <view class="grid-box">
-        <view class="card-box pointer" v-for="(item, index) in toolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
+        <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
           <view class="img-box">
-            <image :src="item.url"></image>
+            <image :src="item.url" mode="aspectFill"></image>
           </view>
           <view class="title">{{item.title}}</view>
+          <view class="go-btn">前往创作</view>
         </view>
       </view>
     </view>
@@ -57,16 +58,20 @@ export default {
   gap: 40rpx;
   margin-top: 30rpx;
   .card-box {
+    cursor: pointer;
+    padding: 10rpx;
     min-width: 0;
     border-radius: 20rpx;
-    background-color: var(--bg-color2);
     overflow: hidden;
     box-shadow: 0 0 20rpx rgba(0,0,0,.1);
+    background: #25262B;
+    box-sizing: border-box;
+    border: 2rpx solid #373A40;
     .title {
       font-size: 24rpx;
       color: var(--txt-color1);
       text-align: center;
-      line-height: 80rpx;
+      line-height: 70rpx;
     }
   }
   .img-box {
@@ -76,6 +81,16 @@ export default {
       width: 100%;
       height: 100%;
     }
+  }
+  .go-btn {
+    height: 70rpx;
+    line-height: 70rpx;
+    text-align: center;
+    color: #fff;
+    border-radius: 10rpx;
+    background: var(--red-color1);
+    font-weight: bold;
+    font-size: 28rpx;
   }
 }
 

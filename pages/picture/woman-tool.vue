@@ -3,17 +3,15 @@
   <view class="page-container">
     <QmNavTop></QmNavTop>
     <view class="page-main">
-      <PicHeader title="选择视频工具" />
+      <PicHeader title="选择女神风格" />
       <view class="grid-box">
-        <view class="card-box pointer" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
+        <view class="card-box" v-for="(item, index) in toolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
           <view class="img-box">
-            <image model="aspectFill" :src="item.url"></image>
+            <image :src="item.url" mode="aspectFill"></image>
           </view>
-          <view class="card-info">
-            <view class="title">{{item.title}}</view>
-            <view class="tips" v-if="item.tips">{{item.tips}}</view>
-            <view class="go-btn">前往创作</view>
-          </view>
+          <view class="title">{{item.title}}</view>
+          <view class="tips">{{item.tips}}</view>
+          <view class="go-btn">前往创作</view>
         </view>
       </view>
     </view>
@@ -26,16 +24,16 @@ import PicHeader from './components/PicHeader.vue';
 
 export default {
   computed: {
-    ...mapState('PictureInfo', ['videoToolsList']),
+    ...mapState('PictureInfo', ['toolsList']),
   },
   components: { PicHeader },
   onShow() {
-    this.getVideoToolsList({page:1, pagesize: 20, class_id: 2});
+    this.getToolsList({page:1, pagesize: 20, class_id: 4});
   },
   methods: {
-    ...mapActions('PictureInfo', ['getVideoToolsList']),
+    ...mapActions('PictureInfo', ['getToolsList']),
     handleClick(item) {
-      const {type, id} = item || {};
+      const {type, id} = item || {}
       uni.$u.route({
         url: `pages/picture/${type}`,
         params: {
@@ -58,21 +56,18 @@ export default {
 .grid-box {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
+  gap: 40rpx;
   margin-top: 30rpx;
   .card-box {
     cursor: pointer;
+    padding: 10rpx;
     min-width: 0;
     border-radius: 20rpx;
     overflow: hidden;
     box-shadow: 0 0 20rpx rgba(0,0,0,.1);
-    padding: 10rpx;
     background: #25262B;
     box-sizing: border-box;
     border: 2rpx solid #373A40;
-    //display: flex;
-    //align-items: center;
-    gap: 20rpx;
     .title {
       font-size: 24rpx;
       color: var(--txt-color1);
@@ -80,17 +75,14 @@ export default {
       line-height: 70rpx;
     }
     .tips {
+      flex: 1;
+      min-height: 0;
       font-size: 20rpx;
       color: var(--txt-color1);
       text-align: center;
       line-height: 1.5;
       padding: 0 0 15rpx;
     }
-  }
-  .card-info {
-    flex: 1;
-    min-width: 0;
-    //padding-right: 10rpx;
   }
   .img-box {
     aspect-ratio: 4 / 3;

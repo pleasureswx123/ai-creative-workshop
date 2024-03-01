@@ -178,6 +178,42 @@
 			}
 		},
 		{
+			"path": "pages/picture/text-to-video",
+			"style": {
+				"navigationBarTitleText": "文生视频"
+			}
+		},
+		{
+			"path": "pages/picture/woman-tool",
+			"style": {
+				"navigationBarTitleText": "女神风格"
+			}
+		},
+		{
+			"path": "pages/picture/woman-style1",
+			"style": {
+				"navigationBarTitleText": "风格1"
+			}
+		},
+		{
+			"path": "pages/picture/woman-style2",
+			"style": {
+				"navigationBarTitleText": "风格2"
+			}
+		},
+		{
+			"path": "pages/picture/woman-style3",
+			"style": {
+				"navigationBarTitleText": "风格3"
+			}
+		},
+		{
+			"path": "pages/picture/woman-style4",
+			"style": {
+				"navigationBarTitleText": "风格4"
+			}
+		},
+		{
 			"path": "pages/picture/tool",
 			"style": {
 				"navigationBarTitleText": "图片处理"

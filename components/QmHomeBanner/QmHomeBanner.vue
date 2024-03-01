@@ -1,25 +1,8 @@
 <template>
   <view class="banner-cont">
     <view class="banner">
-      <view class="bannerBg">
-        <video
-            id="myVideo"
-            @loadedmetadata="loadedmetadata"
-            :src="bannerInfo.url"
-            :autoplay="false"
-            :loop="true"
-            :controls="false"
-            :muted="true"
-            :show-center-play-btn="false"
-            object-fit="cover"
-            x5-playsinline="true"
-            playsinline="true"
-            webkit-playsinline="true"
-            x-webkit-airplay="true"
-            x5-video-player-type="h5"
-            x5-video-player-fullscreen=""
-            x5-video-orientation="portraint" />
-      </view>
+      <image class="img" v-if="bannerInfo.url_type === 'image'" src="bannerInfo.url" mode="aspectFill"></image>
+      <QmVideo v-if="bannerInfo.url_type === 'video'" :src="bannerInfo.url"></QmVideo>
       <view class="bannerText">
         <text class="eng">{{bannerInfo.slogan_en}}</text>
         <view>
@@ -34,22 +17,9 @@
 import {mapState} from 'vuex';
 
 export default {
-  data() {
-    return {
-      videoContext: null
-    }
-  },
-  created() {
-    this.videoContext = uni.createVideoContext('myVideo', this);
-  },
   computed: {
     ...mapState('HomeInfo', ['bannerInfo']),
   },
-  methods: {
-    loadedmetadata() {
-      this.videoContext.play()
-    },
-  }
 }
 </script>
 
@@ -65,19 +35,20 @@ export default {
     width: 100%;
     overflow: hidden;
     position: relative;
-    .bannerBg {
+    .img {
       width: 100%;
-      height: 100% !important;
+      height: 100%;
+      display: block;
+    }
+    .bannerText {
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 1;
-    }
-    
-    .bannerText {
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
       color: #fff;
-      position: relative;
-      z-index: 2;
       box-sizing: border-box;
       padding: 60rpx 0 0 30rpx;
       

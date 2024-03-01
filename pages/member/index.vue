@@ -40,6 +40,7 @@ export default {
     }
   },
   onShow() {
+    this.bindWechatAuth();
     this.getGoodsType();
     this.getCommonProblem();
   },

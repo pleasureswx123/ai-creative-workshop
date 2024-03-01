@@ -144,6 +144,13 @@ export default {
       }
     })
   },
+  authAndBindWechat(params = {}) {
+    return uni.$u.http.post(`/User/authAndBindWechat`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   votePrompt(params = {}) {
     return uni.$u.http.post(`/write/votePrompt`, params, {
       custom: {
