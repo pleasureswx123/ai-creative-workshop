@@ -40,6 +40,10 @@ export default {
     border-left: none;
     font-size: 28rpx;
     cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     &:first-child {
       border-left: 2rpx solid #606060;
       border-radius: 70rpx 0 0 70rpx;
