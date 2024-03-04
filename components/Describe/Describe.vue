@@ -123,6 +123,7 @@ export default {
       color: var(--txt-color2)!important;
     }
     .uni-textarea-wrapper {
+      min-height: 100%!important;
       color: var(--txt-color1)!important;
     }
     .u-textarea__count {
