@@ -6,7 +6,7 @@
 			<text>（预估5-10分钟完成）</text>
 			<view class="videoPop">
 				<view class="finishTit">{{status}}</view>
-				<text>当前状态可返回，不会数据丢失，视频生成后可在<br>"AI视频"->"我的作品"处查看</text>
+				<text>当前状态可返回，不会数据丢失，视频生成后可在<br>"AI视频"->"我的创作"处查看</text>
 				<view class="btn-bar">
 					<view class="btn back" @tap="back">返回</view>
 					<view class="btn next" @tap="goBack">我的创作</view>
@@ -26,6 +26,14 @@
 		},
 		mounted() {
 			this.getName()
+			let timer = setInterval(() => {
+			    setTimeout(this.getName, 0)
+			}, 10000);
+		},
+		beforeDestroy() {
+			this.$once('hook:beforeDestroy', () => {
+			    clearInterval(timer);
+			});
 		},
 		methods: {
 			back(){
@@ -71,7 +79,9 @@
 						})
 					}
 					if(res.is_automatic == 2 && state == 2){
-						//跳转到编辑
+						uni.navigateTo({
+							url: './config'
+						})
 					}
 				}).catch(() => {
 					this.status = '任务失败'

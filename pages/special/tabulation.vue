@@ -4,13 +4,13 @@
 		<view class="tips">内容由AI生成，仅供参考，作品和素材系统会默认为您云端保存30天，请在30天内下载保存到您本地哦，30天后系统会自动清空，清空后不可找回。</view>
 		<view class="list">
 			<view class="videoPop" v-for="(item,index) in lationList" :key="index">
-				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3">{{item.state_info}}</view>
+				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3||item.state == 101" @tap="edit(item.state,item.is_automatic)">{{item.state_info}}</view>
 				<view class="video" v-if="item.state == 4">
 					<video id="myVideo" :src="item.video_url" object-fit="contain" :poster="item.cover_img_url" :controls="true"></video>
 				</view>
 				<view class="info">
 					<view class="title">{{item.title}}</view>
-					<i class="iconfont icon-shanchu" v-if="item.state == 4" @tap="del(index)"></i>
+					<i class="iconfont icon-shanchu" v-if="item.state == 4" @tap="deleteData(index,item.task_id)"></i>
 				</view>
 			</view>
 		</view>
@@ -33,6 +33,9 @@
 		},
 		mounted() {
 			this.myTaskList()
+			let timer = setInterval(() => {
+			    setTimeout(this.myTaskList(), 0)
+			}, 10000);
 		},
 		methods: {
 			myTaskList(){
@@ -49,7 +52,6 @@
 					sign:"52d89ffef49b65edaf5d232104d42fac",
 					timestamp:"1545454552"
 				}).then(res => {
-					this.current_page = res.total_page
 					if (res && res.list.length) {
 						  this.lationList = [...this.lationList,...res.list]
 						  if (res.list.length < this.pagesize) {
@@ -60,10 +62,39 @@
 					}
 				})
 			},
-			del(index){
+			 deleteData(index,task_id){
 				this.lationList.splice(index, 1);
-				console.log(this.lationList)
+				let user_id = JSON.parse(uni.getStorageSync('user_id'))
+				NovelApi.delTask({
+					data:{
+						user_id:user_id,
+						task_id:task_id
+					},
+					no_sign: 1,
+					sourceCode:"100001",
+					sign:"52d89ffef49b65edaf5d232104d42fac",
+					timestamp:"1545454552"
+				}).then(res => {
+					if (res && res.list.length) {
+						  this.lationList = [...this.lationList,...this.lationList]
+						  if (res.list.length < this.pagesize) {
+							this.noMore = true
+						  }
+					} else {
+					  this.noMore = false
+					}
+				})
+			},
+			edit(state,is_automatic){
+				if(state==2&&is_automatic==2){
+					uni.navigateTo({
+						url: './config'
+					})
+				}
 			}
+		},
+		beforeDestroy() {
+			clearInterval(timer);
 		},
 		onReachBottom() {
 			this.page+=1
@@ -161,6 +192,7 @@
 	  }
 	  .icon-shanchu{
 		  font-size: 40rpx;
+		  cursor: pointer;
 	  }
   }
   /deep/.uni-video-cover-play-button{

@@ -69,4 +69,25 @@ export default {
       }
     })
   },
+  updateTaskState(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/UpdateTaskState`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getGeneration(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/GetGeneration`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  delTask(params = {}) {
+    return uni.$u.http.post(`/pc.php/VideoTask/delTask`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

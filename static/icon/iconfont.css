@@ -108,6 +108,11 @@
   content: "\e625";
 }
 
+.icon-AI:before {
+  content: "\e697";
+  font-size: 30px;
+}
+
 .icon-a-hecheng2:before {
   content: "\e789";
 }
@@ -122,4 +127,7 @@
 }
 .icon-shanchu:before {
   content: "\e8c1";
+}
+.icon-guanbi:before {
+  content: "\e7be";
 }

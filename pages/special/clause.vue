@@ -72,25 +72,31 @@
 				row.text_split = this.clauseList.map(item=>{
 					return item.name
 				})
-				if (data == '自动生成模式') {
-					NovelApi.createTask({
-						data:row,
-						no_sign: 1,
-						sourceCode:"100001",
-						sign:"52d89ffef49b65edaf5d232104d42fac",
-						timestamp:"1545454552"
-					}).then(res => {
-						uni.setStorageSync('task',JSON.stringify(res.task_id))
+				if (data == '自动生成模式'){
+					row.is_automatic = 1
+				}
+				if (data == '手动生成模式'){
+					row.is_automatic = 2
+				}
+				NovelApi.createTask({
+					data:row,
+					no_sign: 1,
+					sourceCode:"100001",
+					sign:"52d89ffef49b65edaf5d232104d42fac",
+					timestamp:"1545454552"
+				}).then(res => {
+					uni.setStorageSync('task',JSON.stringify(res.task_id))
+					if (data == '自动生成模式'){
 						uni.navigateTo({
 							url: './finish'
 						})
-					})
-				}
-				if (data == '手动生成模式') {
-					uni.navigateTo({
-						url: './storyboard'
-					})
-				}
+					}
+					if (data == '手动生成模式'){
+						uni.navigateTo({
+							url: './storyboard'
+						})
+					}
+				})
 			}
 		},
 	}

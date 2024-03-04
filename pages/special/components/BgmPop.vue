@@ -28,12 +28,12 @@ export default {
 				id:1,
 				url:'./music'
 			},
-			{
-				title:'音乐素材库',
-				account:'iconfont icon-jia',
-				id:2,
-				url: './Material'
-			},
+			// {
+			// 	title:'音乐素材库',
+			// 	account:'iconfont icon-jia',
+			// 	id:2,
+			// 	url: './Material'
+			// },
 			{
 				title:'不需要',
 				id:3,

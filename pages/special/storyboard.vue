@@ -5,7 +5,7 @@
 		<view class="finish">
 			<view class="time">（预估10-15分钟完成）</view>
 			<view class="videoPop">
-				<view class="finishTit">AI分镜中</view>
+				<view class="finishTit">{{status}}</view>
 				<u-steps current="1" activeColor="#3c9cff">
 					<u-steps-item v-for="(item,index) in stepList" :title="item.title" :desc="item.desc" :account="item.account">
 						<text :class="item.activeIcon" slot="icon"></text>
@@ -16,7 +16,7 @@
 				</view>
 				<view class="btn-bar">
 					<view class="btn back" @tap="back">返回</view>
-					<view class="btn next" @tap="next">草稿箱</view>
+					<view class="btn next" @tap="next">我的创作</view>
 				</view>
 			</view>
 		</view>
@@ -24,9 +24,11 @@
 </template>
 
 <script>
+	import {NovelApi} from '@/api'
 	export default {
 		data() {
 			return {
+				status:'',
 				stepList:[
 					{
 						title:'AI分镜中',
@@ -49,6 +51,9 @@
 				]
 			}
 		},
+		mounted() {
+			this.getName()
+		},
 		methods: {
 			back(){
 				uni.navigateTo({
@@ -57,7 +62,48 @@
 			},
 			next(){
 				uni.navigateTo({
-				   url: './config'
+				   url: './tabulation'
+				})
+			},
+			getName(){
+				let row = JSON.parse(uni.getStorageSync('task'))
+				NovelApi.getTaskInfo({
+					data:{
+						task_id:row
+					},
+					no_sign: 1,
+					sourceCode:"100001",
+					sign:"52d89ffef49b65edaf5d232104d42fac",
+					timestamp:"1545454552"
+				}).then(res => {
+					const state = res.state
+					if(state == 0 || state == 1){
+						this.status = '分镜处理中'
+					}
+					if(state == 2){
+						this.status = '分镜已完成'
+					}
+					if(state == 3){
+						this.status = '视频合成中'
+					}
+					if(state == 4){
+						this.status = '完成'
+					}
+					if(state == 100){
+						this.status = '任务失败'
+					}
+					if(state == 4){
+						uni.navigateTo({
+							url: './tabulation'
+						})
+					}
+					if(res.is_automatic == 2 && state == 2){
+						uni.navigateTo({
+							url: './config'
+						})
+					}
+				}).catch(() => {
+					this.status = '任务失败'
 				})
 			}
 		},
