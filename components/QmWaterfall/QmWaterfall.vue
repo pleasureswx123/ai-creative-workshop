@@ -103,12 +103,12 @@ export default {
   },
   mounted() {
     // #ifdef H5
-    window.addEventListener('resize', this.restData)
+    // window.addEventListener('resize', this.restData)
     // #endif
   },
   beforeDestroy() {
     // #ifdef H5
-    window.removeEventListener('resize', this.restData);
+    // window.removeEventListener('resize', this.restData);
     // #endif
     this.$refs?.waterfall?.clear?.();
   },
@@ -148,6 +148,9 @@ export default {
       this.waterfall[e.name].push(e.value);
     },
     loadMore() {
+      if(this.showNoMore) {
+        return;
+      }
       this.page++;
       this.getData();
     },

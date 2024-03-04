@@ -2,10 +2,12 @@
   <view class="page-container">
     <QmNavTop></QmNavTop>
     <MemberInfo></MemberInfo>
-<!--    <MemberVipDesc></MemberVipDesc>
-    <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
-    <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
-    <view class="btn-box" @tap="handleUpgrader">{{btnTxt}}</view>-->
+    <template v-if="$getModuleStatus().pay">
+      <MemberVipDesc></MemberVipDesc>
+      <OrderGoodsList :value.sync="goodsId" :list="goodsList"></OrderGoodsList>
+      <OrderGoodsType :type.sync="typeNum" :list="goodsType"></OrderGoodsType>
+      <view class="btn-box" @tap="handleUpgrader">{{ btnTxt }}</view>
+    </template>
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>
     <UpgradePop :value.sync="showUpgradePop" :info="orderInfo" :goodsId="goodsId"></UpgradePop>
   </view>

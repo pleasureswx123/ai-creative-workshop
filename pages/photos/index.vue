@@ -28,6 +28,7 @@
         </view>
         <view>
         <ReferenceImgCard
+            v-if="[1, 2].includes(modeId)"
             @showPopFunc="showHistoryPop = true"
             @setReferenceImgInfo="setReferenceImgInfo"
             :info.sync="referenceImgInfo" />

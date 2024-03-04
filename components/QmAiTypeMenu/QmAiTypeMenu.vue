@@ -6,13 +6,13 @@
         v-for="item in aiTypeList"
         :data-id="item.id"
         :key="item.id"
-        @tap="handleJump(item.id)">
+        @tap="handleJump(item)">
       <view class="item-con">
         <view class="title">{{item.title}}</view>
         <view class="con">{{item.content}}</view>
       </view>
-      <uni-icons custom-prefix="iconfont-qm" :type="getIconName(item.id)" color="#77787B" size="30" />
-      <view class="stay" v-if="[7,8,9, 10].includes(+item.id)">敬请期待</view>
+      <uni-icons v-if="aiTypeListInfo[item.id] && aiTypeListInfo[item.id].iconName" custom-prefix="iconfont-qm" :type="aiTypeListInfo[item.id].iconName" color="#77787B" size="30" />
+      <view class="stay" v-if="!!item.is_expectation">敬请期待</view>
     </view>
   </view>
 </template>
@@ -23,10 +23,8 @@ import {mapState} from 'vuex';
 export default {
   computed: {
     ...mapState('HomeInfo', ['aiTypeList']),
-  },
-  methods: {
-    getInfo(id) {
-      const temp = {
+    aiTypeListInfo() {
+      return {
         1: {
           // iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
           iconName: 'icon-qm-chat',
@@ -54,35 +52,41 @@ export default {
         },
         7: {
           iconName: 'icon-qm-MaterialSymbolsMenuBook',
-          url: 'pages/special/novel'
+          url: 'pages/special/novel',
+          expectationUrl: 'pages/special/novel'
         },
         8: {
           iconName: 'icon-qm-MaterialSymbolsPhotoLibraryRounded',
-          url: 'pages/special/make-diagram'
+          url: 'pages/electronic/index',
+          expectationUrl: 'pages/special/make-diagram',
         },
         9: {
           iconName: 'icon-qm-IcRoundModelTraining',
-          url: 'pages/special/train-model'
+          url: 'pages/special/train-model',
+          expectationUrl: 'pages/special/train-model',
         },
         10: {
           iconName: 'icon-qm-GgDigitalocean',
-          url: 'pages/special/digital-humans'
+          url: 'pages/special/digital-humans',
+          expectationUrl: 'pages/special/digital-humans',
         },
         11: {
           iconName: 'icon-qm-woman',
           url: 'pages/picture/woman-tool',
-          
+          expectationUrl: 'pages/picture/woman-tool',
         },
-      };
-      return temp[id] || {};
-    },
-    getIconName(id) {
-      const { iconName } = this.getInfo(id);
-      return iconName || ''
-    },
-    handleJump(id) {
-      const { url } = this.getInfo(id);
-      url && uni.$u.route({url});
+      }
+    }
+  },
+  methods: {
+    handleJump(item) {
+      const {id, is_expectation} = item || {};
+      const {url, expectationUrl} = this.aiTypeListInfo[`${id}`] || {};
+      let path = url;
+      if(!!is_expectation) {
+        path = expectationUrl;
+      }
+      path && uni.$u.route({url: path});
     },
   }
 }

@@ -63,7 +63,7 @@ export default {
           }
           return {
             ...item,
-            hideBtn: (+item.type) === 1,
+            hideBtn: (+item.type) === 1 && !this.$getModuleStatus().pay,
             btnTxt: temp[`${item.type}`] || ''
           }
         })
