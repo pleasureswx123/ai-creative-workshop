@@ -66,6 +66,7 @@ export default {
       
       .cn {
         font-size: 60rpx;
+        text-shadow: 0 0 20rpx rgba(0,0,0,.8);
       }
       
       .cnmain {
