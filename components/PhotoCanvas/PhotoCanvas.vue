@@ -4,10 +4,11 @@
       <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
     </view>
     <view class="photo-canvas-inner" id="photoCanvasBox">
-      <view class="photo-content" :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}">
+      <view v-if="imgCanvasInfo" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
         <img :src="imgSrc" />
         <canvas
-            :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}"
+            :disable-scroll="disableScrollStatus"
+            :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}"
             class="canvas"
             ref="myCanvas"
             canvas-id="myCanvas"
@@ -62,11 +63,27 @@ export default {
     }
   },
   mounted() {
+    const {width, height} = document.getElementById('photoCanvasBox').getBoundingClientRect();
+    const {width: imgWidth, height: imgHeight} = this.imgInfo;
+    if(imgWidth > width) {
+      const wd = width;
+      this.imgCanvasInfo = {
+        width: wd,
+        height: imgHeight / imgWidth * wd
+      }
+    } else {
+      this.imgCanvasInfo = {
+        width: imgWidth,
+        height: imgHeight
+      }
+    }
     this.createCanvas();
     this.reset();
   },
   data() {
     return {
+      imgCanvasInfo: null,
+      disableScrollStatus: false,
       ctx: null,
       isDrawing: false,
       // globalAlpha: '.5',
@@ -85,6 +102,8 @@ export default {
   },
   methods: {
     disableScroll(status) {
+      this.disableScrollStatus = status;
+      return
       const dom = document.getElementById('photoCanvasBox');
       if(status) {
         this.toggleBodyPositionStatus(true);
@@ -101,7 +120,7 @@ export default {
       // this.ctx.globalAlpha = this.globalAlpha;
     },
     initCanvas() {
-      const {width, height} = this.imgInfo || {};
+      const {width, height} = this.imgCanvasInfo || {};
       this.ctx.clearRect(0, 0, width, height);
       this.ctx.fillStyle = 'transparent';
       this.ctx.fillRect(0, 0, width, height);
@@ -162,8 +181,8 @@ export default {
           canvasId: 'myCanvas',
           x: 0,
           y: 0,
-          width: this.imgInfo.width,
-          height: this.imgInfo.height,
+          width: this.imgCanvasInfo.width,
+          height: this.imgCanvasInfo.height,
           success: res => {
             cb && cb(res.data);
             console.log('set history', this.history.length)
@@ -198,8 +217,8 @@ export default {
           data: lastState,
           x: 0,
           y: 0,
-          width: this.imgInfo.width,
-          height: this.imgInfo.height,
+          width: this.imgCanvasInfo.width,
+          height: this.imgCanvasInfo.height,
           success: () => {
             this.ctx.draw(true);
           },
