@@ -1,6 +1,8 @@
 <template>
   <LayoutPage>
     <TabsBox :value.sync="type" :options="tabsList"></TabsBox>
+    <PhotoGenerate v-if="loading"></PhotoGenerate>
+<!--    <PhotoGenerateResult></PhotoGenerateResult>-->
     <PhotoModify></PhotoModify>
     <Describe :value.sync="description"></Describe>
     <ProduceBtn :value.sync="pages" :loading="loading" @cb="handleComfirm"></ProduceBtn>
@@ -49,7 +51,6 @@ export default {
   methods: {
     handleComfirm() {
       if (this.loading) {
-        alert(1)
         return
       }
       this.loading = true;

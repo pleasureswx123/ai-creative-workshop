@@ -1,9 +1,9 @@
 <template>
-  <view>
-    <view class="photo-canvas-wrapper">
-      <view class="del-btn" @tap.stop>
-        <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
-      </view>
+  <view class="photo-canvas-wrapper">
+    <view class="del-btn" @tap.stop>
+      <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
+    </view>
+    <view class="photo-canvas-inner" id="photoCanvasBox">
       <view class="photo-content" :style="{width: imgInfo.width + 'px', height: imgInfo.height + 'px'}">
         <img :src="imgSrc" />
         <canvas
@@ -84,6 +84,16 @@ export default {
     this.ctx = null;
   },
   methods: {
+    disableScroll(status) {
+      const dom = document.getElementById('photoCanvasBox');
+      if(status) {
+        this.toggleBodyPositionStatus(true);
+        dom && (dom.style['overflow'] = 'hidden');
+      } else {
+        this.toggleBodyPositionStatus(false);
+        dom && (dom.style['overflow'] = 'auto');
+      }
+    },
     createCanvas() {
       this.ctx = uni.createCanvasContext('myCanvas', this);
       this.ctx.lineWidth = this.brushSize;
@@ -108,7 +118,7 @@ export default {
       this.isDrawing = false;
       this.points = [];
       this.$nextTick(() => {
-        this.toggleBodyPositionStatus(false);
+        this.disableScroll(false);
       })
     },
     onMove(e) {
@@ -141,7 +151,7 @@ export default {
       }
     },
     startDrawing({x, y}) {
-      this.toggleBodyPositionStatus(true);
+      this.disableScroll(true);
       this.isDrawing = true;
       this.points = [];
       this.points.push({ x, y });
@@ -377,12 +387,11 @@ export default {
 
 <style lang="scss" scoped>
 .photo-canvas-wrapper {
+  border: 2rpx solid #494C55;
+  padding: 4rpx;
   border-radius: 20rpx;
   background: #1F2937;
   box-sizing: border-box;
-  border: 2rpx solid #494C55;
-  padding: 4rpx;
-  min-height: 500px;
   position: relative;
   .del-btn {
     position: absolute;
@@ -392,7 +401,14 @@ export default {
     line-height: 60rpx;
     padding: 0 20rpx;
     z-index: 10;
+    cursor: pointer;
   }
+}
+.photo-canvas-inner {
+  width: 100%;
+  max-height: 85vh;
+  position: relative;
+  overflow: auto;
   .photo-content {
     width: 100%;
     height: 100%;
