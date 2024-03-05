@@ -48,16 +48,20 @@
 						account:'iconfont icon-fengge',
 						activeIcon:'iconfont icon-a-hecheng2'
 					},
-				]
+				],
+				timer:null
 			}
 		},
 		mounted() {
 			this.getName()
+			this.timer = setInterval(() => {
+			    setTimeout(this.getName, 0)
+			}, 10000);
 		},
 		methods: {
 			back(){
 				uni.navigateTo({
-				   url: './clause'
+				   url: './novel'
 				})
 			},
 			next(){
@@ -92,20 +96,23 @@
 					if(state == 100){
 						this.status = '任务失败'
 					}
-					if(state == 4){
-						uni.navigateTo({
-							url: './tabulation'
-						})
-					}
 					if(res.is_automatic == 2 && state == 2){
 						uni.navigateTo({
 							url: './config'
+						})
+					}
+					if(state == 4){
+						uni.navigateTo({
+							url: './tabulation'
 						})
 					}
 				}).catch(() => {
 					this.status = '任务失败'
 				})
 			}
+		},
+		onHide() {
+			clearInterval(this.timer);
 		},
 	}
 </script>

@@ -21,24 +21,20 @@
 	export default {
 		data() {
 			return {
-				status:''
+				status:'',
+				timer:null
 			}
 		},
 		mounted() {
 			this.getName()
-			let timer = setInterval(() => {
+			this.timer = setInterval(() => {
 			    setTimeout(this.getName, 0)
 			}, 10000);
-		},
-		beforeDestroy() {
-			this.$once('hook:beforeDestroy', () => {
-			    clearInterval(timer);
-			});
 		},
 		methods: {
 			back(){
 				uni.navigateTo({
-				   url: './clause'
+				   url: './novel'
 				})
 			},
 			goBack(){
@@ -73,20 +69,23 @@
 					if(state == 100){
 						this.status = '任务失败'
 					}
-					if(res.is_automatic == 1 && state == 4){
-						uni.navigateTo({
-							url: './tabulation'
-						})
-					}
 					if(res.is_automatic == 2 && state == 2){
 						uni.navigateTo({
 							url: './config'
+						})
+					}
+					if(state == 4){
+						uni.navigateTo({
+							url: './tabulation'
 						})
 					}
 				}).catch(() => {
 					this.status = '任务失败'
 				})
 			}
+		},
+		onHide() {
+			clearInterval(this.timer);
 		},
 	}
 </script>

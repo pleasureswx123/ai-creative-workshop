@@ -36,26 +36,6 @@
 			this.getTaskInfo()
 		},
 		methods: {
-			nextTop(){
-				let row = JSON.parse(uni.getStorageSync('task'))
-				NovelApi.updateTaskState({
-					data:{
-						task_id:row,
-						type:2
-					},
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552",
-				}).then(res => {
-					// this.configList = res.describe_image
-				}).catch(() => {
-					
-				})
-				uni.navigateTo({
-				   url: './finish'
-				})
-			},
 			getTaskInfo(){
 				let row = JSON.parse(uni.getStorageSync('task'))
 				NovelApi.getTaskInfo({
@@ -104,6 +84,26 @@
 				}).catch(() => {
 					uni.hideLoading()
 				})
+			},
+			nextTop(){
+				let row = JSON.parse(uni.getStorageSync('task'))
+				NovelApi.updateTaskState({
+					data:{
+						task_id:row,
+						type:2
+					},
+					no_sign: 1,
+					sourceCode:"100001",
+					sign:"52d89ffef49b65edaf5d232104d42fac",
+					timestamp:"1545454552",
+				}).then(res => {
+					uni.navigateTo({
+					   url: './storyboard'
+					})
+				}).catch(() => {
+					
+				})
+				
 			}
 		},
 	}

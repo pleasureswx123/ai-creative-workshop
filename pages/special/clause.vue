@@ -1,6 +1,8 @@
 <template>
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
+		<view class="replace" @tap="replace">批量替换</view>
+		<ReplacePop :show="replacePop" title="" @handConfirm="handConfirm" :show.sync="replacePop"></ReplacePop>
 		<view class="videoPop tips">如分句不合理，可将光标放到文字中央点击"回车键"换行，也可通过合并按钮取消分段。</view>
 		<view class="videoPop" v-for="(item,index) in clauseList" :key="index">
 			<view class="title">场景</view>
@@ -17,17 +19,20 @@
 </template>
 <script>
 	import ModePop from "./components/ModePop.vue"
+	import ReplacePop from "./components/ReplacePop.vue"
 	import {NovelApi} from '@/api'
 	export default {
 		components: {
-			ModePop
+			ModePop,
+			ReplacePop
 		},
 		data() {
 			return {
 				current: '',
 				maxlength: 100,
 				show: false,
-				clauseList: []
+				clauseList: [],
+				replacePop:false
 			}
 		},
 		mounted() {
@@ -67,6 +72,28 @@
 			close() {
 				this.show = false
 			},
+			replace(){
+				this.replacePop = true
+			},
+			handConfirm(data){
+				let arr = this.clauseList.map(item=>{
+					return item.name
+				})
+				const laceValue = data.laceValue
+				const repValue = data.repValue
+				arr.forEach((item, index) => {
+				  if(item.includes(laceValue)){
+					  let str = item.replace(laceValue,repValue);
+					  arr[index] = str
+				  }
+				});
+				this.clauseList = arr.map(item=>{
+					return {
+						name:item
+					}
+				})
+				this.replacePop = false
+			},
 			nextStep(data) {
 				let row = JSON.parse(uni.getStorageSync('data'))
 				row.text_split = this.clauseList.map(item=>{
@@ -105,6 +132,16 @@
 .page-container {
 	padding: 0 30rpx 150rpx ;
 	position: relative;
+	font-size: 24rpx;
+}
+.replace{
+	color: var(--txt-color1);
+	padding: 10rpx 30rpx;
+	display: inline-block;
+	background: #4f6994;
+	text-align: right;
+	border-radius: 10rpx;
+	margin: 20rpx 0 0;
 }
 .videoPop {
 	background-color: #3b3f57;
@@ -113,7 +150,6 @@
 	margin-top: 10rpx;
 	color: var(--txt-color1);
 	position: relative;
-	font-size: 24rpx;
 	.icon-ai70{
 		position: absolute;
 		right: 30rpx;
@@ -122,7 +158,6 @@
 	}
 	.title {
 		color: #ccc;
-		font-size: 24rpx;
 	}
 }
 .tips{

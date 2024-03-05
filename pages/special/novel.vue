@@ -2,6 +2,7 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view>
+			<view class="title" @tap="create">我的创作</view>
 			<NovelTextarea ref="novelText"></NovelTextarea>
 			<view class="novel">
 				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>
@@ -165,6 +166,11 @@
 					
 				})
 			},
+			create(){
+				uni.navigateTo({
+				   url: './tabulation'
+				})
+			}
 		},
 	}
 </script>
@@ -174,9 +180,13 @@
 		background: var(--bg-color1);
 		font-size: 24rpx;
 		padding: 0 30rpx 40rpx;
-		margin-top: 40rpx;
 		.box-container {
 			padding: 0;
+		}
+		.title{
+			color: var(--txt-color1);
+			text-align: right;
+			margin: 30rpx 0;
 		}
 	}
 	.next{
