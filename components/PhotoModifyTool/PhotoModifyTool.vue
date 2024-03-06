@@ -4,6 +4,7 @@
         class="item"
         v-for="item in tools"
         :key="item.type"
+        :ref="item.type"
         :class="{active: actionType === item.type}"
         @tap="handleActions(item)">
       <uni-icons custom-prefix="iconfont-qm" :type="item.iconName" color="#fff" size="20" />

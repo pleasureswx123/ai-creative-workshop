@@ -1,6 +1,6 @@
 <template>
   <view class="brush-box">
-    <view class="brush-inner">
+    <view class="brush-inner" ref="brushSizeBox">
       <u-slider
           v-model="currentValue"
           step="1" min="1" max="100"

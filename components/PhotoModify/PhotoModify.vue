@@ -4,8 +4,9 @@
     <template v-if="imgSrc && !!imgInfo">
       <PhotoCanvas ref="photoCanvas" :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
     </template>
-    <BrushSize v-if="actionType === 'brush'" :value.sync="brushSize"></BrushSize>
+    <BrushSize ref="brushSize" v-if="actionType === 'brush' && showBrushSize" :value.sync="brushSize"></BrushSize>
     <PhotoModifyTool
+        ref="tool"
         :value.sync="actionType"
         @undo="undo"
         @reset="reset"
@@ -21,7 +22,8 @@ export default {
       actionType: 'brush',
       brushSize: 10,
       imgSrc: '',
-      imgInfo: null
+      imgInfo: null,
+      showBrushSize: false
     }
   },
   watch: {
@@ -35,7 +37,21 @@ export default {
       }) : (this.imgInfo = null);
     }
   },
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.handleClickOutside);
+  },
   methods: {
+    handleClickOutside(event) {
+      if(this.$refs?.brushSize?.$refs?.brushSizeBox?.$el?.contains?.(event.target) || this.$refs?.tool?.$refs?.brush?.[0]?.$el?.contains?.(event.target)) {
+        this.showBrushSize = true
+      }
+      if(!this.$refs?.brushSize?.$refs?.brushSizeBox?.$el?.contains?.(event.target) && !this.$refs?.tool?.$refs?.brush?.[0]?.$el?.contains?.(event.target)) {
+        this.showBrushSize = false
+      }
+    },
     undo() {
       this.$refs?.photoCanvas?.undo?.();
     },
