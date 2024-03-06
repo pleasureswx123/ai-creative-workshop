@@ -146,6 +146,7 @@ export default {
       position: relative;
       font-size: 28rpx;
       font-weight: bold;
+	  cursor: pointer;
     }
 	.cancle{
 		background: #3b3f57;

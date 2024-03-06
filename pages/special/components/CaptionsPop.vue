@@ -62,6 +62,7 @@ export default {
 		border-radius:20rpx;
 		padding:20rpx 30rpx;
 		text-align: center;
+		cursor: pointer;
 	}
 	.noPop{
 		margin:30rpx 0 0 0

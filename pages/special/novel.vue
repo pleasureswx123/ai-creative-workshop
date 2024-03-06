@@ -178,7 +178,7 @@
 <style lang="scss" scoped>
 	.page-container {
 		background: var(--bg-color1);
-		font-size: 24rpx;
+		font-size: 28rpx;
 		padding: 0 30rpx 40rpx;
 		.box-container {
 			padding: 0;
@@ -200,6 +200,7 @@
 			border-radius:20rpx;
 			font-size:32rpx;
 			margin:80rpx auto 10rpx;
+			cursor: pointer;
 		}
 		.tips{
 			color: var(--txt-color1);

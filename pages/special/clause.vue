@@ -142,6 +142,7 @@
 	text-align: right;
 	border-radius: 10rpx;
 	margin: 20rpx 0 0;
+	cursor: pointer;
 }
 .videoPop {
 	background-color: #3b3f57;
@@ -201,6 +202,21 @@
 	border-radius: 20rpx 20rpx 0 0;
 	font-size: 28rpx;
 	font-weight: 700;
+	cursor: pointer;
 	z-index: 3;
+}
+@media screen and (min-width: 960px){
+	.nextBtn{
+		width: 1200px;
+		left: 50%;
+		margin-left: -600px;
+	}
+	.replace{
+		padding: 20rpx 40rpx;
+		font-size:32rpx;
+	}
+	.page-container{
+		font-size: 28rpx;
+	}
 }
 </style>

@@ -40,6 +40,7 @@ export default {
   gap: 20rpx;
   justify-content: space-between;
   border-bottom:1px solid rgb(54,56,73);
+  cursor: pointer;
   .title {
     min-width: 0;
     color: var(--txt-color1);
@@ -58,6 +59,7 @@ export default {
   .choose{
 	   color: var(--txt-color1);
 	   opacity: 0.7;
+	   cursor: pointer;
 	   .iconfont{
 	   	margin-right:0;
 	   }
@@ -66,4 +68,9 @@ export default {
 .title-box:last-child{
 	  border:none;
   }
+@media screen and (min-width: 960px){
+	.title{
+		font-size: 32rpx!important;
+	}
+}
 </style>

@@ -64,5 +64,6 @@ export default {
 		padding:50rpx 30rpx;
 		margin-bottom:30rpx;
 		text-align: center;
+		cursor: pointer;
 	}
 </style>

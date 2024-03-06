@@ -73,6 +73,7 @@ export default {
 		padding:20rpx 0;
 		margin-bottom:10rpx;
 		text-align: center;
+		cursor: pointer;
 		&.active{
 			background-color:#6978fd;
 		}

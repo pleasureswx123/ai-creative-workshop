@@ -63,6 +63,7 @@ export default {
 		padding:30rpx 30rpx;
 		margin-bottom:30rpx;
 		text-align: center;
+		cursor: pointer;
 		.iconfont{
 			margin-right: 6rpx;
 			font-size:16px!important;

@@ -2,24 +2,7 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view class="videoPop" v-for="(item,index) in musicList" :class="{active: activeIndex === index}" @click="onSelected(index)">
-		  <!-- {{item.title}} -->
-		  <view class="audio">
-			  <view class="flex">
-				  <view>{{item.title}}</view>
-				  <u-count-down
-				          ref="countDown"
-				          :time="time"
-				          format="mm:ss"
-				          :autoStart="false"
-				      >
-					</u-count-down>
-			  </view>
-			  <view class="bar"></view>
-			  <view class="iconPlay">
-				  <i class="iconfont icon-zanting" v-if="musicId ==item.id" @click="pause(item,index)"></i>
-				  <i class="iconfont icon-bofang2" v-else @click="play(item,index)"></i>
-			  </view>
-		  </view>
+		  <free-audio audioId='item.id' :url='item.url' :title="item.title"></free-audio>
 		</view>
 		<u-gap height="100" />
 		<view class="footer-bar">
@@ -31,7 +14,15 @@
 
 <script>
 import {NovelApi} from '@/api'
+import freeAudio from '@/components/chengpeng-audio/free-audio.vue'
 export default {
+	components: {freeAudio},
+	props: {
+		title: {
+		  type: String,
+		  default: '标题' 
+		}
+	},
 	data() {
 	  return {
 		musicList:[],
@@ -43,11 +34,17 @@ export default {
 		},
 		innerAudioContext:null,
 		musicId:'',
-		time:0
+		time:0,
 	  }
 	},
 	mounted() {
 		this.getMusicList()
+	},
+	onUnload() { //普通页面在 onUnload 生命周期中执行
+	  uni.$emit('stop')
+	},
+	onHide() { //tabBar页面在onHide生命周期中执行
+	  uni.$emit('stop')
 	},
 	methods: {
 		getMusicList() {
@@ -83,42 +80,6 @@ export default {
 			})
 			
 		},
-		pause(item,index){
-			this.musicId = ''
-			this.innerAudioContext.destroy()
-			this.$refs.countDown[index].pause();
-		},
-		play(item,index){
-			this.musicId = item.id
-			if (this.innerAudioContext != null) {
-				this.innerAudioContext.destroy()
-			}
-			this.innerAudioContext = uni.createInnerAudioContext();
-			this.innerAudioContext.autoplay = true;
-			this.innerAudioContext.src = item.url
-			this.innerAudioContext.onPlay(() => {
-				
-			});
-			this.innerAudioContext.onCanplay(() => {
-				 const time = this.innerAudioContext.duration.toFixed(0)
-				 const min = Math.floor(time/60)
-				 const second = time%60
-				 this.musicTime = (min>10?min:'0'+min)+':'+(second>10?second:'0'+second)
-			});
-			this.innerAudioContext.onTimeUpdate(() => {
-				const time = this.innerAudioContext.currentTime.toFixed(0)
-				const min = Math.floor(time/60)
-				const second = time%60
-				this.currentTime = (min>10?min:'0'+min)+':'+(second>10?second:'0'+second)
-			});
-			this.innerAudioContext.onEnded(() => {
-				this.musicId = ''
-				this.innerAudioContext.destroy()
-			});
-			this.$nextTick(()=>{
-				this.$refs.countDown[index].start()
-			})
-		},
 		close(){
 			uni.navigateTo({
 			   url: './novel' // 要跳转到的页面路径
@@ -132,9 +93,9 @@ export default {
 <style lang="scss" scoped>
 	.page-container {
 		background: var(--bg-color1);
-		font-size: 24rpx;
 		padding: 0 30rpx 40rpx;
 		margin-top: 40rpx;
+		position: relative;
 	}
 	.videoPop{
 		background-color:#3b3f57;
@@ -143,29 +104,12 @@ export default {
 		margin-bottom:30rpx;
 		color:var(--txt-color1);
 		position: relative;
+		font-size: 24rpx;
+		cursor: pointer;
 		&.active {
 			border:1px solid #fff;
 		}
-		.audio{
-			padding: 0 100rpx 0 0;
-			position: relative;
-			.flex{
-				display:flex;
-				justify-content: space-between;
-			}
-			.bar{
-				height: 4px;
-				line-height:4px;
-				background:#999;
-				margin-top: 14rpx;
-				border-radius: 10rpx;
-			}
-			.iconPlay{
-				position: absolute;
-				right: 0;
-				top: 0;
-			}
-		}
+		
 	}
 	.footer-bar {
 	   position: fixed;
@@ -177,11 +121,11 @@ export default {
 	   box-sizing: border-box;
 	   place-items: center;
 	   z-index: 100;
-		 background:var(--bg-color1);
-		 display: flex;
-		 width: 100%;
-		 gap:10px;
-		 color:var(--txt-color1);
+	   background:var(--bg-color1);
+	   display: flex;
+	   // width: 100%;
+	   gap:10px;
+	   color:var(--txt-color1);
 	  .btn-box {
 		  width: 50%;
 	    background: #6978fd;
@@ -197,4 +141,15 @@ export default {
 			background: #3b3f57;
 		}
 	}
+	@media screen and (min-width: 960px) {
+		.footer-bar{
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+		.videoPop{
+			padding: 50rpx 40rpx;
+			font-size: 32rpx;
+		}
+	}
+	
 </style>

@@ -74,6 +74,7 @@ export default {
 	.item-box {
 	  position: relative;
 	  overflow: hidden;
+	  cursor: pointer;
 	  .pic-box {
 		height: 140rpx;
 	    overflow: hidden;
@@ -104,5 +105,12 @@ export default {
 	  }
 	}
 }
-
+@media screen and (min-width: 960px){
+	.item-wrapper .item-box .pic-box{
+		height:  500rpx;
+	}
+	scroll-view{
+		height: 75vh!important;
+	}
+}
 </style>

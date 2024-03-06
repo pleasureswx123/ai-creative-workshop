@@ -188,6 +188,7 @@
 				flex:1;
 				padding:20rpx 0;
 				border-radius: 20rpx;
+				cursor: pointer;
 			}
 			.back{
 				background-color: #2c2f44;

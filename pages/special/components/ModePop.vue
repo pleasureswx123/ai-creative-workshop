@@ -1,19 +1,21 @@
 <template>
 	<u-popup :show="show" mode="bottom" @tap="$emit('close')">
-		<view class="modePop">
-			<i class="iconfont icon-fanhui" @tap="$emit('close')"></i>
-			<view class="title">请选择视频生成模式</view>
-			<view class="videoPop" v-for="(item,index) in modeList" :class="{active: activeIndex === index}" @tap="boxHand(index,item)">
-				<view class="type">
-					{{item.type}}
-					<view class="btn">{{item.icon}}</view>
+		<view class="pop-container">
+			<view class="modePop">
+				<i class="iconfont icon-fanhui" @tap="$emit('close')"></i>
+				<view class="title">请选择视频生成模式</view>
+				<view class="videoPop" v-for="(item,index) in modeList" :class="{active: activeIndex === index}" @tap="boxHand(index,item)">
+					<view class="type">
+						{{item.type}}
+						<view class="btn">{{item.icon}}</view>
+					</view>
+					<view class="cont">{{item.title}}</view>
+					<u-radio-group v-model="value">
+						<u-radio shape="square" :label="item.type" :name="item.type"></u-radio>
+					</u-radio-group>
 				</view>
-				<view class="cont">{{item.title}}</view>
-				<u-radio-group v-model="value">
-					<u-radio shape="square" :label="item.type" :name="item.type"></u-radio>
-				</u-radio-group>
+				<view class="nextBtn" @tap="nextStep">下一步</view>
 			</view>
-			<view class="nextBtn" @tap="nextStep">下一步</view>
 		</view>
 	</u-popup>
 </template>
@@ -92,6 +94,7 @@ export default {
 		color:var(--txt-color1);
 		border:2px solid #3b3f57;
 		position: relative;
+		cursor: pointer;
 		&.active{
 			border:2px solid #fff;
 		}
@@ -142,5 +145,12 @@ export default {
 		border-radius:20rpx;
 		font-size:28rpx;
 		font-weight:700;
+		cursor: pointer;
+	}
+	@media screen and (min-width: 960px) {
+	  /deep/ .u-popup__content {
+	    width: 60%;
+	    margin: 0 auto;
+	  }
 	}
 </style>

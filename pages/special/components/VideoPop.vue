@@ -59,4 +59,12 @@ export default {
 		padding:30rpx 30rpx;
 		margin-bottom:20rpx;
 	}
+	@media screen and (min-width: 960px){
+		// .item-wrapper .item-box .pic-box{
+		// 	height:  500rpx;
+		// }
+		scroll-view{
+			height: 70vh!important;
+		}
+	}
 </style>
