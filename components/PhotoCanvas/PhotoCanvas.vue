@@ -425,7 +425,7 @@ export default {
 }
 .photo-canvas-inner {
   width: 100%;
-  max-height: 85vh;
+  max-height: 80vh;
   position: relative;
   overflow: auto;
   .photo-content {
@@ -433,6 +433,7 @@ export default {
     height: 100%;
     margin: 0 auto;
     position: relative;
+    //transform: scale(0.9);
     img, .canvas {
       position: absolute;
       top: 0;
@@ -443,7 +444,7 @@ export default {
       height: 100%;
     }
     .canvas {
-      opacity: .5;
+      opacity: .8;
     }
   }
 }
