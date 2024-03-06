@@ -79,6 +79,14 @@
             "open" : true,
             "port" : 8099,
             "proxy" : {
+				"/web.php/pc.php" : {
+				    "target" : "https://api.chaojiyuyan.com/pc.php/",
+				    "changeOrigin" : true,
+				    "secure" : false,
+				    "pathRewrite" : {
+				        "^/web.php/pc.php" : "/"
+				    }
+				},
                 "/web.php" : {
                     "target" : "http://aigc.chaojiyuyan.cn/web.php",
                     "changeOrigin" : true,
@@ -102,6 +110,7 @@
                     "pathRewrite" : {
                         "^/proxyApi" : ""
                     }
+					// https://api.chaojiyuyan.com/pc.php/VideoTask/GetDub'
                 }
             }
         },

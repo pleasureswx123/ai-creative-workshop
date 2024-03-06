@@ -118,9 +118,63 @@
 			}
 		},
 		{
+			"path": "pages/special/tweets",
+			"style": {
+				"navigationBarTitleText": "小说推文"
+			}
+		},
+		{
 			"path": "pages/special/novel",
 			"style": {
 				"navigationBarTitleText": "小说推文"
+			}
+		},
+		{
+			"path": "pages/special/music",
+			"style": {
+				"navigationBarTitleText": "推荐音乐"
+			}
+		},
+		{
+			"path": "pages/special/Material",
+			"style": {
+				"navigationBarTitleText": "音乐素材选择"
+			}
+		},
+		{
+			"path": "pages/special/clause",
+			"style": {
+				"navigationBarTitleText": "分句处理"
+			}
+		},
+		{
+			"path": "pages/special/finish",
+			"style": {
+				"navigationBarTitleText": "视频生成"
+			}
+		},
+		{
+			"path": "pages/special/tabulation",
+			"style": {
+				"navigationBarTitleText": "我的创作"
+			}
+		},
+		{
+			"path": "pages/special/storyboard",
+			"style": {
+				"navigationBarTitleText": "AI分镜中"
+			}
+		},
+		{
+			"path": "pages/special/role",
+			"style": {
+				"navigationBarTitleText": "角色调整"
+			}
+		},
+		{
+			"path": "pages/special/config",
+			"style": {
+				"navigationBarTitleText": "素材配置"
 			}
 		},
 		{

@@ -85,6 +85,7 @@
 <style lang="scss">
 @import "@/uni_modules/uview-ui/index.scss";
 @import "@/static/iconfont/iconfont.css";
+@import "@/static/icon/iconfont.css";
 image {
   vertical-align: middle;
 }
