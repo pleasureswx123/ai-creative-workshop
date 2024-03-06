@@ -73,16 +73,15 @@ export default {
 		},
 		confirm(){
 			uni.navigateTo({
-			   url: './novel',// 要跳转到的页面路径
+			   url: './tweets',// 要跳转到的页面路径
 			   success:res=>{
 			   	res.eventChannel.emit('setMusic',this.musicList[this.activeIndex])
 			   }
 			})
-			
 		},
 		close(){
 			uni.navigateTo({
-			   url: './novel' // 要跳转到的页面路径
+			   url: './tweets' // 要跳转到的页面路径
 			})
 			this.innerAudioContext.destroy()
 		}

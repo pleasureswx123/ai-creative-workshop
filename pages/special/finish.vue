@@ -34,7 +34,7 @@
 		methods: {
 			back(){
 				uni.navigateTo({
-				   url: './novel'
+				   url: './tweets'
 				})
 			},
 			goBack(){

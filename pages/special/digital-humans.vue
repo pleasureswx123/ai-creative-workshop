@@ -1,35 +1,18 @@
 <template>
-  <view class="page-container">
-    <QmNavTop />
-    <QmTabs
-        :value.sync="current"
-        :options="stayTunedInfo" />
-    <view class="page-content">
-      <VideoItem :info="currentVideoInfo" />
-    </view>
-  
-    <QmPreviewVideo
-        :showPreview.sync="showPreviewVideo"
-        :info="previewVideoInfo" />
-  </view>
+	<view class="page-container">
+		<QmNavTop></QmNavTop>
+	</view>
 </template>
 
 <script>
-import TunedMixins from './mixin';
 
 export default {
-  mixins: [TunedMixins],
   data() {
     return {
-      current: 0,
-      taskType: 10
+		
     }
   },
-  computed: {
-    currentVideoInfo() {
-      return this.stayTunedInfo?.[this.current] || {};
-    }
-  }
+  
 }
 </script>
 

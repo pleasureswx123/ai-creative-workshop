@@ -1,11 +1,11 @@
 <template>
   <view class="page-container">
-    <QmNavTop></QmNavTop>
+    <QmNavTop />
+    <QmTabs
+        :value.sync="current"
+        :options="stayTunedInfo" />
     <view class="page-content">
-      <template v-for="(item, index) in stayTunedInfo">
-        <ImgItem v-if="item.type === 'img'" :src="item.url"/>
-        <VideoItem v-if="item.type === 'video'" :info="item" :key="index"/>
-      </template>
+      <VideoItem :info="currentVideoInfo" />
     </view>
   
     <QmPreviewVideo
@@ -21,9 +21,15 @@ export default {
   mixins: [TunedMixins],
   data() {
     return {
-      taskType: 7
+      current: 0,
+      taskType: 10
     }
   },
+  computed: {
+    currentVideoInfo() {
+      return this.stayTunedInfo?.[this.current] || {};
+    }
+  }
 }
 </script>
 
@@ -33,9 +39,8 @@ export default {
   padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
-  
   .page-content {
-    padding: 30rpx 40rpx;
+    padding: 0 40rpx;
   }
 }
 </style>

@@ -74,6 +74,12 @@
 			}
 		},
 		{
+			"path": "pages/special/tweets",
+			"style": {
+				"navigationBarTitleText": "小说推文"
+			}
+		},
+		{
 			"path": "pages/special/novel",
 			"style": {
 				"navigationBarTitleText": "小说推文"

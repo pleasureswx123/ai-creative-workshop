@@ -61,7 +61,7 @@
 		methods: {
 			back(){
 				uni.navigateTo({
-				   url: './novel'
+				   url: './tweets'
 				})
 			},
 			next(){
