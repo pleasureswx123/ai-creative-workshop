@@ -822,6 +822,53 @@ export default {
         throw error;
       }
     },
+    async downLoadFileStream(fileUrl, options = {}) {
+      // import streamSaver from 'streamsaver';
+      const fileName = this.getFileName(fileUrl);
+      try {
+        const response = await fetch(fileUrl);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // 创建可写流
+        const writableStream = streamSaver.createWriteStream(fileName);
+        // 获取可读流
+        const readableStream = response.body;
+        // 检查浏览器是否支持WritableStream和pipeTo
+        if (window.WritableStream && readableStream.pipeTo) {
+          // 如果支持，直接传输数据流到可写流
+          return readableStream.pipeTo(writableStream)
+            .then(() => {
+              console.log('File download complete');
+            });
+        }
+        // 如果不支持，手动处理数据传输
+        const reader = response.body.getReader(); // 获取数据流的读取器
+        const writer = writableStream.getWriter(); // 获取可写流的写入器
+        // 数据传输函数
+        async function pump() {
+          try {
+            while (true) {
+              const { done, value } = await reader.read(); // 读取数据流的下一部分
+              if (done) {
+                console.log('File download complete'); // 如果数据已经全部读取完成，则下载完成
+                writer.close(); // 关闭写入器
+                break;
+              }
+              // 写入文件流
+              await writer.write(value);
+            }
+          } catch (error) {
+            console.error('File download failed:', error); // 捕获并处理下载失败的情况
+            writer.close(); // 关闭写入器
+          }
+        }
+        // 开始数据传输
+        await pump();
+      } catch (error) {
+        console.error('Download error:', error); // 捕获并处理下载失败的情况
+      }
+    },
     downLoadFile1(url) {
       // #ifdef H5
       return new Promise((resolve, reject) => {
