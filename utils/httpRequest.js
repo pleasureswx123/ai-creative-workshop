@@ -48,6 +48,22 @@ module.exports = (vm) => {
         }
         return Promise.reject(data);
       };
+      if(data?.errno === 201) { // 算力不足请充值
+        uni.showModal({
+          title: '提示',
+          showCancel: false,
+          content: data?.message || '请登录',
+          confirmText: '确定',
+          success: function (res) {
+            if (res.confirm) {
+              uni.$u.route({
+                url: `pages/member/index`
+              })
+            }
+          }
+        })
+        return Promise.reject(data);
+      };
       if (data.message && !hideToast) {
         uni.showModal({
           title: '提示',

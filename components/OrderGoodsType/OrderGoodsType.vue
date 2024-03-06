@@ -42,8 +42,8 @@ export default {
   methods: {
     initType() {
       // const temp = this.list.find(item => item.is_default === '1');
-      const temp = this.list.find(item => +item.num === 3);
-      this.currentType = temp ? temp.num : (this.list?.[0]?.num || '3');
+      const temp = this.list.find(item => +item.num === 1);
+      this.currentType = temp ? temp.num : (this.list?.[0]?.num || '1');
     }
   }
 }
