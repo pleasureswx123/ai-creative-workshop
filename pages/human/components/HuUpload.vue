@@ -1,6 +1,6 @@
 <template>
 	<view class="upload-container">
-	  <view class="create">从创作历史中选择 ></view>
+	  <view class="create" @tap="creatPop=true">从创作历史中选择 ></view>
 	  <view class="loading-box" v-if="loading">
 	    <view class="title">正在上传中</view>
 	    <view class="icon-box">
@@ -18,15 +18,22 @@
 	      <view class="warn">注意：正面图片，且背景干净或纯色为佳</view>
 	    </view>
 	  </view>
+	  <HuCreatePop title="选择要处理的图片" :show="creatPop" :show.sync="creatPop" @handConfirm="handConfirm"></HuCreatePop>
 	</view>
 </template>
 
 <script>
+import HuCreatePop from './HuCreatePop.vue'
 export default{
+	components:{HuCreatePop},
 	data() {
 		return{
-			loading:false
+			loading:false,
+			creatPop:false
 		}
+	},
+	methods:{
+		
 	}
 }
 </script>

@@ -6,4 +6,11 @@ export default {
       }
     })
   },
+  getTypeface(params = {}) {
+    return uni.$u.http.post(`/DigitPeople/GetTypeface`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }
