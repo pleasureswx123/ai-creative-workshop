@@ -34,15 +34,14 @@ import {mapActions} from 'vuex';
 
 export default {
   props: {
-    value: {
-      type: [String, Number],
-      default: ''
+    currentInfo: {
+      type: Object,
+      default: () => (null)
     },
   },
   data() {
     return {
       showImgStylePop: false,
-      currentInfo: null,
       gridNums: 4,
       list: [],
       listBak: []
@@ -54,29 +53,31 @@ export default {
         return this.currentInfo
       },
       set(info) {
-        this.change(info);
+        this.$emit('update:currentInfo', info)
       }
     },
-    currentId: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('update:value', val)
-      }
+    currentId() {
+      return this.imgStyleInfo?.id || this.imgStyleInfo?.img_style_id || ''
     },
     styleGrid() {
       return {
         'grid-template-columns': `repeat(${this.gridNums}, 1fr)`
       }
+    },
+    watchIdList() {
+      return {
+        id: this.currentId,
+        list: this.list
+      }
     }
   },
   watch: {
-    currentId(id) {
-      if(!id) {
+    watchIdList(item) {
+      const {id, list} = item || {};
+      const ids = list.map(item => item.id);
+      if(!id || !ids.length) {
         return
       }
-      const ids = this.list.map(item => item.id);
       if(!ids.includes(id)) {
         const temp = [...this.listBak];
         this.list = [...temp.slice(0, -1), this.currentInfo]
@@ -87,7 +88,8 @@ export default {
     const {width} = this.$refs.photoBox.$el.getBoundingClientRect();
     this.gridNums = Math.floor(width / 80);
     this.getImgStyleList({page: 1, pagesize: 50}).then(res => {
-      this.list = ((res?.list || []).slice(0, this.gridNums - 1)).map(item => {
+      const temp = ((res?.list || []).slice(0, this.gridNums - 1));
+      this.list = temp.map(item => {
         return {...item, id: item.img_style_id, value: 0.8}
       });
       this.listBak = this.list;
@@ -97,12 +99,10 @@ export default {
     ...mapActions('PhotoInfo', ['getImgStyleList']),
     change(item) {
       if(this.currentId === item.id) {
-        this.currentInfo = null;
-        this.currentId = '';
+        this.imgStyleInfo = null
         return
       }
-      this.currentInfo = item;
-      this.currentId = item.id
+      this.imgStyleInfo = item
     }
   }
 }
