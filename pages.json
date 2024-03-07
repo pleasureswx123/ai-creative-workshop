@@ -462,6 +462,12 @@
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationBarTextStyle": "black"
 			}
+		},
+		{
+			"path": "pages/human/index",
+			"style": {
+				"navigationBarTitleText": "数字人"
+			}
 		}
 	],
 	"globalStyle": {

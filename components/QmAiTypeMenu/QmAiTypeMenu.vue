@@ -52,7 +52,7 @@ export default {
         },
         7: {
           iconName: 'icon-qm-MaterialSymbolsMenuBook',
-          url: 'pages/special/novel',
+          url: 'pages/special/tweets',
           expectationUrl: 'pages/special/novel'
         },
         8: {
@@ -67,8 +67,9 @@ export default {
         },
         10: {
           iconName: 'icon-qm-GgDigitalocean',
-          url: 'pages/special/digital-humans',
-          expectationUrl: 'pages/special/digital-humans',
+          url: 'pages/human/index',
+          // expectationUrl: 'pages/special/digital-humans',
+          expectationUrl: 'pages/human/index',
         },
         11: {
           iconName: 'icon-qm-woman',

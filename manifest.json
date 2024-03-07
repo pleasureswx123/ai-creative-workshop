@@ -1,6 +1,6 @@
 {
     "name" : "-",
-    "appid" : "__UNI__05E00C4",
+    "appid" : "__UNI__34903F0",
     "description" : "",
     "versionName" : "2.3.8",
     "versionCode" : "100",
@@ -79,14 +79,14 @@
             "open" : true,
             "port" : 8099,
             "proxy" : {
-				"/web.php/pc.php" : {
-				    "target" : "https://api.chaojiyuyan.com/pc.php/",
-				    "changeOrigin" : true,
-				    "secure" : false,
-				    "pathRewrite" : {
-				        "^/web.php/pc.php" : "/"
-				    }
-				},
+                "/web.php/pc.php" : {
+                    "target" : "https://api.chaojiyuyan.com/pc.php/",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/web.php/pc.php" : "/"
+                    }
+                },
                 "/web.php" : {
                     "target" : "http://aigc.chaojiyuyan.cn/web.php",
                     "changeOrigin" : true,
@@ -110,11 +110,11 @@
                     "pathRewrite" : {
                         "^/proxyApi" : ""
                     }
-					// https://api.chaojiyuyan.com/pc.php/VideoTask/GetDub'
                 }
             }
         },
-        "title" : "加载中",
+        // https://api.chaojiyuyan.com/pc.php/VideoTask/GetDub'
+        "title" : "超级语言",
         "uniStatistics" : {
             "enable" : true
         },
