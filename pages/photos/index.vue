@@ -24,7 +24,7 @@
               v-if="[1, 2].includes(modeId)"
               @showPopFunc="showLoraPop = true"
               :info.sync="loraInfo" />
-          <PhotoStyle :value.sync="photoStyleId"></PhotoStyle>
+          <PhotoStyle :currentInfo.sync="photoStyleInfo"></PhotoStyle>
         </view>
         <view>
         <ReferenceImgCard
@@ -139,7 +139,7 @@ export default {
       description: '',
       controlNetInfo: null,
       loraInfo: null,
-      photoStyleId: '',
+      photoStyleInfo: null,
       referenceImgInfo: null,
       badDescription: '',
       ratioId: 5, // 默认出图比例为 头像
@@ -200,7 +200,7 @@ export default {
           controlnet_weight: this.controlNetInfo?.value || '',
           lora_id: this.loraInfo?.lora_id || '',
           lora_weight: this.loraInfo?.value || '',
-          img_style_id: this.photoStyleId || '',
+          img_style_id: this.photoStyleInfo?.img_style_id || '',
           reference_image: this.referenceImgInfo?.url || '',
           reference_image_weight: this.referenceImgInfo?.value || '',
           negative_prompt: this.badDescription || '',
@@ -268,7 +268,14 @@ export default {
         }
       }
       if (img_style_id) {
-        this.photoStyleId = img_style_id;
+        this.photoStyleInfo = {
+          img_style_id: img_style_id,
+          title: img_style_title,
+          img_url: img_style_img,
+          en_title: img_style_title,
+          id: img_style_id,
+          value: 0.8
+        }
       }
       if (reference_image) {
         this.referenceImgInfo = {
@@ -295,7 +302,7 @@ export default {
     resetData() {
       this.controlNetInfo = null;
       this.loraInfo = null;
-      this.img_style_id = '';
+      this.photoStyleInfo = null;
       // this.referenceImgInfo = null;
       // this.badDescription = '';
       // this.description = '';

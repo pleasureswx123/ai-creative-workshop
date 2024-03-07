@@ -10,7 +10,7 @@
     <template v-if="setting">
       <ExtendDirection :value.sync="directions"></ExtendDirection>
       <PersonEnhance :value.sync="enhanceType"></PersonEnhance>
-      <PhotoStyle :value.sync="photoStyleId"></PhotoStyle>
+      <PhotoStyle :currentInfo.sync="photoStyleInfo"></PhotoStyle>
     </template>
 <!--    <view>{{type}}</view>
     <view>{{description}}</view>
@@ -18,7 +18,7 @@
     <view>{{setting}}</view>
     <view>{{directions}}</view>
     <view>{{enhanceType}}</view>
-    <view>{{photoStyleId}}</view>-->
+    <view>{{photoStyleInfo}}</view>-->
   </LayoutPage>
 </template>
 
@@ -38,13 +38,13 @@ export default {
       setting: true,
       directions: [],
       enhanceType: '',
-      photoStyleId: 1
+      photoStyleInfo: null
     }
   },
   watch: {
     setting(status) {
       if(!status) {
-        this.photoStyleId = ''
+        // this.photoStyleInfo = null
       }
     }
   },
