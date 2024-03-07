@@ -147,7 +147,12 @@ export default {
         })
       })
     },
-    getFileName(url) {
+    getFileName(src) {
+      let url = src;
+      try {
+        const temp = new URL(url);
+        url = temp.pathname;
+      } catch (e) {}
       return url?.split?.('/')?.slice(-1)?.[0] || url;
     },
     async downLoadFile(url, options = {}) {
