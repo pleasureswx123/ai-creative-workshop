@@ -2,12 +2,15 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view class="box-container">
-			<HuTab></HuTab>
+			<HuTab @tab="tab"></HuTab>
 			<HuUpload></HuUpload>
-			<HuTextarea></HuTextarea>
+			<HuTextarea v-if="index == 0"></HuTextarea>
 		</view>
-		<view class="box-container">
+		<view class="box-container" v-if="index == 0">
 			<HuRadio></HuRadio>
+		</view>
+		<view class="box-container" v-if="index == 1">
+			<HuAudio></HuAudio>
 		</view>
 		<view class="box-container">
 			<HuCaptions></HuCaptions>
@@ -25,11 +28,17 @@ import HuUpload from './components/HuUpload.vue'
 import HuTextarea from './components/HuTextarea.vue'
 import HuRadio from './components/HuRadio.vue'
 import HuCaptions from './components/HuCaptions.vue'
+import HuAudio from './components/HuAudio.vue'
 export default{
-	components: {HuTab,HuUpload,HuTextarea,HuRadio,HuCaptions},
+	components: {HuTab,HuUpload,HuTextarea,HuRadio,HuCaptions,HuAudio},
 	data(){
 		return{
-			
+			index:0
+		}
+	},
+	methods:{
+		tab(e){
+			this.index = e.index;
 		}
 	}
 }

@@ -3,7 +3,7 @@
 		<view class="title">选择字幕</view>
 		<view class="box-caption">
 			<selectSwitch @change="changeSwitch" />
-			<view @tap="capShow = true">
+			<view class="capChoose" @tap="capShow = true">
 				<u-picker :show="capShow" :columns="capColumns" keyName="label" @confirm="capConfirm" @cancel="capShow=false"></u-picker>
 				<u--input v-model="capName" placeholder="请选择字幕类型" class=""></u--input>
 			</view>
@@ -31,19 +31,13 @@ export default{
 			isSwitch:false
 		},
 		getTypeface() {
-			HumanApi.getTypeface({
-				data:{
-					page:this.page,
-        			pagesize:this.pagesize,
-				}
-			}).then(res => {
+			HumanApi.getTypeface({}).then(res => {
 				res.list.map(item=>{
 					this.capColumns[0].push(item.title)
 				})
 			})
 		},
 		capConfirm(e){
-			console.log(e)
 			this.capShow = false
 			this.capName = e.value[0]
 		}
@@ -74,6 +68,9 @@ export default{
 			color: var(--txt-color1)!important;
 			text-align: center!important;
 		}
+	}
+	.capChoose{
+		cursor: pointer;
 	}
 	/deep/.u-picker{
 		background-color:var(--bg-color2);

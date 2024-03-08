@@ -158,4 +158,11 @@ export default {
       }
     })
   },
+  uploadAudio(params = {}) {
+    return uni.$u.http.post(`/upload/audio`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

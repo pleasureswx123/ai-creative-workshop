@@ -1,6 +1,6 @@
 <template>
 	<view class="tab">
-		<u-tabs :list="tabList" :activeStyle="{backgroundColor: '#F60652',}"></u-tabs>
+		<u-tabs :list="tabList" :activeStyle="{backgroundColor: '#F60652',}" @click="tab"></u-tabs>
 	</view>
 </template>
 
@@ -10,14 +10,17 @@
 			return{
 				tabList:[
 					{
-						name:'图+文案',
-						id:1
+						name:'图+文案'
 					},
 					{
-						name:'图+音频',
-						id:2
+						name:'图+音频'
 					}
 				]
+			}
+		},
+		methods:{
+			tab(index){
+				this.$emit('tab',index)
 			}
 		}
 	}

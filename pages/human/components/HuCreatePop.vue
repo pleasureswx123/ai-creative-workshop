@@ -1,57 +1,32 @@
 <template>
-	<NovelPop :show="show"
-	  @close="$emit('update:show', false)"
-	  :title="title" @confirm="handConfirm">
-	<view class="waterfall">
-		<uv-waterfall ref="waterfall" v-model="list" :add-time="10" :left-gap="leftGap" :right-gap="rightGap"
-			:column-gap="columnGap" @changeList="changeList">
-			<!-- 第一列数据 -->
-			<template v-slot:list1>
-				<!-- 为了磨平部分平台的BUG，必须套一层view -->
-				<view>
-					<view v-for="(item, index) in list1" :key="item.id" class="waterfall-item"
-						@click="wallInfo(item.task_id)">
-						<view class="waterfall-item__image" :style="[imageStyle(item)]">
-							<image :src="item.img_url" mode="widthFix"></image>
-						</view>
-						<view class="waterfall-item__ft">
-							<view class="waterfall-item__ft__title">
-								<text class="value">{{item.model_info}}</text>
+	<NovelPop :show="show" @close="$emit('update:show', false)" :title="title" @confirm="handConfirm" :height="100+'vh'">
+		<view class="waterfall">
+			<uv-waterfall ref="waterfall" v-model="list" :column-count="columnCount" :add-time="10" :left-gap="leftGap"
+				:right-gap="rightGap" :column-gap="columnGap" @changeList="changeList">
+				<!-- 第一列数据 -->
+				<template v-for="num in columnCount" v-slot:[`list${num}`]>
+					<view>
+						<view v-for="(item, index) in waterfall[`list${num}`]" :key="item.id"
+							:class="{active: activeIndex == item.id}" class="waterfall-item">
+							<view class="waterfall-item__image" :style="[imageStyle(item)]"
+								@tap="handleSelect(item,index)">
+								<image :src="item.img_url" mode="widthFix" :style="{width:item.width+'px'}"></image>
 							</view>
 						</view>
 					</view>
-				</view>
-			</template>
-			<!-- 第二列数据 -->
-			<template v-slot:list2>
-				<!-- 为了磨平部分平台的BUG，必须套一层view -->
-				<view>
-					<view v-for="(item, index) in list2" :key="item.id" class="waterfall-item"
-						@click="wallInfo(item.task_id)">
-						<view class="waterfall-item__image" :style="[imageStyle(item)]">
-							<image :src="item.img_url" mode="widthFix"></image>
-						</view>
-						<view class="waterfall-item__ft">
-							<view class="waterfall-item__ft__title">
-								<text class="value">{{item.model_info}}</text>
-							</view>
-						</view>
-					</view>
-				</view>
-			</template>
-		</uv-waterfall>
-		<view class="load-more" v-show="countShow == true">
-			<u-loadmore :status="status" :nomore-text="nomoreText" @loadmore="getList" />
+				</template>
+			</uv-waterfall>
+			<view class="no-more" v-if="showNoMore">没有更多了</view>
+			<view class="load-more" v-else>
+				<view class="more-btn" @tap="loadMore">加载更多</view>
+			</view>
 		</view>
-		<view class="load-more" v-show="countShow == false">
-			没有更多了
-		</view>
-	</view>
-</NovelPop>
+	</NovelPop>
 </template>
 
 <script>
-import {photoApi} from '@/api'
+	import {guid} from '@/uni_modules/uv-ui-tools/libs/function/index.js'
+	import {photoApi} from '@/api'
 	export default {
 		props: {
 			show: {
@@ -62,29 +37,46 @@ import {photoApi} from '@/api'
 				type: String,
 				default: false,
 			},
+			selectId: {
+				type: [String, Number],
+				default: ''
+			},
+			paramsInfo: {
+				type: Object,
+				default: () => ({})
+			},
+			proxyList: {
+				type: Function,
+			}
 		},
 		data() {
 			return {
+				columnCount: 2,
+				page: 1,
+				pagesize: 10,
 				list: [], // 瀑布流全部数据
-				list1: [], // 瀑布流第一列数据
-				list2: [], // 瀑布流第二列数据
+				waterfall: {},
 				leftGap: 10,
 				rightGap: 10,
 				columnGap: 10,
-				wallShow: false,
-				wallList: [],
-				currentNum: 0,
-				wallCont: {},
-				nomoreText: '没有更多了',
-				countShow:false,
-				status: 'loadmore',
+				showNoMore: true,
+				activeIndex: 0,
+				item: {}
 			}
 		},
+		created() {
+			this.setColumnCount();
+			this.clearData();
+			// this.getData();
+		},
+
 		computed: {
 			imageStyle(item) {
 				return item => {
-					const v = uni.upx2px(750 - 20) - this.leftGap - this.rightGap - this.columnGap;
-					const w = v / 2;
+					const val = uni.upx2px(750);
+					const num = val > 1200 ? 1200 : val;
+					const v = num - this.leftGap - this.rightGap - this.columnGap;
+					const w = v / this.columnCount;
 					const rate = w / item.img_width;
 					const h = rate * item.img_height;
 					return {
@@ -92,69 +84,118 @@ import {photoApi} from '@/api'
 						height: h + 'px'
 					}
 				}
+			},
+			params() {
+				return {
+					page: this.page,
+					pagesize: this.pagesize,
+					...this.paramsInfo,
+				}
 			}
 		},
-		onLoad() {
-			this.getData();
+		watch: {
+			// paramsInfo: {
+			// 	deep: true,
+			// 	handler() {
+			// 		this.list = []
+			// 		this.clearData();
+			// 		this.getData();
+			// 	}
+			// },
+		},
+		mounted() {
+			// #ifdef H5
+			// window.addEventListener('resize', this.restData)
+			// #endif
+		},
+		beforeDestroy() {
+			// #ifdef H5
+			// window.removeEventListener('resize', this.restData);
+			// #endif
+			this.$refs?.waterfall?.clear?.();
 		},
 		methods: {
-			async change(index) {
-				this.model_subclass_id = index.current
+			getShow() {
 				this.list = []
-				this.$refs.waterfall.clear()
-				this.list1 = []
-				this.list2 = []
-				this.getData()
+				this.clearData();
+				this.getData();
 			},
-			// 这点非常重要：e.name在这里返回是list1或list2，要手动将数据追加到相应列
+			restData() {
+				uni.$u.debounce(this.resetColumnCount, 800);
+			},
+			setColumnCount() {
+				const {
+					windowWidth
+				} = uni.getSystemInfoSync();
+				if (750 < windowWidth && windowWidth < 960) {
+					this.columnCount = 3;
+
+				}
+				if (windowWidth > 960) {
+					this.columnCount = 4;
+				}
+			},
+			resetColumnCount() {
+				this.setColumnCount();
+				this.clearData();
+				return this.getData();
+			},
+			initListData() {
+				for (let i = 0; i < this.columnCount; i++) {
+					this.$set(this.waterfall, `list${i + 1}`, [])
+				}
+			},
+			handleSelect(item, index) {
+				this.activeIndex = item.id
+				this.item = item
+			},
+			clearData() {
+				this.page = 1;
+				this.list = [];
+				this.$refs?.waterfall?.clear?.();
+				this.initListData();
+			},
 			changeList(e) {
-				this[e.name].push(e.value);
+				this.waterfall[e.name].push(e.value);
 			},
-			getList() {
-				this.page++
-				this.getData()
+			loadMore() {
+				if (this.showNoMore) {
+					return;
+				}
+				this.page++;
+				this.getData();
 			},
-			// 模拟的后端数据
 			getData() {
-				return new Promise((resolve) => {
-					app.globalData.util.request({
-						url: '/AiDraw/getHistory',
-						data: {
-							page: this.page,
-							pagesize: this.pagesize
-						}
-					})
-					.then((res) => {
-						this.imgs = res.list
-						const imgs = this.imgs
-						if(res.data.list.length<10){
-							this.countShow = false
-						}else{
-							this.countShow = true
-						}
+				photoApi.getHistoryList({
+					page: this.page,
+					pagesize: this.pagesize,
+				}).then(res => {
+					if (res.list.length > 0) {
 						if (this.list.length == 0) {
-							this.list = this.imgs.map(item => {
+							this.list = res.list.map(item => {
+								const id = item.id || guid();
 								return {
-									...item.task_info
+									...item,
+									id
 								}
 							})
-						} else if (this.list.length > 0) {
-							this.imgs.map(item => {
-								this.list.push({
-									...item.task_info
-								})
-							})
+						} else {
+							this.list = [...this.list, ...res.list.map(item => {
+								const id = item.id || guid();
+								return {
+									...item,
+									id
+								}
+							})]
 						}
-					})
+					}
+					this.showNoMore = res.list.length < this.pagesize;
 				})
 			},
-			wallOpen() {
-
-			},
-			wallClose() {
-				this.wallShow = false
-			},
-
+			handConfirm() {
+				this.$emit('select',this.item)
+				this.$emit('update:show', false);
+			}
 		}
 	}
 </script>
@@ -162,11 +203,16 @@ import {photoApi} from '@/api'
 <style lang="scss" scoped>
 	@import '@/uni_modules/uv-ui-tools/libs/css/variable.scss';
 	.waterfall {
+		padding-bottom: 140rpx;
 		/deep/.uv-waterfall__gap_left {
 			width: 0 !important;
 		}
 		/deep/.uv-waterfall__gap_right {
 			width: 0 !important;
+		}
+		.no-more {
+			text-align: center;
+			margin: 50rpx auto;
 		}
 		.load-more {
 			width: 400rpx;
@@ -176,7 +222,7 @@ import {photoApi} from '@/api'
 			background-color: #1D1E23;
 			text-align: center;
 			margin: 50rpx auto;
-
+			cursor: pointer;
 			/deep/.u-loadmore__content__text {
 				line-height: 88rpx !important;
 			}
@@ -187,6 +233,10 @@ import {photoApi} from '@/api'
 		margin-top: 10px;
 		border-radius: 6px;
 		position: relative;
+		cursor:pointer;
+		&.active {
+			border: 1px solid var(--red-color1);
+		}
 		.waterfall-item__image {
 			image {
 				width: 100% !important;
@@ -202,6 +252,7 @@ import {photoApi} from '@/api'
 		&__title {
 			text-align: center;
 			font-weight: 700;
+
 			.value {
 				font-size: 28rpx;
 				color: #fff;
