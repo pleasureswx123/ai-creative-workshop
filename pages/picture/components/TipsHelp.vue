@@ -5,6 +5,14 @@
     <view class="tips-img">
       <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
     </view>
+<!--    <view class="tips-img video-group">
+      <view class="item">
+        <video src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
+      </view>
+      <view class="item">
+        <video src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1651_1707106361_28210.mp4"></video>
+      </view>
+    </view>-->
   </view>
 </template>
 
@@ -40,6 +48,16 @@ export default {
       width: 100%;
       height: auto;
       border-radius: 10rpx;
+    }
+  }
+}
+.video-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  .item {
+    min-width: 0;
+    video {
+      width: 100%;
     }
   }
 }

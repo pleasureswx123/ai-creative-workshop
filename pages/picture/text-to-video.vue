@@ -9,6 +9,7 @@
         v-if="generateState === 3"
         :showDownload="true"
         :src="finalUrl" />
+    <QmGenerating v-if="generating"></QmGenerating>
   
     <template v-if="generateState === 1">
       <Describe :value.sync="prompt"></Describe>
@@ -64,7 +65,7 @@ export default {
         task_type: this.taskType,
         prompt: this.prompt || '',
         prompt_extend: this.prompt_extend || '',
-        ratioId: this.ratioId || ''
+        ratio_id: this.ratioId || ''
       }
     }
   },

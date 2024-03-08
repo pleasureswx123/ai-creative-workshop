@@ -5,11 +5,16 @@
     <view class="page-main">
       <PicHeader title="选择视频工具" />
       <view class="grid-box">
-        <view class="card-box pointer" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="item.id" @tap="handleClick(item)">
-          <view class="img-box">
-            <image model="aspectFill" :src="item.url"></image>
+        <view class="card-box pointer" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="item.id">
+          <view class="video-box">
+            <view class="item">
+              <video :enable-progress-gesture="false" src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
+            </view>
+            <view class="item">
+              <video :enable-progress-gesture="false" src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
+            </view>
           </view>
-          <view class="card-info">
+          <view class="card-info" @tap="handleClick(item)">
             <view class="title">{{item.title}}</view>
             <view class="tips" v-if="item.tips">{{item.tips}}</view>
             <view class="go-btn">前往创作</view>
@@ -57,7 +62,7 @@ export default {
 }
 .grid-box {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 20rpx;
   margin-top: 30rpx;
   .card-box {
@@ -70,8 +75,8 @@ export default {
     background: #25262B;
     box-sizing: border-box;
     border: 2rpx solid #373A40;
-    //display: flex;
-    //align-items: center;
+    display: flex;
+    align-items: center;
     gap: 20rpx;
     .title {
       font-size: 24rpx;
@@ -90,14 +95,20 @@ export default {
   .card-info {
     flex: 1;
     min-width: 0;
-    //padding-right: 10rpx;
+    padding-right: 10rpx;
   }
-  .img-box {
-    aspect-ratio: 4 / 3;
-    image {
-      display: block;
-      width: 100%;
-      height: 100%;
+  .video-box {
+    width: 58%;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    .item {
+      flex: 1;
+      min-width: 0;
+      video {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   .go-btn {
@@ -114,13 +125,13 @@ export default {
 
 @media screen and (min-width: 750px) and (max-width: 960px){
   .grid-box {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (min-width: 960px) {
   .grid-box {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
