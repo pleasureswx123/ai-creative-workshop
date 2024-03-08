@@ -56,15 +56,19 @@ html, body {
   --red-color2: rgba(246, 6, 82, .3);
 }
 
-/* 强制显示控制栏 */
-.video-js .vjs-control-bar {
-  display: flex !important;
-}
-/* 自定义控制栏样式 */
-.video-js .vjs-control-bar {
-  background-color: rgba(0, 0, 0, 0.5); /* 控制栏背景颜色 */
-}
-.video-js .vjs-control-bar .vjs-play-control,
-.video-js .vjs-control-bar .vjs-volume-menu-button {
-  color: white; /* 播放按钮和音量按钮颜色 */
-}
+/*.video-js {*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/
+/*!* 强制显示控制栏 *!*/
+/*.video-js .vjs-control-bar {*/
+/*  display: flex !important;*/
+/*}*/
+/*!* 自定义控制栏样式 *!*/
+/*.video-js .vjs-control-bar {*/
+/*  background-color: rgba(0, 0, 0, 0.5); !* 控制栏背景颜色 *!*/
+/*}*/
+/*.video-js .vjs-control-bar .vjs-play-control,*/
+/*.video-js .vjs-control-bar .vjs-volume-menu-button {*/
+/*  color: white; !* 播放按钮和音量按钮颜色 *!*/
+/*}*/

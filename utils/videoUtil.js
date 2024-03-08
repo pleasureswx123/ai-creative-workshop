@@ -26,7 +26,7 @@
  * @return {null|*}
  */
 // 创建一个公用的 Video.js 播放器实例的工具函数
-function createVideoPlayer(videoElementId, videoSource, options) {
+function createVideoPlayer(videoElementId, videoSource, options = {}) {
   // 检查是否传入了 videoElementId 和 videoSource
   if (!videoElementId || !videoSource) {
     console.error('Video element ID and video source are required.');
@@ -34,6 +34,9 @@ function createVideoPlayer(videoElementId, videoSource, options) {
   }
   // 默认选项
   const defaultOptions = {
+    width: '100%',
+    height: '100%',
+    // autoplay: 'muted',
     controls: true, // 是否显示默认控件
     preload: 'auto', // 是否预加载视频
     fluid: true // 是否启用自适应大小
@@ -46,7 +49,10 @@ function createVideoPlayer(videoElementId, videoSource, options) {
   const videoElement = document.createElement('video');
   videoElement.id = videoElementId;
   videoElement.className = 'video-js';
-  videoElement.setAttribute('controls', mergedOptions.controls);
+
+  if(mergedOptions.controls) {
+    videoElement.setAttribute('controls', mergedOptions.controls);
+  }
   videoElement.setAttribute('preload', mergedOptions.preload);
 
   // 创建 source 元素
@@ -76,20 +82,6 @@ function createVideoPlayer(videoElementId, videoSource, options) {
 
   // 初始化时设置视频大小
   player.dimensions(window.innerWidth, window.innerHeight);
-
-  // 如果 controls 参数为 false，则手动隐藏控制栏
-
-  // 根据 controls 参数显示或隐藏控制栏
-  // if (mergedOptions.controls) {
-  // 	player.controls(true);
-  // } else {
-  // 	player.controls(false);
-  // }
-
-  // 根据 controls 参数显示或隐藏控制栏
-  if (!mergedOptions.controls) {
-    player.getChild('controlBar').hide();
-  }
 
   return player;
 }
