@@ -94,7 +94,9 @@ export default {
           if(this.qmIsWechat() && this.isBindWechat) {
             trade_type = 'jsapi'
           }
+          // jsapi：是微信浏览器   mweb：是移动端手机浏览器   native：是web端浏览器
           this.createOrder(Object.assign({}, this.params, {
+            // platform: this.qmIsMobile() ? 'h5' : 'web', trade_type
             platform: 'h5', trade_type
           })).then(res => {
             if (trade_type === 'jsapi') {

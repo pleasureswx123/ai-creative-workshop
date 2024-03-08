@@ -107,7 +107,7 @@ export default {
       return !!(ua.match(/mobile/i))
     },
     isVideoTaskType(taskType) {
-      return [2, 10, 11].includes(+taskType)
+      return [2, 10, 11, 24].includes(+taskType)
     },
     toggleBodyPositionStatus(status) {
       document.body.style.overflow = status ? 'hidden' : '';
