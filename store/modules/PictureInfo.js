@@ -83,12 +83,13 @@ const mutations = {
         10: 'img-to-dance',
         11: 'img-to-draw',
         25: 'text-to-video',
+        26: '',
       }
       return {
         ...item,
         url: item.img_url,
         name: item.title,
-        ...({type: temp[item.id] || 'img-to-video'})
+        ...({type: temp[item.id] || 'xxxxxx'})
       }
     });
   },

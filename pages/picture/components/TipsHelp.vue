@@ -2,17 +2,14 @@
   <view class="tips-box">
     <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="var(--txt-color2)" size="20" />
     <view>{{info.content}}</view>
-    <view class="tips-img">
-      <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
+    <view class="tips-img video-group">
+      <view class="item" v-if="info.video_url">
+        <video :enable-progress-gesture="false" :src="info.video_url"></video>
+      </view>
+      <view class="item" v-else-if="info.img_url">
+        <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
+      </view>
     </view>
-<!--    <view class="tips-img video-group">
-      <view class="item">
-        <video src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
-      </view>
-      <view class="item">
-        <video src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1651_1707106361_28210.mp4"></video>
-      </view>
-    </view>-->
   </view>
 </template>
 
@@ -52,12 +49,13 @@ export default {
   }
 }
 .video-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   .item {
+    flex: 1;
     min-width: 0;
     video {
       width: 100%;
+      height: 100%;
     }
   }
 }

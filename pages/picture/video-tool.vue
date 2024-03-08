@@ -7,11 +7,11 @@
       <view class="grid-box">
         <view class="card-box pointer" v-for="(item, index) in videoToolsList" :data-type="item.type" :key="item.id">
           <view class="video-box">
-            <view class="item">
-              <video :enable-progress-gesture="false" src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
+            <view class="item" v-if="item.video_url">
+              <video object-fit="contain" :enable-progress-gesture="false" :src="item.video_url"></video>
             </view>
-            <view class="item">
-              <video :enable-progress-gesture="false" src="https://st-cn.chaojiyuyan.cn/upload/user_task/video/02/2/2_1652_1707106565_60724.mp4"></video>
+            <view class="item" v-else-if="item.img_url">
+              <image :src="item.img_url" mode="aspectFit"></image>
             </view>
           </view>
           <view class="card-info" @tap="handleClick(item)">
@@ -76,26 +76,34 @@ export default {
     box-sizing: border-box;
     border: 2rpx solid #373A40;
     display: flex;
-    align-items: center;
     gap: 20rpx;
     .title {
+      font-size: 28rpx;
+      color: var(--txt-color1);
+      text-align: center;
+      line-height: 80rpx;
+    }
+    .tips {
       font-size: 24rpx;
       color: var(--txt-color1);
       text-align: center;
-      line-height: 70rpx;
-    }
-    .tips {
-      font-size: 20rpx;
-      color: var(--txt-color1);
-      text-align: center;
-      line-height: 1.5;
-      padding: 0 0 15rpx;
+      line-height: 2;
+      margin-bottom: 15rpx;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
   .card-info {
     flex: 1;
     min-width: 0;
     padding-right: 10rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .video-box {
     width: 58%;
@@ -104,7 +112,8 @@ export default {
     .item {
       flex: 1;
       min-width: 0;
-      video {
+      video, image {
+        background-color: rgba(0,0,0,.9);
         display: block;
         width: 100%;
         height: 100%;
@@ -112,6 +121,7 @@ export default {
     }
   }
   .go-btn {
+    width: 70%;
     height: 70rpx;
     line-height: 70rpx;
     text-align: center;
