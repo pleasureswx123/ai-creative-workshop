@@ -18,7 +18,7 @@
   background: var(--bg-color1);
   min-height: 100vh;
   .page-main {
-    padding: 0 30rpx 400rpx;
+    padding: 0 20rpx 400rpx;
     //-webkit-overflow-scrolling: touch;
     //overflow-x: hidden;
     //overflow-y: auto;

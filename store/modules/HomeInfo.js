@@ -38,9 +38,74 @@ const actions = {
 
 const mutations = {
   setAiTypeList(state, info = []) {
+    const temp = {
+      1: {
+        // iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
+        iconName: 'icon-qm-chat',
+        url: 'pages/ai/index'
+      },
+      2: {
+        iconName: 'icon-qm-MaterialSymbolsLinkedCameraRounded',
+        url: 'pages/photos/index'
+      },
+      3: {
+        iconName: 'icon-qm-MdiImageEdit',
+        url: 'pages/tool/list',
+        params: {
+          classId: 1
+        }
+      },
+      4: {
+        iconName: 'icon-qm-MaterialSymbolsVideoCallRounded',
+        url: 'pages/tool/list',
+        params: {
+          classId: 2
+        }
+      },
+      5: {
+        iconName: 'icon-qm-MaterialSymbolsAutoDetectVoice',
+        url: 'pages/sound/index'
+      },
+      6: {
+        iconName: 'icon-qm-MaterialSymbolsPhotoCameraFront',
+        url: 'pages/tool/list',
+        params: {
+          classId: 3
+        }
+      },
+      7: {
+        iconName: 'icon-qm-MaterialSymbolsMenuBook',
+        url: 'pages/special/novel',
+        expectationUrl: 'pages/special/novel'
+      },
+      8: {
+        iconName: 'icon-qm-MaterialSymbolsPhotoLibraryRounded',
+        url: 'pages/electronic/index',
+        expectationUrl: 'pages/special/make-diagram',
+      },
+      9: {
+        iconName: 'icon-qm-IcRoundModelTraining',
+        url: 'pages/special/train-model',
+        expectationUrl: 'pages/special/train-model',
+      },
+      10: {
+        iconName: 'icon-qm-GgDigitalocean',
+        url: 'pages/special/digital-humans',
+        expectationUrl: 'pages/special/digital-humans',
+      },
+      11: { // 三八妇女节活动
+        iconName: 'icon-qm-woman',
+        url: 'pages/tool/list',
+        params: {
+          classId: 4
+        },
+        expectationUrl: '',
+      },
+    };
     state.aiTypeList = (info || []).map(item => ({
       ...item,
-      id: item.channel_id
+      id: item.channel_id,
+      ...(temp[`${item.channel_id}`] || {})
     }));
   },
   setBannerInfo(state, info = {}) {

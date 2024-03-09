@@ -67,7 +67,7 @@ export default {
       const temp = {
         1: 'getAiDetailsInfo',
         2: 'getDrawDetailsInfo',
-        3: 'getDrawDetailsInfo',
+        3: 'getDigitDetailsInfo',
       }
       const methodName = temp?.[`${class_type}`] || 'getDrawDetailsInfo';
       return userApi?.[methodName]({task_id})

@@ -9,6 +9,7 @@
         v-if="generateState === 3"
         :showDownload="true"
         :src="finalUrl" />
+    <QmGenerating v-if="generating"></QmGenerating>
   
     <template v-if="generateState === 1">
       <Describe :value.sync="prompt"></Describe>
@@ -17,7 +18,9 @@
           :isShowLanguageBtn="false"
           placeholder="可以不填写"
           :value.sync="prompt_extend"></Describe>
-      <QmRatio :value.sync="ratioId"></QmRatio>
+      <QmRatio
+          :value.sync="ratioId"
+          :list="ImgRatioInfo" />
     </template>
     
     <template #footer>
@@ -43,17 +46,17 @@ export default {
         prompt: {
           txt: '请输入画面描述'
         },
-        ratio_id: {
+        scale: {
           txt: '请选择出图比例'
         },
       },
     }
   },
   computed: {
-    radioOptions() {
-      return (this.taskDetail?.expand_model?.generation_duration || []).map(item => {
+    ImgRatioInfo() {
+      return (this.taskDetail?.expand_model?.scale_list || []).map(item => {
         const { val, val_name } = item || {};
-        return { label: val_name, value: val}
+        return {id: +val, title: val_name, scale: val_name}
       })
     },
     disabled() {
@@ -64,7 +67,7 @@ export default {
         task_type: this.taskType,
         prompt: this.prompt || '',
         prompt_extend: this.prompt_extend || '',
-        ratioId: this.ratioId || ''
+        scale: this.ratioId || ''
       }
     }
   },

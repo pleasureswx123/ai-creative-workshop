@@ -2,8 +2,13 @@
   <view class="tips-box">
     <uni-icons custom-prefix="iconfont-qm" type="icon-qm-tips" color="var(--txt-color2)" size="20" />
     <view>{{info.content}}</view>
-    <view class="tips-img">
-      <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
+    <view class="tips-img video-group">
+      <view class="item" v-if="info.video_url">
+        <video :enable-progress-gesture="false" :src="info.video_url"></video>
+      </view>
+      <view class="item" v-else-if="info.img_url">
+        <image mode="widthFix" :lazy-load="true" :src="info.img_url"></image>
+      </view>
     </view>
   </view>
 </template>
@@ -40,6 +45,17 @@ export default {
       width: 100%;
       height: auto;
       border-radius: 10rpx;
+    }
+  }
+}
+.video-group {
+  display: flex;
+  .item {
+    flex: 1;
+    min-width: 0;
+    video {
+      width: 100%;
+      height: 100%;
     }
   }
 }

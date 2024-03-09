@@ -106,8 +106,14 @@ export default {
       const ua = navigator.userAgent.toLowerCase();
       return !!(ua.match(/mobile/i))
     },
-    isVideoTaskType(taskType) {
-      return [2, 10, 11].includes(+taskType)
+    isVideoTaskType(item) {
+      // item.task_type
+      return (+item.url_type) === 2;
+      // return [2, 10, 11, 24, 25, 26].includes(+taskType)
+    },
+    isImgTaskType(item) {
+      return (+item.url_type) === 1;
+      // return [2, 10, 11, 24, 25, 26].includes(+taskType)
     },
     toggleBodyPositionStatus(status) {
       document.body.style.overflow = status ? 'hidden' : '';

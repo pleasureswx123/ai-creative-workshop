@@ -57,8 +57,8 @@ export default {
     this.clearTimer();
   },
   onLoad({type}) {
+    this.taskType = type || '';
     this.checkLoginStatus().then(() => {
-      this.taskType = type || '';
       const eventChannel = this.getOpenerEventChannel();
       eventChannel.on('acceptData', ({data}) => {
         const { currentImg } = data || {};

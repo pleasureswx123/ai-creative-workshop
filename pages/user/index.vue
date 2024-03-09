@@ -33,7 +33,7 @@ export default {
       const {img_task_num = 0, video_task_num = 0, phone = ''} = this.userInfoState || {};
       return [
         {name: '图片创作', value: img_task_num , url: '/pages/picture/index'},
-        {name: '视频创作', value: video_task_num, url: '/pages/picture/video-tool'},
+        {name: '视频创作', value: video_task_num, url: '/pages/tool/list?classId=2'},
         {name: '我的算力', value: '查看详情', url: '/pages/user/integral-detail'},
         {name: '兑换会员', type: 'code'},
         {name: '手机号', value: phone, type: 'phone'},

@@ -2,8 +2,8 @@
   <view class="container">
     <StatusItemProgress v-if="[0, 10].includes(state)"
         :info="info" :percentage="50" />
-    <StatusItemVideo v-if="state === 1 && isVideoTaskType(taskType)" :info="info" @toDetails="toDetails" />
-    <StatusItemImg v-if="state === 1 && !isVideoTaskType(taskType)" :info="info"
+    <StatusItemVideo v-if="state === 1 && isVideoTaskType(info)" :info="info" @toDetails="toDetails" />
+    <StatusItemImg v-if="state === 1 && isImgTaskType(info)" :info="info"
                    @toDetails="toDetails"
                    @showToolAction="showToolAction" />
     <StatusItemError v-if="state === 2" :info="info" />

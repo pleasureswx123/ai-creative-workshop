@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 unpackage/
+packages/
 .DS_Store
 dist
 
