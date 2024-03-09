@@ -7,11 +7,13 @@
         <u-icon name="arrow-right" size="24rpx" color="var(--txt-color2)"></u-icon>
       </view>
     </view>
-    <QmWaterFallPop
+  
+    <QmPop
         v-if="showHistoryPop"
         :show.sync="showHistoryPop"
         :currentInfo.sync="historyInfo"
         title="选择要处理的图片"
+        componentName="HistoryItem"
         :getList="getHistoryList"
         :proxyList="item => {
           const {img_height: h, img_url, img_width: w, task_id} = item || {};
@@ -28,6 +30,7 @@
             value: 0.8
           }
         }" />
+    
   </view>
 </template>
 
