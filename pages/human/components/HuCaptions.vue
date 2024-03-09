@@ -5,7 +5,7 @@
 			<selectSwitch @change="changeSwitch" />
 			<view class="capChoose" @tap="capShow = true">
 				<u-picker :show="capShow" keyName="label" :columns="capColumns" @confirm="capConfirm" @cancel="capShow=false"></u-picker>
-				<u--input v-model="capName" placeholder="请选择字幕类型"></u--input>
+				<u--input v-model="capName"></u--input>
 			</view>
 		</view>
 	</view>
@@ -22,7 +22,7 @@ export default{
 			capColumns: [[]],
 			capColumnsList:[],
 			capName:'',
-			capId:'',
+			capId:2,
 			show_captions:1
 		}
 	},
@@ -41,6 +41,7 @@ export default{
 				res.list.map(item=>{
 					this.capColumns[0].push(item.title)
 				})
+				this.capName = this.capColumnsList[0].title
 			})
 		},
 		capConfirm(e){
@@ -81,10 +82,17 @@ export default{
 	}
 	/deep/.u-picker{
 		background-color:var(--bg-color2);
+		height: 35vh;
+		.u-picker__view{
+			height: 100%!important;
+		}
 		.u-picker__view__column__item{
 			height: 70rpx!important;
 			line-height: 70rpx!important;
 			color: var(--txt-color1);
+		}
+		.uni-picker-view-content{
+			// padding: 20rpx 0!important;
 		}
 		.uni-picker-view-indicator{
 			height: 70rpx!important;

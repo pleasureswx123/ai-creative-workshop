@@ -55,15 +55,16 @@
 		},
 		methods:{
 			handleUpload(){
+				var that = this
 				uni.chooseFile({
 					count: 1,   //选取的文件个数限制
 					extension: [".mp3"],  //可定义允许哪些后缀的文件可被选择
 					success: function (res) {
 					  let tempFilePaths = res.tempFilePaths;
-					  console.log(res)
 					  uni.showLoading({
 						title: "上传中...",
 					  });
+					  
 					  uni.uploadFile({
 						name: 'audio',    //文件上传的name值
 						url: 'https://aigc.chaojiyuyan.cn/web.php/upload/audio',    //接口地址
@@ -73,11 +74,12 @@
 						fileType: "audio",   //文件类型
 						success: (uploadFileRes) => {
 						  uni.hideLoading();
-						  this.uploadShow = false
+						  that.uploadShow = false
 						  const ret = JSON.parse(uploadFileRes.data);
-						  console.log(ret); 
+						  that.audioCont.dub_url = ret.data.path
 						},
 					  });
+					  
 					},
 				});
 			},
@@ -87,6 +89,7 @@
 			onSelect(item){
 				this.audioCont = item
 				this.uploadShow = false
+				console.log(this)
 			},
 			destroyAudio() {
 			  if(this.audioContext) {
