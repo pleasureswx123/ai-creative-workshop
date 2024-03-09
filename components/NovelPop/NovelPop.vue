@@ -6,7 +6,7 @@
       overlayStyle="background: rgba(0,0,0,.7)"
       :round="round"
       :safeAreaInsetBottom="safeAreaInsetBottom">
-    <view class="pop-container">
+    <view class="pop-container" :style="{height:height}">
       <view class="pop-body-container" v-if="show">
         <view class="top-bar" :show="titleShow" v-if="titleShow">
           <text class="title">{{title}}</text>
@@ -20,7 +20,7 @@
         </view>
         <view class="footer-bar" v-if="setShow">
           <view class="btn-box cancle" @tap="$emit('close')">取 消</view>
-          <view class="btn-box pointer" @tap="$emit('confirm')">确 定</view>
+          <view class="btn-box pointer" @tap="$emit('confirm')" :style="{background:color}">确 定</view>
         </view>
       </view>
     </view>
@@ -53,6 +53,14 @@ export default {
 	titleShow:{
 		type: Boolean,
 		default: true
+	},
+	height:{
+		type: [ String, Number],
+		default: '高度'
+	},
+	color:{
+		type: String,
+		default: '#6978fd'
 	}
   },
   watch: {
@@ -82,6 +90,7 @@ export default {
   position: relative;
   overflow: hidden;
   padding-bottom:20rpx;
+  max-height:100vh;
   .pop-body-container {
 	  height: 100%;
 	  width: 100%;

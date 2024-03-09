@@ -6,6 +6,7 @@ import homeApi from './home';
 import orderApi from './order';
 import articleApi from './article';
 import NovelApi from './novel';
+import HumanApi from './human';
 
 export {
   userApi,
@@ -15,5 +16,6 @@ export {
   homeApi,
   orderApi,
   articleApi,
-  NovelApi
+  NovelApi,
+  HumanApi
 }

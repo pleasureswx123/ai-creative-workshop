@@ -1,6 +1,6 @@
 {
     "name" : "-",
-    "appid" : "__UNI__05E00C4",
+    "appid" : "__UNI__34903F0",
     "description" : "",
     "versionName" : "2.3.8",
     "versionCode" : "100",
@@ -113,8 +113,7 @@
                 }
             }
         },
-        // https://api.chaojiyuyan.com/pc.php/VideoTask/GetDub'
-        "title" : "加载中",
+        "title" : "超级语言",
         "uniStatistics" : {
             "enable" : true
         },
