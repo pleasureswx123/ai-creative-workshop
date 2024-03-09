@@ -11,6 +11,7 @@
           :class="{active: currentVal === item.id}"
           @tap="currentVal = item.id">
         <view class="ratio-box">
+<!--          <img class="img-el" :src="item.src" />-->
           <image :src="item.src" mode="aspectFit"></image>
         </view>
         <view>{{item.scale}}</view>
@@ -50,8 +51,8 @@ export default {
     ratioList() {
       return this.list.map(item => {
         const [w, h] = item.scale.split(':');
-        const width = w * 100;
-        const height = h * 100;
+        const width = w * 10;
+        const height = h * 10;
         return Object.assign({}, item, {
           src: `https://via.placeholder.com/${width}x${height}.png/808080/808080`
         });
@@ -94,6 +95,7 @@ export default {
   gap: 6rpx;
   text-align: center;
   .item {
+    min-width: 0;
     border-radius: 10rpx;
     //background: #2C2E33;
     padding: 4rpx;
@@ -106,13 +108,17 @@ export default {
   }
   .ratio-box {
     aspect-ratio: 16 / 9;
+    max-height: 120rpx;
     padding: 10rpx;
-    border: 4rpx solid #000;
-    margin-bottom: 6rpx;
+    border: 4rpx solid #141517;
+    margin: 0 auto 6rpx;
+    box-sizing: border-box;
     image {
       border: 4rpx solid #141517;
+      display: block;
       width: 100%;
       height: 100%;
+      object-fit: contain;
       box-sizing: border-box;
     }
   }
