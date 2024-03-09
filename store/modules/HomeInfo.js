@@ -75,7 +75,7 @@ const mutations = {
       },
       7: {
         iconName: 'icon-qm-MaterialSymbolsMenuBook',
-        url: 'pages/special/novel',
+        url: 'pages/special/tweets',
         expectationUrl: 'pages/special/novel'
       },
       8: {
@@ -90,7 +90,7 @@ const mutations = {
       },
       10: {
         iconName: 'icon-qm-GgDigitalocean',
-        url: 'pages/special/digital-humans',
+        url: 'pages/human/index',
         expectationUrl: 'pages/special/digital-humans',
       },
       11: { // 三八妇女节活动

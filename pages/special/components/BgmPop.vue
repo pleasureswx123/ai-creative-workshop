@@ -39,7 +39,7 @@ export default {
 				id:3,
 				url:''
 			}
-		]
+		],
 	  }
 	},
 	methods: {
