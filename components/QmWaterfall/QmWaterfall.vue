@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import {guid} from '@/uni_modules/uv-ui-tools/libs/function/index.js'
-
 export default {
   props: {
     selectId: {
@@ -157,7 +155,7 @@ export default {
     getData() {
       return this.getList(this.params).then(resData => {
         const resList = (this.proxyList ? ((resData?.list || []).map(this.proxyList)) : resData?.list).map(item => {
-          const id = item.id || guid();
+          const id = item.id || uni.$u.guid(20);
           return { ...item, id }
         });
         this.showNoMore = resList.length < this.params.pagesize;
