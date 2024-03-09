@@ -40,8 +40,6 @@
       <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
     
-    <view style="color: #fff">{{previewVideoInfo}}</view>
-  
     <QmPreviewVideo
         :showPreview.sync="showPreviewVideo"
         :info="previewVideoInfo" />
