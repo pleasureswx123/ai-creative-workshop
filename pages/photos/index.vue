@@ -69,8 +69,32 @@
           :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
           :show.sync="showLoraPop"
           :currentInfo.sync="loraInfo" />
+  
+  
+      <QmPop
+          v-if="showHistoryPop"
+          :show.sync="showHistoryPop"
+          :currentInfo.sync="referenceImgInfo"
+          title="选择要处理的图片"
+          componentName="HistoryItem"
+          :getList="getHistoryList"
+          :proxyList="item => {
+          const {img_height: h, img_url, img_width: w, task_id} = item || {};
+          const url = img_url || '';
+          const titles = url.split('/').slice(-1);
+          return {
+            ...item,
+            allowEdit: false,
+            image: url,
+            w, h,
+            url,
+            title: titles[0] || url,
+            id: task_id,
+            value: 0.8
+          }
+        }" />
       
-      <QmWaterFallPop
+<!--      <QmWaterFallPop
           v-if="showHistoryPop"
           :show.sync="showHistoryPop"
           :currentInfo.sync="referenceImgInfo"
@@ -90,7 +114,7 @@
               id: task_id,
               value: 0.8
             }
-          }" />
+          }" />-->
       
       <ControinetPop
           v-if="showControinetPop"

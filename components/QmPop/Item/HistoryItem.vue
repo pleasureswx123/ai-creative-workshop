@@ -1,7 +1,7 @@
 <template>
   <view class="item-box" :class="{active}" @tap="$emit('select', info)">
     <view class="pic-box">
-      <image mode="aspectFit" :src="info.img_url"></image>
+      <image mode="aspectFill" :src="info.img_url"></image>
     </view>
   </view>
 </template>
@@ -26,7 +26,7 @@ export default {
   border: 1px solid #000;
   border-radius: 20rpx;
   background-color: #23242C;
-  padding-bottom: 20rpx;
+  //padding-bottom: 20rpx;
   position: relative;
   overflow: hidden;
   &.active {
@@ -37,7 +37,7 @@ export default {
     aspect-ratio: 1 / 1;
     overflow: hidden;
     position: relative;
-    margin-bottom: 20rpx;
+    //margin-bottom: 20rpx;
     border-radius: 20rpx;
     image {
       width: 100%;
