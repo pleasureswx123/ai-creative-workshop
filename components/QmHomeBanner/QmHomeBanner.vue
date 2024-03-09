@@ -4,8 +4,8 @@
       <template v-if="bannerInfo.url_type === 'image'">
         <Imgs :imgs="bannerInfo.url_data"></Imgs>
       </template>
-<!--      <QmVideo v-if="bannerInfo.url_type === 'video'" :src="bannerInfo.url"></QmVideo>-->
-      <QmVideojs
+      <QmVideo v-if="bannerInfo.url_type === 'video'" :src="bannerInfo.url"></QmVideo>
+<!--      <QmVideojs
           v-if="bannerInfo.url_type === 'video'"
           :src="bannerInfo.url"
           :options="{
@@ -13,7 +13,7 @@
             controls: false,
             vStyle: 'object-fit: fill;'
           }"
-      ></QmVideojs>
+      ></QmVideojs>-->
       <view class="bannerText">
         <text class="eng">{{bannerInfo.slogan_en}}</text>
         <view>

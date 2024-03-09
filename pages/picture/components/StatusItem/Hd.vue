@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     btnTxt() {
-      return this.isVideoTaskType(+this.info.task_type) ? '查看详情' : '图像处理';
+      return this.isVideoTaskType(this.info) ? '查看详情' : '图像处理';
     }
   },
   methods: {

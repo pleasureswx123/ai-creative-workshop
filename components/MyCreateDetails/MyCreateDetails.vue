@@ -10,12 +10,12 @@
           <icon class="pointer" @tap="showPop = false" color="var(--txt-color1)" type="cancel" size="30" />
         </view>
       </view>
-      <view class="pop-main-content" :class="{isVideo: isVideoTaskType(info.task_type)}">
+      <view class="pop-main-content" :class="{isVideo: isVideoTaskType(info)}">
         
-        <template v-if="isVideoTaskType(info.task_type)">
+        <template v-if="isVideoTaskType(info)">
           <VideoItem :info="info"></VideoItem>
         </template>
-        <template v-if="!isVideoTaskType(info.task_type)">
+        <template v-if="isImgTaskType(info)">
           <ImgItem @change="sn => { imgCurrent = sn }" :info="info"></ImgItem>
         </template>
         
@@ -26,13 +26,13 @@
             <QmTaskInfo :info="info"></QmTaskInfo>
           </view>
           <view class="ft-btn-box">
-            <view v-if="isVideoTaskType(info.task_type)" class="btn-box" @tap="handleDownVideo">
+            <view v-if="isVideoTaskType(info)" class="btn-box" @tap="handleDownVideo">
               <view class="icon-box" v-if="downloadStatus">
                 <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#333" size="18" />
               </view>
               <view>下载视频</view>
             </view>
-            <template v-if="!isVideoTaskType(info.task_type)">
+            <template v-if="isImgTaskType(info)">
               <view class="btn-box" @tap="handleDownImage">
                 <view class="icon-box" v-if="downloadStatus">
                   <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#333" size="18" />
