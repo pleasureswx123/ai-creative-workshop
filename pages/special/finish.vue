@@ -47,11 +47,7 @@
 				NovelApi.getTaskInfo({
 					data:{
 						task_id:row
-					},
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552"
+					}
 				}).then(res => {
 					const state = res.state
 					if(state == 0 || state == 1){

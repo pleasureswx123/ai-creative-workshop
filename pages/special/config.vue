@@ -41,11 +41,7 @@
 				NovelApi.getTaskInfo({
 					data:{
 						task_id:row
-					},
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552",
+					}
 				}).then(res => {
 					this.configList = res.describe_image
 				}).catch(() => {
@@ -73,11 +69,7 @@
 						task_id:row,
 						process_id:item.process_id,
 						prompt:item.value
-					},
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552",
+					}
 				}).then(res => {
 					uni.hideLoading()
 					this.configList[index].img_url = res.img_url
@@ -91,11 +83,7 @@
 					data:{
 						task_id:row,
 						type:2
-					},
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552",
+					}
 				}).then(res => {
 					uni.navigateTo({
 					   url: './storyboard'

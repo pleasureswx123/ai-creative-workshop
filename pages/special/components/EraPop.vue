@@ -42,11 +42,7 @@ export default {
 		getTimeStyle() {
 			NovelApi.getTimeStyle({
 				data:{page:1,
-        		pagesize:10,},
-				no_sign: 1,
-				sourceCode:"100001",
-				sign:"52d89ffef49b65edaf5d232104d42fac",
-				timestamp:"1545454552",
+        		pagesize:10,}
 			}).then(res => {
 				this.eraList = res.list
 			})
