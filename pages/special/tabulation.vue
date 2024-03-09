@@ -52,11 +52,7 @@
 						pagesize: this.pagesize,
 						user_id: user_id,
 						data_type: 1
-					},
-					no_sign: 1,
-					sourceCode: "100001",
-					sign: "52d89ffef49b65edaf5d232104d42fac",
-					timestamp: "1545454552"
+					}
 				}).then(res => {
 					if(this.page == 1&&res.list && res.list.length > 0){
 						this.lationList = res.list
@@ -79,11 +75,7 @@
 					data: {
 						user_id: user_id,
 						task_id: task_id
-					},
-					no_sign: 1,
-					sourceCode: "100001",
-					sign: "52d89ffef49b65edaf5d232104d42fac",
-					timestamp: "1545454552"
+					}
 				}).then(res => {
 					// this.lationList = [...this.lationList]
 					// this.lationList.splice(index, 1);

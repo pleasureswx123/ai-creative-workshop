@@ -106,11 +106,7 @@
 					row.is_automatic = 2
 				}
 				NovelApi.createTask({
-					data:row,
-					no_sign: 1,
-					sourceCode:"100001",
-					sign:"52d89ffef49b65edaf5d232104d42fac",
-					timestamp:"1545454552"
+					data:row
 				}).then(res => {
 					uni.setStorageSync('task',JSON.stringify(res.task_id))
 					if (data == '自动生成模式'){
