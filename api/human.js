@@ -20,4 +20,25 @@ export default {
       }
     })
   },
+  createTask(params = {}) {
+    return uni.$u.http.post(`/DigitPeople/CreateTask`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getTaskstate(params = {}) {
+    return uni.$u.http.post(`/DigitPeople/getTaskstate`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  GetMaterial(params = {}) {
+    return uni.$u.http.post(`/DrawTools/GetMaterial`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

@@ -68,8 +68,8 @@ export default {
         10: {
           iconName: 'icon-qm-GgDigitalocean',
           url: 'pages/human/index',
-          // expectationUrl: 'pages/special/digital-humans',
-          expectationUrl: 'pages/human/index',
+          expectationUrl: 'pages/special/digital-humans',
+          // expectationUrl: 'pages/human/index',
         },
         11: {
           iconName: 'icon-qm-woman',

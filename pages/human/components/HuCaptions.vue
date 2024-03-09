@@ -32,12 +32,7 @@ export default{
 	methods: {
 		changeSwitch(isSwitch){
 			isSwitch:false
-			if(isSwitch == true){
-				this.show_captions = 1
-			}else{
-				this.show_captions = 0
-			}
-			console.log(this.show_captions)
+			this.$emit('changeSwitch',isSwitch)
 		},
 		getTypeface() {
 			HumanApi.getTypeface({}).then(res => {

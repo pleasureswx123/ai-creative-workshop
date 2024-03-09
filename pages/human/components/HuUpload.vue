@@ -21,9 +21,9 @@
 		  </view>
 		  <HuCreatePop title="选择要处理的图片" ref="HuCreatePop" :show="creatPop" @select="onSelect" :show.sync="creatPop"></HuCreatePop>
 		</view>
-	  <view class="upload-img" v-if="imgShow">
+	  <view class="upload-img" v-else>
 		  <uni-icons type="icon-qm-close" custom-prefix="iconfont-qm" color="var(--txt-color2)" size="20" @tap="del" />
-		  <image :src="this.imgSrc" mode="aspectFit" @tap="previewImage(imgSrc)"></image>
+		  <image :src="imgSrc" mode="aspectFit" @tap="previewImage(imgSrc)"></image>
 	  </view>
 	</view>
 	
@@ -41,7 +41,6 @@ export default{
 			creatPop:false,
 			fileList1: [],
 			imgSrc:'',
-			imgShow:false,
 			uploadShow:true
 		}
 	},
@@ -53,7 +52,6 @@ export default{
 		onSelect(item){
 			this.imgSrc = item.img_url
 			this.uploadShow = false
-			this.imgShow = true
 		},
 		getHistoryList(){
 			photoApi.getHistoryList({
@@ -76,7 +74,6 @@ export default{
 			    userApi.uploadImg({filePath}).then(res => {
 			      this.imgSrc = res.path || '';
 				  this.uploadShow = false
-				  this.imgShow = true
 			    }).finally(() => {
 			      this.loading = false;
 			    });

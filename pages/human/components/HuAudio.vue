@@ -13,8 +13,7 @@
 			  </view>
 			</view>
 		</view>
-		<HuHistory title="选择历史配音" :show="historyPop" :show.sync="historyPop" @select="onSelect"></HuHistory>
-		<view class="upload-container audio-container" v-if="audioShow">
+		<view class="upload-container audio-container" v-else>
 			<uni-icons type="icon-qm-close" custom-prefix="iconfont-qm" color="var(--txt-color2)" size="20" @tap="del" />
 			<view class="container">
 			  <view class="date">{{audioCont.create_time}}</view>
@@ -31,6 +30,7 @@
 			  </view>
 			</view>
 		</view>
+		<HuHistory title="选择历史配音" :show="historyPop" :show.sync="historyPop" @select="onSelect"></HuHistory>
 	</view>
 </template>
 
@@ -44,7 +44,6 @@
 				loading:false,
 				historyPop:false,
 				audioCont:{},
-				audioShow:false,
 				uploadShow:true
 			}
 		},
@@ -73,7 +72,6 @@
 						fileType: "audio",   //文件类型
 						success: (uploadFileRes) => {
 						  uni.hideLoading();
-						  this.audioShow = true
 						  this.uploadShow = false
 						  const ret = JSON.parse(uploadFileRes.data);
 						  console.log(ret); 
@@ -87,7 +85,6 @@
 			},
 			onSelect(item){
 				this.audioCont = item
-				this.audioShow = true
 				this.uploadShow = false
 			},
 			destroyAudio() {
@@ -107,7 +104,6 @@
 			},
 			del(){
 				this.audioCont = ''
-				this.audioShow = false
 				this.uploadShow = true
 			}
 		}
@@ -182,6 +178,7 @@
 			position: absolute;
 			top: 20rpx;
 			right: 40rpx;
+			cursor: pointer;
 		}
 	}
 	

@@ -113,6 +113,9 @@
 			handConfirm(){
 				this.$emit('select',this.audioItem)
 				this.$emit('update:show', false);
+				if(this.audioContext){
+					this.audioContext.destroy();
+				}
 			},
 			close(){
 				this.$emit('update:show', false);
@@ -139,6 +142,7 @@
   //border-bottom: 1rpx solid var(--txt-color2);
   box-shadow: 0 0 5rpx rgba(255,255,255,.2);
   border-radius: 20rpx;
+  cursor: pointer;
   &.active {
     background-color: #F60652;
 	.content{
