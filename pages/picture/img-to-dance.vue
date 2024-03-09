@@ -22,7 +22,6 @@
           @showPop="showPop = true"
           :info="currentTemplateInfo" />
       <QmPop
-          styleStr="grid-template-columns: repeat(3, 1fr)"
           title="选择舞蹈模板"
           componentName="TemplateItem"
           :paramsInfo="{task_type: 10}"
@@ -47,7 +46,6 @@
 
 <script>
 import {mapActions} from 'vuex';
-import {pictureApi} from '@/api'
 import PicMixins from './mixin';
 import VideoInfo from './components/VideoInfo.vue'
 
@@ -82,9 +80,6 @@ export default {
       this.previewVideoInfo = videoInfo;
       this.showPreviewVideo = true;
     },
-    getTemplateList() {
-      pictureApi.getTemplateList({page: 1, pageSize: 10, task_type: 10})
-    }
   },
   computed: {
     templateId() {

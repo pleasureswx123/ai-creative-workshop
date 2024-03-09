@@ -69,7 +69,7 @@ const mutations = {
         10: 'img-to-dance',
         11: 'img-to-draw',
         25: 'text-to-video',
-        26: '',
+        26: 'text-to-dance-video',
       }
       return {
         ...item,

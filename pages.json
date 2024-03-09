@@ -227,6 +227,12 @@
 			}
 		},
 		{
+			"path": "pages/picture/text-to-dance-video",
+			"style": {
+				"navigationBarTitleText": "文生跳舞视频"
+			}
+		},
+		{
 			"path": "pages/picture/woman-style1",
 			"style": {
 				"navigationBarTitleText": "风格1"

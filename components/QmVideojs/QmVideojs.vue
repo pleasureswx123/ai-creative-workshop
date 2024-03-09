@@ -32,7 +32,11 @@ export default {
       player: null,
       defaultOptions: {
         id: this.id,
-        sources: [{src: this.src, type: 'video/mp4'}],
+        sources: [{
+          src: this.src,
+          // type: "application/x-mpegURL"
+          type: 'video/mp4'
+        }],
         // poster: getImageUrl(this.activityDetail.indexpic),
         // title: this.activityDetail.title,
         poster: '',
@@ -89,7 +93,7 @@ export default {
     video.setAttribute('x5-video-player-type', 'h5') //安卓 声明启用同层H5播放器 可以在video上面加东西
     videoBoxEl.appendChild(video);
     const options = Object.assign({}, this.defaultOptions, {
-      aspectRatio: `${width}:${height}`,
+      aspectRatio: `${width.toFixed()}:${height.toFixed()}`,
       // width: `${width}px`, height: `${height}px`
     }, this.options);
     this.player = this.$vJs(this.id, options);
