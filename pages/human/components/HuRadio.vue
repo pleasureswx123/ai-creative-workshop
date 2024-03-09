@@ -9,25 +9,17 @@
 		<view class="radio-box">
 			<view class="item" v-for="(item, index) in dubList" :key="index" :class="{active: activeIndex == item.dub_id}" @tap="onSelected(item)">{{item.dub_name}}</view>
 		</view>
-		<HuSlider :value.sync="volume" type="volume"></HuSlider>
-		<HuSlider :value.sync="speed" type="speed"></HuSlider>
 	</view>
 </template>
 
 <script>
-import HuSlider from './HuSlider.vue';
 import {HumanApi} from '@/api'
 export default{
-	components: {
-		HuSlider
-	},
 	data(){
 		return{
 			dubList:[],
 			page:1,
 			pagesize:10,
-			volume: 2,
-			speed: 2,
 			activeIndex:0,
 			audioContext: null,
 			radioUrl:''
@@ -44,6 +36,7 @@ export default{
 		onSelected(item){
 			this.activeIndex = item.dub_id
 			this.radioUrl = item.url
+			this.$emit('onSelected',item)
 		},
 		getDubList() {
 			HumanApi.dubList({

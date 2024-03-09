@@ -10,10 +10,12 @@
 			return{
 				tabList:[
 					{
-						name:'图+文案'
+						name:'图+文案',
+						id:1
 					},
 					{
-						name:'图+音频'
+						name:'图+音频',
+						id:2
 					}
 				]
 			}

@@ -63,7 +63,6 @@
 				}).then(res => {
 					if (res.list.length > 0) {
 						if (this.list.length == 0) {
-							console.log(1)
 							this.list = res.list.map(item => {
 								const id = item.id || guid();
 								return {

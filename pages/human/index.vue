@@ -3,20 +3,22 @@
 		<QmNavTop></QmNavTop>
 		<view class="box-container">
 			<HuTab @tab="tab"></HuTab>
-			<HuUpload></HuUpload>
-			<HuTextarea v-if="index == 0"></HuTextarea>
+			<HuUpload ref="HuUpload"></HuUpload>
+			<HuTextarea v-if="type == 1" ref="HuTextarea"></HuTextarea>
 		</view>
-		<view class="box-container" v-if="index == 0">
-			<HuRadio></HuRadio>
+		<view class="box-container" v-if="type == 1">
+			<HuRadio @onSelected="onSelected" ref="HuRadio"></HuRadio>
+			<HuSlider :value.sync="volume" type="volume"></HuSlider>
+			<HuSlider :value.sync="speed" type="speed"></HuSlider>
 		</view>
-		<view class="box-container" v-if="index == 1">
+		<view class="box-container" v-if="type == 2">
 			<HuAudio></HuAudio>
 		</view>
 		<view class="box-container">
-			<HuCaptions></HuCaptions>
+			<HuCaptions ref="HuCaptions"></HuCaptions>
 		</view>
 		<view class="box-container">
-			<view class="btn">立即生成</view>
+			<view class="btn" @tap="handGenerate">立即生成</view>
 		</view>
 		<view class="tips">由于消耗算力较高，每15秒为一个计算单位，不足15秒按照15秒计算</view>
 	</view>
@@ -29,16 +31,46 @@ import HuTextarea from './components/HuTextarea.vue'
 import HuRadio from './components/HuRadio.vue'
 import HuCaptions from './components/HuCaptions.vue'
 import HuAudio from './components/HuAudio.vue'
+import HuSlider from './components/HuSlider.vue';
+import {HumanApi} from '@/api'
 export default{
-	components: {HuTab,HuUpload,HuTextarea,HuRadio,HuCaptions,HuAudio},
+	components: {HuTab,HuUpload,HuTextarea,HuRadio,HuCaptions,HuAudio,HuSlider},
 	data(){
 		return{
-			index:0
+			type:1,
+			dub_id:'',
+			dub_url:'',
+			show_captions:1,
+			volume: 2,
+			speed: 2
 		}
 	},
 	methods:{
 		tab(e){
-			this.index = e.index;
+			this.type = e.id
+		},
+		onSelected(data){
+			this.dub_id = data.dub_id
+			this.dub_url = data.url
+		},
+		handGenerate(){
+			let obj = {
+				dub_volume: ['0.2', '0.3', '1', '2', '3'][this.volume],
+				dub_speed: ['0.7', '0.8', '1', '1.3', '1.6'][this.speed],
+			}
+			HumanApi.confirmTask({
+				type:this.type,
+				content:this.$refs.HuTextarea.current,
+				dub_id:this.dub_id || '',
+				dub_speed:obj.dub_speed || '',
+				dub_volume:obj.dub_volume || '',
+				dub_url:this.dub_url,
+				show_captions:this.$refs.HuCaptions.show_captions,
+				reference_image:this.$refs.HuUpload.imgSrc,
+				typeface_id:this.$refs.HuCaptions.capId
+			}).then(res => {
+				this.getList = res.list
+			})
 		}
 	}
 }

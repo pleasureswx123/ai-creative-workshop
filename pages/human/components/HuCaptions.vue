@@ -4,8 +4,8 @@
 		<view class="box-caption">
 			<selectSwitch @change="changeSwitch" />
 			<view class="capChoose" @tap="capShow = true">
-				<u-picker :show="capShow" :columns="capColumns" keyName="label" @confirm="capConfirm" @cancel="capShow=false"></u-picker>
-				<u--input v-model="capName" placeholder="请选择字幕类型" class=""></u--input>
+				<u-picker :show="capShow" keyName="label" :columns="capColumns" @confirm="capConfirm" @cancel="capShow=false"></u-picker>
+				<u--input v-model="capName" placeholder="请选择字幕类型"></u--input>
 			</view>
 		</view>
 	</view>
@@ -20,7 +20,10 @@ export default{
 		return{
 			capShow:false,
 			capColumns: [[]],
-			capName:''
+			capColumnsList:[],
+			capName:'',
+			capId:'',
+			show_captions:1
 		}
 	},
 	mounted() {
@@ -29,9 +32,17 @@ export default{
 	methods: {
 		changeSwitch(isSwitch){
 			isSwitch:false
+			if(isSwitch == true){
+				this.show_captions = 1
+			}else{
+				this.show_captions = 0
+			}
+			console.log(this.show_captions)
 		},
 		getTypeface() {
 			HumanApi.getTypeface({}).then(res => {
+				this.capColumnsList = res.list
+				this.capColumns = [[]]
 				res.list.map(item=>{
 					this.capColumns[0].push(item.title)
 				})
@@ -40,6 +51,7 @@ export default{
 		capConfirm(e){
 			this.capShow = false
 			this.capName = e.value[0]
+			this.capId = this.capColumnsList.find(item=> item.title == this.capName).id
 		}
 	}
 }

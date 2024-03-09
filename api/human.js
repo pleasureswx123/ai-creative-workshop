@@ -13,4 +13,11 @@ export default {
       }
     })
   },
+  confirmTask(params = {}) {
+    return uni.$u.http.post(`/DigitPeople/ConfirmTask`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }
