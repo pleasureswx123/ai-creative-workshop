@@ -103,6 +103,11 @@ export default {
 	  }
 	}
 }
+.noMore {
+	color: var(--txt-color2);
+	text-align: center;
+	font-size: 28rpx;
+}
 @media screen and (min-width: 960px){
 	.item-wrapper .item-box .pic-box{
 		height:  500rpx;
