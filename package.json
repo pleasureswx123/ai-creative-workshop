@@ -12,6 +12,7 @@
     "highlight.js": "^11.7.0",
     "katex": "^0.16.4",
     "markdown-it": "^13.0.1",
+    "video.js": "^8.10.0",
     "vue-qr": "^3.2.2",
     "weixin-js-sdk": "^1.6.0"
   },

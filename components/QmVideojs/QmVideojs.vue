@@ -92,7 +92,7 @@ export default {
       aspectRatio: `${width}:${height}`,
       // width: `${width}px`, height: `${height}px`
     }, this.options);
-    this.player = videojs(this.id, options);
+    this.player = this.$vJs(this.id, options);
     this.player.ready(() => {
       this.player.addClass('vjs-qmi');
       this.player.log('onPlayerReady999', this.id);

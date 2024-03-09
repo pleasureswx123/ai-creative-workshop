@@ -2,8 +2,6 @@ import {pictureApi} from '@/api'
 
 const state = {
   toolsList: [], // 图片工具列表
-  videoToolsList: [], // 视频工具列表
-  personalToolsList: [], // 个人写真工具列表
   taskDetail: {},
 };
 
@@ -19,18 +17,6 @@ const actions = {
   getToolsList({dispatch, commit}, params = {}) {
     return pictureApi.getToolsList(params).then(res => {
       commit('setToolsList', res?.list || [])
-      return Promise.resolve(res);
-    })
-  },
-  getVideoToolsList({dispatch, commit}, params = {}) {
-    return pictureApi.getToolsList(params).then(res => {
-      commit('setVideoToolsList', res?.list || [])
-      return Promise.resolve(res);
-    })
-  },
-  getPersonalToolsList({dispatch, commit}, params = {}) {
-    return pictureApi.getToolsList(params).then(res => {
-      commit('setPersonalToolsList', res?.list || [])
       return Promise.resolve(res);
     })
   },
@@ -54,6 +40,7 @@ const mutations = {
   setToolsList(state, info = []) {
     state.toolsList = info.map(item => {
       const temp = {
+        // 图片处理工具 classId: 1
         3: 'ai-face',
         7: 'hd-redraw',
         4: 'remove-bg',
@@ -62,23 +49,22 @@ const mutations = {
         8: 'part-redraw',
         9: 'replace-bg-txt',
 
+        // 个人写真摄影工具 classId: 3
+        12: 'photo-clothing',
+        13: 'photo-pictorials',
+        14: 'photo-classical',
+        15: 'photo-han',
+        16: 'photo-modern',
+        17: 'photo-cartoon',
+
+        // 三八妇女节活动工具 classId: 4
         19: 'woman-style1',
         20: 'woman-style2',
         21: 'woman-style3',
         22: 'woman-style4',
         23: 'woman-style5',
-      }
-      return {
-        ...item,
-        url: item.img_url,
-        name: item.title,
-        ...({type: temp[item.id] || 'replace-bg-txt'})
-      }
-    });
-  },
-  setVideoToolsList(state, info = []) {
-    state.videoToolsList = info.map(item => {
-      const temp = {
+
+        // 视频工具 classId: 2
         2: 'img-to-video',
         10: 'img-to-dance',
         11: 'img-to-draw',
@@ -90,24 +76,6 @@ const mutations = {
         url: item.img_url,
         name: item.title,
         ...({type: temp[item.id] || 'xxxxxx'})
-      }
-    });
-  },
-  setPersonalToolsList(state, info = []) {
-    state.personalToolsList = info.map(item => {
-      const temp = {
-        12: 'photo-clothing',
-        13: 'photo-pictorials',
-        14: 'photo-classical',
-        15: 'photo-han',
-        16: 'photo-modern',
-        17: 'photo-cartoon',
-      }
-      return {
-        ...item,
-        url: item.img_url,
-        name: item.title,
-        ...({type: temp[item.id] || 'clothing'})
       }
     });
   },
