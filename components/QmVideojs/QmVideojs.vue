@@ -1,11 +1,19 @@
 <template>
-  <view class="videojs-wrapper">
-    <view class="video-js vjs-theme-city" ref="video" style="width: 100%; height: 100%"></view>
+  <view class="video-js" ref="video">
   </view>
 </template>
 
 <script>
 // <QmVideojs :src="item.video_url"></QmVideojs>
+// <QmVideojs
+//     v-if="bannerInfo.url_type === 'video'"
+//           :src="bannerInfo.url"
+// :options="{
+// autoplay: 'muted',
+//     controls: false,
+//     vStyle: 'object-fit: fill;'
+// }"
+// ></QmVideojs>
 export default {
   name: 'VideoPlayer',
   props: {
@@ -13,68 +21,78 @@ export default {
       type: String,
       required: true
     },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data() {
     return {
       id: uni.$u.guid(20),
       player: null,
+      defaultOptions: {
+        id: this.id,
+        sources: [{src: this.src, type: 'video/mp4'}],
+        // poster: getImageUrl(this.activityDetail.indexpic),
+        // title: this.activityDetail.title,
+        poster: '',
+        title: '',
+        width: '100%',
+        height: '100%',
+        // playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
+        autoDisable: true,
+        preload: 'auto', //auto - 当页面加载后载入整个视频 metadata - 当页面加载后只载入元数据 none - 当页面加载后不载入视频
+        language: 'zh-CN',
+        fluid: true, // 自适应宽高 流体模式
+        muted: false, //  是否静音
+        aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"） 或者，可以将类vjs-16-9、vjs-9-16、vjs-4-3或vjs-1-1添加到播放器
+        controls: true, //是否拥有控制条 【默认true】,如果设为false ,那么只能通过api进行控制了。也就是说界面上不会出现任何控制按钮
+        autoplay: false, //如果true,浏览器准备好时开始回放。 autoplay: "muted", // //自动播放属性,muted:静音播放
+        loop: false, // 导致视频一结束就重新开始。 视频播放结束后，是否循环播放
+        techOrder: ['html5'], //播放顺序
+        screenshot: true,
+        disablePictureInPicture: true, // 如果true，则禁用将视频元素切换为画中画。默认为false.
+        enableSmoothSeeking: true, // 如果设置为true，将在移动和桌面设备上提供更流畅的搜索体验。
+        playsinline: true, // 向浏览器指示当全屏播放是本机默认设置时（例如在 iOS Safari 中），首选非全屏播放。
+        // plugins: {
+        //   foo: {bar: true},
+        //   boo: {baz: false}
+        // },
+        controlBar: {
+          volumePanel: {
+            inline: false // 不使用水平方式
+          },
+          timeDivider: false, // 时间分割线
+          durationDisplay: true, // 总时间
+          progressControl: false, // 进度条
+          remainingTimeDisplay: true, //当前以播放时间
+          // remainingTimeDisplay: { // 默认剩余时间显示为负时间。要不显示负号
+          //   displayNegative: true
+          // },
+          fullscreenToggle: true, //全屏按钮
+          pictureInPictureToggle: false //画中画
+        }
+      }
     }
   },
   mounted() {
+    const videoBoxEl = this.$refs.video.$el;
+    const {width, height} = videoBoxEl.getBoundingClientRect()
     const video = document.createElement('video');
     video.id = this.id;
-    video.style = 'width: 100%; height: 100%;';
+    video.style = `width: 100%; height: 100%; ${this.options.vStyle || ''}`;
     video.controls = true;
     video.preload = 'auto';
     // video.setAttribute('playsinline', true) //IOS微信浏览器支持小窗内播放
     video.setAttribute("crossOrigin", "anonymous");
     // video.setAttribute('webkit-playsinline', true) //这个bai属性是ios 10中设置可以让视频在小du窗内播放，也就是不是全zhi屏播放的video标签的一个属性
     video.setAttribute('x5-video-player-type', 'h5') //安卓 声明启用同层H5播放器 可以在video上面加东西
-    this.$refs.video.$el.appendChild(video)
-    this.player = videojs(this.id, {
-      // poster: getImageUrl(this.activityDetail.indexpic),
-      // title: this.activityDetail.title,
-      id: this.id,
-      sources: [{src: this.src, type: 'video/mp4'}],
-      poster: '',
-      title: '',
-      width: '100%',
-      height: '100%',
-      // playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-      autoDisable: true,
-      preload: 'auto', //auto - 当页面加载后载入整个视频 metadata - 当页面加载后只载入元数据 none - 当页面加载后不载入视频
-      language: 'zh-CN',
-      fluid: true, // 自适应宽高
-      muted: false, //  是否静音
-      aspectRatio: '4:3', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"） 或者，可以将类vjs-16-9、vjs-9-16、vjs-4-3或vjs-1-1添加到播放器
-      controls: true, //是否拥有控制条 【默认true】,如果设为false ,那么只能通过api进行控制了。也就是说界面上不会出现任何控制按钮
-      autoplay: false, //如果true,浏览器准备好时开始回放。 autoplay: "muted", // //自动播放属性,muted:静音播放
-      loop: false, // 导致视频一结束就重新开始。 视频播放结束后，是否循环播放
-      techOrder: ['html5'], //播放顺序
-      screenshot: true,
-      disablePictureInPicture: true, // 如果true，则禁用将视频元素切换为画中画。默认为false.
-      enableSmoothSeeking: true, // 如果设置为true，将在移动和桌面设备上提供更流畅的搜索体验。
-      playsinline: true, // 向浏览器指示当全屏播放是本机默认设置时（例如在 iOS Safari 中），首选非全屏播放。
-      // plugins: {
-      //   foo: {bar: true},
-      //   boo: {baz: false}
-      // },
-      controlBar: {
-        volumePanel: {
-          inline: false // 不使用水平方式
-        },
-        timeDivider: false, // 时间分割线
-        durationDisplay: true, // 总时间
-        progressControl: false, // 进度条
-        remainingTimeDisplay: true, //当前以播放时间
-        // remainingTimeDisplay: { // 默认剩余时间显示为负时间。要不显示负号
-        //   displayNegative: true
-        // },
-        fullscreenToggle: true, //全屏按钮
-        pictureInPictureToggle: false //画中画
-      }
-    })
-  
+    videoBoxEl.appendChild(video);
+    const options = Object.assign({}, this.defaultOptions, {
+      aspectRatio: `${width}:${height}`,
+      // width: `${width}px`, height: `${height}px`
+    }, this.options);
+    this.player = videojs(this.id, options);
     this.player.ready(() => {
       this.player.addClass('vjs-qmi');
       this.player.log('onPlayerReady999', this.id);
@@ -222,9 +240,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.videojs-wrapper {
+.video-js {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .vjs-qmi {
