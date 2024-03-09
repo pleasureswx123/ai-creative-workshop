@@ -52,11 +52,7 @@ export default {
 				data:{
 					page:this.page,
         			pagesize:this.pagesize,
-				},
-				no_sign: 1,
-				sourceCode:"100001",
-				sign:"52d89ffef49b65edaf5d232104d42fac",
-				timestamp:"1545454552",
+				}
 			}).then(res => {
 				// this.musicList = [...this.musicList, ...res.list]
 				if (res.list && res.list.length){

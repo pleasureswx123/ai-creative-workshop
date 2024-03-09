@@ -60,11 +60,12 @@
 					extension: [".mp3"],  //可定义允许哪些后缀的文件可被选择
 					success: function (res) {
 					  let tempFilePaths = res.tempFilePaths;
+					  console.log(res)
 					  uni.showLoading({
 						title: "上传中...",
 					  });
 					  uni.uploadFile({
-						name: "files[]",    //文件上传的name值
+						name: 'audio',    //文件上传的name值
 						url: 'https://aigc.chaojiyuyan.cn/web.php/upload/audio',    //接口地址
 						header:{},    //头信息
 						formData:{},   //上传额外携带的参数

@@ -9,6 +9,7 @@
 				<view class="title" :class="{active: activeIndex === index}">{{item.title}}</view>
 			  </view>
 		  </view>
+		  <view class="noMore" v-if="noMore == false ">没有更多数据了</view>
 		  <u-gap height="150rpx" />
 		</scroll-view>
 	</NovelPop>
@@ -36,7 +37,8 @@ export default {
 		activeIndex: 0,
 		screenList:[],
 		page:1,
-		pagesize:10
+		pagesize:10,
+		noMore: false,
 	  }
 	},
 	mounted() {
@@ -47,11 +49,7 @@ export default {
 			NovelApi.getScreen({
 				data:{
 				page:this.page,
-	        	pagesize:this.pagesize},
-				no_sign: 1,
-				sourceCode:"100001",
-				sign:"52d89ffef49b65edaf5d232104d42fac",
-				timestamp:"1545454552",
+	        	pagesize:this.pagesize}
 			}).then(res => {
 				this.screenList = res.list
 			})
