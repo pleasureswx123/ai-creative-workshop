@@ -15,10 +15,18 @@
           placeholder="一个女孩，粉色短发，黑色短袖，黑色短裤，霓虹背景"
           :value.sync="prompt"></Describe>
       
-      <TemplateStyle
-          :isShowMore="false"
+      <TemplateImageStyle
           :params="{type: 1, task_type: taskType}"
-          :currentInfo.sync="templateInfo"></TemplateStyle>
+          componentName="ImgStyleItem"
+          :getList="getTemplate"
+          :proxyList="item => ({ ...item })"
+          :currentInfo.sync="templateInfo"></TemplateImageStyle>
+  
+<!--
+      <TemplateImageStyle
+          title="选择舞蹈模板"
+          :params="{type: 2, task_type: taskType}"
+          :currentInfo.sync="templateExtendInfo"></TemplateImageStyle>-->
   
       <TitleCell
           title="选择舞蹈模板"

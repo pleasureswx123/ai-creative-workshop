@@ -25,24 +25,26 @@
           :title="title"
           componentName="ImgStyleItem"
           :paramsInfo="params"
-          :getList="getTemplate"
-          :proxyList="item => ({ ...item })" />
+          :getList="getList"
+          :proxyList="proxyList" />
     </template>
   </view>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
-
 export default {
   props: {
-    isShowMore: {
-      type: Boolean,
-      default: true
-    },
     title: {
       type: String,
       default: '选择风格'
+    },
+    getList: {
+      type: Function,
+      default: () => ({})
+    },
+    proxyList: {
+      type: Function,
+      default: (item) => ({...item})
     },
     params: {
       type: Object,
@@ -56,9 +58,10 @@ export default {
   data() {
     return {
       show: false,
+      isShowMore: true,
       gridNums: 4,
       list: [],
-      listBak: []
+      listBak: [],
     }
   },
   computed: {
@@ -104,13 +107,14 @@ export default {
   mounted() {
     const {width} = this.$refs.photoBox.$el.getBoundingClientRect();
     this.gridNums = Math.floor(width / 80);
-    this.getTemplate(Object.assign({page: 1, pagesize: 50}, this.params)).then(res => {
-      this.list = ((res?.list || []).slice(0, this.gridNums - +this.isShowMore ));
+    this.getList(Object.assign({page: 1, pagesize: 50}, this.params)).then(res => {
+      const len = (res?.list || []).length;
+      this.isShowMore = len > this.gridNums;
+      this.list = (((res?.list || []).slice(0, this.gridNums - +this.isShowMore ))).map(this.proxyList);
       this.listBak = this.list;
     });
   },
   methods: {
-    ...mapActions('PictureInfo', ['getTemplate']),
     change(item) {
       if(this.currentId === item.id) {
         this.curInfo = null
