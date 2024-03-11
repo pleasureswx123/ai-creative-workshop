@@ -8,7 +8,7 @@
         <view class="card-box pointer" v-for="(item, index) in toolsList" :data-type="item.type" :key="item.id">
           <view class="video-box">
             <view class="item" v-if="item.video_url">
-              <video object-fit="contain" :enable-progress-gesture="false" :src="item.video_url"></video>
+              <video :poster="item.cover_img_url" object-fit="contain" :enable-progress-gesture="false" :src="item.video_url"></video>
             </view>
             <view class="item" v-else-if="item.img_url">
               <image :src="item.img_url" mode="aspectFit"></image>
