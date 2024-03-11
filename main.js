@@ -32,12 +32,16 @@ App.mpType = 'app';
 import mixin from './common/mixin'
 Vue.mixin(mixin)
 
+import aigcui, { requestUtil } from '@aigcui/entry'
+
+Vue.use(aigcui);
+
 const app = new Vue({
 	store,
 	...App
 });
 
-require('./utils/httpRequest.js')(app)
+requestUtil(app)
 
 app.$mount();
 

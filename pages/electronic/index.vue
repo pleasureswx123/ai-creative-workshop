@@ -10,7 +10,13 @@
     <template v-if="setting">
       <ExtendDirection :value.sync="directions"></ExtendDirection>
       <PersonEnhance :value.sync="enhanceType"></PersonEnhance>
-      <PhotoStyle :currentInfo.sync="photoStyleInfo"></PhotoStyle>
+      <TemplateImageStyle
+          title="图片风格 Style（可不选）"
+          :params="{}"
+          componentName="ImgStyleItem"
+          :getList="getImgStyleList"
+          :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
+          :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
     </template>
 <!--    <view>{{type}}</view>
     <view>{{description}}</view>
@@ -23,6 +29,8 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
+
 export default {
   data() {
     return {
@@ -49,6 +57,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('PhotoInfo', ['getImgStyleList']),
     handleComfirm() {
       if (this.loading) {
         return

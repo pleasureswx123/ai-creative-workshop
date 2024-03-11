@@ -24,7 +24,14 @@
               v-if="[1, 2].includes(modeId)"
               @showPopFunc="showLoraPop = true"
               :info.sync="loraInfo" />
-          <PhotoStyle :currentInfo.sync="photoStyleInfo"></PhotoStyle>
+  
+          <TemplateImageStyle
+              title="图片风格 Style（可不选）"
+              :params="{}"
+              componentName="ImgStyleItem"
+              :getList="getImgStyleList"
+              :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
+              :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
         </view>
         <view>
         <ReferenceImgCard

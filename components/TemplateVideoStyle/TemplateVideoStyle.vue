@@ -10,33 +10,51 @@
           @tap="change(item)">
         <view class="img-box">
           <image :src="item.img_url" mode="aspectFill"></image>
+          <view class="play-box" @tap.stop="previewVideo(item)">
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-play" color="rgba(255,255,255,.6)" size="20" />
+          </view>
         </view>
-        <view class="name">{{item.title}}</view>
       </view>
-      <view class="item" @tap="show = true">
+      <view v-if="isShowMore" class="item" @tap="show = true">
         <view class="img-box"><text class="more-btn">更多</text></view>
       </view>
     </view>
-    <QmPop
-        v-if="show"
-        :show.sync="show"
-        :currentInfo.sync="curInfo"
-        :title="title"
-        componentName="ImgStyleItem"
-        :paramsInfo="params"
-        :getList="getTemplate"
-        :proxyList="item => ({ ...item })" />
+    <template v-if="isShowMore">
+      <QmPop
+          v-if="show"
+          :show.sync="show"
+          :currentInfo.sync="curInfo"
+          :title="title"
+          :componentName="componentName"
+          :paramsInfo="params"
+          :getList="getList"
+          :proxyList="proxyList" />
+    </template>
+  
+    <QmPreviewVideo
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
   </view>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
-
 export default {
   props: {
+    componentName: {
+      type: String,
+      default: ''
+    },
     title: {
       type: String,
       default: '选择风格'
+    },
+    getList: {
+      type: Function,
+      default: () => ({})
+    },
+    proxyList: {
+      type: Function,
+      default: (item) => ({...item})
     },
     params: {
       type: Object,
@@ -49,10 +67,13 @@ export default {
   },
   data() {
     return {
+      showPreviewVideo: false,
+      previewVideoInfo: null,
       show: false,
+      isShowMore: true,
       gridNums: 4,
       list: [],
-      listBak: []
+      listBak: [],
     }
   },
   computed: {
@@ -81,6 +102,9 @@ export default {
   },
   watch: {
     watchIdList(item) {
+      if(!this.isShowMore) {
+        return;
+      }
       const {id, list} = item || {};
       const ids = list.map(item => item.id);
       if(!id || !ids.length) {
@@ -95,13 +119,18 @@ export default {
   mounted() {
     const {width} = this.$refs.photoBox.$el.getBoundingClientRect();
     this.gridNums = Math.floor(width / 80);
-    this.getTemplate(Object.assign({page: 1, pagesize: 50}, this.params)).then(res => {
-      this.list = ((res?.list || []).slice(0, this.gridNums - 1));
+    this.getList(Object.assign({page: 1, pagesize: 50}, this.params)).then(res => {
+      const len = (res?.list || []).length;
+      this.isShowMore = len > this.gridNums;
+      this.list = (((res?.list || []).slice(0, this.gridNums - +this.isShowMore ))).map(this.proxyList);
       this.listBak = this.list;
     });
   },
   methods: {
-    ...mapActions('PictureInfo', ['getTemplate']),
+    previewVideo(videoInfo) {
+      this.previewVideoInfo = videoInfo;
+      this.showPreviewVideo = true;
+    },
     change(item) {
       if(this.currentId === item.id) {
         this.curInfo = null
@@ -149,13 +178,14 @@ export default {
       }
       .img-box {
         width: 76px;
-        height: 76px;
+        aspect-ratio: 725 / 1085;
         margin: 0 auto;
         border-radius: 10rpx;
         background: #233549;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
         image {
           width: 100%;
           height: 100%;
@@ -167,13 +197,15 @@ export default {
           font-size: 28rpx;
         }
       }
-      .name {
-        padding-top: 8rpx;
-        text-align: center;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      .play-box {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

@@ -15,11 +15,21 @@
           placeholder="一个女孩，粉色短发，黑色短袖，黑色短裤，霓虹背景"
           :value.sync="prompt"></Describe>
       
-      <TemplateStyle
+      <TemplateImageStyle
           :params="{type: 1, task_type: taskType}"
-          :currentInfo.sync="templateInfo"></TemplateStyle>
-  
-      <TitleCell
+          componentName="ImgStyleItem"
+          :getList="getTemplate"
+          :proxyList="item => ({ ...item })"
+          :currentInfo.sync="templateInfo"></TemplateImageStyle>
+      
+      <TemplateVideoStyle
+          title="选择舞蹈模板"
+          :params="{type: 2, task_type: taskType}"
+          componentName="TemplateItem"
+          :getList="getTemplate"
+          :proxyList="item => ({ ...item })"
+          :currentInfo.sync="templateExtendInfo"></TemplateVideoStyle>
+<!--      <TitleCell
           title="选择舞蹈模板"
           :isShowRight="false" />
       <QmSelectBox
@@ -33,7 +43,7 @@
           :show.sync="show"
           :initStatus="true"
           :currentInfo.sync="templateExtendInfo"
-          :proxyList="item => ({ ...item })" />
+          :proxyList="item => ({ ...item })" />-->
     </template>
     
     <template #footer>

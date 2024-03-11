@@ -14,6 +14,7 @@ const state = {
   modelList: [],
   topicList: [],
   rolesList: [],
+  userIntegral: {}, // 获取用户任务积分配置
 };
 
 const getters = {
@@ -51,8 +52,14 @@ const actions = {
       commit('setRolesList', res || [])
     })
   },
+  getUserIntegral({dispatch, commit}, params = {}) {
+    return userApi.getUserIntegral(params).then(res => {
+      commit('setUserIntegral', res.list || {})
+    })
+  },
   getUserInfo({dispatch, commit}, params = {}) {
     return userApi.getUserInfo(params).then(res => {
+      dispatch('getUserIntegral');
       commit('setUserInfo', res || {})
     })
   },
@@ -69,6 +76,9 @@ const mutations = {
     uni.setStorageSync('token', info.token);
     uni.setStorageSync('userInfo', info.userinfo);
     state.userLoginInfo = info;
+  },
+  setUserIntegral(state, info = {}) {
+    state.userIntegral = info
   },
   setUserInfo(state, info = {}) {
     state.userInfoState = info
