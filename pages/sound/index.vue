@@ -17,7 +17,7 @@
     <QmRadioPlain :list="dubList" :value.sync="timbre"></QmRadioPlain>
     <QmSlider :value.sync="volume" type="volume"></QmSlider>
     <QmSlider :value.sync="speed" type="speed"></QmSlider>
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating"></GenerateBtn>
+    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo"></GenerateBtn>
   </view>
 </template>
 
@@ -48,8 +48,14 @@ export default {
       timer: null,
     }
   },
+  onLoad() {
+    this.taskType = 19;
+  },
   computed: {
     ...mapState('SoundInfo', ['dubList']),
+    btnInfo() {
+      return {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: this.integralTips};
+    },
     dubUrl() {
       const {url} = this.dubList.find(item => item.id === this.timbre) || {};
       return url || ''
