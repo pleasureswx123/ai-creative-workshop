@@ -71,7 +71,7 @@ export default {
   components: { VideoInfo },
   data() {
     return {
-      prompt: '',
+      prompt: '一个女孩，粉色短发，黑色短袖，黑色短裤，霓虹背景',
       templateInfo: null,
       templateExtendInfo: null,
       
