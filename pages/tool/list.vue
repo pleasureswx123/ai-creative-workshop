@@ -183,7 +183,7 @@ export default {
   }
   .video-box {
     width: 58%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     display: flex;
     .item {
       flex: 1;
