@@ -19,7 +19,7 @@ export default{
 		return{
 			dubList:[],
 			page:1,
-			pagesize:10,
+			pagesize:20,
 			activeIndex:0,
 			audioContext: null,
 			radioUrl:''

@@ -87,6 +87,14 @@
 </script>
 
 <style lang="scss" scoped>
+	@keyframes rotate {
+	  0% {
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    transform: rotate(360deg);
+	  }
+	}
 	.page-container{
 		background: var(--bg-color1);
 		padding: 0 30rpx;
@@ -95,6 +103,7 @@
 		.iconfont{
 			text-align: center;
 			margin: 15vh auto 12vh;
+			animation: rotate 2s linear infinite;
 		}
 	}
 	.finish{

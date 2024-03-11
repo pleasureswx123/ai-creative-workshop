@@ -37,7 +37,6 @@
 			},
 			methods: {
 	            click(item) {
-	                console.log('item', item);
 	            },
 				upLoad(){
 					

@@ -41,7 +41,7 @@ export default {
 		getVideoTask() {
 			NovelApi.getDub({
 				data:{page:1,
-        			pagesize:10,}
+        			pagesize:20,}
 			}).then(res => {
 				this.videoList = res.list
 			})

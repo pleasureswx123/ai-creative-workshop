@@ -79,7 +79,9 @@ export default {
 			uni.navigateTo({
 			   url: './tweets' // 要跳转到的页面路径
 			})
-			this.innerAudioContext.destroy()
+			if(this.innerAudioContext){
+				this.innerAudioContext.destroy()
+			}
 		}
 	},
 }

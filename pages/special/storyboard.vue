@@ -114,6 +114,14 @@
 </script>
 
 <style lang="scss" scoped>
+	@keyframes rotate {
+	  0% {
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    transform: rotate(360deg);
+	  }
+	}
 	.page-container{
 		background: var(--bg-color1);
 		padding: 0 30rpx;
@@ -122,6 +130,7 @@
 		.icon-shipinshengchengzhong{
 			text-align: center;
 			margin: 10vh auto 8vh;
+			animation: rotate 2s linear infinite;
 		}
 	}
 	.finish{

@@ -37,7 +37,7 @@ export default {
 		activeIndex: 0,
 		screenList:[],
 		page:1,
-		pagesize:10,
+		pagesize:20,
 	  }
 	},
 	mounted() {

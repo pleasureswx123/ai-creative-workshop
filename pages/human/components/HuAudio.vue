@@ -89,7 +89,6 @@
 			onSelect(item){
 				this.audioCont = item
 				this.uploadShow = false
-				console.log(this)
 			},
 			destroyAudio() {
 			  if(this.audioContext) {

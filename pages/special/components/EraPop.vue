@@ -42,7 +42,7 @@ export default {
 		getTimeStyle() {
 			NovelApi.getTimeStyle({
 				data:{page:1,
-        		pagesize:10,}
+        		pagesize:20,}
 			}).then(res => {
 				this.eraList = res.list
 			})
