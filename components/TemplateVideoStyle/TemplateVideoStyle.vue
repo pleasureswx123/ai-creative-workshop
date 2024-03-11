@@ -10,7 +10,9 @@
           @tap="change(item)">
         <view class="img-box">
           <image :src="item.img_url" mode="aspectFill"></image>
-          <view class="name">{{item.title}}</view>
+          <view class="play-box" @tap.stop="previewVideo(item)">
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-play" color="rgba(255,255,255,.6)" size="20" />
+          </view>
         </view>
       </view>
       <view v-if="isShowMore" class="item" @tap="show = true">
@@ -28,6 +30,10 @@
           :getList="getList"
           :proxyList="proxyList" />
     </template>
+  
+    <QmPreviewVideo
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
   </view>
 </template>
 
@@ -61,6 +67,8 @@ export default {
   },
   data() {
     return {
+      showPreviewVideo: false,
+      previewVideoInfo: null,
       show: false,
       isShowMore: true,
       gridNums: 4,
@@ -119,6 +127,10 @@ export default {
     });
   },
   methods: {
+    previewVideo(videoInfo) {
+      this.previewVideoInfo = videoInfo;
+      this.showPreviewVideo = true;
+    },
     change(item) {
       if(this.currentId === item.id) {
         this.curInfo = null
@@ -166,7 +178,7 @@ export default {
       }
       .img-box {
         width: 76px;
-        height: 76px;
+        aspect-ratio: 725 / 1085;
         margin: 0 auto;
         border-radius: 10rpx;
         background: #233549;
@@ -185,19 +197,15 @@ export default {
           font-size: 28rpx;
         }
       }
-      .name {
+      .play-box {
         position: absolute;
-        bottom: 0;
         left: 0;
-        right: 0;
-        font-size: 24rpx;
-        background-color: var(--red-color2);
-        padding-top: 8rpx;
-        text-align: center;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        bottom: 0;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

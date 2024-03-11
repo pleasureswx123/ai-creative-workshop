@@ -21,14 +21,15 @@
           :getList="getTemplate"
           :proxyList="item => ({ ...item })"
           :currentInfo.sync="templateInfo"></TemplateImageStyle>
-  
-<!--
-      <TemplateImageStyle
+      
+      <TemplateVideoStyle
           title="选择舞蹈模板"
           :params="{type: 2, task_type: taskType}"
-          :currentInfo.sync="templateExtendInfo"></TemplateImageStyle>-->
-  
-      <TitleCell
+          componentName="TemplateItem"
+          :getList="getTemplate"
+          :proxyList="item => ({ ...item })"
+          :currentInfo.sync="templateExtendInfo"></TemplateVideoStyle>
+<!--      <TitleCell
           title="选择舞蹈模板"
           :isShowRight="false" />
       <QmSelectBox
@@ -42,7 +43,7 @@
           :show.sync="show"
           :initStatus="true"
           :currentInfo.sync="templateExtendInfo"
-          :proxyList="item => ({ ...item })" />
+          :proxyList="item => ({ ...item })" />-->
     </template>
     
     <template #footer>
