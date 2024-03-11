@@ -1,7 +1,7 @@
 <template>
   <view class="item-box" :class="{active}" @tap="$emit('select', info)">
     <view class="video-wrapper">
-      <image mode="aspectFit" :src="info.img_url"></image>
+      <image :src="info.img_url" mode="aspectFit" />
       <view class="play-box">
         <view class="play-btn">
           <uni-icons @tap="previewVideo(info)" custom-prefix="iconfont-qm" type="icon-qm-play" color="rgba(255,255,255,.8)" size="40" />
@@ -49,16 +49,14 @@ export default {
   }
   .video-wrapper {
     width: 100%;
-    aspect-ratio: 9 / 9;
+    aspect-ratio: 725 / 1085;
     overflow: hidden;
     position: relative;
-    display: grid;
-    place-items: center;
     border-radius: 20rpx;
     image {
       width: 100%;
       height: 100%;
-      background-color: #23242C;
+      display: block;
     }
     .play-box {
       position: absolute;

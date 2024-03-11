@@ -16,6 +16,10 @@
 <script>
 export default {
   props: {
+    aspectRatio: {
+      type: String,
+      default: '16 / 9'
+    },
     showPreview: {
       type: Boolean,
       default: false
@@ -28,7 +32,7 @@ export default {
     // videoBoxStyle(info) {
     //   return info => {
     //     const {width, height} = info || {};
-    //     const ratio = (width && height) ? `${width} / ${height}` : `16 / 9`;
+    //     const ratio = (width && height) ? `${width} / ${height}` : this.aspectRatio;
     //     return {
     //       'aspect-ratio': ratio
     //     }

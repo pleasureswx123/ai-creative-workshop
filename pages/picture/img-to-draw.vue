@@ -86,6 +86,22 @@ export default {
     ...mapActions('PictureInfo', ['getTemplate']),
   },
   computed: {
+    btnInfo() {
+      let result = '';
+      const temp = this.userIntegral?.[`${this.taskType}`] || {};
+      const {is_show, consume} = temp;
+      if(+is_show) {
+        const {A_show, B_show} = consume || {};
+        const mp = {
+          5: A_show,
+          10: B_show
+        }
+        result = mp[`${this.generation_duration}`];
+      }
+      const res = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: result};
+      // const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: ''};
+      return this.generateState === 3 ? {btnTxt: '重新生成'} : res;
+    },
     radioOptions() {
       return (this.taskDetail?.expand_model?.generation_duration || []).map(item => {
         const { val, val_name } = item || {};

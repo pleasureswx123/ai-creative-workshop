@@ -32,24 +32,8 @@ export default {
       return this.generateState === 2
     },
     btnInfo() {
-      let tipsTxt = '1万'
-      if (this.taskType === '7') {
-        tipsTxt = '2万'
-      }
-      if (this.taskType === '10') {
-        tipsTxt = '50万'
-      }
-      if (this.taskType === '11') {
-        tipsTxt = '50万'
-      }
-      if (this.taskType === '2') {
-        tipsTxt = '10万'
-      }
-      if(!this.taskType) {
-        tipsTxt = '10万'
-      }
-      // const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: `消耗${tipsTxt}`};
-      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: ''};
+      const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: this.integralTips};
+      // const temp = {btnTxt: '开始生成', loadingBtnTxt: '正在生成...', tipTxt: ''};
       return this.generateState === 3 ? {btnTxt: '重新生成'} : temp;
     },
   },

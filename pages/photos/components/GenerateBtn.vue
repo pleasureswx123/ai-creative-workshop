@@ -11,9 +11,9 @@
           </view>
           <text>开始生成</text>
         </view>
-        <view class="tips-txt">
-          <text v-if="[1,2].includes(modeId)">消耗{{value}}万</text>
-          <text v-else>消耗4万</text>
+        <view class="tips-txt" v-if="integralTips">
+          <text v-if="[1,2].includes(modeId)">消耗{{integralTips}}万</text>
+          <text v-else>消耗1万</text>
         </view>
       </view>
     </view>
@@ -42,6 +42,17 @@ export default {
   },
   components: { SelectNums, Statement },
   computed: {
+    integralTips() {
+      let result = '';
+      const temp = this.userIntegral?.['1'] || {};
+      const {is_show, consume} = temp;
+      console.log(JSON.stringify(temp))
+      if(+is_show) {
+        const {A_num} = consume || {};
+        result = (A_num * this.value) / 10000;
+      }
+      return result;
+    },
     currentVal: {
       get() {
         return this.value
@@ -86,7 +97,6 @@ export default {
         }
       }
       .tips-txt {
-        display: none;
         position: absolute;
         right: 30rpx;
         top: 50%;

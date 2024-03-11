@@ -151,6 +151,13 @@ export default {
       }
     })
   },
+  getUserIntegral(params = {}) {
+    return uni.$u.http.post(`/Integral/GetiIntegralNum`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   authAndBindWechat(params = {}) {
     return uni.$u.http.post(`/User/authAndBindWechat`, params, {
       custom: {

@@ -8,5 +8,5 @@ module.exports = {
       config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
     }
   },
-  transpileDependencies: []
+  transpileDependencies: ['@aigcui/entry']
 }
