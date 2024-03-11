@@ -71,7 +71,7 @@ export default {
 		text-align: center;
 		cursor: pointer;
 		&.active{
-			background-color:#6978fd;
+			background-color:#F60652;
 		}
 	}
 </style>

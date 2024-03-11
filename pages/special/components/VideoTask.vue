@@ -76,7 +76,7 @@ export default {
 			margin-bottom: 10px;
 			cursor: pointer;
 			&.active{
-				background-color: #2877ff;
+				background-color: #F60652;
 			}
 			.videoBg {
 				width: 90rpx;

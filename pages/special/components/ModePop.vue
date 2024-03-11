@@ -133,11 +133,11 @@ export default {
 	}
 	.videoPop:nth-child(3){
 		.btn{
-			background:#4b73f9;
+			background:#F60652;
 		}
 	}
 	.nextBtn{
-		background: #2877ff;
+		background: #F60652;
 		text-align:center;
 		width: 100%;
 		padding:20rpx 0;

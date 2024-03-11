@@ -30,7 +30,7 @@
 			url: String,
 			activeColor: {
 				type: String,
-				default: '#0E7EFC'
+				default: '#F60652'
 			},
 			endPic: String,
 			title: String,

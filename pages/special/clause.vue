@@ -190,7 +190,7 @@
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	background: #2877ff;
+	background: #F60652;
 	text-align: center;
 	width: 100%;
 	padding: 30rpx 0;

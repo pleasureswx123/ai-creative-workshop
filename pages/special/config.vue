@@ -1,13 +1,13 @@
 <template>
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
-		<view class="videoPop">图片配置支持AI绘图或者上传素材(2选1)，若选择AI绘图，每张图片会根据图片配置小号对应的积分(修改会重新消耗积分)。</view>
+		<view class="videoPop">图片配置支持AI绘图，每张图片会根据图片配置小号对应的积分(修改会重新消耗积分)。</view>
 		<view class="videoPop" v-for="(item,index) in configList" :key="index">
 			<view class="title">{{item.original}}</view>
 			<u--textarea v-model="item.value" placeholder="可以修改描述(选填)" class="qm-textarea" height="34" confirmType="done" ></u--textarea>
 			<view class="generate">
 				<view class="info" v-if="item.img_url!=''">
-					<image :src="item.img_url" mode="aspectFill" v-if="item.img_url" @tap="viewImage(item.img_url)"></image>
+					<image :src="item.img_url" mode="aspectFit" v-if="item.img_url" @tap="viewImage(item.img_url)"></image>
 					<i class="iconfont icon-guanbi" @tap="close(index)"></i>
 				</view>
 				<view class="info" @tap="generate(item,index)" v-if="item.img_url==''">
@@ -20,7 +20,10 @@
 				</view> -->
 			</view>
 		</view>
-		<view class="nextBtn" @tap="nextTop">合成视频</view>
+		<view class="footer-bar">
+		  <view class="btn-box cancle" @tap="back">返回</view>
+		  <view class="btn-box pointer" @tap="nextTop">合成视频</view>
+		</view>=
 	</view>
 </template>
 
@@ -91,7 +94,11 @@
 				}).catch(() => {
 					
 				})
-				
+			},
+			back(){
+				uni.navigateTo({
+				   url: './tabulation'
+				})
 			}
 		},
 	}
@@ -127,8 +134,9 @@
 			 height: 140rpx;
 			 text-align: center;
 			 border-radius:30rpx;
-			 // overflow: hidden;
+			 aspect-ratio: 1 / 1;
 			 position: relative;
+			 cursor: pointer;
 			 image{
 				 width: 100%;
 				 height: 100%;
@@ -143,6 +151,7 @@
 				 top: -10rpx;
 				 right: -6rpx;
 				 z-index: 2;
+				 cursor: pointer;
 			 }
 			 .icon-AI{
 				 display:block;
@@ -158,19 +167,36 @@
 			 }
 		}
 	}
-	.nextBtn{
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		background: #2877ff;
-		text-align:center;
-		width: 100%;
-		padding:30rpx 0;
-		color:var(--txt-color1);
-		border-radius:20rpx 20rpx 0 0;
-		font-size:28rpx;
-		font-weight:700;
-		z-index: 3;
+	.footer-bar {
+	   position: fixed;
+	   bottom: 0;
+	   left: 0;
+	   right: 0;
+	   padding: 0 30rpx;
+	   height: 150rpx;
+	   box-sizing: border-box;
+	   place-items: center;
+	   z-index: 100;
+	   color: var(--txt-color1);
+		background:var(--bg-color1);
+		display: flex;
+		 width: 100%;
+		 gap:10px;
+	  .btn-box {
+		width: 50%;
+	    background: #F60652;
+	    height: 80rpx;
+	    border-radius: 10rpx;
+	    text-align: center;
+	    line-height: 80rpx;
+	    position: relative;
+	    font-size: 28rpx;
+	    font-weight: bold;
+		  cursor: pointer;
+	  }
+	  .cancle{
+		background: #3b3f57;
+	  }
 	}
 	.qm-textarea {
 	  background: var(--bg-color2);
@@ -193,4 +219,10 @@
 	    }
 	  }
 	}
+@media screen and (min-width: 960px){
+	.footer-bar{
+		width: 1200px;
+		margin: auto;
+	}
+}
 </style>

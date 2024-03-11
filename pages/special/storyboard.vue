@@ -12,7 +12,7 @@
 					</u-steps-item>
 				</u-steps>
 				<view class="tips">
-					使用提醒：<view class="content">当前状态可返回，数据不会丢失，可在"草稿箱"中查看任务进度，分成成功后可进行下一步操作。</view>
+					使用提醒：<view class="content">当前状态可返回，数据不会丢失，可在"我的创作"中查看任务进度，成功后可进行下一步操作。</view>
 				</view>
 				<view class="btn-bar">
 					<view class="btn back" @tap="back">返回</view>
