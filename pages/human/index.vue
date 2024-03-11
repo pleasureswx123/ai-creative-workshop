@@ -136,10 +136,10 @@ export default{
 				this.taskId = res.task_id
 			}).catch(res =>{
 				this.pageShow = true
+				uni.hideLoading();
 			})
 		},
 		Handload(data){
-			console.log(data)
 			if(data == '重新生成'){
 				this.pageShow = true
 			}

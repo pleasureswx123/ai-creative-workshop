@@ -34,7 +34,7 @@ export default {
 		getCapList() {
 			NovelApi.getTypeface({
 				data:{page:1,
-        			pagesize:10,}
+        			pagesize:20,}
 			}).then(res => {
 				this.capList = res.list
 			})

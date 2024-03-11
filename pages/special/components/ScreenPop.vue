@@ -9,7 +9,7 @@
 				<view class="title" :class="{active: activeIndex === index}">{{item.title}}</view>
 			  </view>
 		  </view>
-		  <view class="noMore" v-if="noMore == false ">没有更多数据了</view>
+		  <!-- <view class="noMore" v-if="noMore == false "></view> -->
 		  <u-gap height="150rpx" />
 		</scroll-view>
 	</NovelPop>
@@ -37,8 +37,7 @@ export default {
 		activeIndex: 0,
 		screenList:[],
 		page:1,
-		pagesize:10,
-		noMore: false,
+		pagesize:20,
 	  }
 	},
 	mounted() {
@@ -102,11 +101,6 @@ export default {
 		  }
 	  }
 	}
-}
-.noMore {
-	color: var(--txt-color2);
-	text-align: center;
-	font-size: 28rpx;
 }
 @media screen and (min-width: 960px){
 	.item-wrapper .item-box .pic-box{

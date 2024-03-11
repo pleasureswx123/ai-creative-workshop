@@ -71,7 +71,6 @@
 								}
 							})
 						} else {
-							console.log(2)
 							this.list = [...this.list, ...res.list.map(item => {
 								const id = item.id || guid();
 								return {
