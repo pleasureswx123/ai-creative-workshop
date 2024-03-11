@@ -2,7 +2,7 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view>
-			<view class="title" @tap="create">我的创作</view>
+			<view class="title" @tap="create">小说推文创作</view>
 			<NovelTextarea ref="novelText"></NovelTextarea>
 			<view class="novel">
 				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>
@@ -181,8 +181,12 @@
 		}
 		.title{
 			color: var(--txt-color1);
-			text-align: right;
+			text-align: left;
 			margin: 30rpx 0;
+			background-color: #6978fd;
+			display: inline-block;
+			padding: 10rpx;
+			border-radius: 10rpx;
 		}
 	}
 	.next{

@@ -5,7 +5,7 @@
 		<view class="list">
 			<view class="videoPop" v-for="(item,index) in lationList" :key="item.task_id">
 				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3||item.state == 101"
-					@tap="edit(item.state,item.is_automatic)">{{item.state_info}}</view>
+					@tap="edit(item.state,item.is_automatic,item.task_id)">{{item.state_info}}</view>
 				<view class="video" v-if="item.state == 4">
 					<video id="myVideo" :src="item.video_url" object-fit="contain" :poster="item.cover_img_url"
 						:controls="true"></video>
@@ -59,7 +59,6 @@
 					}else if (res.list && res.list.length > 0) {
 						this.lationList = [...this.lationList,...res.list]
 					}
-					
 					if (res.list && res.list.length >= this.pagesize) {
 						this.page++
 						this.noMore = true
@@ -69,7 +68,6 @@
 				})
 			},
 			deleteData(index, task_id) {
-				
 				let user_id = JSON.parse(uni.getStorageSync('user_id'))
 				NovelApi.delTask({
 					data: {
@@ -85,7 +83,8 @@
 					this.myTaskList();
 				})
 			},
-			edit(state, is_automatic) {
+			edit(state, is_automatic,task_id) {
+				uni.setStorageSync('task',JSON.stringify(task_id))
 				if (state == 2 && is_automatic == 2) {
 					uni.navigateTo({
 						url: './config'
