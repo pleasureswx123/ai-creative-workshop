@@ -13,19 +13,21 @@
         </view>
         <view class="name">{{item.title}}</view>
       </view>
-      <view class="item" @tap="show = true">
+      <view v-if="isShowMore" class="item" @tap="show = true">
         <view class="img-box"><text class="more-btn">更多</text></view>
       </view>
     </view>
-    <QmPop
-        v-if="show"
-        :show.sync="show"
-        :currentInfo.sync="curInfo"
-        :title="title"
-        componentName="ImgStyleItem"
-        :paramsInfo="params"
-        :getList="getTemplate"
-        :proxyList="item => ({ ...item })" />
+    <template v-if="isShowMore">
+      <QmPop
+          v-if="show"
+          :show.sync="show"
+          :currentInfo.sync="curInfo"
+          :title="title"
+          componentName="ImgStyleItem"
+          :paramsInfo="params"
+          :getList="getTemplate"
+          :proxyList="item => ({ ...item })" />
+    </template>
   </view>
 </template>
 
@@ -34,6 +36,10 @@ import {mapActions} from 'vuex';
 
 export default {
   props: {
+    isShowMore: {
+      type: Boolean,
+      default: true
+    },
     title: {
       type: String,
       default: '选择风格'
@@ -81,6 +87,9 @@ export default {
   },
   watch: {
     watchIdList(item) {
+      if(!this.isShowMore) {
+        return;
+      }
       const {id, list} = item || {};
       const ids = list.map(item => item.id);
       if(!id || !ids.length) {
@@ -96,7 +105,7 @@ export default {
     const {width} = this.$refs.photoBox.$el.getBoundingClientRect();
     this.gridNums = Math.floor(width / 80);
     this.getTemplate(Object.assign({page: 1, pagesize: 50}, this.params)).then(res => {
-      this.list = ((res?.list || []).slice(0, this.gridNums - 1));
+      this.list = ((res?.list || []).slice(0, this.gridNums - +this.isShowMore ));
       this.listBak = this.list;
     });
   },

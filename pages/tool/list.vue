@@ -182,7 +182,7 @@ export default {
     justify-content: center;
   }
   .video-box {
-    width: 58%;
+    width: 55%;
     aspect-ratio: 4 / 3;
     display: flex;
     .item {

@@ -16,6 +16,7 @@
           :value.sync="prompt"></Describe>
       
       <TemplateStyle
+          :isShowMore="false"
           :params="{type: 1, task_type: taskType}"
           :currentInfo.sync="templateInfo"></TemplateStyle>
   
