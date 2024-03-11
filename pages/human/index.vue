@@ -21,7 +21,7 @@
 			<view class="box-container">
 				<view class="btn" @tap="handGenerate">
 					立即生成
-					<view class="time">{{integralTips.consume.A_show}}</view>
+					<view class="time">{{integralTips}}</view>
 				</view>
 			</view>
 			<view class="tips">由于消耗算力较高，每15秒为一个计算单位，不足15秒按照15秒计算</view>
@@ -68,7 +68,8 @@ export default{
 	},
 	computed: {
 		integralTips() {
-		  return this.userIntegral?.['24'] || {};
+		  const result = (this.userIntegral?.['24'] || {})?.consume?.A_show;
+		  return result
 		},
 	},
 	methods:{

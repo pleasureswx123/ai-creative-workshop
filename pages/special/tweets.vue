@@ -9,7 +9,7 @@
 			</view>
 			<view class="next">
 				<view class="nextBtn" @tap="nextStep()">下一步</view>
-				<view class="tips">({{integralTips.consume.A_show}})</view>
+				<view class="tips">({{integralTips}})</view>
 			</view>
 		</view>
 		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
@@ -63,23 +63,18 @@
 		},
 		computed: {
 			integralTips() {
-			  return this.userIntegral?.['27'] || {};
+			  const result = (this.userIntegral?.['27'] || {})?.consume?.A_show;
+			  return result
 			},
-		},
-		onShow (){
-			const eventChannel = this.getOpenerEventChannel();
-			this.eventChannel=eventChannel
-			eventChannel.on('setMusic',data =>{
-				this.$nextTick(() =>{
-					this.$refs.NovelVideo.tabList[1].choose = data.title
-					this.musicId = data.id
-				})
-			 })
 		},
 		mounted() {
 			this.getUserInfo()
 		},
 		methods: {
+			getMusic(musicList){
+				this.$refs.NovelVideo.tabList[1].choose = musicList.title
+				this.musicId = musicList.id
+			},
 			onLayout(name) {
 				this[`${name}`] = true
 			},

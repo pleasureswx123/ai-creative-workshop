@@ -68,16 +68,17 @@ export default {
 			this.getMusicList()
 		},
 		confirm(){
-			uni.navigateTo({
-			   url: './tweets',// 要跳转到的页面路径
-			   success:res=>{
-			   	res.eventChannel.emit('setMusic',this.musicList[this.activeIndex])
-			   }
+			let pages = getCurrentPages();  //获取所有页面栈实例列表
+			let nowPage = pages[ pages.length - 1];  //当前页页面实例
+			let prevPage = pages[ pages.length - 2 ];  //上一页页面实例
+			prevPage.$vm.getMusic(this.musicList[this.activeIndex])
+			uni.navigateBack({
+			   delta: 1,// 要跳转到的页面路径
 			})
 		},
 		close(){
-			uni.navigateTo({
-			   url: './tweets' // 要跳转到的页面路径
+			uni.navigateBack({
+			   delta:1 // 要跳转到的页面路径
 			})
 			if(this.innerAudioContext){
 				this.innerAudioContext.destroy()
