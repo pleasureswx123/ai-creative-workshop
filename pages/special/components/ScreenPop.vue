@@ -81,7 +81,7 @@ export default {
 		background-color: #ccc;
 		border:1px solid var(--bg-color1);
 	  &.active {
-		border:1px solid #6978fd;
+		border:1px solid #F60652;
 	  }
 	    uni-image {
 	      width: 100%;
@@ -97,7 +97,7 @@ export default {
 	    overflow: hidden;
 	    text-align: center;
 		  &.active {
-			color:#6978fd;
+			color:#F60652;
 		  }
 	  }
 	}

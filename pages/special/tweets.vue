@@ -9,7 +9,7 @@
 			</view>
 			<view class="next">
 				<view class="nextBtn" @tap="nextStep()">下一步</view>
-				<view class="tips">(消耗40积分)</view>
+				<view class="tips">({{integralTips.consume.A_show}})</view>
 			</view>
 		</view>
 		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
@@ -60,6 +60,11 @@
 				musicId:'',
 				eraId:''
 			}
+		},
+		computed: {
+			integralTips() {
+			  return this.userIntegral?.['27'] || {};
+			},
 		},
 		onShow (){
 			const eventChannel = this.getOpenerEventChannel();
@@ -183,7 +188,7 @@
 			color: var(--txt-color1);
 			text-align: left;
 			margin: 30rpx 0;
-			background-color: #6978fd;
+			background-color: #F60652;
 			display: inline-block;
 			padding: 10rpx;
 			border-radius: 10rpx;
@@ -195,7 +200,7 @@
 			width: 100%;
 			height: 80rpx;
 			line-height:80rpx;
-			background-color: #6978fd;
+			background-color: #F60652;
 			color:#fff;
 			border-radius:20rpx;
 			font-size:32rpx;

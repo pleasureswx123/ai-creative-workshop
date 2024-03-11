@@ -125,6 +125,7 @@
 		color: var(--txt-color1);
 		position: relative;
 		overflow: hidden;
+		cursor: pointer;
 		.status {
 			background: var(--bg-color1);
 			font-size: 32rpx;

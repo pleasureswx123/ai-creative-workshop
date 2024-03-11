@@ -60,7 +60,7 @@ export default {
 	},
 	color:{
 		type: String,
-		default: '#6978fd'
+		default: '#F60652'
 	}
   },
   watch: {
@@ -147,7 +147,7 @@ export default {
 	 gap:10px;
     .btn-box {
 	  width: 50%;
-      background: #6978fd;
+      background: #F60652;
       height: 80rpx;
       border-radius: 10rpx;
       text-align: center;
@@ -164,7 +164,7 @@ export default {
 }
 @supports (-webkit-touch-callout: none) {
   .pop-container {
-    height: 100dvh;
+    height: 100vh;
   }
 }
 .tips-wrapper {

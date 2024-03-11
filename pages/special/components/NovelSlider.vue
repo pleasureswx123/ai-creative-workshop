@@ -96,6 +96,9 @@ export default {
     uni-slider .uni-slider-handle-wrapper {
       height: 3px!important;
     }
+	uni-slider .uni-slider-track{
+		background-color: #F60652!important;
+	}
   }
 }
 </style>

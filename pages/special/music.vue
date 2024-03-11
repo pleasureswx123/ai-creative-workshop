@@ -125,7 +125,7 @@ export default {
 	   color:var(--txt-color1);
 	  .btn-box {
 		  width: 50%;
-	    background: #6978fd;
+	    background: #F60652;
 	    height: 80rpx;
 	    border-radius: 10rpx;
 	    text-align: center;

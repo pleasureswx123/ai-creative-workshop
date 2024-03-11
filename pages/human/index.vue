@@ -19,7 +19,10 @@
 				<HuCaptions ref="HuCaptions" @changeSwitch="changeSwitch"></HuCaptions>
 			</view>
 			<view class="box-container">
-				<view class="btn" @tap="handGenerate">立即生成</view>
+				<view class="btn" @tap="handGenerate">
+					立即生成
+					<view class="time">{{integralTips.consume.A_show}}</view>
+				</view>
 			</view>
 			<view class="tips">由于消耗算力较高，每15秒为一个计算单位，不足15秒按照15秒计算</view>
 			<view class="tipsPop">
@@ -62,6 +65,11 @@ export default{
 			timer:null,
 			videoUrl:''
 		}
+	},
+	computed: {
+		integralTips() {
+		  return this.userIntegral?.['24'] || {};
+		},
 	},
 	methods:{
 		tab(e){
@@ -211,8 +219,15 @@ export default{
 	color: var(--txt-color1);
 	text-align: center;
 	border-radius: 10rpx;
-	padding:10rpx 0;
+	padding:20rpx 0;
 	cursor: pointer;
+	position: relative;
+	.time{
+		position: absolute;
+		right: 10rpx;
+		font-size:20rpx;
+		bottom: 0;
+	}
 }
 .tips{
 	color: var(--txt-color1);
