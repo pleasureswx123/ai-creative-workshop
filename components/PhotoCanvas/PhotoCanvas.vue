@@ -63,19 +63,24 @@ export default {
     }
   },
   mounted() {
-    const {width, height} = document.getElementById('photoCanvasBox').getBoundingClientRect();
+    // const {width, height} = document.getElementById('photoCanvasBox').getBoundingClientRect();
     const {width: imgWidth, height: imgHeight} = this.imgInfo;
-    if(imgWidth > width) {
-      const wd = width;
-      this.imgCanvasInfo = {
-        width: wd,
-        height: imgHeight / imgWidth * wd
-      }
-    } else {
-      this.imgCanvasInfo = {
-        width: imgWidth,
-        height: imgHeight
-      }
+    debugger
+    // if(imgWidth > width) {
+    //   const wd = width;
+    //   this.imgCanvasInfo = {
+    //     width: wd,
+    //     height: imgHeight / imgWidth * wd
+    //   }
+    // } else {
+    //   this.imgCanvasInfo = {
+    //     width: imgWidth,
+    //     height: imgHeight
+    //   }
+    // }
+    this.imgCanvasInfo = {
+      width: imgWidth,
+      height: imgHeight
     }
     this.createCanvas();
     this.reset();
@@ -245,7 +250,7 @@ export default {
       });
     },
     drawPoints() {
-      cancelAnimationFrame(this.animationFrameId);
+      // cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = requestAnimationFrame(() => {
         if (this.points.length < 2) return; // 至少需要两个点来绘制
         this.ctx.beginPath();
@@ -254,13 +259,14 @@ export default {
       
         for (let i = 1; i < this.points.length; i++) {
           const point = this.points[i];
-          const prevPoint = this.points[i - 1];
-          const centerX = (point.x + prevPoint.x) / 2;
-          const centerY = (point.y + prevPoint.y) / 2;
-          this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-          // this.ctx.lineTo(endX, endY);
+          // const prevPoint = this.points[i - 1];
+          // const centerX = (point.x + prevPoint.x) / 2;
+          // const centerY = (point.y + prevPoint.y) / 2;
+          // this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+          this.ctx.lineTo(point.x, point.y);
         }
         this.ctx.lineWidth = this.brushSize;
+        this.ctx.lineCap = 'round';
         this.ctx.stroke();
         this.ctx.closePath();
         this.ctx.draw(true);
@@ -293,12 +299,14 @@ export default {
       
       for (let i = 1; i < points.length; i++) {
         const point = points[i];
-        const prevPoint = points[i - 1];
-        const centerX = (point.x + prevPoint.x) / 2;
-        const centerY = (point.y + prevPoint.y) / 2;
-        this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+        // const prevPoint = points[i - 1];
+        // const centerX = (point.x + prevPoint.x) / 2;
+        // const centerY = (point.y + prevPoint.y) / 2;
+        // this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+        this.ctx.lineTo(point.x, point.y);
       }
       this.ctx.lineWidth = size;
+      this.ctx.lineCap = 'round';
       this.ctx.stroke();
       this.ctx.closePath();
     },
