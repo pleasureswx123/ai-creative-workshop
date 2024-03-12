@@ -95,14 +95,7 @@
 				}
 			},
 			downloadAudio(item){
-				uni.downloadFile({
-					url: item.video_url, //仅为示例，并非真实的资源
-					success: (res) => {
-						if (res.statusCode === 200) {
-							uni.$u.toast('下载成功');
-						}
-					}
-				});
+				this.downLoadFile(item.video_url)
 			}
 		},
 		onReachBottom() {
