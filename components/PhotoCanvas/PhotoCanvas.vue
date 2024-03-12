@@ -3,8 +3,8 @@
     <view class="del-btn" @tap.stop>
       <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
     </view>
-    <view class="photo-canvas-inner" ref="myCanvasBox">
-      <view v-if="imgCanvasInfo" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
+    <view class="photo-canvas-inner">
+      <view v-if="imgCanvasInfo" ref="myCanvasBox" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
         <canvas
             :disable-scroll="disableScrollStatus"
             :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}"
@@ -62,6 +62,12 @@ export default {
     },
     lineIds() {
       return this.drawingData.map(item => item.id);
+    },
+    cursorSize() {
+      return {
+        brushSize: this.brushSize,
+        imgCanvasInfo: this.imgCanvasInfo
+      }
     }
   },
   mounted() {
@@ -83,7 +89,6 @@ export default {
       width: imgWidth / window.devicePixelRatio,
       height: imgHeight / window.devicePixelRatio
     }
-    this.updateCursorSize(this.brushSize * window.devicePixelRatio)
     this.createCanvas();
     this.reset();
   },
@@ -108,9 +113,18 @@ export default {
     this.ctx = null;
   },
   watch: {
-    brushSize(size) {
-      this.updateCursorSize(size * 1)
-    }
+    cursorSize: {
+      immediate: true,
+      deep: true,
+      handler(info) {
+        const {brushSize, imgCanvasInfo} = info || {};
+        if (imgCanvasInfo) {
+          this.$nextTick(() => {
+            this.updateCursorSize(brushSize * 1)
+          })
+        }
+      }
+    },
   },
   methods: {
     getMaskImgSrc() {
