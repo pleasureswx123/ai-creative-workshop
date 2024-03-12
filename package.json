@@ -8,7 +8,7 @@
   },
   "author": "",
   "dependencies": {
-    "@aigcui/entry": "^0.0.8",
+    "@aigcui/entry": "^0.0.10",
     "@traptitech/markdown-it-katex": "^3.6.0",
     "highlight.js": "^11.7.0",
     "katex": "^0.16.4",
