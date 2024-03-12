@@ -7,7 +7,7 @@
 		    <view class="icon-box">
 		      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="40" />
 		    </view>
-		    <view class="tips">支持图片格式：KPG,PNG,最大限制：10	M</view>
+		    <view class="tips">支持图片格式：JPG,PNG,最大限制：10	M</view>
 		  </view>
 		  <view v-else class="upload-box-container pointer" @tap="handleUpload">
 		    <view class="upload-box">
@@ -15,7 +15,7 @@
 		        <i class="iconfont icon-shangchuan_huaban"></i>
 		      </view>
 		      <view class="title">点击上传图片</view>
-		      <view class="tips">支持图片格式：KPG,PNG,最大限制：10M</view>
+		      <view class="tips">支持图片格式：JPG,PNG,最大限制：10M</view>
 		      <view class="warn">注意：正面图片，且背景干净或纯色为佳</view>
 		    </view>
 		  </view>
