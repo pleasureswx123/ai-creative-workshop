@@ -4,7 +4,7 @@
 		<u--textarea v-model="current" placeholder="输入或者复制您要制作数字人的文案" height="140" :maxlength="maxlength"></u--textarea>
 		<view class="textarea-tips-box">
 			<view class="count-tips">{{current.length}}/{{maxlength}}</view>
-			<view class="paste" @tap="handlePaste">黏贴</view>
+			<uni-icons @tap="current = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="var(--txt-color2)" size="20" />
 		</view>
 	</view>
 </template>
@@ -79,13 +79,6 @@ export default{
 		  color: var(--txt-color2)!important;
 		  background: var(--bg-color1)!important;
 		  margin-right: 10rpx;
-		}
-		.paste{
-			color: var(--txt-color1);
-			border: 1px solid var(--txt-color1);
-			border-radius: 30rpx;
-			padding: 0 10rpx;
-			cursor: pointer;
 		}
 	}
 }
