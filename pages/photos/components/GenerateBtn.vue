@@ -23,7 +23,6 @@
 
 <script>
 import SelectNums from './SelectNums.vue';
-import Statement from './Statement.vue';
 
 export default {
   props: {
@@ -40,7 +39,7 @@ export default {
       default:  1
     }
   },
-  components: { SelectNums, Statement },
+  components: { SelectNums },
   computed: {
     integralTips() {
       let result = '';
