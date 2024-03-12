@@ -102,7 +102,7 @@ export default {
 		margin-bottom:30rpx;
 		color:var(--txt-color1);
 		position: relative;
-		font-size: 24rpx;
+		font-size: 28rpx;
 		cursor: pointer;
 		&.active {
 			border:1px solid #fff;

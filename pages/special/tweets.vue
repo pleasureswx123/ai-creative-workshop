@@ -15,8 +15,8 @@
 		<ScreenPop @setNovelData="setNovelData" title="画面风格" v-if="screenPop" :show.sync="screenPop"></ScreenPop>
 		<EraPop @setEraData="setEraData" title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
 		<VideoPop @setTaskData="setTaskData" title="配音选择" v-if="videoPop" :show.sync="videoPop" ref="videoPop"></VideoPop>
-		<BgmPop @setMusic="setMusic" title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
-		<CaptionsPop @setCapData="setCapData" title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
+		<BgmPop @NoNeed="NoNeed" title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
+		<CaptionsPop @setCapData="setCapData" @close="close" title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
 		<InverPop @setInverData="setInverData" title="视频比例" v-if="inverPop" :show.sync="inverPop"></InverPop>
 	</view>
 </template>
@@ -95,10 +95,20 @@
 				this.speedId = data.speed
 				this.videoPop = false
 			},
+			NoNeed(data){
+				this.bgmPop  = false
+				this.$refs.NovelVideo.tabList[1].choose = data
+				this.musicId = ''
+			},
 			setCapData(data){
 				this.$refs.NovelVideo.tabList[2].choose = data.title
 				this.capId = data.id
 				this.captionsPop = false
+			},
+			close(data){
+				this.captionsPop = false
+				this.$refs.NovelVideo.tabList[2].choose = data
+				this.capId = ''
 			},
 			setInverData(data){
 				this.$refs.NovelVideo.tabList[3].choose = data.scale
@@ -146,7 +156,7 @@
 					typeface:this.capId,
 					music:this.musicId,
 					time_style:this.eraId,
-					show_captions:2
+					show_captions:this.capId?1:2
 				}
 				uni.setStorageSync('data',JSON.stringify(data))
 				NovelApi.articlesSplit({

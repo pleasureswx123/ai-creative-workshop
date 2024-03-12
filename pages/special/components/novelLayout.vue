@@ -44,7 +44,7 @@ export default {
   .title {
     min-width: 0;
     color: var(--txt-color1);
-    font-size: 24rpx;
+    font-size: 28rpx;
     line-height: 70rpx;
     max-width: 100%;
     overflow: hidden;

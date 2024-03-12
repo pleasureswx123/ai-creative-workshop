@@ -48,9 +48,8 @@ export default {
 			   url: url 
 			})
 			if(this.id = 3){
-				this.$emit('update:show', false)
+				this.$emit('NoNeed', '不需要')
 			}
-			
 		}
 	},
 }
