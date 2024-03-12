@@ -5,7 +5,6 @@
     </view>
     <view class="photo-canvas-inner" ref="myCanvasBox">
       <view v-if="imgCanvasInfo" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
-        <img :src="imgSrc" />
         <canvas
             :disable-scroll="disableScrollStatus"
             :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}"
@@ -21,11 +20,13 @@
             @click="onClick" />
       </view>
     </view>
-<!--    <view @tap="saveFile">保存</view>-->
+<!--    <view @tap="getMaskImgSrc">获取</view>-->
   </view>
 </template>
 
 <script>
+import { userApi } from '@/api';
+
 export default {
   props: {
     src: {
@@ -112,18 +113,27 @@ export default {
     }
   },
   methods: {
-    saveFile() {
-      uni.canvasToTempFilePath({
-        canvasId: 'myCanvas',
-        success: res => {
-          // 在H5平台下，tempFilePath 为 base64
-          console.log(res.tempFilePath)
-          const imgData = res.tempFilePath.replace("image/png", "image/octet-stream");
-          this.downImg(imgData, 'mask.png');
-        }
+    getMaskImgSrc() {
+      return new Promise((resolve, reject) => {
+        uni.canvasToTempFilePath({
+          canvasId: 'myCanvas',
+          success: res => {
+            // 在H5平台下，tempFilePath 为 base64
+            userApi.uploadImg({filePath: res.tempFilePath}).then(res => {
+              resolve(res.path)
+            }).catch(err => {
+              reject(err)
+            })
+          },
+          fail: (err) => {
+            reject(err)
+          }
+        }, this)
       })
     },
     downImg(data, filename) {
+      // const imgData = res.tempFilePath.replace("image/png", "image/octet-stream");
+      // this.downImg(imgData, 'mask.png');
       const save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
       save_link.href = data;
       save_link.download = filename;
@@ -152,7 +162,19 @@ export default {
       this.ctx.clearRect(0, 0, width, height);
       this.ctx.fillStyle = 'transparent';
       this.ctx.fillRect(0, 0, width, height);
-      // this.ctx.drawImage(this.imgSrc, 0, 0, width, height);
+      console.log(this.imgSrc)
+      uni.downloadFile({
+        url: this.imgSrc,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            this.ctx.drawImage(res.tempFilePath, 0, 0, width, height);
+            this.ctx.draw();
+          }
+        },
+        fail: (err) => {
+          console.log('draw fail', err)
+        }
+      });
     },
     stopDrawing() {
       if (this.points.length > 1) {
@@ -477,7 +499,7 @@ export default {
       height: 100%;
     }
     .canvas {
-      opacity: .8;
+      //opacity: .8;
     }
   }
 }
