@@ -2,7 +2,7 @@
   <view class="statement-box">
     <view class="txt-con" @tap="showStatement">
       <uni-icons custom-prefix="iconfont-qm" type="icon-qm-warning1" color="var(--txt-color2)" size="16" />
-      <text class="txt">免责声明 由AI生成</text>
+      <text class="txt">免责声明 内容由AI生成</text>
     </view>
   </view>
 </template>
