@@ -25,7 +25,7 @@ export default {
       brushSize: 10,
       imgSrc: '',
       imgInfo: null,
-      showBrushSize: false
+      showBrushSize: false,
     }
   },
   watch: {
@@ -46,6 +46,9 @@ export default {
     document.removeEventListener('click', this.handleClickOutside);
   },
   methods: {
+    getMaskImgSrc() {
+      return this.$refs.photoCanvas.getMaskImgSrc();
+    },
     handleClickOutside(event) {
       if(this.$refs?.brushSize?.$refs?.brushSizeBox?.$el?.contains?.(event.target) || this.$refs?.tool?.$refs?.brush?.[0]?.$el?.contains?.(event.target)) {
         this.showBrushSize = true

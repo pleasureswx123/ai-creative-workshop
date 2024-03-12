@@ -3,7 +3,7 @@
     <TabsBox :value.sync="type" :options="tabsList"></TabsBox>
     <PhotoGenerate v-if="loading"></PhotoGenerate>
 <!--    <PhotoGenerateResult></PhotoGenerateResult>-->
-    <PhotoModify></PhotoModify>
+    <PhotoModify ref="photoTool"></PhotoModify>
     <Describe :value.sync="description"></Describe>
     <ProduceBtn :value.sync="pages" :loading="loading" @cb="handleComfirm"></ProduceBtn>
     <Setting :value.sync="setting"></Setting>
@@ -58,14 +58,19 @@ export default {
   },
   methods: {
     ...mapActions('PhotoInfo', ['getImgStyleList']),
+    getMaskImgSrc() {
+      return this.$refs.photoTool.getMaskImgSrc()
+    },
     handleComfirm() {
       if (this.loading) {
         return
       }
       this.loading = true;
-      setTimeout(() => {
+      this.getMaskImgSrc().then(path => {
+        console.log('mask img:', path)
+      }).finally(() => {
         this.loading = false;
-      }, 3000)
+      });
     }
   }
 }
