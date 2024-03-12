@@ -67,7 +67,9 @@ export default {
       }
       this.loading = true;
       this.getMaskImgSrc().then(path => {
-        console.log('mask img:', path)
+        const a = path;
+        debugger
+        console.log('mask img:', a)
       }).finally(() => {
         this.loading = false;
       });
