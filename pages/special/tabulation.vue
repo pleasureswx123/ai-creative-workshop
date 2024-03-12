@@ -4,7 +4,7 @@
 		<view class="tips">内容由AI生成，仅供参考，作品和素材系统会默认为您云端保存30天，请在30天内下载保存到您本地哦，30天后系统会自动清空，清空后不可找回。</view>
 		<view class="list">
 			<view class="videoPop" v-for="(item,index) in lationList" :key="item.task_id">
-				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3||item.state == 101"
+				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3||item.state == 100"
 					@tap="edit(item.state,item.is_automatic,item.task_id)">{{item.state_info}}</view>
 				<view class="video" v-if="item.state == 4">
 					<video id="myVideo" :src="item.video_url" object-fit="contain" :poster="item.cover_img_url"
@@ -12,7 +12,10 @@
 				</view>
 				<view class="info">
 					<view class="title">{{item.title}}</view>
-					<i class="iconfont icon-shanchu" v-if="item.state == 4" @tap="deleteData(index,item.task_id)"></i>
+					<view class="set" v-if="item.state == 4">
+						<i class="iconfont icon-shanchu" @tap="deleteData(index,item.task_id)"></i>
+						<uni-icons @tap="downloadAudio(item)" class="pointer" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="18" />
+					</view>
 				</view>
 			</view>
 		</view>
@@ -90,6 +93,16 @@
 						url: './config'
 					})
 				}
+			},
+			downloadAudio(item){
+				uni.downloadFile({
+					url: item.video_url, //仅为示例，并非真实的资源
+					success: (res) => {
+						if (res.statusCode === 200) {
+							uni.$u.toast('下载成功');
+						}
+					}
+				});
 			}
 		},
 		onReachBottom() {
@@ -153,7 +166,6 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 20rpx 0;
-
 		.title {
 			width: 90%;
 			overflow: hidden;
@@ -161,6 +173,13 @@
 			line-height: 28rpx;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+		}
+	}
+	.set{
+		display: flex;
+		align-items: center;
+		.icon-shanchu{
+			margin-right: 5rpx;
 		}
 	}
 	.noMore {
@@ -183,6 +202,11 @@
 			}
 			.icon-shanchu {
 				font-size: 40rpx;
+				cursor: pointer;
+				margin-right: 10rpx;
+			}
+			.icon-qm-download11{
+				font-size: 50rpx!important;
 				cursor: pointer;
 			}
 		}
