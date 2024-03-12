@@ -5,17 +5,19 @@ import store from './store'
 import uView from '@/uni_modules/uview-ui'
 import '@/static/styles/index.css'
 
-import videojs from "video.js"
-import 'video.js/dist/video-js.min.css'
-	
+// import videojs from "video.js"
+// import 'video.js/dist/video-js.min.css'
+// Vue.prototype.$vJs = videojs;
+
 // 全局mixins，用于实现setData等功能，请勿删除！';
 import zpMixins from '@/uni_modules/zp-mixins/index.js';
 
 import './lang.js';
 
-Vue.prototype.$vJs = videojs;
 Vue.prototype.$store = store;
 
+import VueQr from 'vue-qr';
+Vue.component('VueQr', VueQr);
 Vue.use(uView)
 
 uni.$u.setConfig({

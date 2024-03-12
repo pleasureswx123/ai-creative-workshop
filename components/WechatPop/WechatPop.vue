@@ -30,11 +30,8 @@
 
 <script>
 import {mapActions} from 'vuex';
-import VueQr from 'vue-qr';
-const app = getApp();
 
 export default {
-  components: { VueQr },
   props: {
     value: {
       type: Boolean,
@@ -66,7 +63,7 @@ export default {
       return !!this.popMode && !!this.show && !!this.info
     },
     isMobile() {
-      return !!['android', 'ios'].includes(app.globalData.system)
+      return !!['android', 'ios'].includes(this.qmSystem)
     },
     popMode() {
       return this.isMobile ? 'bottom' : 'center';
