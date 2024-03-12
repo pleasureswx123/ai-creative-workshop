@@ -141,7 +141,7 @@ export default {
   background: #1F2937;
   box-sizing: border-box;
   border: 2rpx solid #494C55;
-  height: 500px;
+  height: 500rpx;
   position: relative;
   display: flex;
   align-items: center;

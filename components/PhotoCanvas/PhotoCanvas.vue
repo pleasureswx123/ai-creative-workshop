@@ -3,7 +3,7 @@
     <view class="del-btn" @tap.stop>
       <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
     </view>
-    <view class="photo-canvas-inner" id="photoCanvasBox">
+    <view class="photo-canvas-inner" ref="myCanvasBox">
       <view v-if="imgCanvasInfo" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
         <img :src="imgSrc" />
         <canvas
@@ -21,6 +21,7 @@
             @click="onClick" />
       </view>
     </view>
+<!--    <view @tap="saveFile">保存</view>-->
   </view>
 </template>
 
@@ -65,7 +66,6 @@ export default {
   mounted() {
     // const {width, height} = document.getElementById('photoCanvasBox').getBoundingClientRect();
     const {width: imgWidth, height: imgHeight} = this.imgInfo;
-    debugger
     // if(imgWidth > width) {
     //   const wd = width;
     //   this.imgCanvasInfo = {
@@ -79,9 +79,10 @@ export default {
     //   }
     // }
     this.imgCanvasInfo = {
-      width: imgWidth,
-      height: imgHeight
+      width: imgWidth / window.devicePixelRatio,
+      height: imgHeight / window.devicePixelRatio
     }
+    this.updateCursorSize(this.brushSize * window.devicePixelRatio)
     this.createCanvas();
     this.reset();
   },
@@ -105,23 +106,45 @@ export default {
     }
     this.ctx = null;
   },
+  watch: {
+    brushSize(size) {
+      this.updateCursorSize(size * 1)
+    }
+  },
   methods: {
+    saveFile() {
+      uni.canvasToTempFilePath({
+        canvasId: 'myCanvas',
+        success: res => {
+          // 在H5平台下，tempFilePath 为 base64
+          console.log(res.tempFilePath)
+          const imgData = res.tempFilePath.replace("image/png", "image/octet-stream");
+          this.downImg(imgData, 'mask.png');
+        }
+      })
+    },
+    downImg(data, filename) {
+      const save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+      save_link.href = data;
+      save_link.download = filename;
+      const event = document.createEvent('MouseEvents');
+      event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      save_link.dispatchEvent(event);
+    },
+    updateCursorSize(cursorSize) {
+      if (this.$refs.myCanvasBox) {
+        this.$refs.myCanvasBox.$el.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="${cursorSize}" width="${cursorSize}" viewBox="0 0 ${cursorSize} ${cursorSize}"><circle cx="${cursorSize / 2}" cy="${cursorSize / 2}" r="${cursorSize / 2}" fill="white"/></svg>') ${cursorSize / 2} ${cursorSize / 2}, auto`;
+      }
+    },
     disableScroll(status) {
       this.disableScrollStatus = status;
-      return
-      const dom = document.getElementById('photoCanvasBox');
-      if(status) {
-        this.toggleBodyPositionStatus(true);
-        dom && (dom.style['overflow'] = 'hidden');
-      } else {
-        this.toggleBodyPositionStatus(false);
-        dom && (dom.style['overflow'] = 'auto');
-      }
     },
     createCanvas() {
       this.ctx = uni.createCanvasContext('myCanvas', this);
+      this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
       this.ctx.lineWidth = this.brushSize;
       this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
       // this.ctx.globalAlpha = this.globalAlpha;
     },
     initCanvas() {
@@ -251,7 +274,7 @@ export default {
     },
     drawPoints() {
       // cancelAnimationFrame(this.animationFrameId);
-      this.animationFrameId = requestAnimationFrame(() => {
+      // this.animationFrameId = requestAnimationFrame(() => {
         if (this.points.length < 2) return; // 至少需要两个点来绘制
         this.ctx.beginPath();
         this.ctx.strokeStyle = (this.selectedColor);
@@ -259,19 +282,20 @@ export default {
       
         for (let i = 1; i < this.points.length; i++) {
           const point = this.points[i];
-          // const prevPoint = this.points[i - 1];
-          // const centerX = (point.x + prevPoint.x) / 2;
-          // const centerY = (point.y + prevPoint.y) / 2;
-          // this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-          this.ctx.lineTo(point.x, point.y);
+          const prevPoint = this.points[i - 1];
+          const centerX = (point.x + prevPoint.x) / 2;
+          const centerY = (point.y + prevPoint.y) / 2;
+          this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+          // this.ctx.lineTo(point.x, point.y);
         }
         this.ctx.lineWidth = this.brushSize;
         this.ctx.lineCap = 'round';
+        this.ctx.lineJoin = 'round';
         this.ctx.stroke();
         this.ctx.closePath();
         this.ctx.draw(true);
         // this.ctx.globalCompositeOperation = 'source-over';
-      })
+      // })
     },
     eraseLine() {
       if (this.selectedLineId) {
@@ -299,14 +323,15 @@ export default {
       
       for (let i = 1; i < points.length; i++) {
         const point = points[i];
-        // const prevPoint = points[i - 1];
-        // const centerX = (point.x + prevPoint.x) / 2;
-        // const centerY = (point.y + prevPoint.y) / 2;
-        // this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-        this.ctx.lineTo(point.x, point.y);
+        const prevPoint = points[i - 1];
+        const centerX = (point.x + prevPoint.x) / 2;
+        const centerY = (point.y + prevPoint.y) / 2;
+        this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+        // this.ctx.lineTo(point.x, point.y);
       }
       this.ctx.lineWidth = size;
       this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
       this.ctx.stroke();
       this.ctx.closePath();
     },

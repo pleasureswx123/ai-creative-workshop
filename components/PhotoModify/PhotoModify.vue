@@ -6,12 +6,14 @@
     </template>
     <BrushSize ref="brushSize" v-if="actionType === 'brush' && showBrushSize" :value.sync="brushSize"></BrushSize>
     <PhotoModifyTool
+        v-if="imgSrc && !!imgInfo"
         ref="tool"
         :value.sync="actionType"
         @undo="undo"
         @reset="reset"
         @eraser="eraser"
     ></PhotoModifyTool>
+    <u-gap height="30"></u-gap>
   </view>
 </template>
 

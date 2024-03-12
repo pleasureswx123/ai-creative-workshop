@@ -68,7 +68,6 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 10rpx;
-  margin-bottom: 30rpx;
   .item {
     border-radius: 5px;
     height: 70rpx;
