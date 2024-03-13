@@ -30,13 +30,19 @@ export default {
   },
   watch: {
     imgSrc(src) {
-      src ? uni.getImageInfo({
-        src, success: res => {
-          if (res.errMsg === 'getImageInfo:ok') {
-            this.imgInfo = res;
+      if(src) {
+        this.$emit('setUrl', src);
+        uni.getImageInfo({
+          src, success: res => {
+            if (res.errMsg === 'getImageInfo:ok') {
+              this.imgInfo = res;
+            }
           }
-        }
-      }) : (this.imgInfo = null);
+        })
+      } else {
+        this.$emit('setUrl');
+        this.imgInfo = null
+      }
     }
   },
   mounted() {
