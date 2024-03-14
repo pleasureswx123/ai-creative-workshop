@@ -1,13 +1,13 @@
 <template>
   <LayoutPage>
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
-    <template v-if="task_type === 27">
-      <view style="color: #fff; font-size: 15px; display: none">{{params27}}</view>
+    <template v-if="task_type === 28">
+      <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
       <PhotoGenerate v-if="loading"></PhotoGenerate>
-  <!--    <PhotoGenerateResult></PhotoGenerateResult>-->
+<!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
       <PhotoModify ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
-      <ProduceBtn :value.sync="batch_size" :loading="loading" @cb="handleComfirm"></ProduceBtn>
+      <ProduceBtn :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>
       <template v-if="setting">
         <ExtendDirection :value.sync="directions"></ExtendDirection>
@@ -20,9 +20,12 @@
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
             :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
       </template>
+      <LoraCard
+          @showPopFunc="showLoraPop = true"
+          :info.sync="loraInfo" />
     </template>
-    <template v-if="task_type === 31">
-      <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
+    <template v-if="task_type === 29">
+      <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
           :info="currentModeInfo" />
@@ -46,8 +49,7 @@
       <QmRatio
           :value.sync="img_scale"
           :list="ImgRatioInfo" />
-      <ProduceBtn :value.sync="batch_size" :loading="loading" @cb="handleComfirm"></ProduceBtn>
-      <Statement />
+      <ProduceBtn :taskType="task_type" :value.sync="batch_size" :loading="loading29" @cb="handle29Comfirm"></ProduceBtn>
   
       <QmPop
           v-if="showModelSelectPop"
@@ -64,19 +66,19 @@
           </view>
         </template>
       </QmPop>
-  
+    </template>
+    <template v-if="[28, 29].includes(+task_type)">
       <QmPop
           v-if="showLoraPop"
           title="选择Lora模型"
           componentName="LoraItem"
-          :paramsInfo="{class_id: modeId}"
+          :paramsInfo="{class_id: modeId, is_commercial: 1}"
           :getList="getLoraList"
           :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
           :show.sync="showLoraPop"
           :currentInfo.sync="loraInfo" />
-
     </template>
-    <template v-if="task_type === 29">
+    <template v-if="task_type === 30">
     
     </template>
   </LayoutPage>
@@ -92,11 +94,11 @@ export default {
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
       finalUrl: '',
       timer: null,
-      task_type: 27,
+      task_type: 28,
       tabsList: [
-        {name: '专业修图', value: 27},
-        {name: '商业出图', value: 28},
-        {name: '人物修图', value: 29},
+        {name: '专业修图', value: 28},
+        {name: '商业出图', value: 29},
+        {name: '人物修图', value: 30},
       ],
       reference_image: '',
       reference_image_extend: '',
@@ -108,6 +110,7 @@ export default {
       photoStyleInfo: null,
       loading: false,
       // 商业出图
+      loading29: false,
       modeId: 2,
       showModelSelectPop: false,
       showLoraPop: false,
@@ -118,7 +121,7 @@ export default {
   },
   watch: {
     task_type(id) {
-      if(id === 28) {
+      if(id === 29) { // 商业出图
         this.initData();
       }
     }
@@ -151,8 +154,10 @@ export default {
     lora_weight() {
       return this.loraInfo?.value || ''
     },
-    params28() {
+    params29() {
       return {
+        task_type: this.task_type,
+        model_parentclass_id: this.modeId,
         model_style_id: this.model_style_id,
         prompt: this.prompt || '',
         negative_prompt: this.negative_prompt || '',
@@ -163,7 +168,7 @@ export default {
         batch_size: this.batch_size || 1,
       }
     },
-    params27() {
+    params28() {
       return {
         task_type: this.task_type,
         reference_image: this.reference_image || '',
@@ -177,11 +182,16 @@ export default {
           right: this.directions.includes('right') ? 1 : 0,
           img_style_id: this.img_style_id,
         } : {upper: 0, below: 0, left: 0, right: 0, img_style_id: ''}),
+        lora_id: this.lora_id || '',
+        lora_weight: this.lora_weight || '',
       }
     }
   },
   methods: {
     ...mapActions('PictureInfo', ['createTask']),
+    ...mapActions('PhotoInfo', {
+      createPhotoTask: 'createTask'
+    }),
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
     ...mapActions('PhotoInfo', ['getModelClass', 'getImgStyleList', 'getModelStyleList', 'getModelList', 'getImgScale', 'getLoraList']),
     showTips(msg) {
@@ -192,7 +202,7 @@ export default {
         showCancel: false,
       })
     },
-    initData() {
+    initData() { // 商业出图 29
       this.getModelClass().then(() => {
         Promise.all([
           this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId}),
@@ -207,54 +217,82 @@ export default {
         this.timer = null;
       }
     },
-    handleComfirm() {
+    handle29Comfirm() {
+      if(!this.prompt) {
+        return this.showTips('请输入画面描述词');
+      }
+      if(!this.negative_prompt) {
+        return this.showTips('请输入负面描述词');
+      }
+      if (this.loading29) {
+        return
+      }
+      this.loading29 = true;
+      this.createPhotoTask(this.params29).then(({task_id}) => {
+        debugger
+        if(!!task_id) {
+          uni.reLaunch({
+            url: '/pages/picture/index'
+          })
+        } else {
+          uni.showModal({
+            title: '提示',
+            content: '生成失败，请重新生成！',
+            confirmText: '确定',
+            showCancel: false,
+            success: function () {}
+          })
+        }
+      }).finally(() => {
+        this.loading29 = false;
+      })
+    },
+    handle28Comfirm() {
       if(!this.reference_image) {
         return this.showTips('请上传图片');
       }
       if(!this.prompt) {
-        return this.showTips('请输入画面描述');
+        return this.showTips('请输入画面描述词');
       }
       if (this.loading) {
         return
       }
-      if(this.finalUrl) {
-        return
-      }
+      // if(this.finalUrl) {
+      //   return
+      // }
       this.loading = true;
       this.$refs.photoTool.getMaskImgSrc().then(path => {
         this.reference_image_extend = path;
-        const params = this?.[`params${this.task_type}`];
-        if(params) {
-          this.createTask(params).then(({task_id}) => {
-            const func = () => {
-              pictureApi.getTaskstate({task_id}).then((res) => {
-                const {state, url} = res || {};
-                if(state === 2) { // 生成失败
-                  this.loading = false;
-                  this.clearTimer();
-                  uni.$u.toast('生成任务失败');
-                  return
-                }
-                if(state === 1) { // 生成成功
-                  this.loading = false;
-                  this.clearTimer();
-                  this.finalUrl = url;
-                  return;
-                }
-              }).catch(() => {
+        this.createTask(this.params28).then(({task_id}) => {
+          const func = () => {
+            pictureApi.getTaskstate({task_id}).then((res) => {
+              const {state, url} = res || {};
+              if (state === 2) { // 生成失败
                 this.loading = false;
                 this.clearTimer();
-              })
-            }
-            this.timer = setInterval(() => {
-              func();
-            }, 3000);
-          }).catch(() => {
-            this.loading = false;
-          })
-        } else {
+                uni.$u.toast('生成任务失败');
+                return
+              }
+              if (state === 1) { // 生成成功
+                this.loading = false;
+                this.clearTimer();
+                this.finalUrl = url;
+                uni.reLaunch({
+                  url: '/pages/picture/index'
+                })
+                return;
+              }
+            }).catch(() => {
+              this.loading = false;
+              this.clearTimer();
+            })
+          }
+          this.timer = setInterval(() => {
+            func();
+          }, 3000);
+        }).catch(() => {
           this.loading = false;
-        }
+        })
       }).catch(() => {
         this.loading = false;
       });

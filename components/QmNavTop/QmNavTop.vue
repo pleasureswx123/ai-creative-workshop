@@ -56,6 +56,9 @@ export default {
         {id: 5, name: '智能对话', url: '/pages/ai/index' },
         {id: 6, name: '生成视频', url: '/pages/tool/list?classId=2' },
         {id: 7, name: '写真摄影', url: '/pages/tool/list?classId=3' },
+        {id: 9, name: '数字人', url: '/pages/human/index' },
+        {id: 10, name: '小说推文', url: '/pages/special/tweets' },
+        {id: 11, name: '电商图制作', url: '/pages/electronic/index' },
         {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial' },
       ]
     }
@@ -154,7 +157,7 @@ export default {
     display: flex;
     align-items: center;
     font-size: 28rpx;
-    gap: 50rpx;
+    gap: 40rpx;
     color: var(--txt-color2);
     flex: 1;
     min-width: 0;

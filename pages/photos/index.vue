@@ -245,7 +245,7 @@ export default {
             } else {
               uni.showModal({
                 title: '提示',
-                content: '生成失败，请从新生成！',
+                content: '生成失败，请重新生成！',
                 confirmText: '确定',
                 showCancel: false,
                 success: function () {}

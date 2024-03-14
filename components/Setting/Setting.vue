@@ -7,7 +7,7 @@
       </view>
       <view class="btn">高级设置</view>
     </view>
-    <view class="tips">扩图，整体风格选择，人物细节修复 </view>
+    <view class="tips">扩图，整体风格选择 </view>
   </view>
 </template>
 
