@@ -24,7 +24,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: '画面描述'
+      default: '画面描述词'
     },
     isShowLanguageBtn: {
       type: Boolean,

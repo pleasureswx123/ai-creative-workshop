@@ -4,14 +4,13 @@
     <template v-if="imgSrc && !!imgInfo">
       <PhotoCanvas ref="photoCanvas" :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
     </template>
-    <BrushSize ref="brushSize" v-if="actionType === 'brush' && showBrushSize" :value.sync="brushSize"></BrushSize>
     <PhotoModifyTool
         v-if="imgSrc && !!imgInfo"
         ref="tool"
         :value.sync="actionType"
+        :size.sync="brushSize"
         @undo="undo"
         @reset="reset"
-        @eraser="eraser"
     ></PhotoModifyTool>
     <u-gap height="30"></u-gap>
   </view>
@@ -21,50 +20,38 @@
 export default {
   data() {
     return {
-      actionType: 'brush',
-      brushSize: 10,
+      actionType: '',
+      brushSize: 30,
       imgSrc: '',
       imgInfo: null,
-      showBrushSize: false,
     }
   },
   watch: {
     imgSrc(src) {
-      src ? uni.getImageInfo({
-        src, success: res => {
-          if (res.errMsg === 'getImageInfo:ok') {
-            this.imgInfo = res;
+      if(src) {
+        this.$emit('setUrl', src);
+        uni.getImageInfo({
+          src, success: res => {
+            if (res.errMsg === 'getImageInfo:ok') {
+              this.imgInfo = res;
+            }
           }
-        }
-      }) : (this.imgInfo = null);
+        })
+      } else {
+        this.$emit('setUrl');
+        this.imgInfo = null
+      }
     }
-  },
-  mounted() {
-    document.addEventListener('click', this.handleClickOutside);
-  },
-  beforeDestroy() {
-    document.removeEventListener('click', this.handleClickOutside);
   },
   methods: {
     getMaskImgSrc() {
       return this.$refs.photoCanvas.getMaskImgSrc();
-    },
-    handleClickOutside(event) {
-      if(this.$refs?.brushSize?.$refs?.brushSizeBox?.$el?.contains?.(event.target) || this.$refs?.tool?.$refs?.brush?.[0]?.$el?.contains?.(event.target)) {
-        this.showBrushSize = true
-      }
-      if(!this.$refs?.brushSize?.$refs?.brushSizeBox?.$el?.contains?.(event.target) && !this.$refs?.tool?.$refs?.brush?.[0]?.$el?.contains?.(event.target)) {
-        this.showBrushSize = false
-      }
     },
     undo() {
       this.$refs?.photoCanvas?.undo?.();
     },
     reset() {
       this.$refs?.photoCanvas?.reset?.();
-    },
-    eraser() {
-    
     },
   }
 }

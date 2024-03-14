@@ -1,14 +1,15 @@
 <template>
-  <view class="brush-box">
-    <view class="brush-inner" ref="brushSizeBox">
+  <view class="slider-wrapper">
+    <view class="slider-box">
       <u-slider
           v-model="currentValue"
-          step="1" min="1" max="100"
+          step="0.1" min="0.1" max="1"
           activeColor="var(--red-color1)"
           inactiveColor="var(--txt-color5)"
-          block-size="20"
+          block-size="15"
           block-color="var(--txt-color6)" />
     </view>
+    <view class="tips">强度{{currentValue}}</view>
   </view>
 </template>
 
@@ -25,7 +26,7 @@ export default {
         return +this.value
       },
       set(value) {
-        this.$emit('update:value', +value)
+        this.$emit('update:value', +(value.toFixed(1)))
       }
     },
   },
@@ -33,25 +34,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.brush-box {
-  height: 0;
-  position: relative;
-  .brush-inner {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 90%;
-    max-width: 500px;
-    height: 60rpx;
-    transform: translate3d(-50%, -60rpx, 0);
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  color: #fff;
+  font-size: 28rpx;
+  padding-top: 26rpx;
+  .slider-box {
+    flex: 1;
+    min-width: 0;
     /deep/ {
       uni-slider {
-        margin: 0;
+        margin: 0 0 0 10px;
       }
       uni-slider .uni-slider-handle-wrapper {
-        height: 10px!important;
+        height: 2px!important;
       }
     }
+  }
+  .tips {
+    width: 100rpx;
+    text-align: right;
+    font-size: 24rpx;
+    color: rgba(255,255,255,.5)
   }
 }
 </style>
