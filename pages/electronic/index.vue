@@ -3,9 +3,8 @@
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 28">
       <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
-      <PhotoGenerate v-if="loading"></PhotoGenerate>
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
-      <PhotoModify ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
+      <PhotoModify :loading="loading" ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
       <ProduceBtn :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>

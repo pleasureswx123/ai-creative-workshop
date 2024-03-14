@@ -389,26 +389,26 @@ export default {
     drawPoints() {
       // cancelAnimationFrame(this.animationFrameId);
       // this.animationFrameId = requestAnimationFrame(() => {
-        if (this.points.length < 2) return; // 至少需要两个点来绘制
-        this.ctx.beginPath();
-        this.ctx.strokeStyle = (this.selectedColor);
-        this.ctx.moveTo(this.points[0].x, this.points[0].y);
+      if (this.points.length < 2) return; // 至少需要两个点来绘制
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = (this.selectedColor);
+      this.ctx.moveTo(this.points[0].x, this.points[0].y);
       
-        for (let i = 1; i < this.points.length; i++) {
-          const point = this.points[i];
-          const prevPoint = this.points[i - 1];
-          const centerX = (point.x + prevPoint.x) / 2;
-          const centerY = (point.y + prevPoint.y) / 2;
-          this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
-          // this.ctx.lineTo(point.x, point.y);
-        }
-        this.ctx.lineWidth = this.brushSize;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-        this.ctx.stroke();
-        this.ctx.closePath();
-        this.ctx.draw(true);
-        // this.ctx.globalCompositeOperation = 'source-over';
+      for (let i = 1; i < this.points.length; i++) {
+        const point = this.points[i];
+        const prevPoint = this.points[i - 1];
+        const centerX = (point.x + prevPoint.x) / 2;
+        const centerY = (point.y + prevPoint.y) / 2;
+        this.ctx.quadraticCurveTo(prevPoint.x, prevPoint.y, centerX, centerY);
+        // this.ctx.lineTo(point.x, point.y);
+      }
+      this.ctx.lineWidth = this.brushSize;
+      this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
+      this.ctx.stroke();
+      this.ctx.closePath();
+      this.ctx.draw(true);
+      // this.ctx.globalCompositeOperation = 'source-over';
       // })
     },
     eraseLine() {

@@ -7,18 +7,18 @@
       <view class="select-photo-inner">
         <template v-if="loading">
           <view class="icon-box">
-            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#fff" size="80" />
+            <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="80" />
           </view>
           <view>正在上传中</view>
         </template>
         <template v-else>
-          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="#fff" size="80" />
+          <uni-icons custom-prefix="iconfont-qm" type="icon-qm-upload" color="var(--txt-color2)" size="80" />
           <view>点击上传图片</view>
         </template>
         <view>支持jpg/png/gif格式的图片，不超过10M</view>
       </view>
     </view>
-  
+    
     <QmPop
         v-if="showHistoryPop"
         :show.sync="showHistoryPop"
@@ -41,27 +41,27 @@
             value: 0.8
           }
         }" />
-<!--    <QmWaterFallPop
-        v-if="showHistoryPop"
-        :show.sync="showHistoryPop"
-        :currentInfo.sync="historyInfo"
-        title="选择要处理的图片"
-        :getList="getHistoryList"
-        :proxyList="item => {
-          const {img_height: h, img_url, img_width: w, task_id} = item || {};
-          const url = img_url || '';
-          const titles = url.split('/').slice(-1);
-          return {
-            ...item,
-            allowEdit: false,
-            image: url,
-            w, h,
-            url,
-            title: titles[0] || url,
-            id: task_id,
-            value: 0.8
-          }
-        }" />-->
+    <!--    <QmWaterFallPop
+            v-if="showHistoryPop"
+            :show.sync="showHistoryPop"
+            :currentInfo.sync="historyInfo"
+            title="选择要处理的图片"
+            :getList="getHistoryList"
+            :proxyList="item => {
+              const {img_height: h, img_url, img_width: w, task_id} = item || {};
+              const url = img_url || '';
+              const titles = url.split('/').slice(-1);
+              return {
+                ...item,
+                allowEdit: false,
+                image: url,
+                w, h,
+                url,
+                title: titles[0] || url,
+                id: task_id,
+                value: 0.8
+              }
+            }" />-->
   </view>
 </template>
 
@@ -141,7 +141,7 @@ export default {
   background: #1F2937;
   box-sizing: border-box;
   border: 2rpx solid #494C55;
-  height: 500rpx;
+  height: 400rpx;
   position: relative;
   display: flex;
   align-items: center;
@@ -160,7 +160,7 @@ export default {
     font-size: 30rpx;
     line-height: 1.8;
     text-align: center;
-    color: #fff;
+    color: var(--txt-color2);
     .icon-qm-upload, .icon-qm-loading-1 {
       line-height: 1.2;
     }

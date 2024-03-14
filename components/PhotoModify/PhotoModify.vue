@@ -1,23 +1,43 @@
 <template>
-  <view class="photo-modify-wrapper">
-    <SelectUploadPhoto v-if="!imgSrc" :src.sync="imgSrc"></SelectUploadPhoto>
-    <template v-if="imgSrc && !!imgInfo">
-      <PhotoCanvas ref="photoCanvas" :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
-    </template>
-    <PhotoModifyTool
-        v-if="imgSrc && !!imgInfo"
-        ref="tool"
-        :value.sync="actionType"
-        :size.sync="brushSize"
-        @undo="undo"
-        @reset="reset"
-    ></PhotoModifyTool>
-    <u-gap height="30"></u-gap>
+  <view>
+    <PhotoGenerate v-if="loading"></PhotoGenerate>
+    <view class="photo-modify-wrapper">
+      <SelectUploadPhoto v-if="!imgSrc" :src.sync="imgSrc"></SelectUploadPhoto>
+      <template v-if="imgSrc && !!imgInfo">
+        <PhotoCanvas ref="photoCanvas" :src.sync="imgSrc" :imgInfo="imgInfo" :actionType="actionType" :brushSize="brushSize" />
+      </template>
+      <PhotoModifyTool
+          v-if="imgSrc && !!imgInfo"
+          ref="tool"
+          :value.sync="actionType"
+          :size.sync="brushSize"
+          @undo="undo"
+          @reset="reset"
+      ></PhotoModifyTool>
+      <u-gap height="30"></u-gap>
+    </view>
   </view>
 </template>
 
 <script>
+import PhotoGenerate from './PhotoGenerate.vue';
+import SelectUploadPhoto from './SelectUploadPhoto.vue';
+import PhotoCanvas from './PhotoCanvas.vue';
+import PhotoModifyTool from './PhotoModifyTool.vue';
+
 export default {
+  props: {
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {
+    PhotoGenerate,
+    SelectUploadPhoto,
+    PhotoCanvas,
+    PhotoModifyTool,
+  },
   data() {
     return {
       actionType: '',
