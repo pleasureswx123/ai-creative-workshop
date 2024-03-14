@@ -2,7 +2,7 @@
   <LayoutPage>
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 27">
-      <view style="color: #fff; font-size: 15px; display: none">{{params}}</view>
+      <view style="color: #fff; font-size: 15px; display: none">{{params27}}</view>
       <PhotoGenerate v-if="loading"></PhotoGenerate>
   <!--    <PhotoGenerateResult></PhotoGenerateResult>-->
       <PhotoModify ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
@@ -21,7 +21,7 @@
             :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
       </template>
     </template>
-    <template v-if="task_type === 28">
+    <template v-if="task_type === 31">
       <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
@@ -75,7 +75,6 @@
           :show.sync="showLoraPop"
           :currentInfo.sync="loraInfo" />
 
-
     </template>
     <template v-if="task_type === 29">
     
@@ -85,10 +84,14 @@
 
 <script>
 import {mapActions, mapState, mapMutations} from 'vuex';
+import {pictureApi} from '@/api';
 
 export default {
   data() {
     return {
+      generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
+      finalUrl: '',
+      timer: null,
       task_type: 27,
       tabsList: [
         {name: '专业修图', value: 27},
@@ -119,6 +122,9 @@ export default {
         this.initData();
       }
     }
+  },
+  destroyed() {
+    this.clearTimer();
   },
   computed: {
     ...mapState('PhotoInfo', ['modeClassInfo', 'currentModeInfo', 'ImgRatioInfo']),
@@ -157,7 +163,7 @@ export default {
         batch_size: this.batch_size || 1,
       }
     },
-    params() {
+    params27() {
       return {
         task_type: this.task_type,
         reference_image: this.reference_image || '',
@@ -175,6 +181,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('PictureInfo', ['createTask']),
     ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
     ...mapActions('PhotoInfo', ['getModelClass', 'getImgStyleList', 'getModelStyleList', 'getModelList', 'getImgScale', 'getLoraList']),
     showTips(msg) {
@@ -194,6 +201,12 @@ export default {
         })
       })
     },
+    clearTimer() {
+      if(this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    },
     handleComfirm() {
       if(!this.reference_image) {
         return this.showTips('请上传图片');
@@ -204,10 +217,45 @@ export default {
       if (this.loading) {
         return
       }
+      if(this.finalUrl) {
+        return
+      }
       this.loading = true;
       this.$refs.photoTool.getMaskImgSrc().then(path => {
         this.reference_image_extend = path;
-      }).finally(() => {
+        const params = this?.[`params${this.task_type}`];
+        if(params) {
+          this.createTask(params).then(({task_id}) => {
+            const func = () => {
+              pictureApi.getTaskstate({task_id}).then((res) => {
+                const {state, url} = res || {};
+                if(state === 2) { // 生成失败
+                  this.loading = false;
+                  this.clearTimer();
+                  uni.$u.toast('生成任务失败');
+                  return
+                }
+                if(state === 1) { // 生成成功
+                  this.loading = false;
+                  this.clearTimer();
+                  this.finalUrl = url;
+                  return;
+                }
+              }).catch(() => {
+                this.loading = false;
+                this.clearTimer();
+              })
+            }
+            this.timer = setInterval(() => {
+              func();
+            }, 3000);
+          }).catch(() => {
+            this.loading = false;
+          })
+        } else {
+          this.loading = false;
+        }
+      }).catch(() => {
         this.loading = false;
       });
     }

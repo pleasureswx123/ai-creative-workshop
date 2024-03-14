@@ -52,10 +52,14 @@ export default {
         this.radioList = data;
       }
     },
-    len: {
+    radioList: {
       immediate: true,
-      handler(num) {
-        if(num) {
+      handler(list) {
+        if(list.length) {
+          const style = list[0].style
+          if(style) {
+            return
+          }
           this.$nextTick(() => {
             const query = uni.createSelectorQuery().in(this);
             query.select('.ratio-box-img')
@@ -63,7 +67,7 @@ export default {
                   const {width, height} = data;
                   console.log("得到布局位置信息" + JSON.stringify({width, height}));
                   const minVal = Math.min(width, height);
-                  this.radioList = [...this.radioList].map(item => {
+                  this.radioList = [...list].map(item => {
                     const [w, h] = item.scale.split(':');
                     const cell = Math.floor(+minVal / (+w + +h));
                     const wd = cell * w;
@@ -74,7 +78,7 @@ export default {
                         height: `${ht}px`,
                       }
                     });
-                  })
+                  });
                 }).exec();
           })
         }
@@ -82,9 +86,6 @@ export default {
     }
   },
   computed: {
-    len() {
-      return this.radioList.length
-    },
     currentVal: {
       get() {
         return this.value || 5

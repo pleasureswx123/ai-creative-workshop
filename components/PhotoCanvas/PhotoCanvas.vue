@@ -559,7 +559,7 @@ export default {
       height: 100%;
     }
     .canvas {
-      opacity: .8;
+      opacity: .7;
     }
   }
 }
