@@ -2,7 +2,7 @@
 	<view class="page-container">
 		<QmNavTop></QmNavTop>
 		<view>
-			<view class="title" @tap="create">小说推文创作</view>
+			<view class="title" @tap="create">小说推文创作历史</view>
 			<NovelTextarea ref="novelText"></NovelTextarea>
 			<view class="novel">
 				<NovelVideo ref="NovelVideo" @onLayout="onLayout"></NovelVideo>

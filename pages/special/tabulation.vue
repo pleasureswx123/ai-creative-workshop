@@ -5,7 +5,7 @@
 		<view class="list">
 			<view class="videoPop" v-for="(item,index) in lationList" :key="item.task_id">
 				<view class="status" v-if="item.state == 0||item.state == 1||item.state == 2||item.state == 3||item.state == 100"
-					@tap="edit(item.state,item.is_automatic,item.task_id)">{{item.state_info}}</view>
+					@tap="edit(item.state,item.is_automatic,item.task_id)" :class="{'active':item.state == 2}">{{item.state_info}}</view>
 				<view class="video" v-if="item.state == 4">
 					<video id="myVideo" :src="item.video_url" object-fit="contain" :poster="item.cover_img_url"
 						:controls="true"></video>
@@ -141,6 +141,9 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			&.active{
+				color: #F60652;
+			}
 		}
 		.video {
 			aspect-ratio: 16 / 9;
