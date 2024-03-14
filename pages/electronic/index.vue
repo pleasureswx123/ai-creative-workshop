@@ -24,7 +24,7 @@
           @showPopFunc="showLoraPop = true"
           :info.sync="loraInfo" />
     </template>
-    <template v-if="task_type === 29">
+    <template v-if="task_type === 31">
       <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
