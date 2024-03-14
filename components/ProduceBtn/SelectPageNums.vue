@@ -5,7 +5,7 @@
       <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arrowdown1" color="var(--txt-color2)" size="16" />
     </view>
     <u-action-sheet
-        description="最多只可选择2张" round="16" class="sheet-box"
+        :description="description" round="16" class="sheet-box"
         :actions="numsList" title="请选择数量" cancelText="取消"
         :closeOnClickOverlay="true" :closeOnClickAction="true"
         :show="showNumsSheet" @select="selectNums" @close="showNumsSheet = false" />
@@ -19,19 +19,34 @@ export default {
       type: [String, Number],
       default: 1
     },
+    pieces: {
+      type: Number,
+      default: 2
+    }
   },
   data() {
     return {
       showNumsSheet: false,
-      numsList: [
-        { name: '1', value: 1, fontSize:'28'},
-        { name: '2', value: 2, fontSize:'28'},
-        // { name: '3', value: 3, fontSize:'28'},
-        // { name: '4', value: 4, fontSize:'28'},
-      ],
+      // numsList: [
+      //   { name: '1', value: 1, fontSize:'28'},
+      //   { name: '2', value: 2, fontSize:'28'},
+      //   // { name: '3', value: 3, fontSize:'28'},
+      //   // { name: '4', value: 4, fontSize:'28'},
+      // ],
     }
   },
   computed: {
+    numsList() {
+      const result = [];
+      for(let i = 0; i < this.pieces; i++) {
+        const value = i + 1;
+        result.push({ name: `${value}`, value, fontSize:'28'})
+      }
+      return result;
+    },
+    description() {
+      return `最多只可选择${this.numsList.length}张`
+    },
     nums: {
       get() {
         return this.value || ''

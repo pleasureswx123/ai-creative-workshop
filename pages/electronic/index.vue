@@ -6,11 +6,11 @@
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
       <PhotoModify :loading="loading" ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
-      <ProduceBtn :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
+      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>
       <template v-if="setting">
-        <ExtendDirection :value.sync="directions"></ExtendDirection>
-  <!--      <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
+<!--        <ExtendDirection :value.sync="directions"></ExtendDirection>
+        <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
         <TemplateImageStyle
             title="图片风格 Style（可不选）"
             :params="{}"
@@ -48,7 +48,7 @@
       <QmRatio
           :value.sync="img_scale"
           :list="ImgRatioInfo" />
-      <ProduceBtn :taskType="task_type" :value.sync="batch_size" :loading="loading29" @cb="handle29Comfirm"></ProduceBtn>
+      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading29" @cb="handle29Comfirm"></ProduceBtn>
   
       <QmPop
           v-if="showModelSelectPop"
@@ -90,6 +90,7 @@ import {pictureApi} from '@/api';
 export default {
   data() {
     return {
+      pieces: 2,
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
       finalUrl: '',
       timer: null,
@@ -175,12 +176,14 @@ export default {
         prompt: this.prompt || '',
         batch_size: this.batch_size || 1,
         ...(this.setting ? {
-          upper: this.directions.includes('up') ? 1 : 0,
-          below: this.directions.includes('down') ? 1 : 0,
-          left: this.directions.includes('left') ? 1 : 0,
-          right: this.directions.includes('right') ? 1 : 0,
+          // upper: this.directions.includes('up') ? 1 : 0,
+          // below: this.directions.includes('down') ? 1 : 0,
+          // left: this.directions.includes('left') ? 1 : 0,
+          // right: this.directions.includes('right') ? 1 : 0,
           img_style_id: this.img_style_id,
-        } : {upper: 0, below: 0, left: 0, right: 0, img_style_id: ''}),
+        } : {
+          // upper: 0, below: 0, left: 0, right: 0,
+          img_style_id: ''}),
         lora_id: this.lora_id || '',
         lora_weight: this.lora_weight || '',
       }
@@ -228,7 +231,6 @@ export default {
       }
       this.loading29 = true;
       this.createPhotoTask(this.params29).then(({task_id}) => {
-        debugger
         if(!!task_id) {
           uni.reLaunch({
             url: '/pages/picture/index'

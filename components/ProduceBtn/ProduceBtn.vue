@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="produce-box">
-      <SelectPageNums :value.sync="nums"></SelectPageNums>
+      <SelectPageNums :pieces="pieces" :value.sync="nums"></SelectPageNums>
       <view class="btn-box"  @tap="$u.debounce(handleComfirm, 500)">
         <view class="rotate-box" v-if="loading">
           <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="var(--txt-color4)" size="16" />
@@ -18,11 +18,20 @@
 </template>
 
 <script>
+import SelectPageNums from './SelectPageNums.vue'
+
 export default {
+  components: {
+    SelectPageNums
+  },
   props: {
     value: {
       type: [String, Number],
       default: 1
+    },
+    pieces: {
+      type: Number,
+      default: 2
     },
     taskType: {
       type: [String, Number],
