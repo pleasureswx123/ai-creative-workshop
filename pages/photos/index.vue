@@ -143,9 +143,7 @@
 import {mapState, mapActions, mapMutations} from 'vuex';
 import TaskTips from './components/TaskTips.vue';
 
-import ModelSelectCard from './components/ModelSelect.vue';
 import ControlNetCard from './components/ControlNet.vue';
-import LoraCard from './components/Lora.vue';
 import ReferenceImgCard from './components/ReferenceImg.vue';
 import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
@@ -153,8 +151,8 @@ import ControinetPop from './controinet/controinet.vue'
 
 export default {
   components: { TaskTips, GeneratePhotoBtn,
-    ModelSelectCard, ControlNetCard,
-    LoraCard, ReferenceImgCard,
+    ControlNetCard,
+    ReferenceImgCard,
     ControinetPop, },
   data() {
     return {

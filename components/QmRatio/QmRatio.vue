@@ -6,13 +6,14 @@
     <view class="card-content-grid">
       <view
           class="item"
-          v-for="item in ratioList"
+          v-for="item in radioList"
           :key="item.id"
           :class="{active: currentVal === item.id}"
           @tap="currentVal = item.id">
         <view class="ratio-box">
-<!--          <img class="img-el" :src="item.src" />-->
-          <image :src="item.src" mode="aspectFit"></image>
+          <view class="ratio-box-img">
+            <view class="iel" v-if="item.style" :style="item.style"></view>
+          </view>
         </view>
         <view>{{item.scale}}</view>
       </view>
@@ -39,7 +40,51 @@ export default {
       ])
     }
   },
+  data() {
+    return {
+      radioList: []
+    }
+  },
+  watch: {
+    list: {
+      immediate: true,
+      handler(data) {
+        this.radioList = data;
+      }
+    },
+    len: {
+      immediate: true,
+      handler(num) {
+        if(num) {
+          this.$nextTick(() => {
+            const query = uni.createSelectorQuery().in(this);
+            query.select('.ratio-box-img')
+                .boundingClientRect((data) => {
+                  const {width, height} = data;
+                  console.log("得到布局位置信息" + JSON.stringify({width, height}));
+                  const minVal = Math.min(width, height);
+                  this.radioList = [...this.radioList].map(item => {
+                    const [w, h] = item.scale.split(':');
+                    const cell = Math.floor(+minVal / (+w + +h));
+                    const wd = cell * w;
+                    const ht = cell * h;
+                    return Object.assign({}, item, {
+                      style: {
+                        width: `${wd}px`,
+                        height: `${ht}px`,
+                      }
+                    });
+                  })
+                }).exec();
+          })
+        }
+      }
+    }
+  },
   computed: {
+    len() {
+      return this.radioList.length
+    },
     currentVal: {
       get() {
         return this.value || 5
@@ -48,16 +93,6 @@ export default {
         this.$emit('update:value', id)
       }
     },
-    ratioList() {
-      return this.list.map(item => {
-        const [w, h] = item.scale.split(':');
-        const width = w * 10;
-        const height = h * 10;
-        return Object.assign({}, item, {
-          src: `https://via.placeholder.com/${width}x${height}.png/808080/808080`
-        });
-      })
-    }
   }
 }
 </script>
@@ -87,39 +122,40 @@ export default {
   }
 }
 .card-content-grid {
+  padding: 4rpx;
   border-radius: 10rpx;
   background: #141517;
-  padding: 6rpx;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6rpx;
   text-align: center;
   .item {
     min-width: 0;
     border-radius: 10rpx;
-    //background: #2C2E33;
-    padding: 4rpx;
     cursor: pointer;
     &.active {
-      .ratio-box {
-        border-color: var(--red-color1);
+      .ratio-box .ratio-box-img {
+        background: #2C2E33;
       }
     }
   }
   .ratio-box {
     aspect-ratio: 16 / 9;
-    max-height: 120rpx;
-    padding: 10rpx;
-    border: 4rpx solid #141517;
+    max-height: 200rpx;
     margin: 0 auto 6rpx;
     box-sizing: border-box;
-    image {
-      border: 4rpx solid #141517;
-      display: block;
+    .ratio-box-img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      border-radius: 10rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .iel {
+      border-radius: 8rpx;
+      background: #1A1B1E;
       box-sizing: border-box;
+      border: 6rpx solid #8D939F;
     }
   }
 }

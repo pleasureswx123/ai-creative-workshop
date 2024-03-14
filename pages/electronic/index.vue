@@ -1,15 +1,35 @@
 <template>
   <LayoutPage>
-    <TabsBox :value.sync="type" :options="tabsList"></TabsBox>
-    <PhotoGenerate v-if="loading"></PhotoGenerate>
-<!--    <PhotoGenerateResult></PhotoGenerateResult>-->
-    <PhotoModify ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
-    <Describe :value.sync="prompt"></Describe>
-    <ProduceBtn :value.sync="batch_size" :loading="loading" @cb="handleComfirm"></ProduceBtn>
-    <Setting :value.sync="setting"></Setting>
-    <template v-if="setting">
-      <ExtendDirection :value.sync="directions"></ExtendDirection>
-<!--      <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
+    <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
+    <template v-if="task_type === 27">
+      <view style="color: #fff; font-size: 15px; display: none">{{params}}</view>
+      <PhotoGenerate v-if="loading"></PhotoGenerate>
+  <!--    <PhotoGenerateResult></PhotoGenerateResult>-->
+      <PhotoModify ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
+      <Describe :value.sync="prompt"></Describe>
+      <ProduceBtn :value.sync="batch_size" :loading="loading" @cb="handleComfirm"></ProduceBtn>
+      <Setting :value.sync="setting"></Setting>
+      <template v-if="setting">
+        <ExtendDirection :value.sync="directions"></ExtendDirection>
+  <!--      <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
+        <TemplateImageStyle
+            title="图片风格 Style（可不选）"
+            :params="{}"
+            componentName="ImgStyleItem"
+            :getList="getImgStyleList"
+            :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
+            :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
+      </template>
+    </template>
+    <template v-if="task_type === 28">
+      <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
+      <ModelSelectCard
+          @showPopFunc="showModelSelectPop = true"
+          :info="currentModeInfo" />
+      <Describe :value.sync="prompt"></Describe>
+      <LoraCard
+          @showPopFunc="showLoraPop = true"
+          :info.sync="loraInfo" />
       <TemplateImageStyle
           title="图片风格 Style（可不选）"
           :params="{}"
@@ -17,22 +37,63 @@
           :getList="getImgStyleList"
           :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
           :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
+      <Describe
+          title="负面描述词"
+          :maxlength="1000"
+          :isShowLanguageBtn="false"
+          placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
+          :value.sync="negative_prompt" />
+      <QmRatio
+          :value.sync="img_scale"
+          :list="ImgRatioInfo" />
+      <ProduceBtn :value.sync="batch_size" :loading="loading" @cb="handleComfirm"></ProduceBtn>
+      <Statement />
+  
+      <QmPop
+          v-if="showModelSelectPop"
+          :title="`选择模型${currentModelInfo.title}`"
+          componentName="ModelStyleItem"
+          :paramsInfo="{class_id: modeId}"
+          :getList="getModelList"
+          :proxyList="item => ({ ...item, id: item.model_style_id })"
+          :show.sync="showModelSelectPop"
+          :currentInfo.sync="currentModeInfoData">
+        <template #tips>
+          <view class="tips-txt">
+            {{currentModelInfo.content}}
+          </view>
+        </template>
+      </QmPop>
+  
+      <QmPop
+          v-if="showLoraPop"
+          title="选择Lora模型"
+          componentName="LoraItem"
+          :paramsInfo="{class_id: modeId}"
+          :getList="getLoraList"
+          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+          :show.sync="showLoraPop"
+          :currentInfo.sync="loraInfo" />
+
+
     </template>
-    <view style="color: #fff; font-size: 12px; display: none">{{params}}</view>
+    <template v-if="task_type === 29">
+    
+    </template>
   </LayoutPage>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {mapActions, mapState, mapMutations} from 'vuex';
 
 export default {
   data() {
     return {
-      type: 0,
+      task_type: 27,
       tabsList: [
-        {name: '专业修图', value: 0},
-        {name: '商业出图', value: 1},
-        {name: '人物修图', value: 2},
+        {name: '专业修图', value: 27},
+        {name: '商业出图', value: 28},
+        {name: '人物修图', value: 29},
       ],
       reference_image: '',
       reference_image_extend: '',
@@ -43,19 +104,66 @@ export default {
       // enhanceType: '',
       photoStyleInfo: null,
       loading: false,
+      // 商业出图
+      modeId: 2,
+      showModelSelectPop: false,
+      showLoraPop: false,
+      loraInfo: null,
+      negative_prompt: '',
+      img_scale: 5,
+    }
+  },
+  watch: {
+    task_type(id) {
+      if(id === 28) {
+        this.initData();
+      }
     }
   },
   computed: {
+    ...mapState('PhotoInfo', ['modeClassInfo', 'currentModeInfo', 'ImgRatioInfo']),
+    model_style_id() {
+      return this.currentModeInfo?.model_style_id || ''
+    },
+    currentModeInfoData: {
+      get() {
+        return this.currentModeInfo
+      },
+      set(info) {
+        this.setCurrentModeInfo(info)
+      }
+    },
+    currentModelInfo() {
+      return this.modeClassInfo.find(item => item.id === this.modeId);
+    },
     img_style_id() {
       return this.photoStyleInfo?.id || this.photoStyleInfo?.img_style_id || ''
     },
+    lora_id() {
+      return this.loraInfo?.lora_id || ''
+    },
+    lora_weight() {
+      return this.loraInfo?.value || ''
+    },
+    params28() {
+      return {
+        model_style_id: this.model_style_id,
+        prompt: this.prompt || '',
+        negative_prompt: this.negative_prompt || '',
+        lora_id: this.lora_id || '',
+        lora_weight: this.lora_weight || '',
+        img_style_id: this.img_style_id || '',
+        img_scale: this.img_scale || 5,
+        batch_size: this.batch_size || 1,
+      }
+    },
     params() {
       return {
-        task_type: 26,
+        task_type: this.task_type,
         reference_image: this.reference_image || '',
         reference_image_extend: this.reference_image_extend || '',
         prompt: this.prompt || '',
-        batch_size: this.batch_size,
+        batch_size: this.batch_size || 1,
         ...(this.setting ? {
           upper: this.directions.includes('up') ? 1 : 0,
           below: this.directions.includes('down') ? 1 : 0,
@@ -67,13 +175,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions('PhotoInfo', ['getImgStyleList']),
+    ...mapMutations('PhotoInfo', ['setCurrentModeInfo', ]),
+    ...mapActions('PhotoInfo', ['getModelClass', 'getImgStyleList', 'getModelStyleList', 'getModelList', 'getImgScale', 'getLoraList']),
     showTips(msg) {
       uni.showModal({
         title: '提示',
         content: msg,
         confirmText: '确定',
         showCancel: false,
+      })
+    },
+    initData() {
+      this.getModelClass().then(() => {
+        Promise.all([
+          this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId}),
+          this.getImgScale({class_id: this.modeId})
+        ]).then(res => {
+        })
       })
     },
     handleComfirm() {
