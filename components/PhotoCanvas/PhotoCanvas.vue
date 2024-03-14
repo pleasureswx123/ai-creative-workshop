@@ -4,7 +4,7 @@
       <view style="display:none;">{{history.length}}</view>
       <uni-icons @tap="imgSrc = ''" custom-prefix="iconfont-qm" type="icon-qm-del" color="#fff" size="20" />
     </view>
-    <view class="photo-canvas-inner">
+    <view class="photo-canvas-inner" id="photoCanvasBox">
       <view v-if="imgCanvasInfo" ref="myCanvasBox" class="photo-content" :style="{width: imgCanvasInfo.width + 'px', height: imgCanvasInfo.height + 'px'}">
         <img :src="imgSrc" />
         <canvas
@@ -90,11 +90,30 @@ export default {
       width: imgWidth,
       height: imgHeight
     }
-    this.createCanvas();
-    this.reset();
+    this.$nextTick(() => {
+      const query = uni.createSelectorQuery().in(this);
+      query.select('#photoCanvasBox')
+          .boundingClientRect((data) => {
+            const {width, height} = data;
+            console.log("得到布局位置信息" + JSON.stringify({width, height}));
+            console.log("img" + JSON.stringify({imgWidth, imgHeight}));
+            console.log(width / imgWidth, height / imgHeight)
+            if (imgWidth > width) {
+              this.imgCanvasInfo = {
+                width: width,
+                height: imgHeight / imgWidth * width
+              }
+              this.scale = imgWidth / width;
+              console.log(this.scale)
+            }
+            this.createCanvas();
+            this.reset();
+          }).exec();
+    })
   },
   data() {
     return {
+      scale: 1,
       imgCanvasInfo: null,
       disableScrollStatus: false,
       ctx: null,
@@ -171,8 +190,21 @@ export default {
               const ctx = canvas.getContext('2d');
               const imgData = new ImageData(resData, res.width, res.height);
               ctx.putImageData(imgData, 0, 0);
+              
+              // 创建一个新的 Canvas 用于放大图像
+              const scaledCanvas = document.createElement('canvas');
+              const scaledCtx = scaledCanvas.getContext('2d');
+              const scaleFactor = this.scale; // 放大倍数
+              // 设置新 Canvas 的大小为放大后的尺寸
+              const scaledWidth = res.width * scaleFactor;
+              const scaledHeight = res.height * scaleFactor;
+              scaledCanvas.width = scaledWidth;
+              scaledCanvas.height = scaledHeight;
+              // 使用双线性插值绘制图像
+              scaledCtx.drawImage(canvas, 0, 0, res.width, res.height, 0, 0, scaledWidth, scaledHeight);
+              
               // base64上传方式，方式一：
-              const dataURL = canvas.toDataURL('image/png');
+              const dataURL = scaledCanvas.toDataURL('image/png');
               userApi.uploadImg({filePath: dataURL}).then(res => {
                 resolve(res.path)
               }).catch(err => {
@@ -231,6 +263,7 @@ export default {
     },
     createCanvas() {
       this.ctx = uni.createCanvasContext('myCanvas', this);
+      // this.ctx.scale(window.devicePixelRatio * 8, window.devicePixelRatio * 8);
       this.ctx.lineWidth = this.brushSize;
       this.ctx.lineCap = 'round';
       this.ctx.lineJoin = 'round';
@@ -539,10 +572,11 @@ export default {
   }
 }
 .photo-canvas-inner {
-  width: 100%;
-  max-height: 80vh;
+  width: 90%;
+  margin: 0 auto;
+  //max-height: 70vh;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   .photo-content {
     width: 100%;
     height: 100%;
