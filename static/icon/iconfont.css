@@ -139,3 +139,20 @@
   content: "\e66e";
   font-size: 42px;
 }
+.icon-a-chuangjian_huaban1:before {
+  content: "\e68e";
+  font-size: 24px;
+  color: #fff;
+}
+
+.icon-tingzhiluzhi:before {
+  content: "\e628";
+  font-size: 44px;
+  color: #fa3232;
+}
+
+.icon-luzhi1:before {
+  content: "\e61b";
+  font-size: 44px;
+  color: #fa3232;
+}
