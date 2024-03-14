@@ -1,6 +1,8 @@
 ## 安装
 
 ```bash
-cnpm install
+npm i
+
+cnpm i
 ```
 
