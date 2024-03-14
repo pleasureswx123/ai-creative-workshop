@@ -7,7 +7,7 @@
       </view>
       <view class="btn">高级设置</view>
     </view>
-    <view class="tips">扩图，整体风格选择 </view>
+    <view class="tips">整体风格选择</view>
   </view>
 </template>
 
@@ -38,6 +38,7 @@ export default {
   align-items: center;
   margin-bottom: 30rpx;
   gap: 20rpx;
+  user-select: none;
   .btn-box {
     padding: 10rpx;
     border-radius: 5px;

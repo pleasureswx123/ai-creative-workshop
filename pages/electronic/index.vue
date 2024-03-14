@@ -4,7 +4,7 @@
     <template v-if="task_type === 28">
       <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
-      <PhotoModify :loading="loading" ref="photoTool" @setUrl="url => { reference_image = (url || '') }"></PhotoModify>
+      <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
       <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>
@@ -18,10 +18,10 @@
             :getList="getImgStyleList"
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
             :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
+        <LoraCard
+            @showPopFunc="showLoraPop = true"
+            :info.sync="loraInfo" />
       </template>
-      <LoraCard
-          @showPopFunc="showLoraPop = true"
-          :info.sync="loraInfo" />
     </template>
     <template v-if="task_type === 31">
       <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
@@ -86,15 +86,24 @@
 <script>
 import {mapActions, mapState, mapMutations} from 'vuex';
 import {pictureApi} from '@/api';
+import Setting from './components/Setting.vue';
 
 export default {
+  components: {
+    Setting
+  },
+  onLoad(options) {
+    const {id, src} = options || {};
+    this.task_type = +id || 28;
+    this.reference_image = src || '';
+  },
   data() {
     return {
       pieces: 2,
       generateState: 1,  // 1:初始化状态 2:开始生成状态 3:生成成功状态
       finalUrl: '',
       timer: null,
-      task_type: 28,
+      task_type: '',
       tabsList: [
         {name: '专业修图', value: 28},
         {name: '商业出图', value: 29},
@@ -181,11 +190,11 @@ export default {
           // left: this.directions.includes('left') ? 1 : 0,
           // right: this.directions.includes('right') ? 1 : 0,
           img_style_id: this.img_style_id,
+          lora_id: this.lora_id || '',
+          lora_weight: this.lora_weight || '',
         } : {
           // upper: 0, below: 0, left: 0, right: 0,
-          img_style_id: ''}),
-        lora_id: this.lora_id || '',
-        lora_weight: this.lora_weight || '',
+          img_style_id: '', lora_id: '', lora_weight: '', }),
       }
     }
   },

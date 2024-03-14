@@ -13,7 +13,7 @@
     <u-action-sheet
         round="20"
         :closeOnClickOverlay="true" :closeOnClickAction="true"
-        :actions="toolsList" cancelText="取消"
+        :actions="actionList" cancelText="取消"
         @select="selectClick"
         @close="showAction = false"
         :show="showAction" />
@@ -40,6 +40,14 @@ export default {
   },
   computed: {
     ...mapState('PictureInfo', ['toolsList']),
+    actionList() {
+      return [{
+        id: 28,
+        title: '专业修图',
+        name: '专业修图',
+        type: '28'
+      },...this.toolsList]
+    }
   },
   components: {
     TipsTxt, CreationItem
@@ -60,6 +68,13 @@ export default {
       })
     },
     selectClick({type, id}){
+      if(id === 28) {
+        const params = {id, src: this.currentInfo?.currentImg};
+        uni.reLaunch({
+          url: `/pages/electronic/index?${(new URLSearchParams(params)).toString()}`
+        })
+        return
+      }
       uni.navigateTo({
         url: `/pages/picture/${type}?type=${id}`,
         success: res => {
