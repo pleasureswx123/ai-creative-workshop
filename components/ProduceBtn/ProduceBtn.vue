@@ -1,12 +1,19 @@
 <template>
-  <view class="produce-box">
-    <SelectPageNums :value.sync="nums"></SelectPageNums>
-    <view class="btn-box"  @tap="$u.debounce(handleComfirm, 500)">
-      <view class="rotate-box" v-if="loading">
-        <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="var(--txt-color4)" size="16" />
+  <view>
+    <view class="produce-box">
+      <SelectPageNums :value.sync="nums"></SelectPageNums>
+      <view class="btn-box"  @tap="$u.debounce(handleComfirm, 500)">
+        <view class="rotate-box" v-if="loading">
+          <uni-icons class="rotate" custom-prefix="iconfont-qm" type="icon-qm-hourglass1" color="var(--txt-color4)" size="16" />
+        </view>
+        <view>立即生成</view>
+        <view class="tips-txt" v-if="integralTips">
+          <text>消耗{{integralTips}}万</text>
+        </view>
       </view>
-      <view>立即生成</view>
     </view>
+    <Statement />
+    <u-gap height="30"></u-gap>
   </view>
 </template>
 
@@ -17,12 +24,27 @@ export default {
       type: [String, Number],
       default: 1
     },
+    taskType: {
+      type: [String, Number],
+      default: 1
+    },
     loading: {
       type: Boolean,
       default: false
     },
   },
   computed: {
+    integralTips() {
+      let result = '';
+      const temp = this.userIntegral?.[`${this.taskType}`] || {};
+      const {is_show, consume} = temp;
+      console.log(JSON.stringify(temp))
+      if(+is_show) {
+        const {A_num} = consume || {};
+        result = (A_num * this.nums) / 10000;
+      }
+      return result;
+    },
     nums: {
       get() {
         return this.value || ''
@@ -58,6 +80,16 @@ export default {
     font-size: 30rpx;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+  
+    .tips-txt {
+      position: absolute;
+      right: 30rpx;
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
+      font-size: 24rpx;
+      color: rgba(255,255,255,.8);
+    }
   }
 }
 
