@@ -33,7 +33,7 @@ export default {
   methods: {
     toCosplayChat({id}) {
       uni.$u.route({
-        url: 'pages/ai/digit-chat',
+        url: 'pagesA/ai/digit-chat',
         params: {
           role_id: id
         }

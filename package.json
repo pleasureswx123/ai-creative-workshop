@@ -11,13 +11,11 @@
     "@aigcui/entry": "^0.0.18",
     "@traptitech/markdown-it-katex": "^3.6.0",
     "highlight.js": "^11.7.0",
-    "katex": "^0.16.4",
     "markdown-it": "^13.0.1",
     "vue-qr": "^3.2.2",
     "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
-    "@types/katex": "^0.16.0",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-link-attributes": "^3.0.1",
     "markdown-it-link-attributes": "^4.0.1"

@@ -41,7 +41,7 @@ export default {
         {id: 2, icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
         {type: 'line', id: 'line1', className: 'mobile' },
         {id: 13, icon: 'icon-qm-flash1', name: '兑换会员' },
-        {id: 3, icon: 'icon-qm-chat', name: '智能对话', url: '/pages/ai/index', className: 'mobile' },
+        {id: 3, icon: 'icon-qm-chat', name: '智能对话', url: '/pagesA/ai/index', className: 'mobile' },
         {id: 4, icon: 'icon-qm-MaterialSymbolsLinkedCameraRounded', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
         {id: 5, icon: 'icon-qm-MdiImageEdit', name: '图片处理', url: '/pages/tool/list?classId=1', className: 'mobile' },
         {id: 6, icon: 'icon-qm-MaterialSymbolsAutoDetectVoice', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
