@@ -74,7 +74,7 @@
     },
     "h5" : {
         "devServer" : {
-            "https" : false,
+            "https" : true,
             "disableHostCheck" : true,
             "open" : true,
             "port" : 8099,
