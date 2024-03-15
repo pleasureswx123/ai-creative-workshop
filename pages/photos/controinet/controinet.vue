@@ -9,7 +9,7 @@
 						<u--text text="选择控制类型" align="center" size="50rpx" color="#FFFFFF" lineHeight="160rpx"></u--text>
 					</view>
 					<view class="controinet-popup-tabs">
-					<view :class="['controinet-tabs',controinetPopupNumber == index?'controinet-active':'']"  v-for="(item,index) in photosControinetPopupList" @click="oncontroinetPopuptabs(index)">
+					<view :class="['controinet-tabs',controinetPopupNumber == index?'controinet-active':'']"  v-for="(item,index) in photosControinetPopupList" :key="index" @click="oncontroinetPopuptabs(index)">
 					<view class="controinet-tabs-b">{{ item.title}}</view>
 					</view>
 					</view>

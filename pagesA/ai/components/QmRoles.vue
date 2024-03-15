@@ -3,7 +3,7 @@
     <view class="roles-card" v-for="item in list" :key="item.id">
       <view class="card-title">{{item.title}}</view>
       <view class="card-roles">
-        <view class="roles-item" v-for="roles in item.roles" :id="roles.id" @tap="toCosplayChat(roles)">
+        <view class="roles-item" v-for="roles in item.roles" :key="roles.id" :id="roles.id" @tap="toCosplayChat(roles)">
           <view class="thumb">
             <image :src="roles.thumb || '/static/images/cosplay/default.png'"></image>
           </view>
