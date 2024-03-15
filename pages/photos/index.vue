@@ -129,11 +129,13 @@
           @controninetlist="setControlNetInfo" />
     
       <u-gap height="30" />
-      <GeneratePhotoBtn
+      <ProduceBtn
+          :isShowPieces="[1,2].includes(modeId)"
+          taskType="1"
           :value.sync="picNums"
-          :modeId="modeId"
-          :generateStatus="generateStatus"
-          @cb="startGenerate" />
+          :loading="generateStatus"
+          @cb="startGenerate"></ProduceBtn>
+
     </view>
   </view>
 </template>
@@ -144,12 +146,11 @@ import TaskTips from './components/TaskTips.vue';
 
 import ControlNetCard from './components/ControlNet.vue';
 import ReferenceImgCard from './components/ReferenceImg.vue';
-import GeneratePhotoBtn from './components/GenerateBtn.vue';
 
 import ControinetPop from './controinet/controinet.vue'
 
 export default {
-  components: { TaskTips, GeneratePhotoBtn,
+  components: { TaskTips,
     ControlNetCard,
     ReferenceImgCard,
     ControinetPop, },
