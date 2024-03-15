@@ -23,7 +23,7 @@
             :info.sync="loraInfo" />
       </template>
     </template>
-    <template v-if="task_type === 31">
+    <template v-if="task_type === 29">
       <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
@@ -42,7 +42,6 @@
       <Describe
           title="负面描述词"
           :maxlength="1000"
-          :isShowLanguageBtn="false"
           placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
           :value.sync="negative_prompt" />
       <QmRatio

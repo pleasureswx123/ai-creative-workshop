@@ -15,7 +15,6 @@
       <Describe :value.sync="prompt"></Describe>
       <Describe
           title="输入不希望出现的内容描述（可不填）"
-          :isShowLanguageBtn="false"
           placeholder="可以不填写"
           :value.sync="prompt_extend"></Describe>
       <QmRatio
