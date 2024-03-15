@@ -6,7 +6,12 @@
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
       <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
-      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
+      <ProduceBtn
+          :pieces="pieces"
+          :taskType="task_type"
+          :value.sync="batch_size"
+          :loading="loading"
+          @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>
       <template v-if="setting">
 <!--        <ExtendDirection :value.sync="directions"></ExtendDirection>
@@ -47,7 +52,12 @@
       <QmRatio
           :value.sync="img_scale"
           :list="ImgRatioInfo" />
-      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading29" @cb="handle29Comfirm"></ProduceBtn>
+      <ProduceBtn
+          :pieces="pieces"
+          :taskType="task_type"
+          :value.sync="batch_size"
+          :loading="loading29"
+          @cb="handle29Comfirm"></ProduceBtn>
   
       <QmPop
           v-if="showModelSelectPop"
