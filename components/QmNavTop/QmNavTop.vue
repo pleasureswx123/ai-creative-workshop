@@ -58,7 +58,7 @@ export default {
         {id: 7, name: '写真摄影', url: '/pages/tool/list?classId=3' },
         {id: 9, name: '数字人', url: '/pages/human/index' },
         {id: 10, name: '小说推文', url: '/pages/special/tweets' },
-        {id: 11, name: '电商图制作', url: '/pages/electronic/index' },
+        // {id: 11, name: '电商图制作', url: '/pages/electronic/index' },
         {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial' },
       ]
     }
