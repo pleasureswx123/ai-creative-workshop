@@ -116,7 +116,7 @@ export default {
       tabsList: [
         {name: '专业修图', value: 28},
         {name: '商业出图', value: 29},
-        {name: '人物修图', value: 30},
+        // {name: '人物修图', value: 30},
       ],
       reference_image: '',
       reference_image_extend: '',
