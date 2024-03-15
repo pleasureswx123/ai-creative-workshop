@@ -11,7 +11,6 @@
     <template v-if="generateState === 1">
       <Describe
           title="描述您的视频场景"
-          :isShowLanguageBtn="false"
           placeholder="一个女孩，粉色短发，黑色短袖，黑色短裤，霓虹背景"
           :value.sync="prompt"></Describe>
       

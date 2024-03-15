@@ -42,7 +42,6 @@
         <Describe
             title="负面描述词"
             :maxlength="maxlength"
-            :isShowLanguageBtn="false"
             placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
             :value.sync="badDescription" />
         <QmRatio
