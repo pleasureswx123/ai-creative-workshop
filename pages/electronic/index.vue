@@ -241,9 +241,6 @@ export default {
       if(!this.prompt) {
         return this.showTips('请输入画面描述词');
       }
-      if(!this.negative_prompt) {
-        return this.showTips('请输入负面描述词');
-      }
       if (this.loading29) {
         return
       }

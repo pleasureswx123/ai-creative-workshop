@@ -53,7 +53,7 @@ export default {
         {id: 2, name: '文生图片', url: '/pages/photos/index' },
         {id: 3, name: '图片处理', url: '/pages/tool/list?classId=1' },
         {id: 4, name: '生成配音', url: '/pages/sound/index' },
-        {id: 5, name: '智能对话', url: '/pages/ai/index' },
+        {id: 5, name: '智能对话', url: '/pagesA/ai/index' },
         {id: 6, name: '生成视频', url: '/pages/tool/list?classId=2' },
         {id: 7, name: '写真摄影', url: '/pages/tool/list?classId=3' },
         {id: 9, name: '数字人', url: '/pages/human/index' },

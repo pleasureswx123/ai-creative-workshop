@@ -330,24 +330,6 @@
 			}
 		},
 		{
-			"path": "pages/ai/index",
-			"style": {
-				"navigationBarTitleText": "智能对话"
-			}
-		},
-		{
-			"path": "pages/ai/digit-chat",
-			"style": {
-				"navigationBarTitleText": "对话"
-			}
-		},
-		{
-			"path": "pages/ai/assistant-chat",
-			"style": {
-				"navigationBarTitleText": "创作助手"
-			}
-		},
-		{
 			"path": "pages/login/reg",
 			"style": {
 				"navigationBarTitleText": ""
@@ -390,78 +372,35 @@
 			}
 		},
 		{
-			"path": "pages/article/article",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/article/list",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/article/code",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/task/index",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/write/index",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/write/chat",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/cosplay/index",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/cosplay/chat",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/draw/chat",
-			"style": {
-				"navigationBarBackgroundColor": "#04BABE",
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/webview/webview",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-		{
 			"path": "pages/human/index",
 			"style": {
 				"navigationBarTitleText": "数字人"
 			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "pagesA",
+			"pages": [
+				{
+					"path": "ai/index",
+					"style": {
+						"navigationBarTitleText": "智能对话"
+					}
+				},
+				{
+					"path": "ai/digit-chat",
+					"style": {
+						"navigationBarTitleText": "对话"
+					}
+				},
+				{
+					"path": "ai/assistant-chat",
+					"style": {
+						"navigationBarTitleText": "创作助手"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {
@@ -473,6 +412,5 @@
 		"rpxCalcMaxDeviceWidth": 750,
 		"rpxCalcBaseDeviceWidth": 375,
 		"rpxCalcIncludeWidth": 750
-	},
-	"subPackages": []
+	}
 }

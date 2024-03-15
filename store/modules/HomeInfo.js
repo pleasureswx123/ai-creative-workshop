@@ -42,7 +42,7 @@ const mutations = {
       1: {
         // iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
         iconName: 'icon-qm-chat',
-        url: 'pages/ai/index'
+        url: 'pagesA/ai/index'
       },
       2: {
         iconName: 'icon-qm-MaterialSymbolsLinkedCameraRounded',
