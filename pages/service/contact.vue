@@ -1,8 +1,9 @@
 <template>
   <view class="page-container">
     <QmNavTop></QmNavTop>
-    <view class="code">
-      <image src="@/static/images/code.png" mode="aspectFit"></image>
+    <view class="code" v-for="(item,index) in list" :key="index">
+      <view>{{item.title}}</view>
+      <image :src="item.img_url" mode="aspectFit"></image>
       <view>请使用微信扫一扫</view>
     </view>
   </view>
@@ -10,17 +11,36 @@
 </template>
 
 <script>
+import { articleApi } from '@/api';
+
+export default {
+  data() {
+    return {
+      list: []
+    }
+  },
+  onLoad() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      articleApi.getAboutUse().then(res => {
+        this.list = res.list || [];
+      })
+    }
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
 .page-container {
   background: #0D0D0D;
-  font-size: 24rpx;
   padding: 30rpx 30rpx 300rpx;
-}
-.code {
   font-size: 28rpx;
   text-align: center;
+}
+.code {
   padding: 30rpx 0;
   margin: 50rpx 30rpx 0;
   display: flex;
