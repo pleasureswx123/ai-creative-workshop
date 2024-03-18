@@ -39,7 +39,63 @@ export default {
       this.downLoadFile(this.info.dub_url);
     },
     playAudio() {
-      this.$emit('playAudio', this.info)
+      this.$emit('playAudio', this.info);
+      return
+      this.$refs.waveContainer.$el.innerHTML = '';
+      // 创建 canvas 元素
+      const canvas = document.createElement('canvas');
+      canvas.style = 'width: 100%; height: 100%;'
+      canvas.width = 400;
+      canvas.height = 70;
+      // 创建音频元素
+      const audioElement = document.createElement('audio');
+      // audioElement.src = 'https://st-cn.chaojiyuyan.cn/upload/user_task/dub/02/2/2_79_1706850603_78724.mp3'; // 设置音频文件路径
+      audioElement.src = this.info.dub_url; // 设置音频文件路径
+      audioElement.crossOrigin = 'anonymous'; // 设置跨域属性
+      // 将 canvas 和音频元素添加到其中
+      this.$refs.waveContainer.$el.appendChild(canvas);
+      this.$refs.waveContainer.$el.appendChild(audioElement);
+      // 获取 canvas 上下文
+      const ctx = canvas.getContext('2d');
+      // 音频上下文
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaElementSource(audioElement);
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      // 绘制音频频谱和波形数据
+      function draw() {
+        const WIDTH = canvas.width;
+        const HEIGHT = canvas.height;
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+        // 清空画布并设置背景色为黑色
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        // 设置频谱柱状的颜色为白色
+        ctx.fillStyle = 'white';
+        // 检查是否有音频数据可用
+        if (dataArray.some(value => value > 0)) {
+          const barWidth = (WIDTH / bufferLength) * 2.5;
+          let x = 0;
+          for (let i = 0; i < bufferLength; i++) {
+            const barHeight = dataArray[i] / 2;
+            console.log(i, barWidth, barHeight)
+            // ctx.fillStyle = `rgb(${barHeight + 100}, 0, 0)`;
+            ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);
+            x += barWidth + 1;
+          }
+        }
+      }
+      // 点击播放按钮时触发
+      audioElement.addEventListener('loadedmetadata', function () {
+        audioElement.play();
+        console.log('音频开始播放');
+        draw(); // 开始绘制音频频谱和波形数据
+      });
     }
   }
 }
