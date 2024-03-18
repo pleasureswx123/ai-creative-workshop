@@ -52,6 +52,7 @@ export default {
   },
   created() {
     this.getUserInfo();
+    this.getHomeInfo();
   },
   computed: {
     ...mapState('UserInfo', ['userInfoState']),
@@ -69,6 +70,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('HomeInfo', ['getHomeInfo']),
     ...mapActions('UserInfo', ['getUserInfo']),
     handleJump({url, params}) {
       url && uni.$u.route({url: url, params});
