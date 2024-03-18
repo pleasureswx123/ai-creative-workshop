@@ -13,4 +13,11 @@ export default {
       }
     })
   },
+  getAboutUse(params = {}) {
+    return uni.$u.http.post(`/Article/AboutUse`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }
