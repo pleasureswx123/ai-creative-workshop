@@ -2,7 +2,7 @@
   <view class="page-container">
     <QmNavTop></QmNavTop>
     <view class="code" v-for="(item,index) in list" :key="index">
-      <view>{{item.title}}</view>
+      <view class="title">{{item.title}}</view>
       <image :src="item.img_url" mode="aspectFit"></image>
       <view>请使用微信扫一扫</view>
     </view>
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     getData() {
-      articleApi.getAboutUse().then(res => {
+      articleApi.getAboutUs().then(res => {
         this.list = res.list || [];
       })
     }
@@ -47,6 +47,10 @@ export default {
   flex-direction: column;
   gap: 20rpx;
   color: #B2B2B2;
+  .title {
+    font-size: 30rpx;
+    font-weight: bold;
+  }
   image {
     margin: 0 auto;
   }
