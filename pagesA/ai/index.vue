@@ -57,7 +57,6 @@ export default {
     Promise.all([this.getTopicList(), this.getModelList()]).then(res => {
       this.getHt().then(res => {
         this.mainStyle = res;
-        debugger
       });
     })
   },
