@@ -2,6 +2,8 @@ import Vue from 'vue'
 
 const sites = ['default', 'xky'];
 
+// https://sora.chaojiyuyan.cn/
+
 const getSite = () => {
   const host = window.location.host;
   const temp = {

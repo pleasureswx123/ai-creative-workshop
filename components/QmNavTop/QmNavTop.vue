@@ -64,8 +64,8 @@ export default {
         home,
           ...(((this.aiTypeList || []).filter(item => (!item.is_expectation && item.short_title))).map(item => {
             return {...item, name: item.short_title}
-          })),
-        tutorial,
+          }).slice(0, 10)),
+        tutorial
       ]
     }
   },
@@ -138,7 +138,7 @@ export default {
   //}
 }
 .pc-nav-box {
-  gap: 100rpx;
+  gap: 50rpx;
   padding: 0 30rpx;
   .logo {
     display: flex;
