@@ -1,7 +1,7 @@
 <template>
   <Layout :info="info" @cb="clickRightBtnEvent">
     <view class="video-wrapper" :style="boxStyle">
-      <video class="video-box" :src="info.video_url" :poster="info.video_cover_img" object-fit="contain"></video>
+      <video @loadedmetadata="loadedmetadata" class="video-box" :src="info.video_url" :poster="info.video_cover_img" object-fit="contain"></video>
       <!--      <video class="video-box" object-fit="contain"
                    :src="info.video_url" :poster="info.video_cover_img" />-->
     </view>
@@ -19,15 +19,19 @@ export default {
     },
   },
   components: { Layout },
-  computed: {
-    boxStyle() {
-      const [width, height] = this.info?.scale?.split('*') || [];
-      return {
-        'aspect-ratio': (width && height) ? `${width} / ${height}` : '16 / 9'
-      }
-    },
+  data() {
+    return {
+      boxStyle: {}
+    }
   },
   methods: {
+    loadedmetadata(res) {
+      const {width, height} = res.detail || {};
+      console.log(res.detail)
+      this.boxStyle = {
+        'aspect-ratio': `${width} / ${height}`
+      }
+    },
     clickRightBtnEvent() {
       this.toDetails();
     },
