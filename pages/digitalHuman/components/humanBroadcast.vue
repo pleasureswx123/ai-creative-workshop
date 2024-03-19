@@ -15,15 +15,15 @@
 					</view>
 					<view class="draft-infor">
 						<view class="name">{{item.name}}</view>
-						<i class="iconfont icon-caozuo"></i>
+						<i class="iconfont icon-caozuo" @tap="cancel"></i>
 					</view>
 				</view>
 			</view>
 		</view>
 		<u-popup :show="delShow" @close="delShow=false" mode="bottom">
 			<view class="set-box">
-				<view>删除</view>
-				<view>取消</view>
+				<view class="set-btn del">删除</view>
+				<view class="set-btn" @tap="delShow=false">取消</view>
 			</view>
 		</u-popup>
 	</view>
@@ -42,6 +42,11 @@ export default{
 				name:'未命名'
 			}],
 			delShow:false
+		}
+	},
+	methods:{
+		cancel(){
+			this.delShow = true
 		}
 	}
 }
@@ -107,6 +112,20 @@ export default{
 			color: var(--txt-color2);
 			font-size: 24rpx;
 		}
+	}
+}
+.container{
+	/deep/.u-popup__content{
+		background-color: #282828;
+		text-align: center;
+		color: var(--txt-color1);
+	}
+	.set-btn{
+		padding:40rpx 0;
+		border-bottom: 1px solid #615c5c;
+	}
+	.del{
+		color: red;
 	}
 }
 </style>
