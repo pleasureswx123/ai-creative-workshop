@@ -24,8 +24,12 @@
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
             :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
         <LoraCard
-            @showPopFunc="showLoraPop = true"
-            :info.sync="loraInfo" />
+            title="使用专属商业定制模型"
+            :params="{class_id: modeId, is_commercial: 1}"
+            componentName="LoraItem"
+            :getList="getLoraList"
+            :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+            :currentInfo.sync="loraInfo"></LoraCard>
       </template>
     </template>
     <template v-if="task_type === 29">
@@ -35,8 +39,12 @@
           :info="currentModeInfo" />
       <Describe :value.sync="prompt"></Describe>
       <LoraCard
-          @showPopFunc="showLoraPop = true"
-          :info.sync="loraInfo" />
+          title="使用专属商业定制模型"
+          :params="{class_id: modeId, is_commercial: 1}"
+          componentName="LoraItem"
+          :getList="getLoraList"
+          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+          :currentInfo.sync="loraInfo"></LoraCard>
       <TemplateImageStyle
           title="图片风格 Style（可不选）"
           :params="{}"
@@ -63,7 +71,7 @@
           v-if="showModelSelectPop"
           :title="`选择模型${currentModelInfo.title}`"
           componentName="ModelStyleItem"
-          :paramsInfo="{class_id: modeId}"
+          :paramsInfo="{class_id: modeId, task_type: 29}"
           :getList="getModelList"
           :proxyList="item => ({ ...item, id: item.model_style_id })"
           :show.sync="showModelSelectPop"
@@ -74,17 +82,6 @@
           </view>
         </template>
       </QmPop>
-    </template>
-    <template v-if="[28, 29].includes(+task_type)">
-      <QmPop
-          v-if="showLoraPop"
-          title="选择Lora模型"
-          componentName="LoraItem"
-          :paramsInfo="{class_id: modeId, is_commercial: 1}"
-          :getList="getLoraList"
-          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
-          :show.sync="showLoraPop"
-          :currentInfo.sync="loraInfo" />
     </template>
     <template v-if="task_type === 30">
     
@@ -131,7 +128,6 @@ export default {
       loading29: false,
       modeId: 2,
       showModelSelectPop: false,
-      showLoraPop: false,
       loraInfo: null,
       negative_prompt: '',
       img_scale: 5,
@@ -225,7 +221,7 @@ export default {
     initData() { // 商业出图 29
       this.getModelClass().then(() => {
         Promise.all([
-          this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId}),
+          this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId, task_type: 29}),
           this.getImgScale({class_id: this.modeId})
         ]).then(res => {
         })
@@ -240,6 +236,9 @@ export default {
     handle29Comfirm() {
       if(!this.prompt) {
         return this.showTips('请输入画面描述词');
+      }
+      if(!this.lora_id) {
+        return this.showTips('请选择专属商业定制模型');
       }
       if (this.loading29) {
         return

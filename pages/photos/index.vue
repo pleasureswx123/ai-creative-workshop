@@ -20,7 +20,7 @@
               v-if="modeId === 1"
               @showPopFunc="showControlNetPop"
               :info.sync="controlNetInfo" />
-          <LoraCard
+          <LoraCardStyle
               v-if="[1, 2].includes(modeId)"
               @showPopFunc="showLoraPop = true"
               :info.sync="loraInfo" />
@@ -142,6 +142,7 @@
 
 <script>
 import {mapState, mapActions, mapMutations} from 'vuex';
+import LoraCardStyle from '@/components/LoraCard/LoraCardStyle.vue';
 import TaskTips from './components/TaskTips.vue';
 
 import ControlNetCard from './components/ControlNet.vue';
@@ -150,7 +151,7 @@ import ReferenceImgCard from './components/ReferenceImg.vue';
 import ControinetPop from './controinet/controinet.vue'
 
 export default {
-  components: { TaskTips,
+  components: { LoraCardStyle, TaskTips,
     ControlNetCard,
     ReferenceImgCard,
     ControinetPop, },
