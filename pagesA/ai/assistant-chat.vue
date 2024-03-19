@@ -13,7 +13,7 @@
                   <img mode="widthFix" src="@/static/images/ic_ai.jpg" />
                 </view>
                 <view class="text markdown-body">
-                  <textComponent :text="item.message"></textComponent>
+                  <TextComponent :text="item.message"></TextComponent>
                   <view class="tools">
                     <view>
                       <view class="btn" @click="copyText(item.message)">
@@ -35,7 +35,7 @@
                   <img mode="widthFix" :src="userAvatar" />
                 </view>
                 <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
-                  <textComponent :text="item.message"></textComponent>
+                  <TextComponent :text="item.message"></TextComponent>
                 </view>
               </view>
             </block>
@@ -44,7 +44,7 @@
                 <img src="@/static/images/ic_ai.jpg" />
               </view>
               <view class="text markdown-body">
-                <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
+                <TextComponent :text="writingText" :writing="!!(writing || writingText)"></TextComponent>
                 <view class="tools">
                   <view>
                     <view class="btn" @click="stopFetch">
@@ -98,13 +98,6 @@
 import {mapState, mapActions} from 'vuex';
 import ic_user from '@/static/images/avatar.jpg'
 const app = getApp();
-
-import TextComponent from '../../components/message/text'
-import Welcome from '../../components/welcome/index2'
-import 'katex/dist/katex.min.css'
-import '@/static/styles/lib/tailwind.css'
-import '@/static/styles/lib/highlight.scss'
-import '@/static/styles/lib/github-markdown.scss'
 import QmSubTabs from "./components/QmSubTabs.vue";
 
 var textStacks = []
@@ -114,8 +107,8 @@ var fetchCtrl = null
 export default {
   components: {
     QmSubTabs,
-    TextComponent,
-    Welcome
+    TextComponent: () => import('./components/message/text.vue'),
+    Welcome: () => import('./components/welcome/index2.vue'),
   },
   data() {
     return {

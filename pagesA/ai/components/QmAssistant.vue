@@ -35,7 +35,7 @@ export default {
   methods: {
     toWriteChat({id}) {
       uni.$u.route({
-        url: 'pages/ai/assistant-chat',
+        url: 'pagesA/ai/assistant-chat',
         params: {
           prompt_id: id
         }

@@ -42,56 +42,66 @@ const mutations = {
       1: {
         // iconName: 'icon-qm-MaterialSymbolsChatOutlineRounded',
         iconName: 'icon-qm-chat',
-        url: 'pages/ai/index'
+        url: 'pagesA/ai/index',
+        "title": "智能对话",
       },
       2: {
         iconName: 'icon-qm-MaterialSymbolsLinkedCameraRounded',
-        url: 'pages/photos/index'
+        url: 'pages/photos/index',
+        "title": "文生图片",
       },
       3: {
         iconName: 'icon-qm-MdiImageEdit',
         url: 'pages/tool/list',
         params: {
           classId: 1
-        }
+        },
+        "title": "图片处理",
       },
       4: {
         iconName: 'icon-qm-MaterialSymbolsVideoCallRounded',
         url: 'pages/tool/list',
         params: {
           classId: 2
-        }
+        },
+        "title": "生成视频",
       },
       5: {
         iconName: 'icon-qm-MaterialSymbolsAutoDetectVoice',
-        url: 'pages/sound/index'
+        url: 'pages/sound/index',
+        "title": "生成配音",
       },
       6: {
         iconName: 'icon-qm-MaterialSymbolsPhotoCameraFront',
         url: 'pages/tool/list',
         params: {
           classId: 3
-        }
+        },
+        "title": "创作个人写真摄影",
       },
       7: {
         iconName: 'icon-qm-MaterialSymbolsMenuBook',
         url: 'pages/special/tweets',
-        expectationUrl: 'pages/special/novel'
+        expectationUrl: 'pages/special/novel',
+        "title": "小说推文",
       },
       8: {
         iconName: 'icon-qm-MaterialSymbolsPhotoLibraryRounded',
         url: 'pages/electronic/index',
         expectationUrl: 'pages/special/make-diagram',
+        "title": "电商图制作",
       },
       9: {
         iconName: 'icon-qm-IcRoundModelTraining',
         url: 'pages/special/train-model',
         expectationUrl: 'pages/special/train-model',
+        "title": "训练专属模型",
       },
       10: {
         iconName: 'icon-qm-GgDigitalocean',
         url: 'pages/human/index',
         expectationUrl: 'pages/special/digital-humans',
+        "title": "数字人",
       },
       11: { // 三八妇女节活动
         iconName: 'icon-qm-woman',

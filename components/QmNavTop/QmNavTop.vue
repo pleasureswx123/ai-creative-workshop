@@ -48,31 +48,32 @@ export default {
   data() {
     return {
       showUserInfoPop: false,
-      menuList: [
-        {id: 1, name: '首页', url: '/pages/index/index' },
-        {id: 2, name: '文生图片', url: '/pages/photos/index' },
-        {id: 3, name: '图片处理', url: '/pages/tool/list?classId=1' },
-        {id: 4, name: '生成配音', url: '/pages/sound/index' },
-        {id: 5, name: '智能对话', url: '/pages/ai/index' },
-        {id: 6, name: '生成视频', url: '/pages/tool/list?classId=2' },
-        {id: 7, name: '写真摄影', url: '/pages/tool/list?classId=3' },
-        {id: 9, name: '数字人', url: '/pages/human/index' },
-        {id: 10, name: '小说推文', url: '/pages/special/tweets' },
-        {id: 11, name: '电商图制作', url: '/pages/electronic/index' },
-        {id: 8, name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial' },
-      ]
     }
   },
   created() {
     this.getUserInfo();
+    this.getHomeInfo();
   },
   computed: {
     ...mapState('UserInfo', ['userInfoState']),
+    ...mapState('HomeInfo', ['aiTypeList']),
+    menuList() {
+      const home = {id: 100, name: '首页', url: 'pages/index/index' };
+      const tutorial = {id: 200, name: '使用教程', tag: true, tagTxt: '推荐', url: 'pages/service/tutorial' };
+      return [
+        home,
+          ...(((this.aiTypeList || []).filter(item => (!item.is_expectation && item.short_title))).map(item => {
+            return {...item, name: item.short_title}
+          }).slice(0, 10)),
+        tutorial
+      ]
+    }
   },
   methods: {
+    ...mapActions('HomeInfo', ['getHomeInfo']),
     ...mapActions('UserInfo', ['getUserInfo']),
-    handleJump({url}) {
-      uni.reLaunch({url});
+    handleJump({url, params}) {
+      url && uni.$u.route({url: url, params});
     },
     goHome() {
       uni.reLaunch({
@@ -137,7 +138,7 @@ export default {
   //}
 }
 .pc-nav-box {
-  gap: 100rpx;
+  gap: 50rpx;
   padding: 0 30rpx;
   .logo {
     display: flex;

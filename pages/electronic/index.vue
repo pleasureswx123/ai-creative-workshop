@@ -2,39 +2,52 @@
   <LayoutPage>
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 28">
-      <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
       <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
-      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading" @cb="handle28Comfirm"></ProduceBtn>
+      <ProduceBtn
+          :pieces="pieces"
+          :taskType="task_type"
+          :value.sync="batch_size"
+          :loading="loading"
+          @cb="handle28Comfirm"></ProduceBtn>
       <Setting :value.sync="setting"></Setting>
       <template v-if="setting">
 <!--        <ExtendDirection :value.sync="directions"></ExtendDirection>
         <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
         <TemplateImageStyle
+            :key="task_type"
             title="图片风格 Style（可不选）"
-            :params="{}"
+            :params="{task_type}"
             componentName="ImgStyleItem"
             :getList="getImgStyleList"
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
             :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
         <LoraCard
-            @showPopFunc="showLoraPop = true"
-            :info.sync="loraInfo" />
+            title="使用专属商业定制模型"
+            :params="{class_id: modeId, is_commercial: 1}"
+            componentName="LoraItem"
+            :getList="getLoraList"
+            :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
+            :currentInfo.sync="loraInfo"></LoraCard>
       </template>
     </template>
-    <template v-if="task_type === 31">
-      <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
+    <template v-if="task_type === 29">
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
           :info="currentModeInfo" />
       <Describe :value.sync="prompt"></Describe>
       <LoraCard
-          @showPopFunc="showLoraPop = true"
-          :info.sync="loraInfo" />
+          title="使用专属商业定制模型"
+          :params="{class_id: modeId, is_commercial: 1}"
+          componentName="LoraItem"
+          :getList="getLoraList"
+          :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
+          :currentInfo.sync="loraInfo"></LoraCard>
       <TemplateImageStyle
+          :key="task_type"
           title="图片风格 Style（可不选）"
-          :params="{}"
+          :params="{task_type}"
           componentName="ImgStyleItem"
           :getList="getImgStyleList"
           :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
@@ -42,19 +55,23 @@
       <Describe
           title="负面描述词"
           :maxlength="1000"
-          :isShowLanguageBtn="false"
           placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
           :value.sync="negative_prompt" />
       <QmRatio
           :value.sync="img_scale"
           :list="ImgRatioInfo" />
-      <ProduceBtn :pieces="pieces" :taskType="task_type" :value.sync="batch_size" :loading="loading29" @cb="handle29Comfirm"></ProduceBtn>
+      <ProduceBtn
+          :pieces="pieces"
+          :taskType="task_type"
+          :value.sync="batch_size"
+          :loading="loading29"
+          @cb="handle29Comfirm"></ProduceBtn>
   
       <QmPop
           v-if="showModelSelectPop"
           :title="`选择模型${currentModelInfo.title}`"
           componentName="ModelStyleItem"
-          :paramsInfo="{class_id: modeId}"
+          :paramsInfo="{class_id: modeId, task_type: 29}"
           :getList="getModelList"
           :proxyList="item => ({ ...item, id: item.model_style_id })"
           :show.sync="showModelSelectPop"
@@ -65,17 +82,6 @@
           </view>
         </template>
       </QmPop>
-    </template>
-    <template v-if="[28, 29].includes(+task_type)">
-      <QmPop
-          v-if="showLoraPop"
-          title="选择Lora模型"
-          componentName="LoraItem"
-          :paramsInfo="{class_id: modeId, is_commercial: 1}"
-          :getList="getLoraList"
-          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
-          :show.sync="showLoraPop"
-          :currentInfo.sync="loraInfo" />
     </template>
     <template v-if="task_type === 30">
     
@@ -107,7 +113,7 @@ export default {
       tabsList: [
         {name: '专业修图', value: 28},
         {name: '商业出图', value: 29},
-        {name: '人物修图', value: 30},
+        // {name: '人物修图', value: 30},
       ],
       reference_image: '',
       reference_image_extend: '',
@@ -122,7 +128,6 @@ export default {
       loading29: false,
       modeId: 2,
       showModelSelectPop: false,
-      showLoraPop: false,
       loraInfo: null,
       negative_prompt: '',
       img_scale: 5,
@@ -130,6 +135,7 @@ export default {
   },
   watch: {
     task_type(id) {
+      this.photoStyleInfo = null;
       if(id === 29) { // 商业出图
         this.initData();
       }
@@ -216,7 +222,7 @@ export default {
     initData() { // 商业出图 29
       this.getModelClass().then(() => {
         Promise.all([
-          this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId}),
+          this.getModelStyleList({page: 1, pagesize: 10, class_id: this.modeId, task_type: 29}),
           this.getImgScale({class_id: this.modeId})
         ]).then(res => {
         })
@@ -232,8 +238,8 @@ export default {
       if(!this.prompt) {
         return this.showTips('请输入画面描述词');
       }
-      if(!this.negative_prompt) {
-        return this.showTips('请输入负面描述词');
+      if(!this.lora_id) {
+        return this.showTips('请选择专属商业定制模型');
       }
       if (this.loading29) {
         return

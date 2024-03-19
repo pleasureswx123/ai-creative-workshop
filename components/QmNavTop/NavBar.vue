@@ -116,7 +116,7 @@ export default {
         1: '/pages/index/index',
         2: '/pages/user/index',
         3: '/pages/picture/index',
-        4: '/pages/ai/index',
+        4: '/pagesA/ai/index',
         5: '/pages/photos/index',
         6: '/pages/tool/list?classId=1',
         7: '/pages/sound/index',

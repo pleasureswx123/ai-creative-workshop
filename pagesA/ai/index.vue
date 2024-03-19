@@ -33,6 +33,11 @@ import loaderAssistantDataMixin from '@/common/loaderAssistantDataMixin.js'
 import QmChat from './chat.vue'
 import {userApi} from '@/api'
 
+// import 'katex/dist/katex.min.css'
+import '@/static/styles/lib/tailwind.css'
+import '@/static/styles/lib/highlight.scss'
+import '@/static/styles/lib/github-markdown.scss'
+
 export default {
   mixins: [loaderAssistantDataMixin],
   components: { QmNavTabs, QmSubTabs, QmAssistant, QmRoles, QmChat },
@@ -52,7 +57,6 @@ export default {
     Promise.all([this.getTopicList(), this.getModelList()]).then(res => {
       this.getHt().then(res => {
         this.mainStyle = res;
-        debugger
       });
     })
   },

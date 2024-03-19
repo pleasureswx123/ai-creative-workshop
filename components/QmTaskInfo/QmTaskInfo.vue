@@ -5,15 +5,15 @@
       <view class="space-place"></view>
     </template>
     <view class="ft-con">
+      <text v-if="info.scale">{{info.scale}}</text>
+      <text v-if="info.task_id">任务ID {{info.task_id}}</text>
+      <text v-if="info.create_time">生成时间 {{info.create_time}}</text>
       <text v-if="info.task_name">{{info.task_name}}</text>
       <text v-if="info.model_style_name">{{info.model_style_name}}</text>
       <text v-if="info.lora_name">{{info.lora_name}}</text>
       <text v-if="info.controlnet_type">{{info.controlnet_type}}</text>
       <text v-if="info.img_style_name">{{info.img_style_name}}</text>
-      <text v-if="info.scale">{{info.scale}}</text>
 <!--      <text v-if="info.jifen_consume">{{info.jifen_consume}}</text>-->
-      <text v-if="info.create_time">生成时间 {{info.create_time}}</text>
-      <text v-if="info.task_id">任务ID {{info.task_id}}</text>
     </view>
   </view>
 </template>
@@ -33,7 +33,7 @@ export default {
 .ft {
   font-size: 24rpx;
   line-height: 1.6;
-  padding: 20rpx 30rpx;
+  padding: 10rpx 10rpx;
   //background: linear-gradient(to right, #ff5500, #ffd200);
   .title {
     color: var(--txt-color1);
@@ -63,7 +63,7 @@ export default {
     //-webkit-background-clip: text;
     //-webkit-text-fill-color: transparent;
     text {
-      padding-right: 20rpx;
+      padding-right: 10rpx;
       display: inline-block;
     }
   }

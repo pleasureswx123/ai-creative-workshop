@@ -23,6 +23,42 @@ export default {
     }
   },
   methods: {
+    // saveImage() {
+    //   if (!this.qrcode) {
+    //     app.globalData.util.message('获取二维码失败', 'error');
+    //     return;
+    //   }
+    //   uni.downloadFile({
+    //     url: this.qrcode,
+    //     success: function (res) {
+    //       uni.saveImageToPhotosAlbum({
+    //         filePath: res.tempFilePath[0],
+    //         success: function () {
+    //           app.globalData.util.message('已保存到相册');
+    //         },
+    //         fail: function (res) {
+    //           console.log('error', res);
+    //           app.globalData.util.message('保存失败，请检查是否有保存到相册权限', 'error');
+    //         }
+    //       });
+    //     },
+    //     fail: function () {
+    //       app.globalData.util.message('图片下载失败', 'error');
+    //     }
+    //   });
+    // },
+    // saveToAlbum: function () {
+    //   const haibaoArr = this.share.haibaoArr
+    //   const currentHaibao = this.currentHaibao
+    //   const haibao = haibaoArr[currentHaibao]
+    //   const qrcode = this.share.qrcode
+    //   const poster = 'https://' + window.location.host + '/web.php/commission/makePoster?bg=' + encodeURIComponent(haibao.bg) + '&qrcode=' + encodeURIComponent(qrcode) + '&hole_w=' + haibao.hole_w + '&hole_h=' + haibao.hole_h + '&hole_x=' + haibao.hole_x + '&hole_y=' + haibao.hole_y;
+    //   app.globalData.util.message('请长按弹出的图片->保存到手机', 'error', function () {
+    //     uni.previewImage({
+    //       urls: [poster]
+    //     })
+    //   })
+    // },
     videoToCanvas(src) {
       // 创建 video 元素
       const video = document.createElement('video');

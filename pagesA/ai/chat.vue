@@ -18,7 +18,7 @@
                   <img src="@/static/images/ic_ai.jpg" />
                 </view>
                 <view class="text markdown-body">
-                  <textComponent :text="item.message"></textComponent>
+                  <TextComponent :text="item.message"></TextComponent>
                   <view class="tools">
                     <view>
                       <view class="btn" @click="copyText(item.message)">
@@ -42,7 +42,7 @@
                   <img mode="widthFix" :src="userAvatar" />
                 </view>
                 <view class="text markdown-body" @longpress="showCopyBtn" :data-text="item.message">
-                  <textComponent :text="item.message"></textComponent>
+                  <TextComponent :text="item.message"></TextComponent>
                 </view>
               </view>
             </block>
@@ -51,7 +51,7 @@
                 <img src="@/static/images/ic_ai.jpg" />
               </view>
               <view class="text markdown-body">
-                <textComponent :text="writingText" :writing="!!(writing || writingText)"></textComponent>
+                <TextComponent :text="writingText" :writing="!!(writing || writingText)"></TextComponent>
                 <view class="tools">
                   <view>
                     <view class="btn" @click="stopFetch">
@@ -93,15 +93,8 @@
 
 <script>
 import ic_user from "@/static/images/avatar.jpg";
-
 const app = getApp();
 import {mapState} from 'vuex';
-import TextComponent from '../../components/message/text'
-import Welcome from '../../components/welcome/index2'
-import 'katex/dist/katex.min.css'
-import '@/static/styles/lib/tailwind.css'
-import '@/static/styles/lib/highlight.scss'
-import '@/static/styles/lib/github-markdown.scss'
 
 var textStacks = []
 var textOutputSi = 0
@@ -115,8 +108,8 @@ export default {
     }
   },
   components: {
-    TextComponent,
-    Welcome
+    TextComponent: () => import('./components/message/text.vue'),
+    Welcome: () => import('./components/welcome/index2.vue'),
   },
   data() {
     return {
@@ -696,7 +689,7 @@ export default {
 }
 
 .box-input .input {
-  width: 690rpx;
+  //width: 690rpx;
   margin: 0 30rpx;
   position: relative;
   box-sizing: border-box;
@@ -705,7 +698,7 @@ export default {
 }
 
 .box-input .input textarea {
-  width: 580rpx;
+  width: auto;
   padding: 20rpx 10rpx 20rpx 20rpx;
   border-radius: 10rpx;
   line-height: 40rpx;
