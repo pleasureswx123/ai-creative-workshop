@@ -2,7 +2,6 @@
   <LayoutPage>
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 28">
-      <view style="color: #fff; font-size: 15px; display: none">{{params28}}</view>
 <!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
       <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
@@ -17,8 +16,9 @@
 <!--        <ExtendDirection :value.sync="directions"></ExtendDirection>
         <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
         <TemplateImageStyle
+            :key="task_type"
             title="图片风格 Style（可不选）"
-            :params="{}"
+            :params="{task_type}"
             componentName="ImgStyleItem"
             :getList="getImgStyleList"
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
@@ -33,7 +33,6 @@
       </template>
     </template>
     <template v-if="task_type === 29">
-      <view style="color: #fff; font-size: 15px; display: none">{{params29}}</view>
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
           :info="currentModeInfo" />
@@ -46,8 +45,9 @@
           :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
           :currentInfo.sync="loraInfo"></LoraCard>
       <TemplateImageStyle
+          :key="task_type"
           title="图片风格 Style（可不选）"
-          :params="{}"
+          :params="{task_type}"
           componentName="ImgStyleItem"
           :getList="getImgStyleList"
           :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
@@ -135,6 +135,7 @@ export default {
   },
   watch: {
     task_type(id) {
+      this.photoStyleInfo = null;
       if(id === 29) { // 商业出图
         this.initData();
       }

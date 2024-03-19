@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import {userApi} from '@/api';
 
 export default {
@@ -36,28 +37,28 @@ export default {
   data() {
     return {
       showIntegralPop: false,
-      navList: [
-        {id: 1, icon: 'icon-qm-account', name: '个人中心', url: '/pages/user/index'},
-        {id: 2, icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
-        {type: 'line', id: 'line1', className: 'mobile' },
-        {id: 13, icon: 'icon-qm-flash1', name: '兑换会员' },
-        {id: 3, icon: 'icon-qm-chat', name: '智能对话', url: '/pagesA/ai/index', className: 'mobile' },
-        {id: 4, icon: 'icon-qm-MaterialSymbolsLinkedCameraRounded', name: '生成图片', url: '/pages/photos/index', className: 'mobile' },
-        {id: 5, icon: 'icon-qm-MdiImageEdit', name: '图片处理', url: '/pages/tool/list?classId=1', className: 'mobile' },
-        {id: 6, icon: 'icon-qm-MaterialSymbolsAutoDetectVoice', name: '智能配音', url: '/pages/sound/index', className: 'mobile' },
-        {id: 7, icon: 'icon-qm-MaterialSymbolsVideoCallRounded', name: '生成视频', url: '/pages/tool/list?classId=2', className: 'mobile' },
-        {id: 12, icon: 'icon-qm-MaterialSymbolsPhotoCameraFront', name: '写真摄影', url: '/pages/tool/list?classId=3', className: 'mobile' },
-        {type: 'line', id: 'line2' },
-        {id: 8, icon: 'icon-qm-text1', name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial'},
-        {id: 9, icon: 'icon-qm-call', name: '联系我们', url: '/pages/service/contact'},
-        {id: 10, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/service/article?type=service'},
-        {id: 11, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/service/article?type=privacy'},
-        {type: 'line', id: 'line3' },
-        {id: 100, icon: 'icon-qm-exit', name: '退出登录'},
-      ]
     }
   },
   computed: {
+    ...mapState('HomeInfo', ['aiTypeList']),
+    navList() {
+      return [
+        {id: 100, icon: 'icon-qm-account', name: '个人中心', url: '/pages/user/index'},
+        {id: 101, icon: 'icon-qm-listbox', name: '我的创作', url: '/pages/picture/index', className: 'mobile' },
+        {type: 'line', id: 'line1', className: 'mobile' },
+        {id: 200, icon: 'icon-qm-flash1', name: '兑换会员' },
+        ...(((this.aiTypeList || []).filter(item => (!item.is_expectation && item.short_title))).map(item => {
+          return {...item, icon: item.iconName, name: item.short_title, className: 'mobile'}
+        }).slice(0, 10)),
+        {type: 'line', id: 'line2' },
+        {id: 102, icon: 'icon-qm-text1', name: '使用教程', tag: true, tagTxt: '推荐', url: '/pages/service/tutorial'},
+        {id: 103, icon: 'icon-qm-call', name: '联系我们', url: '/pages/service/contact'},
+        {id: 104, icon: 'icon-qm-txt', name: '服务条款', url: '/pages/service/article?type=service'},
+        {id: 105, icon: 'icon-qm-privacy', name: '隐私协议', url: '/pages/service/article?type=privacy'},
+        {type: 'line', id: 'line3' },
+        {id: 1000, icon: 'icon-qm-exit', name: '退出登录'},
+      ]
+    },
     showNavListPop: {
       get() {
         return this.show
@@ -79,14 +80,14 @@ export default {
     this.toggleBodyPositionStatus(false)
   },
   methods: {
-    jump({id, url}) {
-      if(id === 13) {
+    jump({id, url, params}) {
+      if(id === 200) {
         return this.checkLoginStatus().then(() => {
           this.showNavListPop = false;
           this.showIntegralPop = true;
         })
       }
-      if(id === 100) {
+      if(id === 1000) {
         return userApi.logout().then(res => {
           uni.clearStorage();
           uni.reLaunch({
@@ -94,7 +95,7 @@ export default {
           })
         });
       }
-      uni.reLaunch({url});
+      url && uni.$u.route({url: url, params});
     }
   }
 }

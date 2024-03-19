@@ -98,6 +98,7 @@ export default {
 .page-container {
   background: var(--bg-color1);
   background: #000;
+  padding: 0 20rpx 20rpx;
   padding-bottom: calc(10rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
   font-size: 24rpx;
@@ -110,7 +111,7 @@ export default {
   
   column-gap: 20rpx;
   padding-top: 30rpx;
-  column-count: 1;
+  column-count: 2;
   column-fill: balance;
   
   //-moz-column-count: 1;
