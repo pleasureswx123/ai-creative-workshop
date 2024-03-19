@@ -12,9 +12,9 @@
 				</view>
 				<view class="info">
 					<view class="title">{{item.title}}</view>
-					<view class="set" v-if="item.state == 4">
-						<i class="iconfont icon-shanchu" @tap="deleteData(index,item.task_id)"></i>
-						<uni-icons @tap="downloadAudio(item)" class="pointer" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="18" />
+					<view class="set">
+						<i class="iconfont icon-shanchu" @tap="deleteData(index,item.task_id)" v-if="item.state == 4||item.state == 100"></i>
+						<uni-icons @tap="downloadAudio(item)" v-if="item.state == 4" class="pointer" custom-prefix="iconfont-qm" type="icon-qm-download11" color="var(--txt-color1)" size="18" />
 					</view>
 				</view>
 			</view>

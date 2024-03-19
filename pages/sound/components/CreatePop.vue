@@ -7,7 +7,7 @@
 	  </view>
 	  <view class="pop-container">
 		  <view class="nav-item" v-if="isActive==0">
-			  <AudioPlay ref="AudioPlay"></AudioPlay>
+			  <AudioPlay></AudioPlay>
 		  </view>
 		  <view class="nav-item" v-if="isActive==1">
 			  <AudioUpload></AudioUpload>
@@ -77,8 +77,11 @@ export default{
 .upload-box-container {
 	width: 100%;
 	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+}
+@media screen and (min-width: 960px) {
+  /deep/ .u-popup__content {
+    width: 1200px;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -61,8 +61,8 @@
 				})
 			},
 			stop() {
-				this.recorder.stop()
-				this.stream.getTracks().forEach((track) => {
+				this.recorder&&this.recorder.stop()
+				this.stream&&this.stream.getTracks().forEach((track) => {
 					track.stop()
 				})
 			},
