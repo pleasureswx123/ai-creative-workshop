@@ -28,7 +28,7 @@
             :params="{class_id: modeId, is_commercial: 1}"
             componentName="LoraItem"
             :getList="getLoraList"
-            :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+            :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
             :currentInfo.sync="loraInfo"></LoraCard>
       </template>
     </template>
@@ -43,7 +43,7 @@
           :params="{class_id: modeId, is_commercial: 1}"
           componentName="LoraItem"
           :getList="getLoraList"
-          :proxyList="item => ({ ...item, id: item.lora_id, value: 0.8 })"
+          :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
           :currentInfo.sync="loraInfo"></LoraCard>
       <TemplateImageStyle
           title="图片风格 Style（可不选）"
