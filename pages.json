@@ -376,6 +376,12 @@
 			"style": {
 				"navigationBarTitleText": "数字人"
 			}
+		},
+		{
+			"path": "pages/digitalHuman/index",
+			"style": {
+				"navigationBarTitleText": "数字人"
+			}
 		}
 	],
 	"subPackages": [

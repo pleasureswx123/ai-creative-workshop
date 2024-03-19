@@ -9,7 +9,7 @@
 			<view class="box-create" @tap="handCreate">
 				<i class="iconfont icon-a-chuangjian_huaban1"></i>创建我的声音
 			</view>
-			<CreatePop :show="CreateShow"></CreatePop>
+			<CreatePop :show="CreateShow" @close="close"></CreatePop>
 		</view>
 		<view class="nav_item" v-if="isActive==1">
 			345
@@ -38,6 +38,10 @@ export default{
 		},
 		handCreate(){
 			this.CreateShow = true
+			this.recorder = false
+		},
+		close(){
+			this.CreateShow = false
 		}
 	}
 }
