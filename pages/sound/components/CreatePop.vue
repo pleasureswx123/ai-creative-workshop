@@ -10,7 +10,7 @@
 			  <AudioPlay></AudioPlay>
 		  </view>
 		  <view class="nav-item" v-if="isActive==1">
-			  
+			  <AudioUpload></AudioUpload>
 		  </view>
 	  </view>
 	</u-popup>
@@ -18,8 +18,9 @@
 
 <script>
 import AudioPlay from './AudioPlay.vue';
+import AudioUpload from './AudioUpload.vue';
 export default{
-	components:{AudioPlay},
+	components:{AudioPlay,AudioUpload},
 	props: {
 	    show: {
 	      type: Boolean,
@@ -33,21 +34,14 @@ export default{
 			},{
 				name:'音频'
 			}],
-			isActive:0,
-			playtext:'点击录制',
-			playShow:true
+			isActive:0
 		}
 	},
 	methods:{
 		checked(index){
 			this.isActive = index
 		},
-		start(){
-			if(this.playtext){
-				this.playtext = '停止录制'
-				this.playShow = false
-			}
-		}
+		
 	}
 }
 </script>
@@ -79,5 +73,15 @@ export default{
 .nav-item{
 	text-align: center;
 	padding: 30rpx 0;
+}
+.upload-box-container {
+	width: 100%;
+	height: 100%;
+}
+@media screen and (min-width: 960px) {
+  /deep/ .u-popup__content {
+    width: 1200px;
+    margin: 0 auto;
+  }
 }
 </style>

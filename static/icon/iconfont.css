@@ -156,3 +156,8 @@
   font-size: 44px;
   color: #fa3232;
 }
+.icon-caozuo:before {
+  content: "\e60c";
+  color: #9E9E9E;
+  font-size: 14px;
+}
