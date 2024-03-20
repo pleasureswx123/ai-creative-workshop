@@ -2,7 +2,7 @@
   <LayoutPage>
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 28">
-<!--      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>-->
+      <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>
       <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
       <Describe :value.sync="prompt"></Describe>
       <ProduceBtn
@@ -264,6 +264,9 @@ export default {
       })
     },
     handle28Comfirm() {
+      if(this.finalUrl) {
+        this.finalUrl = '';
+      }
       if(!this.reference_image) {
         return this.showTips('请上传图片');
       }
@@ -273,9 +276,6 @@ export default {
       if (this.loading) {
         return
       }
-      // if(this.finalUrl) {
-      //   return
-      // }
       this.loading = true;
       this.$refs.photoTool.getMaskImgSrc().then(path => {
         this.reference_image_extend = path;
@@ -292,10 +292,19 @@ export default {
               if (state === 1) { // 生成成功
                 this.loading = false;
                 this.clearTimer();
-                this.finalUrl = url;
-                uni.reLaunch({
-                  url: '/pages/picture/index'
-                })
+                if(Object.prototype.toString.call(url) === '[object String]') {
+                  if(url.includes(',')) {
+                    this.finalUrl = url.split(',');
+                  } else {
+                    this.finalUrl = [url];
+                  }
+                }
+                if(Object.prototype.toString.call(url) === '[object Array]') {
+                  this.finalUrl = url
+                }
+                // uni.reLaunch({
+                //   url: '/pages/picture/index'
+                // })
                 return;
               }
             }).catch(() => {
