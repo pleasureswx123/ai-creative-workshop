@@ -2,7 +2,7 @@
   <view class="result-wrapper">
     <view class="result-inner" :style="styleInfo">
       <view class="item" v-for="(src, index) in imgs" :key="index">
-        <image @tap.stop="previewImage" :src="src" mode="aspectFit"></image>
+        <image @tap.stop="previewImage" :src="src" mode="widthFix"></image>
       </view>
     </view>
     <view class="img-header" @tap.stop>
@@ -10,20 +10,27 @@
         <uni-icons custom-prefix="iconfont-qm" type="icon-qm-download-1" color="var(--txt-color2)" size="20" />
         <text>下载</text>
       </view>
+<!--      <uni-icons custom-prefix="iconfont-qm" type="icon-qm-close" color="var(&#45;&#45;txt-color2)" size="20" @tap="$emit('del')" />-->
     </view>
   </view>
 </template>
 
 <script>
 export default {
+  props: {
+    imgs: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
-      imgs: [
-          'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
-          'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
-          // 'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
-          // 'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
-      ]
+      // imgs: [
+      //     'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
+      //     'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
+      //     // 'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
+      //     // 'https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26514-387039005.png',
+      // ]
     }
   },
   methods: {
@@ -74,10 +81,11 @@ export default {
   gap: 10rpx;
   .item {
     min-width: 0;
-    min-height: 300px;
     image {
-      width: 100%;
-      height: 100%;
+      display: block;
+      height: auto;
+      margin: 0 auto;
+      max-width: 100%;
     }
   }
 }
