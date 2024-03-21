@@ -5,15 +5,17 @@
 			<view v-for="(item,index) in tabList" :key="index" @tap="handChecked(index)" :class="{'active':isActive == index}" class="item">{{item.name}}</view>
 		</view>
 		<view class="nav_item" v-if="isActive==0">
-			<humanBroadcast></humanBroadcast>
+			<humanBroadcast v-if="creatShow" @starCreate="starCreate"></humanBroadcast>
+			<humanCreate v-else></humanCreate>
 		</view>
 	</view>
 </template>
 
 <script>
 import humanBroadcast from './components/humanBroadcast.vue'
+import humanCreate from './components/humanCreate.vue'
 export default{
-	components:{humanBroadcast},
+	components:{humanBroadcast,humanCreate},
 	data(){
 		return{
 			tabList:[{
@@ -23,12 +25,16 @@ export default{
 			},{
 				name:'数字分身'
 			}],
-			isActive:0
+			isActive:0,
+			creatShow:true
 		}
 	},
 	methods:{
 		handChecked(index){
 			this.isActive = index
+		},
+		starCreate(){
+			this.creatShow = false
 		}
 	}
 }

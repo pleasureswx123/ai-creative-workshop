@@ -16,7 +16,7 @@
 		<EraPop @setEraData="setEraData" title="年代风格" v-if="eraPop" :show.sync="eraPop"></EraPop>
 		<VideoPop @setTaskData="setTaskData" title="配音选择" v-if="videoPop" :show.sync="videoPop" ref="videoPop"></VideoPop>
 		<BgmPop @NoNeed="NoNeed" title="背景音乐" v-if="bgmPop" :show.sync="bgmPop"></BgmPop>
-		<CaptionsPop @setCapData="setCapData" @close="close" title="" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
+		<CaptionsPop @setCapData="setCapData" @close="close" title="视频字幕" v-if="captionsPop" :show.sync="captionsPop"></CaptionsPop>
 		<InverPop @setInverData="setInverData" title="视频比例" v-if="inverPop" :show.sync="inverPop"></InverPop>
 	</view>
 </template>
@@ -185,7 +185,10 @@
 	.page-container {
 		background: var(--bg-color1);
 		font-size: 28rpx;
-		padding: 0 30rpx 40rpx;
+		padding-left: 30rpx;
+		padding-right: 30rpx;
+		padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
+		padding-bottom: calc(100rpx + env(safe-area-inset-bottom));
 		.box-container {
 			padding: 0;
 		}

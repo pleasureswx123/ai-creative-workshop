@@ -6,7 +6,7 @@
       overlayStyle="background: rgba(0,0,0,.7)"
       :round="round"
       :safeAreaInsetBottom="safeAreaInsetBottom">
-    <view class="pop-container">
+    <view class="pop-container" :style="{height:height}">
       <view class="pop-body-container" v-if="show">
         <view class="top-bar" :show="titleShow" v-if="titleShow">
           <text class="title">{{title}}</text>

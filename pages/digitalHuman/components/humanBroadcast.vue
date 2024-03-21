@@ -26,7 +26,7 @@
 				<view class="set-btn" @tap="delShow=false">取消</view>
 			</view>
 		</u-popup>
-		<NovelPop :show="videoShow" @close="videoShow=false" title="选择生成视频尺寸" @confirm="handConfirm" :setShow="false">
+		<HumanPop :show="videoShow" @close="videoShow=false" title="选择生成视频尺寸" @confirm="handConfirm" :setShow="false" :height="40+'vh'">
 			<view class="size">
 				<view class="size-box">
 					<view class="item" v-for="(item,index) in sizeList" :key="index" :class="{'active':isActive == index}" @tap="handSize(index)">
@@ -34,9 +34,9 @@
 						<view class="title">{{item.num}}</view>
 					</view>
 				</view>
-				<view class="btn">开始创作</view>
+				<view class="btn" @tap="starCreate">开始创作</view>
 			</view>
-		</NovelPop>
+		</HumanPop>
 	</view>
 </template>
 
@@ -72,6 +72,9 @@ export default{
 		},
 		handSize(index){
 			this.isActive = index
+		},
+		starCreate(){
+			this.$emit('starCreate')
 		}
 	}
 }
