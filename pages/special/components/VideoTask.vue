@@ -1,5 +1,6 @@
 <template>
-	<scroll-view scroll-y="true" style="height: 300px">
+	<!-- <scroll-view scroll-y="true" style="height: 300px"> -->
+	<view>
 		<view class="videoList">
 			<view class="videoPop" v-for="(item,index) in videoList" @click="play(item,index)" :class="{active: activeIndex === index}">
 				<view class="videoBg">
@@ -17,7 +18,8 @@
 			</view>
 		</view>
 		<u-gap height="120rpx" />
-	</scroll-view>
+		</view>
+	<!-- </scroll-view> -->
 </template>
 
 <script>
@@ -67,6 +69,7 @@ export default {
 
 <style lang="scss" scoped>
 	.videoList {
+		padding-bottom: 40rpx;
 		.videoPop {
 			display: flex;
 			align-items: center;

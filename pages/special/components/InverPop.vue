@@ -1,14 +1,14 @@
 <template>
-	<NovelPop :show="show"
+	<HumanPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title" :setShow="false">
+      :title="title" :setShow="false"  :height="30+'vh'">
 	  <view class="flex">
 		  <view class="videoPop" v-for="(item,index) in inverList" @tap="handConfirm(index)">
 		  	{{item.scale}}
 		  </view>
 	  </view>
 	  
-	</NovelPop>
+	</HumanPop>
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 <template>
-	<NovelPop :show="show" @close="$emit('update:show', false)" :title="title" :setShow="false">
+	<HumanPop :show="show" @close="$emit('update:show', false)" :title="title" :setShow="false" :height="40+'vh'">
 	  <view class="videoPop" v-for="(item,index) in bgmList" @click="misic(item.id,item.url)">
 		  <i :class="item.account"></i>
 		  {{item.title}}
 	  </view>
-	</NovelPop>
+	</HumanPop>
 </template>
 
 <script>

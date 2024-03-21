@@ -1,12 +1,12 @@
 <template>
-	<NovelPop :show="show"
+	<HumanPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title" :setShow="false" :titleShow="false">
+      :title="title" :setShow="false" :height="50+'vh'">
 	  <view class="flex">
 		  <view class="videoPop" v-for="(item,index) in capList" @tap="capConfirm(index)">{{item.title}}</view>
 	  </view>
 		  <view class="videoPop noPop" @tap="close">不需要字幕</view>
-	</NovelPop>
+	</HumanPop>
 </template>
 
 <script>

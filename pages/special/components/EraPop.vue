@@ -1,8 +1,8 @@
 <template>
-	<NovelPop :show="show"
+	<HumanPop :show="show"
       @close="$emit('update:show', false)"
-      :title="title" @confirm="setEraData">
-	  <scroll-view scroll-y="true" style="height: 200px">
+      :title="title" @confirm="setEraData" :height="40+'vh'">
+	  <!-- <scroll-view scroll-y="true" style="height: 200px"> -->
 		  <view class="flex">
 			  <view class="videoPop"
 			   v-for="(item,index) in eraList"
@@ -12,8 +12,8 @@
 				>{{item.title}}</view>
 		  </view>
 		  <u-gap height="120rpx" />
-	  </scroll-view>
-	</NovelPop>
+	  <!-- </scroll-view> -->
+	</HumanPop>
 </template>
 
 <script>

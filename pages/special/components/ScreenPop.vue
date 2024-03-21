@@ -1,6 +1,6 @@
 <template>
-	<NovelPop :show="show"  @close="$emit('update:show', false)" :title="title" @confirm="handConfirm">
-		<scroll-view scroll-y="true" style="height: 300px">
+	<HumanPop :show="show"  @close="$emit('update:show', false)" :title="title" @confirm="handConfirm" :height="72+'vh'">
+		<!-- <scroll-view scroll-y="true" style="height: 300px"> -->
 		  <view class="item-wrapper">
 			  <view class="item-box" v-for="(item,index) in screenList" :key="index" @click="onSelected(index)">
 				<view class="pic-box" :class="{active: activeIndex === index}">
@@ -11,8 +11,8 @@
 		  </view>
 		  <!-- <view class="noMore" v-if="noMore == false "></view> -->
 		  <u-gap height="150rpx" />
-		</scroll-view>
-	</NovelPop>
+		<!-- </scroll-view> -->
+	</HumanPop>
 </template>
 
 <script>
@@ -104,10 +104,10 @@ export default {
 }
 @media screen and (min-width: 960px){
 	.item-wrapper .item-box .pic-box{
-		height:  500rpx;
+		height:  400rpx;
 	}
-	scroll-view{
-		height: 75vh!important;
-	}
+	// scroll-view{
+	// 	height: 75vh!important;
+	// }
 }
 </style>

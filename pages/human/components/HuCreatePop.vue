@@ -1,5 +1,5 @@
 <template>
-	<NovelPop :show="show" @close="$emit('update:show', false)" :title="title" @confirm="handConfirm" :height="100+'vh'">
+	<NovelPop :show="show" @close="$emit('update:show', false)" :height="100+'vh'" :title="title" @confirm="handConfirm">
 		<view class="waterfall">
 			<uv-waterfall ref="waterfall" v-model="list" :column-count="columnCount" :add-time="10" :left-gap="leftGap"
 				:right-gap="rightGap" :column-gap="columnGap" @changeList="changeList">

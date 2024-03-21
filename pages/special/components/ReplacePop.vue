@@ -1,7 +1,7 @@
 <template>
-	<NovelPop :show="show"
+	<HumanPop :show="show"
 	  @close="$emit('update:show', false)"
-	  :title="title" :titleShow="false" @confirm="handConfirm">
+	  :title="title" :titleShow="false" @confirm="handConfirm" :height="40+'vh'">
 		<view class="replace">
 			<u--input
 				class="qm-textarea"
@@ -17,7 +17,7 @@
 			  	v-model="repValue"
 			    ></u--input>
 		</view>
-	</NovelPop>
+	</HumanPop>
 </template>
 
 <script>
