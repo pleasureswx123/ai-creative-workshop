@@ -42,7 +42,7 @@ export default{
 
 <style lang="scss" scoped>
 .page-container{
-	background: var(--bg-color1);
+	background: #1A1B1E;
 	padding: 0 30rpx;
 }
 .tab{

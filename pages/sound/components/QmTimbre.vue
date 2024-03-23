@@ -9,15 +9,16 @@
 			<Timbre></Timbre>
 		</view>
 		<view class="nav_item" v-if="isActive==1">
-			
+			<QmConfig></QmConfig>
 		</view>
 	</view>
 </template>
 
 <script>
 import Timbre from './Timbre.vue';
+import QmConfig from './QmConfig.vue';
 export default{
-	components: {Timbre},
+	components: {Timbre,QmConfig},
 	data() {
 		return{
 			tabList:[{
@@ -56,8 +57,5 @@ export default{
 	.active {
 		border-bottom: 1px solid #9E9E9E;
 	}
-}
-.nav_item{
-	padding: 10rpx 0 0 20rpx;
 }
 </style>

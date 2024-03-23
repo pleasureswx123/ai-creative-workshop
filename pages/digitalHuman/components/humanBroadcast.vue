@@ -98,6 +98,7 @@ export default{
 	flex-direction: column;
 	height: 280rpx;
 	justify-content: center;
+	cursor:pointer;
 	.title{
 		color:var(--txt-color2);
 		margin-top: 20rpx;
@@ -150,7 +151,6 @@ export default{
 		background-color: #282828;
 		text-align: center;
 		color: var(--txt-color1);
-		width: 100%;
 	}
 	.set-btn{
 		padding:40rpx 0;
@@ -184,5 +184,11 @@ export default{
 		margin:70rpx auto 30rpx;
 		border-radius:10rpx;
 	}
+}
+@media screen and (min-width: 960px) {
+  /deep/ .u-popup__content {
+    width: 60%;
+    margin: 0 auto;
+  }
 }
 </style>

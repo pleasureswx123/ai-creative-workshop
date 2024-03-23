@@ -1,6 +1,6 @@
 <template>
-	<view class="upload-box-container" @tap="handleUpload">
-	  <view class="upload-box" v-if="uploadShow">
+	<view class="upload-box-container">
+	  <view class="upload-box" v-if="uploadShow" @tap="handleUpload">
 	    <view class="icon-box">
 	      <i class="iconfont icon-shangchuan_huaban icon-upload"></i>
 	    </view>
