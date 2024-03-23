@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@aigcui/entry':
-    specifier: ^0.0.21
-    version: 0.0.21
+    specifier: ^0.0.24
+    version: 0.0.24
   '@traptitech/markdown-it-katex':
     specifier: ^3.6.0
     version: 3.6.0
@@ -37,88 +37,88 @@ devDependencies:
 
 packages:
 
-  /@aigcui/describe@0.0.21:
-    resolution: {integrity: sha512-LManl6CvT5GATbPVNMm4E7ifJrt4OsU+82PLT1c0lDhvtOARrwlja1NraaqQoJRouYyTOUgLZMC74LfF2v+1Uw==}
+  /@aigcui/describe@0.0.24:
+    resolution: {integrity: sha512-op7D/ohISXKFKnqgrlNFIyyxH+agU94dXLW3ulnhE55kxW9bD4XNeHVRO12zhuVqYqPIJRweNIc4dM2mqYkTAw==}
     dev: false
 
-  /@aigcui/entry@0.0.21:
-    resolution: {integrity: sha512-0jrTbORXVuaF4kl+UTgR4xnGTHEwRulVdz3/Zqp2DrxHQYeq9JB8DoEJhdR0u7DwS32vea/PJlElzKa5MJ62Pg==}
+  /@aigcui/entry@0.0.24:
+    resolution: {integrity: sha512-jDNsJO+YFCCrMpsW2kUfOrKdwk/TXjKbb/YmtlmWhwIzSY67N+aG//uvF6/Q7xn5ETK57CGRGvdQ8vuNpGi4lg==}
     dependencies:
-      '@aigcui/describe': 0.0.21
-      '@aigcui/generatebtn': 0.0.21
-      '@aigcui/membervipdesc': 0.0.21
-      '@aigcui/ordergoodslist': 0.0.21
-      '@aigcui/ordergoodstype': 0.0.21
-      '@aigcui/photomodify': 0.0.21
-      '@aigcui/producebtn': 0.0.21
-      '@aigcui/qmaitypemenu': 0.0.21
-      '@aigcui/qmratio': 0.0.21
-      '@aigcui/qtabs': 0.0.21
-      '@aigcui/request': 0.0.21
-      '@aigcui/statement': 0.0.21
-      '@aigcui/templateimagestyle': 0.0.21
-      '@aigcui/templatevideostyle': 0.0.21
-      '@aigcui/wechatpop': 0.0.21
+      '@aigcui/describe': 0.0.24
+      '@aigcui/generatebtn': 0.0.24
+      '@aigcui/membervipdesc': 0.0.24
+      '@aigcui/ordergoodslist': 0.0.24
+      '@aigcui/ordergoodstype': 0.0.24
+      '@aigcui/photomodify': 0.0.24
+      '@aigcui/producebtn': 0.0.24
+      '@aigcui/qmaitypemenu': 0.0.24
+      '@aigcui/qmratio': 0.0.24
+      '@aigcui/qtabs': 0.0.24
+      '@aigcui/request': 0.0.24
+      '@aigcui/statement': 0.0.24
+      '@aigcui/templateimagestyle': 0.0.24
+      '@aigcui/templatevideostyle': 0.0.24
+      '@aigcui/wechatpop': 0.0.24
     dev: false
 
-  /@aigcui/generatebtn@0.0.21:
-    resolution: {integrity: sha512-2K8Aa0QMb/gL+it6HW2ccIdSePX+Uu52RTkcG0KRqzMVkaSVYNt08j1WE1aEms9jHC+PwXBk5Gnv2neZ41ktzQ==}
+  /@aigcui/generatebtn@0.0.24:
+    resolution: {integrity: sha512-5wC2h1b7mryZs8UwyoduC7UM8uRTZVPyrfr8e/BoVVTrvD+h95AoxxbrkK2BSI/fn+oqryVU9xL/zu6GZicyiQ==}
     dependencies:
-      '@aigcui/statement': 0.0.21
+      '@aigcui/statement': 0.0.24
     dev: false
 
-  /@aigcui/membervipdesc@0.0.21:
-    resolution: {integrity: sha512-s58VrR561DXVNkUGwrYl3x2b/5O/i0IJfcT7Sa9ARajvb3xSTa00xbvwILQe85Bo5eqMI8nWBjld8Srqvy66qA==}
+  /@aigcui/membervipdesc@0.0.24:
+    resolution: {integrity: sha512-fH3MKeoYNHn7e7dBYhZyr36c3i0euD0nOeU/WC02pbASYQdre6PnCKYEShZcgq0RrRWwC9f/W8u2jJOP3oWOfA==}
     dev: false
 
-  /@aigcui/ordergoodslist@0.0.21:
-    resolution: {integrity: sha512-3ShNp/HRh59eKb3Z7jHcyvUX3ge8GkvyhRyyuBe04jnqX4QaMzx84ybprMyngOmj7JcQdadmfGi/+tUfBjGejQ==}
+  /@aigcui/ordergoodslist@0.0.24:
+    resolution: {integrity: sha512-SABnbuHr5CEFhu7ASwP9yK+dQCVTTxeATeHAhbEKrTWH5vxKVop4tHGEPtNhsjmkXKPSkoICmmbRAqeKFmdluA==}
     dev: false
 
-  /@aigcui/ordergoodstype@0.0.21:
-    resolution: {integrity: sha512-xqIOPX5SrNYGv6JABcGLDk5KtybjlWgxHT7pXxuo22DnE75SNyZosL6FrRcfvbrf8fWZmUGXJe5K0/qi4cinDw==}
+  /@aigcui/ordergoodstype@0.0.24:
+    resolution: {integrity: sha512-qZfaGu2AeHLkqXkos4khMlwSiBbX9YkxNQE48bqgz6BL5PKW9+DFjRBviTOovjOWgUnOvk0TEUoykR5rk1I7JQ==}
     dev: false
 
-  /@aigcui/photomodify@0.0.21:
-    resolution: {integrity: sha512-uVK9WaxU/z682xQ01NtxIAOFtySF2mJr3RfbeihxXm7FlUAnpTc9/njDnaiWAYAyE4QuLuKgVh5cjxiG8TBe3Q==}
+  /@aigcui/photomodify@0.0.24:
+    resolution: {integrity: sha512-fA3aPmWqrXD0TESim6pH8oi5yGkdRWsN517eRNHszShALIXu21ogBlDiSKaprGgrFDgwxe8MtNb8GzYihQtDLQ==}
     dev: false
 
-  /@aigcui/producebtn@0.0.21:
-    resolution: {integrity: sha512-N5Y/nsXWvukeOxIv0WF4+BM7e3vsBQIMYXqR81CLs3wrNToyxYIZqwsti4UHPgcbQCye16G4EhVKaubX9pzGdA==}
+  /@aigcui/producebtn@0.0.24:
+    resolution: {integrity: sha512-bZQZTowHbzTspJm2jYPVpZuoM0KQSSUFW7RjyhehOe7SHfvS0x6fk4Tw9eBMXnTAJsYUMpq0LPapXRtjvoAnXA==}
     dependencies:
-      '@aigcui/statement': 0.0.21
+      '@aigcui/statement': 0.0.24
     dev: false
 
-  /@aigcui/qmaitypemenu@0.0.21:
-    resolution: {integrity: sha512-LQDCDjvP9C2S160ZeXOffmDz0p70ORVmRAu+OucDtwAHYG671dq1sDTkGQw9ABrp9AkGxPWsJKNrmgkz6BN/sA==}
+  /@aigcui/qmaitypemenu@0.0.24:
+    resolution: {integrity: sha512-+XAQEkhexdiqQLC7flb3f24QY3wCj4awdtO0ITNDccsnI1RhyIb9gIE/Ij1YQ0wPtC59U/oMrQqk1/URSi2/2A==}
     dev: false
 
-  /@aigcui/qmratio@0.0.21:
-    resolution: {integrity: sha512-GH5FlwZfX+yteBuI8ZVL0HeG3UgDUnsoJpvM+PGAk+KHJBK3WVzzhYMcPlrpUryI3gn+zubgx7XgzqYWYYE3hw==}
+  /@aigcui/qmratio@0.0.24:
+    resolution: {integrity: sha512-j6nVae6sTKQaFIUIOHd10pCRjx6KR3V5OEIRvzTLzRHQVPnigUhhOWo3PZxKj99GZ35g0Mj99JoknheyIngoZw==}
     dev: false
 
-  /@aigcui/qtabs@0.0.21:
-    resolution: {integrity: sha512-Br9w3S4IP7hr54QqIJYUCyBe39jnp09Wp6O7+9tCd7Vc1Izin+HMkZmz/22t7nBiaYK4NW8KKVk75JXNabAjoQ==}
+  /@aigcui/qtabs@0.0.24:
+    resolution: {integrity: sha512-0aURiCeh2AdITIpD8fdcyRLxXj3v+4NcKclM/TTTWeXsSPdJncYRdm8xUReLM9qbNnOwK1w8eJCh+U8C/JNSRw==}
     dev: false
 
-  /@aigcui/request@0.0.21:
-    resolution: {integrity: sha512-5wi2exRY+lKl+kS1E+3XReY0QMfpd4ZdRXhGNx86dxoIs++Nvw9UPrw27N/IFdyh3OTz36czfRrl59/GpeOaRw==}
+  /@aigcui/request@0.0.24:
+    resolution: {integrity: sha512-ErVuGihbykoZmMjNKYJ0HAtVWe/y5F0vh9yLgzOC6N+KYegBeF6vG/aju/Aj7wMyYa3IZ4Fy3fg2LfWhwzDAVg==}
     dev: false
 
-  /@aigcui/statement@0.0.21:
-    resolution: {integrity: sha512-kEHyzuEaVGrrpJlKuARvoMJHUptubPS+1mmxbKGzviE9qilaBtNYUcI8dWMa6UQCwdrYJhZKA+RgR7pXa9VgNA==}
+  /@aigcui/statement@0.0.24:
+    resolution: {integrity: sha512-mva4ryvsh5kHvLv5MsGwwG54MV7Fr2ZUpjsrwk0UqZ9E9UrNDwiQfXp1nqhr2W0Yd/CKU3u+gyhC+GIK9VI3lQ==}
     dev: false
 
-  /@aigcui/templateimagestyle@0.0.21:
-    resolution: {integrity: sha512-uYwWoiXkS2Id6vvzmIV42goXa0KRtNKVsGD2IkPcugdvm3/3Oo1gzPc+0gvQZ23YCmME/lZOusNiNOOUSBDGUw==}
+  /@aigcui/templateimagestyle@0.0.24:
+    resolution: {integrity: sha512-MC+aKM1/MlxPAbq/DUyWR6bXVpSIpQL0lV9cOYFiU0IDJ7Ef6VtMadQNVuEpP8bEaOEwtmfMFXQSvAY/aJ+tgw==}
     dev: false
 
-  /@aigcui/templatevideostyle@0.0.21:
-    resolution: {integrity: sha512-d211lBA0pUI6vlwSKGt4m2xk2ecJGaVZTXLPlA6ZaQSWfhL38NfbZghJsTr7kBoe95qVx4TY/4KxZ+g/nhspjQ==}
+  /@aigcui/templatevideostyle@0.0.24:
+    resolution: {integrity: sha512-3+Dn6QalpiHN4RJK6AWpypZfx9WFTkHTW6ptax78jQke8nBS6aRkyWU+KdxhvNhpDzvDuvNYwulr8tE4FwkXUw==}
     dev: false
 
-  /@aigcui/wechatpop@0.0.21:
-    resolution: {integrity: sha512-2zuuHu1eOXV1N14hEyBu4xf+4Ysuo2cpqTyao/iVQCwuki/MUTiG8vHkjWEhYEmn/xFtiE96wDp30yAy0bdUUg==}
+  /@aigcui/wechatpop@0.0.24:
+    resolution: {integrity: sha512-gYUvT6pGCRgxecRMaidkeU4+4m4aB5AH3iJcRZN1WjFhCyEPoFgN7pLkS+Pl0CR6XVBYUCyoxhYBNHtwLe2FkQ==}
     dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:

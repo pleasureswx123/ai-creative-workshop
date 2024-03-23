@@ -240,9 +240,12 @@ export default {
         try {
           this.createTask(params).then(res => {
             if(res.task_id !== '') {
-              uni.$u.route({
-                url: 'pages/picture/index'
-              });
+              this.onTrack();
+              setTimeout(() => {
+                uni.$u.route({
+                  url: 'pages/picture/index'
+                });
+              }, 100)
             } else {
               uni.showModal({
                 title: '提示',

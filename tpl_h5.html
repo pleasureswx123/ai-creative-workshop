@@ -30,7 +30,7 @@
 		<link rel="preconnect" href="//st-cn.chaojiyuyan.cn" crossorigin />
 		<link rel="dns-prefetch" href="//st-cn.chaojiyuyan.cn" />
 		<link rel="icon" type="image/jpg" href="./static/images/ic_ai.jpg" />
-		<title><%= htmlWebpackPlugin.options.title %></title>
+		<title>秋米科技-<%= htmlWebpackPlugin.options.title %></title>
 		<!--<link rel="preconnect" href="//cdn.jsdelivr.net" crossorigin />
 		<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" defer integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />-->
@@ -98,6 +98,28 @@
 		<!--<link rel="stylesheet" href="./two.css" media="(min-width: 1200px)">
 		<link rel="stylesheet" href="./two.css" media="(min-width: 992px)">
 		<link rel="stylesheet" href="./two.css" media="(min-width: 768px)">-->
+		<script>
+			const {search} = new URL(window.location.href);
+			const params = new URLSearchParams(search);
+			const from = params.get('from');
+			if(from?.includes('baidu')) {
+				window.fromSource = 'baidu';
+				window._agl = window._agl || [];
+				(function () {
+					_agl.push(
+							['production', '_f7L2XwGXjyszb4d1e2oxPybgD']
+					);
+					(function () {
+						const agl = document.createElement('script');
+						agl.type = 'text/javascript';
+						agl.async = true;
+						agl.src = 'https://fxgate.baidu.com/angelia/fcagl.js?production=_f7L2XwGXjyszb4d1e2oxPybgD';
+						const s = document.getElementsByTagName('script')[0];
+						s.parentNode.insertBefore(agl, s);
+					})();
+				})();
+			}
+		</script>
 	</head>
 	<body>
 		<noscript>
