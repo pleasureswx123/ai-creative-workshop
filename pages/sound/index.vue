@@ -103,6 +103,7 @@ export default {
     handleGenerate() {
       this.generating = true;
       this.createTask(this.params).then(({task_id}) => {
+        this.onTrack();
         const func = () => {
           soundApi.getTaskstate({task_id}).then(({state}) => {
             if(state === 2) {

@@ -40,6 +40,17 @@ export default {
   },
   methods: {
     ...mapActions('UserInfo', ['getUserInfo', 'authAndBindWechat']),
+    onTrack({eventName = 'form'} = {}) {
+      if(window.fromSource === 'baidu') {
+        const ctMap = new Map([ // 转化事件对应的CT值
+          ['form', 3], // 表单提交成功
+          ['line', 18], // 留线索
+          ['advice', 92], // 有效咨询
+        ]);
+        const ct = ctMap.get(eventName);
+        ct && window._agl && window._agl.push(['track', ['success', {t: ct}]]);
+      }
+    },
     payReady(params, url) {
       function onBridgeReady() {
         WeixinJSBridge.invoke('getBrandWCPayRequest', params, function (res) {

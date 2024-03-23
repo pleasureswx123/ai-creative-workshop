@@ -247,9 +247,12 @@ export default {
       this.loading29 = true;
       this.createPhotoTask(this.params29).then(({task_id}) => {
         if(!!task_id) {
-          uni.reLaunch({
-            url: '/pages/picture/index'
-          })
+          this.onTrack();
+          setTimeout(() => {
+            uni.reLaunch({
+              url: '/pages/picture/index'
+            })
+          }, 100)
         } else {
           uni.showModal({
             title: '提示',
@@ -280,6 +283,7 @@ export default {
       this.$refs.photoTool.getMaskImgSrc().then(path => {
         this.reference_image_extend = path;
         this.createTask(this.params28).then(({task_id}) => {
+          this.onTrack();
           const func = () => {
             pictureApi.getTaskstate({task_id}).then((res) => {
               const {state, url} = res || {};

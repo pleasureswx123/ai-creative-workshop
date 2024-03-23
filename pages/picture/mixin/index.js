@@ -91,6 +91,7 @@ export default {
       }
       this.generateState = 2;
       this.createTask(this.params).then(({task_id}) => {
+        this.onTrack();
         const func = () => {
           pictureApi.getTaskstate({task_id}).then((res) => {
             const {state, url} = res || {};
