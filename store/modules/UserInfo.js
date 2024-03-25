@@ -59,6 +59,7 @@ const actions = {
   },
   getUserInfo({dispatch, commit}, params = {}) {
     return userApi.getUserInfo(params).then(res => {
+      res.user_id && window._hmt?.push(['_setUserId', res.user_id]);
       dispatch('getUserIntegral');
       commit('setUserInfo', res || {})
     })
