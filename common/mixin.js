@@ -4,8 +4,13 @@ import {mapState, mapActions} from 'vuex';
 export default {
   data() {
     return {
-      isLoginStatus: false
+      isLoginStatus: false,
+      statusBarHeight: 0,
     }
+  },
+  created() {
+    const {statusBarHeight} = uni.getSystemInfoSync();
+    this.statusBarHeight = statusBarHeight;
   },
   computed: {
     ...mapState('UserInfo', ['userInfoState', 'userIntegral']),
@@ -137,8 +142,11 @@ export default {
       return (+item.url_type) === 1;
       // return [2, 10, 11, 24, 25, 26].includes(+taskType)
     },
+
     toggleBodyPositionStatus(status) {
-      document.body.style.overflow = status ? 'hidden' : '';
+      if(uni.$u.platform === 'h5') {
+        document.body.style.overflow = status ? 'hidden' : '';
+      }
     },
     async loadImage(url) {
       return new Promise((resolve, reject) => {

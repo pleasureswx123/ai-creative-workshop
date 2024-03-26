@@ -44,7 +44,6 @@
 			var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
 			document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
 		</script>
-		
 		<!-- <script>
 			function getPcUrl() {
 				let search = window.location.search;
@@ -71,7 +70,6 @@
 				  default:
 					path = '';
 				}
-		
 				let pcUrl = 'https://' + host + '/web/' + search + '#/';
 				if (path) {
 				  pcUrl += path;
@@ -79,10 +77,8 @@
 				if (query) {
 				  pcUrl += '?' + query;
 				}
-		
 				return pcUrl;
 			}
-			
 			var ua = navigator.userAgent.toLowerCase();
 			var isMobile = ua.match(/mobile/i);
 			var isWechat = ua.match(/micromessenger/i) && !ua.match(/windows/i) && !ua.match(/macos/i) && !ua.match(/macwechat/i);
@@ -142,13 +138,128 @@
 			}
 		</script>
 		<script>
-			var _hmt = _hmt || [];
+			window._hmt = window._hmt || [];
 			(function() {
-				var hm = document.createElement("script");
+				const hm = document.createElement("script");
 				hm.src = "https://hm.baidu.com/hm.js?f77d19f4ba8fc8633e25da6f5508db63";
-				var s = document.getElementsByTagName("script")[0];
+				const s = document.getElementsByTagName("script")[0];
 				s.parentNode.insertBefore(hm, s);
 			})();
+		</script>
+
+		<script type="module">
+			(() => {
+				const indexedDBReq = indexedDB.open('MyDatabase', 2);
+				indexedDBReq.onerror = function (event) {
+					console.error('数据库打开失败');
+				};
+				indexedDBReq.onsuccess = function (event) {
+					const db = event.target.result;
+					function insertData(dataList) {
+						const transaction = db.transaction(['Room'], 'readwrite');
+						const objectStore = transaction.objectStore('Room');
+						// 遍历数据列表，为每个数据项自动增加 id 并插入到对象存储空间
+						dataList.forEach(function (data) {
+							objectStore.add(data);
+							// objectStore.put(Object.assign({}, data, {
+							// 	// id: performance.now().toString().replace('.', '') + Math.random().toString(36).substr(2, 9)
+							// }));
+						});
+						transaction.oncomplete = function (event) {
+							console.log('数据添加成功');
+						};
+						transaction.onerror = function (event) {
+							console.error('数据添加失败');
+						};
+					}
+					function updateData(newData) {
+						const transaction = db.transaction(['Room'], 'readwrite');
+						const objectStore = transaction.objectStore('Room');
+						const indexedDBReq = objectStore.put(newData);
+						indexedDBReq.onsuccess = function (event) {
+							console.log('数据更新成功');
+						};
+						indexedDBReq.onerror = function (event) {
+							console.error('数据更新失败');
+						};
+					}
+					function deleteData(id) {
+						const transaction = db.transaction(['Room'], 'readwrite');
+						const objectStore = transaction.objectStore('Room');
+						// 使用键值删除数据项
+						const indexedDBReq = objectStore.delete(id);
+						indexedDBReq.onsuccess = function (event) {
+							console.log('成功删除数据项');
+						};
+					}
+					function queryAllData() {
+						return new Promise(function (resolve, reject) {
+							const transaction = db.transaction(['Room'], 'readonly');
+							const objectStore = transaction.objectStore('Room');
+							const getAllRequest = objectStore.getAll();
+							getAllRequest.onsuccess = function (event) {
+								const allData = getAllRequest.result;
+								resolve(allData)
+							};
+							getAllRequest.onerror = function (event) {
+								console.error('查询失败');
+							};
+						});
+					}
+					function queryDataByKey(id) {
+						return new Promise(function (resolve, reject) {
+							const transaction = db.transaction(['Room'], 'readonly');
+							const objectStore = transaction.objectStore('Room');
+							// 使用键值获取数据项
+							const getRequest = objectStore.get(id);
+							getRequest.onsuccess = function (event) {
+								const data = event.target.result;
+								resolve(data);
+							};
+							getRequest.onerror = function (event) {
+								reject('查询数据失败');
+							};
+						});
+					}
+					function clearData() {
+						const transaction = db.transaction(['Room'], 'readwrite');
+						const objectStore = transaction.objectStore('Room');
+						const indexedDBReq = objectStore.clear();
+						indexedDBReq.onsuccess = function (event) {
+							console.log('数据清除成功');
+						};
+						indexedDBReq.onerror = function (event) {
+							console.error('数据清除失败');
+						};
+					}
+					clearData();
+					insertData([
+						{id: 1, name: 'John343', age: 30},
+						{id: 2, name: 'Tom', age: 28},
+						{id: 3, name: 'Lili', age: 26},
+						{id: 4, name: 'Lili', age: 26},
+					]);
+					updateData({id: 5, name: 'rrrr', age: 30})
+					deleteData(3);
+					insertData([{id: 3, name: 'wang', age: 26}])
+					queryDataByKey(2).then(res => {
+						console.log(res)
+					})
+					queryAllData().then(res => {
+						console.log(res)
+					})
+				};
+				indexedDBReq.onupgradeneeded = function (event) {
+					const db = event.target.result;
+					if (!db.objectStoreNames.contains('Room')) {
+						// autoIncrement: true
+						const objectStore = db.createObjectStore('Room', {keyPath: 'id'});
+						objectStore.createIndex('nameIndex', 'name', {unique: false});
+						objectStore.createIndex('ageIndex', 'age', {unique: false});
+					}
+					console.log('数据库升级完成，且成功创建了名为 "Room" 的对象存储空间');
+				};
+			})()
 		</script>
 	</body>
 </html>

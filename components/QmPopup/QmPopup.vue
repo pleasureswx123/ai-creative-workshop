@@ -8,6 +8,7 @@
       :safeAreaInsetBottom="safeAreaInsetBottom">
     <view class="pop-container">
       <view class="pop-body-container" v-if="show">
+        <view :style="{background: '#fff', height: statusBarHeight + 'px'}"></view>
         <view class="top-bar">
           <text class="title">{{title}}</text>
           <view class="close-box">

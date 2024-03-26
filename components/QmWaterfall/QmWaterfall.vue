@@ -70,7 +70,7 @@ export default {
   computed: {
     imageStyle(item) {
       return item => {
-        const val = uni.upx2px(750);
+        const {windowWidth: val} = uni.getSystemInfoSync();
         const num = val > 1200 ? 1200 : val;
         const v = num - this.leftGap - this.rightGap - this.columnGap;
         const w = v / this.columnCount;
@@ -130,7 +130,7 @@ export default {
     },
     initListData() {
       for(let i = 0; i < this.columnCount; i++) {
-        this.$set(this.waterfall, `list${i + 1}`, [])
+        this?.$set(this.waterfall, `list${i + 1}`, [])
       }
     },
     handleSelect(item) {

@@ -1,6 +1,7 @@
 <template>
   <view class="qm-nav-wrapper">
     <view class="nav-inner-box">
+      <view :style="{background: '#fff', height: statusBarHeight + 'px'}"></view>
       <view class="qm-nav-box">
         <view class="lf pointer" @tap="goHome">
           <image src="@/static/images/index/logo.png" mode="aspectFit" />
@@ -35,6 +36,7 @@
       </view>
       <UserInfoBox :show.sync="showUserInfoPop"></UserInfoBox>
     </view>
+    <view :style="{background: '#fff', height: statusBarHeight + 'px'}"></view>
     <view class="qm-nav-box-place"></view>
   </view>
 </template>

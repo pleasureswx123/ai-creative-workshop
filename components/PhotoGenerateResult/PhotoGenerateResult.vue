@@ -74,6 +74,7 @@ export default {
   padding: 4rpx;
   margin-bottom: 30rpx;
   position: relative;
+  min-height: 100rpx;
 }
 .result-inner {
   display: grid;
