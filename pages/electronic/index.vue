@@ -3,26 +3,26 @@
     <TabsBox :value.sync="task_type" :options="tabsList"></TabsBox>
     <template v-if="task_type === 28">
       <PhotoGenerateResult v-if="finalUrl" :imgs="finalUrl"></PhotoGenerateResult>
-      <PhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></PhotoModify>
-      <Describe :value.sync="prompt"></Describe>
-      <ProduceBtn
+      <AuiPhotoModify :loading="loading" ref="photoTool" :src.sync="reference_image"></AuiPhotoModify>
+      <AuiDescribe :value.sync="prompt"></AuiDescribe>
+      <AuiProduceBtn
           :pieces="pieces"
           :taskType="task_type"
           :value.sync="batch_size"
           :loading="loading"
-          @cb="handle28Comfirm"></ProduceBtn>
+          @cb="handle28Comfirm"></AuiProduceBtn>
       <Setting :value.sync="setting"></Setting>
       <template v-if="setting">
 <!--        <ExtendDirection :value.sync="directions"></ExtendDirection>
         <PersonEnhance :value.sync="enhanceType"></PersonEnhance>-->
-        <TemplateImageStyle
+        <AuiTemplateImageStyle
             :key="task_type"
             title="图片风格 Style（可不选）"
             :params="{task_type}"
             componentName="ImgStyleItem"
             :getList="getImgStyleList"
             :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
-            :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
+            :currentInfo.sync="photoStyleInfo"></AuiTemplateImageStyle>
         <LoraCard
             title="使用专属商业定制模型"
             :params="{class_id: modeId, is_commercial: 1}"
@@ -36,7 +36,7 @@
       <ModelSelectCard
           @showPopFunc="showModelSelectPop = true"
           :info="currentModeInfo" />
-      <Describe :value.sync="prompt"></Describe>
+      <AuiDescribe :value.sync="prompt"></AuiDescribe>
       <LoraCard
           title="使用专属商业定制模型"
           :params="{class_id: modeId, is_commercial: 1}"
@@ -44,28 +44,28 @@
           :getList="getLoraList"
           :proxyList="item => ({ ...item, id: item.lora_id, value: 1 })"
           :currentInfo.sync="loraInfo"></LoraCard>
-      <TemplateImageStyle
+      <AuiTemplateImageStyle
           :key="task_type"
           title="图片风格 Style（可不选）"
           :params="{task_type}"
           componentName="ImgStyleItem"
           :getList="getImgStyleList"
           :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
-          :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
-      <Describe
+          :currentInfo.sync="photoStyleInfo"></AuiTemplateImageStyle>
+      <AuiDescribe
           title="负面描述词"
           :maxlength="1000"
           placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
           :value.sync="negative_prompt" />
-      <QmRatio
+      <AuiQmRatio
           :value.sync="img_scale"
           :list="ImgRatioInfo" />
-      <ProduceBtn
+      <AuiProduceBtn
           :pieces="pieces"
           :taskType="task_type"
           :value.sync="batch_size"
           :loading="loading29"
-          @cb="handle29Comfirm"></ProduceBtn>
+          @cb="handle29Comfirm"></AuiProduceBtn>
   
       <QmPop
           v-if="showModelSelectPop"

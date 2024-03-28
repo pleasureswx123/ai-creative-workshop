@@ -1,19 +1,16 @@
 var util = {};
-const getBaseUrl = (url) => {
+util.request = function (option) {
+    var app = getApp();
+    var option = option ? option : {};
+
+    // 组装url
+    var url = option.url;
     if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1) {
         url = app.globalData.siteroot + option.url;
     }
     if(uni.$u.platform === 'plus') {
         url = `https://aigc.chaojiyuyan.cn/web.php${option.url}`;
     }
-    return url;
-};
-util.request = function (option) {
-    var app = getApp();
-    var option = option ? option : {};
-
-    // 组装url
-    var url = getBaseUrl(option.url);
     if (!url) {
         return false;
     }
@@ -78,7 +75,13 @@ util.upload = function (option = null) {
     var option = option ? option : {};
 
     // 组装url
-    var url = getBaseUrl(option.url);
+    var url = option.url;
+    if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1) {
+        url = app.globalData.siteroot + option.url;
+    }
+    if(uni.$u.platform === 'plus') {
+        url = `https://aigc.chaojiyuyan.cn/web.php${option.url}`;
+    }
     if (!url) {
         return false;
     }

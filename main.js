@@ -3,7 +3,6 @@ import '@/utils/utility.js'
 import App from './App';
 import store from './store'
 import uView from '@/uni_modules/uview-ui'
-import '@/static/styles/index.css'
 
 // import videojs from "video.js"
 // import 'video.js/dist/video-js.min.css'
@@ -34,9 +33,10 @@ App.mpType = 'app';
 import mixin from './common/mixin'
 Vue.mixin(mixin)
 
-import aigcui, { requestUtil } from '@aigcui/entry'
+import { requestUtil } from '@aigcui/entrance'
 
-Vue.use(aigcui);
+// #ifdef APP-PLUS
+// #endif
 
 const app = new Vue({
 	store,

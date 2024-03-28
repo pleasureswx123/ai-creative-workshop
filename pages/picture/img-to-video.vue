@@ -19,7 +19,7 @@
     </template>-->
     
     <template #footer>
-      <GenerateBtn
+      <AuiGenerateBtn
           :disabled="disabled"
           @cb="handleGenerate"
           :loading="generating"

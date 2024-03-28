@@ -14,7 +14,7 @@
       <TipsHelp :info="taskDetail" />
     </template>
     <template #footer>
-      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+      <AuiGenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
   </Layout>
 </template>

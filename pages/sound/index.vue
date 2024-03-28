@@ -17,7 +17,7 @@
     <QmRadioPlain :list="dubList" :value.sync="timbre"></QmRadioPlain>
     <QmSlider :value.sync="volume" type="volume"></QmSlider>
     <QmSlider :value.sync="speed" type="speed"></QmSlider>
-    <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo"></GenerateBtn>
+    <AuiGenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo"></AuiGenerateBtn>
   </view>
 </template>
 
