@@ -1,5 +1,5 @@
 <script>
-	import jssdk from "weixin-js-sdk";
+	// import jssdk from "weixin-js-sdk";
 	import util from "./utils/util.js"
 	import siteinfo from "./siteinfo.js"
 	export default {
@@ -87,9 +87,11 @@
 	};
 </script>
 <style lang="scss">
+@import "@/static/styles/index.css";
 @import "@/uni_modules/uview-ui/index.scss";
 @import "@/static/iconfont/iconfont.css";
 @import "@/static/icon/iconfont.css";
+
 image {
   vertical-align: middle;
 }
@@ -124,7 +126,7 @@ image {
 }
 page {
   min-height: calc(100vh - var(--window-bottom) - var(--window-top));
-  background: var(--bg-color1)!important;
+  background: var(--bg-color1-dark)!important;
   font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
 }
 button::after {

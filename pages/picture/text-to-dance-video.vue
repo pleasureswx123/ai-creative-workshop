@@ -9,25 +9,25 @@
     <QmGenerating v-if="generating"></QmGenerating>
     
     <template v-if="generateState === 1">
-      <Describe
+      <AuiDescribe
           title="描述您的视频场景"
           placeholder="一个女孩，粉色短发，黑色短袖，黑色短裤，霓虹背景"
-          :value.sync="prompt"></Describe>
+          :value.sync="prompt"></AuiDescribe>
       
-      <TemplateImageStyle
+      <AuiTemplateImageStyle
           :params="{type: 1, task_type: taskType}"
           componentName="ImgStyleItem"
           :getList="getTemplate"
           :proxyList="item => ({ ...item })"
-          :currentInfo.sync="templateInfo"></TemplateImageStyle>
+          :currentInfo.sync="templateInfo"></AuiTemplateImageStyle>
       
-      <TemplateVideoStyle
+      <AuiTemplateVideoStyle
           title="选择舞蹈模板"
           :params="{type: 2, task_type: taskType}"
           componentName="TemplateItem"
           :getList="getTemplate"
           :proxyList="item => ({ ...item })"
-          :currentInfo.sync="templateExtendInfo"></TemplateVideoStyle>
+          :currentInfo.sync="templateExtendInfo"></AuiTemplateVideoStyle>
 <!--      <TitleCell
           title="选择舞蹈模板"
           :isShowRight="false" />
@@ -46,7 +46,7 @@
     </template>
     
     <template #footer>
-      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+      <AuiGenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
     
     <QmPreviewVideo

@@ -16,7 +16,7 @@
       <TipsHelp :info="taskDetail" />
     </template>
     <template #footer>
-      <GenerateBtn
+      <AuiGenerateBtn
           :errorTips="toastTipsErrorTxt"
           :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>

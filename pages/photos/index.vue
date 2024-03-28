@@ -11,7 +11,7 @@
           <ModelSelectCard
               @showPopFunc="showModelSelectPop = true"
               :info="currentModeInfo" />
-          <Describe
+          <AuiDescribe
               title="画面描述词"
               :maxlength="maxlength"
               placeholder="请输入描述文字以短句、短语为佳，支持中、英文输入"
@@ -25,13 +25,13 @@
               @showPopFunc="showLoraPop = true"
               :info.sync="loraInfo" />
   
-          <TemplateImageStyle
+          <AuiTemplateImageStyle
               title="图片风格 Style（可不选）"
               :params="{}"
               componentName="ImgStyleItem"
               :getList="getImgStyleList"
               :proxyList="item => ({ ...item, id: item.img_style_id, value: 0.8 })"
-              :currentInfo.sync="photoStyleInfo"></TemplateImageStyle>
+              :currentInfo.sync="photoStyleInfo"></AuiTemplateImageStyle>
         </view>
         <view>
         <ReferenceImgCard
@@ -39,12 +39,12 @@
             @showPopFunc="showHistoryPop = true"
             @setReferenceImgInfo="setReferenceImgInfo"
             :info.sync="referenceImgInfo" />
-        <Describe
+        <AuiDescribe
             title="负面描述词"
             :maxlength="maxlength"
             placeholder="输入不希望在画面中看见的内容，越靠前作用越明显"
             :value.sync="badDescription" />
-        <QmRatio
+        <AuiQmRatio
             :value.sync="ratioId"
             :list="ImgRatioInfo" />
         </view>
@@ -129,12 +129,12 @@
           @controninetlist="setControlNetInfo" />
     
       <u-gap height="30" />
-      <ProduceBtn
+      <AuiProduceBtn
           :isShowPieces="[1,2].includes(modeId)"
           taskType="1"
           :value.sync="picNums"
           :loading="generateStatus"
-          @cb="startGenerate"></ProduceBtn>
+          @cb="startGenerate"></AuiProduceBtn>
 
     </view>
   </view>

@@ -33,11 +33,6 @@ import loaderAssistantDataMixin from '@/common/loaderAssistantDataMixin.js'
 import QmChat from './chat.vue'
 import {userApi} from '@/api'
 
-// import 'katex/dist/katex.min.css'
-import '@/static/styles/lib/tailwind.css'
-import '@/static/styles/lib/highlight.scss'
-import '@/static/styles/lib/github-markdown.scss'
-
 export default {
   mixins: [loaderAssistantDataMixin],
   components: { QmNavTabs, QmSubTabs, QmAssistant, QmRoles, QmChat },
@@ -96,6 +91,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// import 'katex/dist/katex.min.css'
+@import '@/static/styles/lib/tailwind.css';
+@import '@/static/styles/lib/highlight.scss';
+@import '@/static/styles/lib/github-markdown.scss';
+
 .page-container {
   width: 100%;
   font-size: 24rpx;

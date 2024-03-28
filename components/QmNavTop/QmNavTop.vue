@@ -1,7 +1,7 @@
 <template>
   <view class="qm-nav-wrapper">
     <view class="nav-inner-box">
-      <view :style="{background: '#fff', height: statusBarHeight + 'px'}"></view>
+      <view v-if="showStatusBar" :style="{background: '#fff', height: statusBarHeightStr}"></view>
       <view class="qm-nav-box">
         <view class="lf pointer" @tap="goHome">
           <image src="@/static/images/index/logo.png" mode="aspectFit" />
@@ -36,7 +36,7 @@
       </view>
       <UserInfoBox :show.sync="showUserInfoPop"></UserInfoBox>
     </view>
-    <view :style="{background: '#fff', height: statusBarHeight + 'px'}"></view>
+    <view v-if="showStatusBar" :style="{background: '#000', height: statusBarHeightStr}"></view>
     <view class="qm-nav-box-place"></view>
   </view>
 </template>
@@ -98,7 +98,7 @@ export default {
 }
 .qm-nav-box, .pc-nav-box, .qm-nav-box-place {
   padding: 0 0 0 30rpx;
-  height: 80rpx;
+  height: 44px;
   position: relative;
   background-color: #0D0D0D;
   box-sizing: border-box;
@@ -116,8 +116,8 @@ export default {
     gap: 10rpx;
     image {
       display: block;
-      width: 80rpx;
-      height: 80rpx;
+      width: 44px;
+      height: 44px;
     }
     .title {
       color: rgba(255,255,255,.7);
@@ -152,8 +152,8 @@ export default {
     cursor: pointer;
     image {
       display: block;
-      width: 80rpx;
-      height: 80rpx;
+      width: 44px;
+      height: 44px;
     }
   }
   .menu-nav {

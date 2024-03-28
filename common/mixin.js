@@ -6,14 +6,36 @@ export default {
     return {
       isLoginStatus: false,
       statusBarHeight: 0,
+      uniPlatform: uni.$u.platform,
+      ua: '',
+      windowWidth: 0,
+      browserName: '',
     }
   },
   created() {
-    const {statusBarHeight} = uni.getSystemInfoSync();
+    const {statusBarHeight, ua, windowWidth, browserName} = uni.$u.sys();
+    this.browserName = browserName;
     this.statusBarHeight = statusBarHeight;
+    this.ua = ua;
+    this.windowWidth = windowWidth;
   },
   computed: {
     ...mapState('UserInfo', ['userInfoState', 'userIntegral']),
+    showStatusBar() {
+      return this.uniPlatform === 'plus' || (this.uniPlatform === 'h5' && this.ua.toLowerCase().includes('html5plus'))
+    },
+    isWeixiBrowser() {
+      return this.ua.toLowerCase().includes('weixin')
+    },
+    statusBarHeightStr() {
+      return `${this.statusBarHeight || 49}px`
+    },
+    mobileH5() {
+      return this.uniPlatform === 'h5' && !this.ua.toLowerCase().includes('mobile')
+    },
+    // showPcTopNavBar() {
+    //   return this.uniPlatform === 'h5' && !this.ua.toLowerCase().includes('mobile') && this.windowWidth > 960;
+    // },
     integralTips() {
       let result = '';
       const temp = this.userIntegral?.[`${this.taskType}`] || {};

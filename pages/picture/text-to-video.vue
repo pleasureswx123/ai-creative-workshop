@@ -12,18 +12,18 @@
     <QmGenerating v-if="generating"></QmGenerating>
   
     <template v-if="generateState === 1">
-      <Describe :value.sync="prompt"></Describe>
-      <Describe
+      <AuiDescribe :value.sync="prompt"></AuiDescribe>
+      <AuiDescribe
           title="输入不希望出现的内容描述（可不填）"
           placeholder="可以不填写"
-          :value.sync="prompt_extend"></Describe>
-      <QmRatio
+          :value.sync="prompt_extend"></AuiDescribe>
+      <AuiQmRatio
           :value.sync="ratioId"
           :list="ImgRatioInfo" />
     </template>
     
     <template #footer>
-      <GenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
+      <AuiGenerateBtn :disabled="disabled" @cb="handleGenerate" :loading="generating" :btnInfo="btnInfo" />
     </template>
   </Layout>
 </template>

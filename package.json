@@ -8,12 +8,11 @@
   },
   "author": "",
   "dependencies": {
-    "@aigcui/entry": "^0.0.27",
+    "@aigcui/entrance": "^0.0.31",
     "@traptitech/markdown-it-katex": "^3.6.0",
     "highlight.js": "^11.7.0",
     "markdown-it": "^13.0.1",
-    "vue-qr": "^3.2.2",
-    "weixin-js-sdk": "^1.6.0"
+    "vue-qr": "^3.2.2"
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
