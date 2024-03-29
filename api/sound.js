@@ -27,4 +27,12 @@ export default {
       }
     })
   },
+  //录制
+  GetRecognitionStr(params = {}) {
+    return uni.$u.http.post(`/Dub/GetRecognitionStr`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

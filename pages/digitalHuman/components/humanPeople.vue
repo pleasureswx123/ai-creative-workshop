@@ -11,7 +11,7 @@
 						<image :src="item" mode="aspectFit"></image>
 						<i class="iconfont icon-bianji1" v-if="isActive === index" @tap="handRead(index)"></i>
 					</view>
-					<view class="name" v-if="currentInput == index">
+					<view class="name" v-show="isActive === index">
 						<u--input class="qm-textarea" placeholder="请输入名称" border="none" v-model="value"></u--input>
 					</view>
 				</view>
@@ -51,7 +51,7 @@ export default {
 	  imageList:[],
 	  humanValue:'',
 	  value:'',
-	  currentInput:null
+	  loShow:false
 	};
   },
   methods: {
@@ -78,14 +78,9 @@ export default {
 	},
 	handImage(index){
 		this.isActive = index
-		if(!this.currentInput){
-			this.currentInput = index
-		}
 	},
 	handRead(index){
-		this.currentInput = index
-		console.log(this.currentInput)
-		// if()
+		this.loShow = true
 	}
   },
 };
@@ -95,7 +90,7 @@ export default {
 .people-box{
 	color: var(--txt-color2);
 	font-size: 28rpx;
-	background: #090909;
+	background: #1A1B1E;
 }
 .people-type{
 	padding:0 40rpx 60rpx;

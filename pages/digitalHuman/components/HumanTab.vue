@@ -1,6 +1,6 @@
 <template>
 	<view class="tab">
-		<u-tabs :list="list" :activeStyle="{color: 'var(--txt-color2)'}" :inactiveStyle="{color: '#606266'}" @click="handTab"></u-tabs>
+		<u-tabs :list="list" :activeStyle="{color: 'var(--txt-color2)'}" :inactiveStyle="{color: '#606266'}" @click="handTab" :current="current"></u-tabs>
 	</view>
 </template>
 
@@ -11,6 +11,10 @@ export default{
 	    type: Array,
 	    default: []
 	  },
+	  current:{
+		  type: [String , Number],
+		  default: 0
+	  }
 	},
 	data(){
 		return{
@@ -29,7 +33,7 @@ export default{
 .tab{
 	color: var(--txt-color2);
 	font-size: 28rpx;
-	background: #090909;
+	background: #1A1B1E;
 	margin: 30rpx 0;
 	padding: 20rpx 0 20rpx 10rpx;
 	/deep/{

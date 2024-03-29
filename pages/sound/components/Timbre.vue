@@ -10,10 +10,10 @@
 			<view class="audioList">
 				<view v-for="(item,index) in audioList">
 					<view class="profile" @tap="play(item.id,index)">
-						<image :src="item.image" mode="aspectFit"></image>
+						<i class="iconfont icon-jiqiren"></i>
 						<view class="iconPlay">
-						  <i class="iconfont icon-zanting1" v-show='status'></i>
-						  <i class="iconfont icon-bofang" v-show='!status'></i>
+						  <i class="iconfont icon-zanting1"></i>
+						  <i class="iconfont icon-bofang"></i>
 						</view>
 					</view>
 					<view class="name">{{item.name}}</view>
@@ -47,19 +47,7 @@ export default{
 			}],
 			isActive:0,
 			CreateShow:false,
-			audioList:[{
-				image:'https://aigc.chaojiyuyan.cn/upload/user_task/novel/178/178/178_1711008733_29106.png',
-				name:'老爸',
-				id:1,
-				tips:'短视频平台最火',
-				title:'专业'
-			},{
-				image:'https://api.chaojiyuyan.com/upload/images/00291-872786304.png',
-				name:'儿子',
-				id:2,
-				tips:'短视频平台最火',
-				title:'专业'
-			}],
+			audioList:[],
 			status: false,
 		}
 	},
@@ -75,13 +63,7 @@ export default{
 			this.CreateShow = false
 		},
 		play(id){
-			this.isActive = index
-			let audioId = id;
-			if(this.status) {
-				this.status = !this.status;
-			}else {
-				this.status = !this.status;
-			}
+			
 		}
 	}
 }
@@ -133,6 +115,10 @@ export default{
 		position: relative;
 		margin: auto;
 		cursor: pointer;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		&.active{
 			border: 4rpx solid #F60652;
 		}
@@ -146,6 +132,9 @@ export default{
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%,-50%);
+		}
+		.icon-jiqiren {
+			position: absolute;
 		}
 	}
 	.name{

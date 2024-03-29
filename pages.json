@@ -382,6 +382,12 @@
 			"style": {
 				"navigationBarTitleText": "数字人"
 			}
+		},
+		{
+		  "path": "uni_modules/buuug7-img-cropper/pages/cropper",
+		  "style": {
+			"navigationBarTitleText": "图片裁剪"
+		  }
 		}
 	],
 	"subPackages": [

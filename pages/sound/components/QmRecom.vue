@@ -1,47 +1,63 @@
 <template>
 	<view class="audioList recomList">
 		<view class="item" v-for="(item,index) in audioList">
-			<view class="profile" @tap="play(index)" :class="{'active':isActive == index}">
-				<image :src="item.image" mode="aspectFit"></image>
-				<view v-if="isActive === index">
+			<view class="profile" @tap="play(item,index)" :class="{'active':isActive == index}">
+				<i class="iconfont icon-jiqiren"></i>
+				<view v-if="isActive == index">
 					<view class="iconPlay">
-						<i class="iconfont icon-zanting1" v-show='status'></i>
-						<i class="iconfont icon-bofang" v-show='!status'></i>
+						<i class="iconfont icon-zanting1" v-if="musicId ==item.id"></i>
+						<i class="iconfont icon-bofang" v-else></i>
 					</view>
-					<view class="bg"></view>
 				</view>
 			</view>
-			<view class="name">{{item.name}}</view>
-			<view class="tips">{{item.tips}}</view>
+			<view class="name">{{item.title}}</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import {NovelApi} from '@/api'
 export default{
 	data(){
 		return{
-			audioList:[{
-				image:'https://aigc.chaojiyuyan.cn/upload/user_task/novel/178/178/178_1711008733_29106.png',
-				name:'老爸',
-				id:1,
-				tips:'短视频平台最火',
-				title:'专业'
-			},{
-				image:'https://api.chaojiyuyan.com/upload/images/00291-872786304.png',
-				name:'儿子',
-				id:2,
-				tips:'短视频平台最火',
-				title:'专业'
-			}],
+			audioList:[],
 			isActive:0,
-			status:false
+			innerAudioContext:null,
+			musicId:''
 		}
 	},
+	mounted() {
+		this.getVideoTask()
+	},
+	beforeDestroy() {
+	  this.destroyAudio();
+	},
 	methods:{
-		play(index){
+		getVideoTask() {
+			NovelApi.getDub({
+				data:{page:1,
+        			pagesize:20,}
+			}).then(res => {
+				this.audioList = res.list
+			})
+		},
+		destroyAudio() {
+		  if(this.innerAudioContext) {
+		    this.innerAudioContext.pause();
+		    this.innerAudioContext.destroy();
+		    this.innerAudioContext = null;
+		  }
+		},
+		play(item,index){
 			this.isActive = index
-			this.playShow = true
+			this.destroyAudio();
+			this.musicId = item.id;
+			this.innerAudioContext = uni.createInnerAudioContext();
+			this.innerAudioContext.autoplay = true;
+			this.innerAudioContext.src = item.url;
+			this.innerAudioContext.onEnded(()=> {
+				this.musicId = '';
+			})
 		}
 	}
 }
@@ -63,6 +79,10 @@ export default{
 		margin: auto;
 		cursor: pointer;
 		border:2px solid #181818;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		&.active{
 			border: 4rpx solid #F60652;
 		}
@@ -78,31 +98,21 @@ export default{
 			transform: translate(-50%,-50%);
 			z-index: 3;
 		}
-	}
-	.bg{
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, .4);
-		position: absolute;
-		top: 0;
-		left: 0;
-		border-radius: 50%;
+		.icon-jiqiren {
+			position: absolute;
+		}
 	}
 	.name{
 		margin-top: 10rpx;
 	}
 }
 .recomList{
-	background: rgb(24,24,24);
 	grid-template-columns: repeat(4, 1fr)!important;
 	padding: 20rpx 0;
-	.tips{
-		font-size: 20rpx;
-	}
 }
 @media screen and (min-width: 960px){
 	.audioList{
-		grid-template-columns: repeat(8, 1fr);
+		grid-template-columns: repeat(8, 1fr)!important;
 		row-gap: 40rpx;
 		.profile{
 			width: 200rpx;

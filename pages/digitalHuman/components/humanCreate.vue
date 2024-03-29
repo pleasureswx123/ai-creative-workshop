@@ -1,32 +1,24 @@
 <template>
 	<view class="container">
-		<view class="pictrue-box">
-			<image src="../../../static/images/avatar.jpg" class="createBg" mode="aspectFit"></image>
-			<view class="scaleImg">
-				<movable-area :scale-area="true">
-					<movable-view :x="x" :y="y" direction="all" @change="onChange" :scale="true" @scale="onScale" scale-min="0.5" scale-max="1.5" :scale-value="1">
-						<image src="https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/26120-2082689743.png?image_process=resize,p_40" mode="aspectFit" class="image"></image>
-					</movable-view>
-				</movable-area>
-			</view>
-		</view>
+		<humanCropper :show="cropperShow" v-if="cropperShow"></humanCropper>
 		<view class="text-box">
-			<HumanTextarea></HumanTextarea>
-			<view class="changeBtn">切换<br>音频</view>
+			<HumanTextarea :show="typeShow" v-if="typeShow"></HumanTextarea>
+			<audioUpload v-else></audioUpload>
+			<view class="changeBtn" @tap="change">{{typeShow?'切换音频':'切换文本'}}</view>
 		</view>
 		<view class="config-box">
-			<HumanTab :list="list" @handTab="handTab"></HumanTab>
-			<view v-if="index == 0">
+			<HumanTab :list="list" :current="current" @handTab="handTab"></HumanTab>
+			<view :title="title" v-if="title == '数字人'">
 				<humanPeople></humanPeople>
 			</view>
-			<view v-if="index == 1">
+			<view :title="title" v-if="title ==  '背景'">
 				<humanColor></humanColor>
 			</view>
-			<view v-if="index == 2">
+			<view :title="title" v-if="title == '音色'">
 				<humanAudio></humanAudio>
 			</view>
-			<view v-if="index == 3">
-				<QmConfig></QmConfig>
+			<view :title="title" v-if="title == '配置'" class="people-box">
+				<QmConfig :configShow="configShow"></QmConfig>
 			</view>
 		</view>
 	</view>
@@ -38,83 +30,60 @@ import HumanTab from './HumanTab.vue';
 import humanPeople from './humanPeople.vue';
 import humanColor from './humanColor.vue';
 import humanAudio from './humanAudio.vue';
-import QmConfig from '@/pages/sound/components/Timbre.vue';
+import audioUpload from './audioUpload.vue';
+import humanCropper from './humanCropper.vue';
+import QmConfig from '@/pages/sound/components/QmConfig.vue';
 export default {
 	components: {
-		HumanTextarea,HumanTab,humanPeople,humanColor,humanAudio
+		HumanTextarea,HumanTab,humanPeople,humanColor,humanAudio,QmConfig,audioUpload,humanCropper
+	},
+	props:{
+		list:{
+			type:Array,
+			default:[{}]
+		},
+		typeShow:{
+			type:Boolean,
+			default:true
+		},
+		title:{
+			type:String,
+			default:'标题'
+		},
+		current:{
+			type:Number,
+			default:0
+		},
+		configShow:{
+			type:Boolean,
+			default:true
+		},
+		cropperShow:{
+			type:Boolean,
+			default:true
+		}
 	},
   data() {
 	return {
-	  x: 0,
-	  y: 0,
-	  old: {
-		  x: 0,
-		  y: 0,
-		  num:1
-	  },
-	  list:[{
-	  	name:'数字人'
-	  },{
-	  	name:'背景'
-	  },{
-	  	name:'音色'
-	  },{
-	  	name:'配置'
-	  }],
-	  index:0
-	};
+	  
+	}
   },
   methods: {
 	handTab(data){
-	  	this.index = data.index
+		this.$emit('handTab',data)
 	},
-	onScale(e) {
-	  this.num = e.detail.scale;
-	},
-	onChange: function(e) {
-		this.old.x = e.detail.x
-		this.old.y = e.detail.y
-	},
+	change(){
+		this.$emit('change')
+	}
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .container{
-	.pictrue-box{
-		width: 500rpx;
-		height: 700rpx;
-		background: var(--txt-color1);
-		margin:50rpx auto;
-		position: relative;
-		overflow: hidden;
-	}
-	.createBg{
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-	}
-	.createPer{
-		max-width: 100%;
-	}
 }
-.scaleImg{
-	width: 100%;
-	height: 100%;
-	uni-movable-area{
-		width: 100%;
-		height: 100%;
-	}
-	uni-movable-view{
-		width: 300rpx;
-		height: 300rpx;
-		.image {
-		  width: 100%;
-		  height: 100%;
-		}
-	}
+.people-box{
+	background: #1A1B1E;
 }
 .text-box{
 	display: grid;
@@ -122,12 +91,14 @@ export default {
 	gap: 3%;
 	.changeBtn{
 		height:180rpx;
+		box-sizing: border-box;
+		padding: 0 10rpx;
 		background: #909399;
 		color: #EDD75A;
 		border-radius: 10rpx;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		text-align: center;
 		cursor: pointer;
 	}
 }

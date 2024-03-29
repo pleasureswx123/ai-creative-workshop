@@ -35,7 +35,7 @@ export default {
 .people-box{
 	color: var(--txt-color2);
 	font-size: 28rpx;
-	background: #090909;
+	background: #1A1B1E;
 }
 .people-type{
 	padding:0 40rpx 60rpx;

@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
-		<view class="item">
+		<view class="item" :show="configShow" v-if="configShow">
 			<view class="title">音量</view>
 			<HuSlider :value.sync="volume" type="volume" :titShow="titShow=false"></HuSlider>
 		</view>
-		<view class="item">
+		<view class="item" :show="configShow" v-if="configShow">
 			<view class="title">语速</view>
 			<HuSlider :value.sync="speed" type="speed" :titShow="titShow=false"></HuSlider>
 		</view>
@@ -24,6 +24,12 @@ import HuSlider from '@/pages/human/components/HuSlider.vue';
 import HuCaptions from '@/pages/human/components/HuCaptions.vue';
 export default{
 	components: {HuSlider,HuCaptions},
+	props:{
+		configShow:{
+			type:Boolean,
+			default:true
+		}
+	},
 	data(){
 		return{
 			volume: 2,
@@ -48,7 +54,7 @@ export default{
 
 <style lang="scss" scoped>
 .container{
-	padding:10rpx 0 0 30rpx ;
+	padding:10rpx 30rpx 60rpx 30rpx ;
 	.item{
 		display: flex;
 		align-items: center;
@@ -56,6 +62,7 @@ export default{
 		.title{
 			font-size: 30rpx;
 			width: 18%;
+			color:var(--txt-color2);
 		}
 	}
 }

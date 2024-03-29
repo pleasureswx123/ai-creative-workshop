@@ -10,6 +10,7 @@
     </TitleCell>
     <QmTextarea :value.sync.trim="describe" :maxlength="300"></QmTextarea>
 	<QmTimbre></QmTimbre>
+	<GenerateBtn :loading="generating"></GenerateBtn>
   </view>
 </template>
 
@@ -20,15 +21,31 @@ import QmTextarea from './components/QmTextarea.vue';
 import QmTimbre from './components/QmTimbre.vue';
 
 export default {
+	provide() {
+	  return {
+	    toastTipsErrorTxt: this.toastTipsErrorTxt
+	  }
+	},
   components: { PicHeader, TitleCell, QmTextarea, QmTimbre },
   data() {
     return {
-      describe: ''
+      describe: '',
+	  generating: false,
     }
   },
   methods: {
 	  jumpHistory() {
 	    uni.$u.route({url: 'pages/sound/history'})
+	  },
+	  toastTipsErrorTxt() {
+	    let result = '';
+	    const {content, dub_id} = this.params;
+	    if(!content) {
+	      result = '请输入配音文案'
+	    } else if(!dub_id) {
+	      result = '请选择音色'
+	    }
+	    return result;
 	  },
   }
 }
