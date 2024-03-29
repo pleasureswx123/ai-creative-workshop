@@ -15,6 +15,12 @@
 			}
 		},
 		{
+			"path": "pages/index/index-new",
+			"style": {
+				"navigationBarTitleText": "超级语言"
+			}
+		},
+		{
 			"path": "pages/electronic/index",
 			"style": {
 				"navigationBarTitleText": "电商图制作"

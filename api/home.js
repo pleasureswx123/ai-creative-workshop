@@ -6,8 +6,29 @@ export default {
       }
     })
   },
+  getRecommendList(params = {}) {
+    return uni.$u.http.post(`/Home/RecommendList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getHomeFeedsList2(params = {}) {
+    return uni.$u.http.post(`/Home/FeedsListV2`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
   getHomeInfo(params = {}) {
     return uni.$u.http.post(`/Home/Index`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  getHomeV2(params) {
+    return uni.$u.http.post(`/Home/IndexV2`, params, {
       custom: {
         auth: true,
       }

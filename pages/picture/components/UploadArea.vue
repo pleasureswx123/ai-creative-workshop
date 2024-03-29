@@ -3,7 +3,7 @@
     <view class="loading-box" v-if="loading">
       <view class="title">正在上传中</view>
       <view class="icon-box">
-        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="var(--txt-color2)" size="40" />
+        <uni-icons custom-prefix="iconfont-qm" type="icon-qm-loading-1" color="#666" size="35" />
       </view>
       <view class="tips">{{uploadTipsTxt}}</view>
     </view>
