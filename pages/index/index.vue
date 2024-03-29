@@ -6,16 +6,32 @@
     
     <AuiQTabs :value.sync="model_subclass_id" />
     <view style="min-height: 90vh">
-    <QmWaterfall
-        ref="waterfall"
-        :paramsInfo="paramsInfo"
-        :proxyList="item => {
-          const task = item.task_info || {};
-          const {img_height: h, img_url: image, img_width: w, model_info: title} = task;
-          return {...task, w, h, image, allowEdit: false, title}
-        }"
-        :getList="homeApi.getHomeFeedsList"
-        @select="getDetailsInfo" />
+      <!-- #ifdef APP -->
+      <AuiQmWaterfalls
+          ref="waterfall"
+          :columnCount="2"
+          :paramsInfo="paramsInfo"
+          :proxyList="item => {
+            const task = item.task_info || {};
+            const {img_height: h, img_url: image, img_width: w, model_info: title} = task;
+            return {...task, w, h, image, allowEdit: false, title}
+          }"
+          :getList="homeApi.getHomeFeedsList"
+          @select="getDetailsInfo"
+      ></AuiQmWaterfalls>
+      <!-- #endif -->
+      <!-- #ifndef APP -->
+      <QmWaterfall
+          ref="waterfall"
+          :paramsInfo="paramsInfo"
+          :proxyList="item => {
+            const task = item.task_info || {};
+            const {img_height: h, img_url: image, img_width: w, model_info: title} = task;
+            return {...task, w, h, image, allowEdit: false, title}
+          }"
+          :getList="homeApi.getHomeFeedsList"
+          @select="getDetailsInfo" />
+      <!-- #endif -->
     </view>
     <QmHomeFooter />
     <MyCreateDetails
@@ -45,9 +61,16 @@ import {mapActions} from 'vuex';
       }
     },
     onPullDownRefresh() {
+      // #ifdef APP
+      this.$refs?.waterfall?.initData?.()?.then(() => {
+        uni.stopPullDownRefresh();
+      });
+      // #endif
+      // #ifndef APP
       this.$refs?.waterfall?.resetColumnCount?.()?.then(() => {
         uni.stopPullDownRefresh();
       });
+      // #endif
     },
     onReachBottom() {
       this.$refs?.waterfall?.loadMore?.();
