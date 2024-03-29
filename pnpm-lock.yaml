@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@aigcui/entrance':
-    specifier: ^0.0.31
-    version: 0.0.31
+    specifier: ^0.0.32
+    version: 0.0.32
   '@traptitech/markdown-it-katex':
     specifier: ^3.6.0
     version: 3.6.0
@@ -34,14 +34,14 @@ devDependencies:
 
 packages:
 
-  /@aigcui/entrance@0.0.31:
-    resolution: {integrity: sha512-ciqsqqAj9Y5XgeoPJwRmAKjxIktbi+Etu2CJfu3j3POLUXYfY2/CgrfIjP6bFYMsz0ZlzbJtmHWCPp4ChVpGyQ==}
+  /@aigcui/entrance@0.0.32:
+    resolution: {integrity: sha512-dAUqpsCEW+Pu6bu8RsvZoHsJVP8QmOpyrHF+r4qYmDeKLzF0ku3tt994ZLtfa+0E90HVFGYz/NA9Fid9MpbKzg==}
     dependencies:
-      '@aigcui/request': 0.0.31
+      '@aigcui/request': 0.0.32
     dev: false
 
-  /@aigcui/request@0.0.31:
-    resolution: {integrity: sha512-QMTFpXBmHMYt7iK/BteXjx8gWGCpsgLMuOACKB+J0DPX9FEtSoBFQDG75Q3y5INPAv8PPA9hSMmV+T9NST8zIw==}
+  /@aigcui/request@0.0.32:
+    resolution: {integrity: sha512-Hpfm1t6ZwwE69hzN0CcbO/6psevm1rT3SY7U5paO69pvGKXX0mrmTbYN+YFzvQ+WltnPLgeRy3x6o/TUD/2AKQ==}
     dev: false
 
   /@mapbox/node-pre-gyp@1.0.11:
