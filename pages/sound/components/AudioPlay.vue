@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="text" v-for="(item,index) in textList">
-			<view>{{item.name}}</view>
+		<view class="text">
+			<view v-for="(item,index) in filteredList" class="item">{{item.item}}</view>
 		</view>
 		<view class="tips">请用普通话大声朗读上方文字</view>
 		<view class="audio">
@@ -13,9 +13,7 @@
 				</view>
 			</view>
 			<view class="prompt" v-if="playShow == false">
-				<view class="prompt-loader">
-					<view class="em" v-for="(item,index) in 15" :key="index"></view>
-				</view>
+				<AudioLoader></AudioLoader>
 			</view>
 			<view>
 				<view @click='handlerOnCahnger' class="play-icon" v-if="playShow">
@@ -26,31 +24,35 @@
 					<i class="iconfont icon-tingzhiluzhi"></i>
 					<view>{{statusName}}</view>
 				</view>
-				<view v-if="statusName =='重新录制'" class="play-reprod">
+				<view v-if="statusName =='重新录制'" class="play-reprod" @click='handReproduction'>
 					<i class="iconfont icon-luzhi1 icon-luzhi2"></i>
 					<view>复刻</view>
 				</view>
 			</view>
-			<mumu-recorder ref='recorder' @success='handlerSuccess' @error='handlerError'></mumu-recorder>
 		</view>
+		<mumu-recorder ref='recorder' @success='handlerSuccess' @error='handlerError'></mumu-recorder>
 	</view>
 </template>
 <script>
-	import {
-		soundApi
-	} from '@/api'
+	import AudioLoader from './AudioLoader.vue';
+	import {soundApi} from '@/api'
 	export default {
+		components:{AudioLoader},
 		data() {
 			return {
 				statusName: '点击录制',
 				playShow: true,
 				audioContext: null,
-				textList: [],
-				audioUrl: ''
+				filteredList: [],
+				audioUrl: '',
+				dub_url:'',
+				id:'',
+				timer:null
 			}
 		},
 		mounted() {
 			this.GetRecognitionStr()
+			
 		},
 		beforeDestroy() {
 			this.destroyAudio();
@@ -75,20 +77,30 @@
 			handlerSuccess(res) {
 				this.recorder = res
 				this.recorder.localUrl = res.localUrl
+				this.upload()
+			},
+			upload(){
+				var that = this
+				uni.showLoading({
+					title: "上传中",
+				});
 				uni.uploadFile({
-					name: 'audio', //文件上传的name值
-					url: 'https://localhost:8099/web.php/upload/audio', //接口地址
+					name:'audio',
+					url: 'https://192.168.31.168:8099/web.php/upload/audio', //接口地址
 					header: {}, //头信息
-					formData: {}, //上传额外携带的参数
-					filePath: res.localUrl, //临时路径
+					files:[{
+						name:'audio',
+						file:this.recorder.file,
+						uri: this.recorder.data,
+					}],
 					fileType: "audio", //文件类型
 					success: (uploadFileRes) => {
 						const ret = JSON.parse(uploadFileRes.data);
-						console.log(ret)
+						that.dub_url = ret.data.path
+						this.SubmitRecognitionText()
 					},
 				});
 			},
-			
 			handlerError(code) {
 				switch (code) {
 					case '101':
@@ -126,167 +138,109 @@
 			GetRecognitionStr() {
 				soundApi.GetRecognitionStr({
 					page: 1,
-					pagesize: 20,
+					pagesize: 20
 				}).then(res => {
-					this.textList = res.text_info.map(item => {
+					this.filteredList = res.text_info.map(item => {
 						return {
-							name: item
+							item
 						}
 					})
 				})
 			},
-		}
+			SubmitRecognitionText() {
+				soundApi.SubmitRecognitionText({
+					dub_url:this.dub_url
+				}).then(res => {
+					this.id = res.id
+					this.GetRecognitionText()
+					this.timer = setInterval(() => {
+					    setTimeout(this.GetRecognitionText, 0)
+					}, 5000);
+					
+				})
+			},
+			GetRecognitionText() {
+				soundApi.GetRecognitionText({
+					id:this.id
+				}).then(res => {
+					// if(res.state ==1 ||res.state==2){
+					// 	clearInterval(this.timer);
+					// }
+					if(res.state==2){
+						uni.hideLoading();
+						clearInterval(this.timer);
+						this.filteredList = res.text.map(item => {
+							return{
+								item
+							}
+						})
+						// const matchedItems = this.filteredList.filter(item=>res.text.includes(item))
+					}
+				})
+			},
+			handReproduction(){
+				uni.showLoading({
+					title: "音频复刻中",
+				});
+				soundApi.CreateReproduction({
+					dub_url:this.dub_url
+				}).then(res => {
+					uni.hideLoading();
+					uni.$u.toast('音频复刻完成');
+					this.$emit('close')
+				}).catch(res =>{
+					uni.hideLoading();
+				})
+			}
+		},
+		onHide() {
+			clearInterval(this.timer);
+		},
 	}
 </script>
 
 <style lang="scss" scoped>
-	@keyframes load {
-		0% {
-			height: 10%;
-		}
-
-		50% {
-			height: 100%;
-		}
-
-		100% {
-			height: 10%;
-		}
-	}
-
-	.audio {
-		.play-icon {
-			cursor: pointer;
-		}
-
-		.play-name {
-			margin: 10rpx 0;
-		}
-	}
-
-	.nav-item {
-		.text {
-			font-size: 28rpx;
-		}
-
-		.tips {
-			margin: 20rpx 0 40rpx;
-		}
-	}
-
-	/* 语音音阶------------- */
-	.prompt {
-		width: 70%;
-		background-color: #333;
-		margin: 0 auto 30rpx;
-		padding: 20rpx 0;
-	}
-
-	.prompt-loader {
-		width: 150px;
-		height: 15px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 6px;
-		margin: 0 auto;
-	}
-
-	.prompt-loader .em {
-		display: block;
-		background: #3f4bf0;
-		width: 1px;
-		height: 10%;
-		margin-right: 2.5px;
-		float: left;
-	}
-
-	.prompt-loader .em:last-child {
-		margin-right: 0px;
-	}
-
-	.prompt-loader .em:nth-child(1) {
-		animation: load 2.5s 1.4s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(2) {
-		animation: load 2.5s 1.2s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(3) {
-		animation: load 2.5s 1s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(4) {
-		animation: load 2.5s 0.8s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(5) {
-		animation: load 2.5s 0.6s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(6) {
-		animation: load 2.5s 0.4s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(7) {
-		animation: load 2.5s 0.2s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(8) {
-		animation: load 2.5s 0s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(9) {
-		animation: load 2.5s 0.2s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(10) {
-		animation: load 2.5s 0.4s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(11) {
-		animation: load 2.5s 0.6s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(12) {
-		animation: load 2.5s 0.8s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(13) {
-		animation: load 2.5s 1s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(14) {
-		animation: load 2.5s 1.2s infinite linear;
-	}
-
-	.prompt-loader .em:nth-child(15) {
-		animation: load 2.5s 1.4s infinite linear;
-	}
-
-	.overplay,
-	.try-listen {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.try-listen {
-		margin-left: 100rpx;
-	}
-
-	.overplay {
-		margin-bottom: 60rpx;
-	}
-
-	.icon-luzhi2:before {
-		color: #73B06F !important;
-	}
-
-	.play-reprod,
+.prompt {
+	width: 70%;
+	background-color: #333;
+	margin: 0 auto 30rpx;
+	padding: 20rpx 0;
+}
+.audio {
 	.play-icon {
-		display: inline-block;
-		margin: 0 20rpx;
+		cursor: pointer;
 	}
+	.play-name {
+		margin: 10rpx 0;
+	}
+}
+.nav-item {
+	.text {
+		font-size: 28rpx;
+		margin: auto;
+	}
+	.tips {
+		margin: 20rpx 0 40rpx;
+	}
+}
+.overplay,
+.try-listen {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.try-listen {
+	margin-left: 100rpx;
+}
+.overplay {
+	margin-bottom: 60rpx;
+}
+.icon-luzhi2:before {
+	color: #73B06F !important;
+}
+.play-reprod,
+.play-icon {
+	display: inline-block;
+	margin: 0 20rpx;
+}
 </style>

@@ -320,6 +320,7 @@
 			"path": "pages/sound/home",
 			"style": {
 				"navigationBarTitleText": "声音克隆"
+				// "onReachBottomDistance": 20
 			}
 		},
 		{

@@ -9,14 +9,19 @@
 			</view>
 			<view class="audioList">
 				<view v-for="(item,index) in audioList">
-					<view class="profile" @tap="play(item.id,index)">
+					<view class="profile" @tap="play(item,index)" :class="{'active':asActive == index}">
 						<i class="iconfont icon-jiqiren"></i>
-						<view class="iconPlay">
-						  <i class="iconfont icon-zanting1"></i>
-						  <i class="iconfont icon-bofang"></i>
+						<view class="iconPlay" v-if="asActive == index">
+						  <i class="iconfont icon-zanting1" v-if="dub_id ==item.dub_id"></i>
+						  <i class="iconfont icon-bofang" v-else></i>
 						</view>
 					</view>
-					<view class="name">{{item.name}}</view>
+					<u--input
+						class="qm-textarea"
+						placeholder="请输入标题"
+						border="bottom"
+						v-model="item.value"
+					  ></u--input>
 				</view>
 			</view>
 			<CreatePop :show="CreateShow" @close="close"></CreatePop>
@@ -30,6 +35,7 @@
 <script>
 import CreatePop from './CreatePop.vue';
 import QmRecom from './QmRecom.vue';
+import {soundApi} from '@/api'
 export default{
 	components:{CreatePop,QmRecom},
 	props: {
@@ -49,7 +55,18 @@ export default{
 			CreateShow:false,
 			audioList:[],
 			status: false,
+			dub_id:'',
+			innerAudioContext:null,
+			asActive:0,
+			page:1,
+			pagesize:18,
 		}
+	},
+	mounted() {
+		this.voiceList()
+	},
+	beforeDestroy() {
+		this.destroyAudio();
 	},
 	methods:{
 		checked(data){
@@ -58,12 +75,41 @@ export default{
 		handCreate(){
 			this.CreateShow = true
 			this.recorder = false
+			if(this.innerAudioContext){
+				this.innerAudioContext.destroy()
+				this.dub_id = '';
+			}
 		},
 		close(){
 			this.CreateShow = false
 		},
-		play(id){
-			
+		voiceList(){
+			soundApi.MyReproductionList({
+				page:this.page,
+				pagesize:this.pagesize
+			}).then(res => {
+				this.audioList =[...this.audioList, ...res.list]
+				// this.lationList = [...this.lationList]
+				this.$emit('onReachBottom',this.audioList)
+			})
+		},
+		destroyAudio() {
+		  if(this.innerAudioContext) {
+		    this.innerAudioContext.pause();
+		    this.innerAudioContext.destroy();
+		    this.innerAudioContext = null;
+		  }
+		},
+		play(item,index){
+			this.asActive = index
+			this.destroyAudio();
+			this.dub_id = item.dub_id;
+			this.innerAudioContext = uni.createInnerAudioContext();
+			this.innerAudioContext.autoplay = true;
+			this.innerAudioContext.src = item.dub_url;
+			this.innerAudioContext.onEnded(()=> {
+				this.dub_id = '';
+			})
 		}
 	}
 }
@@ -103,7 +149,7 @@ export default{
 }
 .audioList{
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	row-gap: 20rpx;
 	text-align: center;
 	margin-top: 30rpx;
@@ -118,6 +164,7 @@ export default{
 		text-align: center;
 		display: flex;
 		align-items: center;
+		border:2px solid #181818;
 		justify-content: center;
 		&.active{
 			border: 4rpx solid #F60652;
@@ -137,9 +184,26 @@ export default{
 			position: absolute;
 		}
 	}
-	.name{
-		margin-top: 10rpx;
+}
+.qm-textarea {
+  // background: var(--bg-color2);
+  padding:0!important;
+  border-bottom:1px solid var(--txt-color3)!important;
+  margin: 10rpx auto 0;
+  width: 80%;
+  /deep/ {
+	.u-input__content__field-wrapper__field {
+	  font-size: 20rpx!important;
+	  text-align: center!important;
 	}
+	.uni-input-placeholder {
+	  color: var(--txt-color2)!important;
+	  font-size: 20rpx!important;
+	}
+	.uni-input-input {
+	  color: var(--txt-color1)!important;
+	}
+  }
 }
 @media screen and (min-width: 960px){
 	.audioList{

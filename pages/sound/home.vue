@@ -47,6 +47,10 @@ export default {
 	    }
 	    return result;
 	  },
+	  onReachBottom(data) {
+		  console.log(1)
+	  	console.log(data)
+	  },
   }
 }
 </script>

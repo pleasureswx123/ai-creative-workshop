@@ -32,6 +32,9 @@ export default{
 	methods:{
 		checked(index){
 			this.isActive = index
+		},
+		onReachBottom(data){
+			// this.$emit('onReachBottom',data)
 		}
 	}
 }

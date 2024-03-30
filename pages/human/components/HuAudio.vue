@@ -61,6 +61,7 @@
 					extension: [".mp3"],  //可定义允许哪些后缀的文件可被选择
 					success: function (res) {
 					  let tempFilePaths = res.tempFilePaths;
+						console.log(res)
 					  uni.showLoading({
 						title: "上传中...",
 					  });
