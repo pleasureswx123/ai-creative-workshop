@@ -2,7 +2,7 @@
   <view class="footer">
     <view class="flex">
       <view class="logo">
-        <image src="@/static/images/index/logo.png" mode="aspectFit"></image>
+        <image @tap="jumpNewIndex" src="@/static/images/index/logo.png" mode="aspectFit"></image>
         <text class="primaryColor">超级语言AI</text>
       </view>
     </view>
@@ -31,6 +31,11 @@
 <script>
 export default {
   methods: {
+    jumpNewIndex() {
+      uni.navigateTo({
+        url: '/pages/index/index-new'
+      })
+    },
     goContact(){
       uni.navigateTo({
         url: '/pages/service/contact'
