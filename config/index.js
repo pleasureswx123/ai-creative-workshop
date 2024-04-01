@@ -41,6 +41,9 @@ const getMapRouter = ({task_type, task_id}) => {
   if(taskType === 1) {
     path = `/pages/photos/index?task_id=${task_id}`
   }
+  if(taskType === 27) {
+    path = `/pages/special/tweets`
+  }
   if([28, 29].includes(taskType)) {
     path = `/pages/electronic/index?task_id=${task_id}`
   }

@@ -18,7 +18,7 @@
         @close="showAction = false"
         :show="showAction" />
   
-    <MyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
+    <AuiMyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></AuiMyCreateDetails>
   </view>
 </template>
 

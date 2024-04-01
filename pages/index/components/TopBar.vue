@@ -20,6 +20,12 @@
 <script>
 import UserInfoBox from '@/components/QmNavTop/UserInfoBox.vue';
 export default {
+  props: {
+    type: {
+      type: String,
+      default: ''
+    }
+  },
   components: { UserInfoBox },
   data() {
     return {
@@ -29,7 +35,7 @@ export default {
   methods: {
     goHome() {
       uni.reLaunch({
-        url: '/pages/index/index'
+        url: `/pages/index/${this.type === 'new' ? 'index-new' : 'index'}`
       })
     },
   }

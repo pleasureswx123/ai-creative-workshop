@@ -35,7 +35,7 @@
     </view>
     <QmHomeFooter />
     <u-gap height="60"></u-gap>
-    <MyCreateDetails
+    <AuiMyCreateDetails
         v-if="showDetails"
         :show.sync="showDetails"
         :info="detailsInfo" />
