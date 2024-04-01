@@ -2,6 +2,9 @@
   <view class="page-container">
     <u-sticky style="top: 0!important">
       <view style="background: #fff; padding: 0 10rpx;">
+        <view style="height: 44px; border-bottom: 2rpx solid rgba(0,0,0,.1)">
+          <TopBar type="new"></TopBar>
+        </view>
         <AuiQTabs :list="feedsTabs" :value.sync="model_subclass_id" />
       </view>
     </u-sticky>
@@ -18,7 +21,7 @@
           @select="toDetails"
       ></AuiQmWaterfalls>
     </view>
-    <MyCreateDetails
+    <AuiMyCreateDetails
         v-if="showDetails"
         :show.sync="showDetails"
         :info="detailsInfo" />
@@ -28,8 +31,10 @@
 <script>
 import {userApi, homeApi} from '@/api'
 import {mapMutations, mapState, mapActions} from 'vuex';
+import TopBar from './components/TopBar.vue';
 
 export default {
+  components: {TopBar},
   data() {
     return {
       homeApi,
@@ -73,6 +78,7 @@ export default {
         1: 'getAiDetailsInfo',
         2: 'getDrawDetailsInfo',
         3: 'getDigitDetailsInfo',
+        4: 'getNovelDetailsInfo',
       }
       const methodName = temp?.[`${class_type}`] || 'getDrawDetailsInfo';
       return userApi?.[methodName]({task_id})

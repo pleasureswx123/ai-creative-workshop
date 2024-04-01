@@ -10,7 +10,7 @@
     </view>
     <QmHomeFooter />
     <u-gap height="60"></u-gap>
-    <MyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
+    <AuiMyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></AuiMyCreateDetails>
 	</view>
 </template>
 
@@ -65,6 +65,7 @@ export default {
         1: 'getAiDetailsInfo',
         2: 'getDrawDetailsInfo',
         3: 'getDigitDetailsInfo',
+        4: 'getNovelDetailsInfo',
       }
       const methodName = temp?.[`${class_type}`] || 'getDrawDetailsInfo';
       return userApi?.[methodName]({task_id})
