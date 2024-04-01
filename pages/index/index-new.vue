@@ -69,7 +69,12 @@ export default {
       const methodName = temp?.[`${class_type}`] || 'getDrawDetailsInfo';
       return userApi?.[methodName]({task_id})
     },
-    toDetails({class_type, task_id}) {
+    toDetails(item) {
+      const {task_id, img_url, video_url, class_type} = item || {};
+      if(!class_type) {
+        this.previewImage(img_url);
+        return
+      }
       this.getDetailsInfo({class_type, task_id}).then(res => {
         this.detailsInfo = res || {};
         this.showDetails = true;
