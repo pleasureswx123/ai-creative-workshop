@@ -12,6 +12,7 @@
     <u-gap height="60"></u-gap>
     <AuiMyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></AuiMyCreateDetails>
     <QmPreviewVideo
+        v-if="showPreviewVideo"
         :showPreview.sync="showPreviewVideo"
         :info="previewVideoInfo" />
 	</view>
