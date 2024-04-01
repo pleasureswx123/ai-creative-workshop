@@ -143,7 +143,7 @@ export default {
 <style lang="scss" scoped>
 
 .pop-container {
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,1);
   color: var(--txt-color1);
   font-size: 28rpx;
   height: 100vh;
