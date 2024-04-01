@@ -2,13 +2,13 @@
   <view class="swiper-card-box">
     <view class="card-hd">
       <view class="title">{{info.title}}</view>
-      <view class="rt">
+      <view class="rt" @tap="handleJumpType">
         <view>全部</view>
         <uni-icons custom-prefix="iconfont-qm" type="icon-qm-arr-rt" color="#666" size="10" />
       </view>
     </view>
     <view class="card-content">
-      <scroll-view class="scroll-view_H" scroll-x="true" scroll-left="0">
+      <scroll-view class="scroll-view_H" scroll-x="true" :show-scrollbar="false">
         <view class="first-box" @tap="jumpToDetail(firstImgInfo)">
           <image class="img-el" :src="firstImgInfo.img_url" :lazy-load="true" mode="aspectFill"></image>
           <view class="play-btn" v-if="firstImgInfo.video_url">
@@ -64,6 +64,12 @@ export default {
     }
   },
   methods: {
+    handleJumpType() {
+      const type = this.info?.type;
+      type && uni.navigateTo({
+        url: `/pages/index/type-list?type=${type}`
+      })
+    },
     jumpToDetail(info) {
       this.$emit('select', info);
     }
@@ -81,14 +87,15 @@ export default {
     .title {
       flex: 1;
       min-width: 0;
-      font-size: 28rpx;
+      font-size: 32rpx;
+      font-weight: bold;
       color: #000;
     }
     .rt {
       display: flex;
       align-items: center;
-      font-size: 24rpx;
-      color: #666;
+      font-size: 26rpx;
+      color: #333;
       gap: 4rpx;
     }
   }

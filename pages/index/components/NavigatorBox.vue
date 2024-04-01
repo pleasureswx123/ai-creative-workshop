@@ -87,6 +87,7 @@ export default {
     line-height: 100px;
     text-align: center;
     cursor: pointer;
+    box-shadow: 0 0 20rpx 0 rgba(0, 0, 0, .3);
     &:first-child {
       background: linear-gradient(90deg, #F7034D 0%, #D24FEB 100%);
     }

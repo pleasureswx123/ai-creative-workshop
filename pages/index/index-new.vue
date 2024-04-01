@@ -8,6 +8,8 @@
         <SwiperCard :info="info" @select="toDetails"></SwiperCard>
       </view>
     </view>
+    <QmHomeFooter />
+    <u-gap height="60"></u-gap>
     <MyCreateDetails v-if="showDetails" :show.sync="showDetails" :info="detailsInfo"></MyCreateDetails>
 	</view>
 </template>
@@ -84,6 +86,6 @@ export default {
   box-sizing: border-box;
 }
 .page-bd-container {
-  padding: 0 30rpx 100px;
+  padding: 0 30rpx 30rpx;
 }
 </style>
