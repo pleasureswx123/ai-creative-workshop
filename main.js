@@ -33,10 +33,7 @@ App.mpType = 'app';
 import mixin from './common/mixin'
 Vue.mixin(mixin)
 
-import { requestUtil } from '@aigcui/entrance'
-
-// #ifdef APP-PLUS
-// #endif
+import requestUtil from '@aigcui/request'
 
 const app = new Vue({
 	store,

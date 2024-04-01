@@ -5,7 +5,7 @@
         <view class="close-box">
           <icon @tap="show = false" color="var(--txt-color1)" type="cancel" size="30" />
         </view>
-        <view class="video-box">
+        <view class="video-box" :style="styleObj">
           <video v-if="info && videoUrl" controls="controls" object-fit="contain" :src="videoUrl" />
         </view>
       </view>
@@ -26,6 +26,27 @@ export default {
     },
     info: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      styleObj: {}
+    }
+  },
+  mounted() {
+    if(this.info?.img_url) {
+      uni.getImageInfo({
+        src: this.info?.img_url,
+        success: image => {
+          const {windowWidth, windowHeight} = uni.getSystemInfoSync();
+          const ratio = `${image.width} / ${image.height}!important`;
+          this.styleObj = {
+            'max-width': `${windowWidth}px`,
+            'max-heigth': `${windowHeight}px`,
+            'aspect-ratio': `${ratio}`
+          }
+        }
+      });
     }
   },
   computed: {
@@ -66,8 +87,9 @@ export default {
   .video-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1200px!important;
     .video-box {
+      margin: 0 auto;
       aspect-ratio: 16 / 9;
     }
     video {
@@ -77,7 +99,7 @@ export default {
   }
   .close-box {
     position: absolute;
-    top: -100rpx;
+    top: 40rpx;
     right: 40rpx;
     display: grid;
     place-items: center;

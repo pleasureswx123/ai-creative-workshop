@@ -9,6 +9,7 @@
       <view class="item" v-for="(item, index) in gridNavList" :key="index" @tap="jumpToPath(item.web_path)">
         <uni-icons v-if="item.iconName" custom-prefix="iconfont-qm" :type="item.iconName" color="#77787B" size="28" />
         <view class="title">{{item.short_title}}</view>
+        <view class="stay" v-if="item.is_expectation === 1">敬请期待</view>
       </view>
     </view>
     <view class="ai-btn" v-for="(item, index) in btnList" :key="index" @tap="jumpToPath(item.web_path)">{{item.title}}</view>
@@ -109,12 +110,39 @@ export default {
     justify-content: center;
     margin-bottom: 30rpx;
     cursor: pointer;
+    position: relative;
     &:nth-child(4n) {
       border-right: none;
     }
     .title {
       padding-top: 4rpx;
       font-size: 24rpx;
+    }
+    .stay{
+      position: absolute;
+      right: 10rpx;
+      top: -30rpx;
+      background-color: var(--red-color1);
+      color:rgba(255, 255, 255, .9);
+      text-align: center;
+      width: 100rpx;
+      height: 40rpx;
+      line-height: 40rpx;
+      border-radius: 0;
+      font-size: 20rpx;
+      transform: scale(0.8);
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 16rpx;
+        height: 16rpx;
+        background-color: var(--red-color1);
+        left: 8rpx;
+        bottom: -4rpx;
+        transform: rotate(45deg);
+        
+      }
     }
   }
 }
