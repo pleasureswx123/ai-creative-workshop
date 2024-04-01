@@ -1,4 +1,5 @@
 import {pictureApi} from '@/api'
+import {routerKeyMap} from '@/config'
 
 const state = {
   toolsList: [], // 图片工具列表
@@ -39,38 +40,7 @@ const mutations = {
   },
   setToolsList(state, info = []) {
     state.toolsList = info.map(item => {
-      const temp = {
-        // 图片处理工具 classId: 1
-        3: 'ai-face',
-        7: 'hd-redraw',
-        4: 'remove-bg',
-        5: 'replace-bg',
-        6: 'ai-expand',
-        8: 'part-redraw',
-        9: 'replace-bg-txt',
-
-        // 个人写真摄影工具 classId: 3
-        12: 'photo-clothing',
-        13: 'photo-pictorials',
-        14: 'photo-classical',
-        15: 'photo-han',
-        16: 'photo-modern',
-        17: 'photo-cartoon',
-
-        // 三八妇女节活动工具 classId: 4
-        19: 'woman-style1',
-        20: 'woman-style2',
-        21: 'woman-style3',
-        22: 'woman-style4',
-        23: 'woman-style5',
-
-        // 视频工具 classId: 2
-        2: 'img-to-video',
-        10: 'img-to-dance',
-        11: 'img-to-draw',
-        25: 'text-to-video',
-        26: 'text-to-dance-video',
-      }
+      const temp = routerKeyMap;
       return {
         ...item,
         url: item.img_url,

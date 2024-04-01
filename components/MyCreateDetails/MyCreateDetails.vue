@@ -39,10 +39,10 @@
                 </view>
                 <view>下载图片</view>
               </view>
-              <view v-if="info.task_type === 1" class="btn-box" @tap="jumpToTextToPicture">
-                <text>一键同款</text>
-              </view>
             </template>
+            <view v-if="info.show_same === 1" class="btn-box" @tap="jumpToCreate">
+              <text>一键同款</text>
+            </view>
           </view>
         </view>
       </view>
@@ -53,6 +53,7 @@
 <script>
 import VideoItem from './VideoItem.vue';
 import ImgItem from './ImgItem.vue';
+import { getMapRouter } from '@/config';
 
 export default {
   props: {
@@ -131,14 +132,9 @@ export default {
         this.downloadStatus = false;
       });
     },
-    jumpToTextToPicture() {
-      const {task_id} = this.info || {};
-      uni.$u.route({
-        url: 'pages/photos/index',
-        params: {
-          task_id: task_id
-        }
-      })
+    jumpToCreate() {
+      const path = getMapRouter(this.info);
+      uni.navigateTo({url: path});
     },
   }
 }
