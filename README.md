@@ -1,7 +1,8 @@
 ## 安装
 
 ```bash
-npm i
+
+yarn install
 
 cnpm i
 ```

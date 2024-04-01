@@ -25,6 +25,10 @@
         v-if="showDetails"
         :show.sync="showDetails"
         :info="detailsInfo" />
+    <QmPreviewVideo
+        v-if="showPreviewVideo"
+        :showPreview.sync="showPreviewVideo"
+        :info="previewVideoInfo" />
   </view>
 </template>
 
@@ -41,6 +45,8 @@ export default {
       model_subclass_id: '',
       showDetails: false,
       detailsInfo: {},
+      showPreviewVideo: false,
+      previewVideoInfo: null,
     }
   },
   computed: {
@@ -86,7 +92,8 @@ export default {
     toDetails(item) {
       const {task_id, img_url, video_url, class_type} = item || {};
       if(!class_type) {
-        this.previewImage(img_url);
+        this.previewVideoInfo = item;
+        this.showPreviewVideo = true;
         return
       }
       this.getDetailsInfo({class_type, task_id}).then(res => {
