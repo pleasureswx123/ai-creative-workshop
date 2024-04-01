@@ -5,19 +5,25 @@
         <image src="@/static/images/index/logo.png" mode="aspectFit"></image>
         <text class="primaryColor">超级语言AI</text>
       </view>
-      <view class="contact" @tap="goContact">联系我们</view>
     </view>
     <text>Copyright © 2024 秋米网络技术(北京)有限公司</text>
-    <view class="">
-      <text @tap="jumpArticle('service')">用户协议和</text><text @tap="jumpArticle('privacy')">隐私政策</text>
-    </view>
     <text @tap="goMiit">京ICP备2023009914号-5</text>
-    <view>
-      <text>增值电信业务许可证 京B2-20240305</text>
+    <view class="ft-box">
+      <view class="">
+        <image src="@/static/images/index/semi.png" mode="aspectFit" class="semi"></image>
+        <text @tap="goMps">京公网安备11011102002471号</text>
+      </view>
+      <view class="link-box">
+        <text @tap="goContact">联系我们</text>
+      </view>
     </view>
-    <view class="">
-      <image src="@/static/images/index/semi.png" mode="aspectFit" class="semi"></image>
-      <text @tap="goMps">京公网安备11011102002471号</text>
+    <view class="ft-box">
+      <view>
+        <text>增值电信业务许可证 京B2-20240305</text>
+      </view>
+      <view class="link-box">
+        <text @tap="jumpArticle('service')">用户协议和</text><text @tap="jumpArticle('privacy')">隐私政策</text>
+      </view>
     </view>
   </view>
 </template>
@@ -47,7 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  border-top: 1px solid #4A4A4A;
+  //border-top: 1px solid #4A4A4A;
   width: 100%;
   box-sizing: border-box;
   padding: 20rpx 30rpx;
@@ -91,6 +97,15 @@ export default {
     width: 18rpx;
     height: 20rpx;
     margin-right: 10rpx;
+  }
+}
+.ft-box {
+  display: flex;
+  align-items: center;
+  .link-box {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
   }
 }
 </style>

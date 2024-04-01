@@ -4,7 +4,7 @@
     <QmHomeBanner></QmHomeBanner>
     <AuiQmAiTypeMenu></AuiQmAiTypeMenu>
     
-    <AuiQTabs :value.sync="model_subclass_id" />
+    <AuiQTabs :list="feedsTabs" :value.sync="model_subclass_id" />
     <view style="min-height: 90vh">
       <!-- #ifdef APP -->
       <AuiQmWaterfalls
@@ -34,6 +34,7 @@
       <!-- #endif -->
     </view>
     <QmHomeFooter />
+    <u-gap height="60"></u-gap>
     <MyCreateDetails
         v-if="showDetails"
         :show.sync="showDetails"
@@ -43,7 +44,7 @@
 
 <script>
 import {userApi, homeApi} from '@/api'
-import {mapActions} from 'vuex';
+import {mapState, mapActions} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -54,6 +55,7 @@ import {mapActions} from 'vuex';
 			}
 		},
     computed: {
+      ...mapState('HomeInfo', ['feedsTabs']),
       paramsInfo() {
         return {
           model_subclass_id: this.model_subclass_id
@@ -77,9 +79,10 @@ import {mapActions} from 'vuex';
     },
 		onLoad() {
 			this.getHomeInfo();
+      this.getFeedsTab();
 		},
 		methods: {
-      ...mapActions('HomeInfo', ['getHomeInfo']),
+      ...mapActions('HomeInfo', ['getHomeInfo', 'getFeedsTab']),
       previewImage(src) {
         uni.previewImage({
           urls: [src]

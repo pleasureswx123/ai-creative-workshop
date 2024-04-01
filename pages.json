@@ -15,6 +15,20 @@
 			}
 		},
 		{
+			"path": "pages/index/index-new",
+			"style": {
+				"navigationBarTitleText": "超级语言"
+			}
+		},
+		{
+			"path": "pages/index/type-list",
+			"style": {
+				"navigationBarTitleText": "专区列表",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 200
+			}
+		},
+		{
 			"path": "pages/electronic/index",
 			"style": {
 				"navigationBarTitleText": "电商图制作"
