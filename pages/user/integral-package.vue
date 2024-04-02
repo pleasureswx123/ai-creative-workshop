@@ -18,7 +18,7 @@
     </view>
     <view class="package-ft">
       <view class="package-ft-inner">
-        <QmPayBuy :params="params"></QmPayBuy>
+        <AuiQmPayBuy :params="params"></AuiQmPayBuy>
       </view>
     </view>
   </view>

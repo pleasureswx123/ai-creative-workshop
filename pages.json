@@ -9,15 +9,15 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "超级语言",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 200
+				"navigationBarTitleText": "超级语言"
 			}
 		},
 		{
 			"path": "pages/index/index-new",
 			"style": {
-				"navigationBarTitleText": "超级语言"
+				"navigationBarTitleText": "超级语言",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 200
 			}
 		},
 		{

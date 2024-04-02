@@ -3,7 +3,7 @@
     <u-sticky style="top: 0!important">
       <view style="background: #fff; padding: 0 10rpx;">
         <view style="height: 44px; border-bottom: 2rpx solid rgba(0,0,0,.1)">
-          <TopBar type="new"></TopBar>
+          <TopBar></TopBar>
         </view>
         <AuiQTabs :list="feedsTabs" :value.sync="model_subclass_id" />
       </view>
@@ -92,8 +92,12 @@ export default {
     toDetails(item) {
       const {task_id, img_url, video_url, class_type} = item || {};
       if(!class_type) {
-        this.previewVideoInfo = item;
-        this.showPreviewVideo = true;
+        if(!!video_url) {
+          this.previewVideoInfo = item;
+          this.showPreviewVideo = true;
+        } else {
+          this.previewImage(img_url);
+        }
         return
       }
       this.getDetailsInfo({class_type, task_id}).then(res => {

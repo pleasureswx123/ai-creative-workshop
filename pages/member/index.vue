@@ -5,7 +5,7 @@
     <template v-if="$getModuleStatus().pay">
       <AuiMemberVipDesc></AuiMemberVipDesc>
       <AuiOrderGoodsList :value.sync="goodsId" :list="goodsList"></AuiOrderGoodsList>
-      <AuiOrderGoodsType :type.sync="typeNum" :list="goodsType"></AuiOrderGoodsType>
+      <AuiOrderGoodsType v-show="goodsId !== '17'" :type.sync="typeNum" :list="goodsType"></AuiOrderGoodsType>
       <view class="btn-box" @tap="handleUpgrader">{{ btnTxt }}</view>
     </template>
     <OrderCommonProblem :list="commonProblem"></OrderCommonProblem>

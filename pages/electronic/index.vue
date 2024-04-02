@@ -100,8 +100,9 @@ export default {
   },
   onLoad(options) {
     const {id, src} = options || {};
-    this.task_type = +id || 28;
+    this.task_type = +id || 29;
     this.reference_image = src || '';
+    this.initData();
   },
   data() {
     return {
@@ -111,8 +112,8 @@ export default {
       timer: null,
       task_type: '',
       tabsList: [
-        {name: '专业修图', value: 28},
         {name: '商业出图', value: 29},
+        {name: '专业修图', value: 28},
         // {name: '人物修图', value: 30},
       ],
       reference_image: '',

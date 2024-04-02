@@ -9,7 +9,7 @@
         <view class="hd">会员升级信息确认</view>
         <view class="flex-box">
           <view class="title">{{info.title}}</view>
-          <view class="price">￥{{info.price}}/月</view>
+          <view class="price">￥{{info.price}}/{{info.date_val}}</view>
         </view>
         <view class="desc-box">
           <view class="pointer-row" v-for="(desc, index) in info.desc" :key="index">{{ desc }}</view>
@@ -17,7 +17,7 @@
         <view class="expiration-box">
           <view class="flex-box">
             <view class="title">会员期限</view>
-            <view class="num">{{info.num}}个月</view>
+            <view class="num">{{info.num}}{{goodsId !== '17' ? '个月' : '周'}}</view>
           </view>
           <view class="pointer-row">{{info.vip_expiration_date}}</view>
         </view>
@@ -25,7 +25,7 @@
           <view class="title">总金额</view>
           <view>￥{{info.pay_price}}</view>
         </view>
-        <QmPayBuy :params="params"></QmPayBuy>
+        <AuiQmPayBuy :params="params"></AuiQmPayBuy>
       </view>
     </u-popup>
   </view>

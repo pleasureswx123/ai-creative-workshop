@@ -107,7 +107,7 @@ export default {
     width: 60rpx;
     height: 60rpx;
     border-radius: 50%;
-    z-index: 1;
+    z-index: 1000;
   }
 }
 </style>
