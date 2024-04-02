@@ -77,6 +77,9 @@
 					uni.hideLoading();
 					uni.$u.toast('音频复刻完成');
 					this.$emit('close')
+					setTimeout(() => {
+					    this.$router.go(0)
+					}, 500)
 				}).catch(res =>{
 					uni.hideLoading();
 				})

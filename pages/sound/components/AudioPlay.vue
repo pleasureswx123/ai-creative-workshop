@@ -35,9 +35,13 @@
 </template>
 <script>
 	import AudioLoader from './AudioLoader.vue';
-	import {soundApi} from '@/api'
+	import {
+		soundApi
+	} from '@/api'
 	export default {
-		components:{AudioLoader},
+		components: {
+			AudioLoader
+		},
 		data() {
 			return {
 				statusName: '点击录制',
@@ -45,14 +49,13 @@
 				audioContext: null,
 				filteredList: [],
 				audioUrl: '',
-				dub_url:'',
-				id:'',
-				timer:null
+				dub_url: '',
+				id: '',
+				timer: null
 			}
 		},
 		mounted() {
 			this.GetRecognitionStr()
-			
 		},
 		beforeDestroy() {
 			this.destroyAudio();
@@ -79,18 +82,18 @@
 				this.recorder.localUrl = res.localUrl
 				this.upload()
 			},
-			upload(){
+			upload() {
 				var that = this
 				uni.showLoading({
 					title: "上传中",
 				});
 				uni.uploadFile({
-					name:'audio',
+					name: 'audio',
 					url: 'https://192.168.31.168:8099/web.php/upload/audio', //接口地址
 					header: {}, //头信息
-					files:[{
-						name:'audio',
-						file:this.recorder.file,
+					files: [{
+						name: 'audio',
+						file: this.recorder.file,
 						uri: this.recorder.data,
 					}],
 					fileType: "audio", //文件类型
@@ -136,62 +139,57 @@
 				this.audioContext.play();
 			},
 			GetRecognitionStr() {
-				soundApi.GetRecognitionStr({
-					page: 1,
-					pagesize: 20
-				}).then(res => {
+				soundApi.GetRecognitionStr({}).then(res => {
 					this.filteredList = res.text_info.map(item => {
 						return {
-							item
+							item:item
 						}
 					})
 				})
 			},
 			SubmitRecognitionText() {
 				soundApi.SubmitRecognitionText({
-					dub_url:this.dub_url
+					dub_url: this.dub_url
 				}).then(res => {
 					this.id = res.id
 					this.GetRecognitionText()
 					this.timer = setInterval(() => {
-					    setTimeout(this.GetRecognitionText, 0)
+						setTimeout(this.GetRecognitionText, 0)
 					}, 5000);
-					
 				})
 			},
 			GetRecognitionText() {
 				soundApi.GetRecognitionText({
-					id:this.id
+					id: this.id
 				}).then(res => {
-					// if(res.state ==1 ||res.state==2){
-					// 	clearInterval(this.timer);
-					// }
-					if(res.state==2){
+					if (res.state == 2) {
 						uni.hideLoading();
 						clearInterval(this.timer);
 						this.filteredList = res.text.map(item => {
-							return{
+							return {
 								item
 							}
 						})
-						// const matchedItems = this.filteredList.filter(item=>res.text.includes(item))
 					}
 				})
 			},
-			handReproduction(){
+			handReproduction() {
 				uni.showLoading({
 					title: "音频复刻中",
 				});
 				soundApi.CreateReproduction({
-					dub_url:this.dub_url
+					dub_url: this.dub_url
 				}).then(res => {
 					uni.hideLoading();
 					uni.$u.toast('音频复刻完成');
 					this.$emit('close')
-				}).catch(res =>{
+					setTimeout(() => {
+					    this.$router.go(0)
+					}, 500)
+				}).catch(res => {
 					uni.hideLoading();
 				})
-			}
+			},
 		},
 		onHide() {
 			clearInterval(this.timer);
@@ -200,47 +198,61 @@
 </script>
 
 <style lang="scss" scoped>
-.prompt {
-	width: 70%;
-	background-color: #333;
-	margin: 0 auto 30rpx;
-	padding: 20rpx 0;
-}
-.audio {
+	.prompt {
+		width: 70%;
+		background-color: #333;
+		margin: 0 auto 30rpx;
+		padding: 20rpx 0;
+	}
+	.changeBlack{
+		color:#fff;
+	}
+	.changeRed{
+		color:red;
+	}
+	.audio {
+		.play-icon {
+			cursor: pointer;
+		}
+
+		.play-name {
+			margin: 10rpx 0;
+		}
+	}
+
+	.nav-item {
+		.text {
+			font-size: 28rpx;
+			margin: auto;
+		}
+
+		.tips {
+			margin: 20rpx 0 40rpx;
+		}
+	}
+
+	.overplay,
+	.try-listen {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.try-listen {
+		margin-left: 100rpx;
+	}
+
+	.overplay {
+		margin-bottom: 60rpx;
+	}
+
+	.icon-luzhi2:before {
+		color: #73B06F !important;
+	}
+
+	.play-reprod,
 	.play-icon {
-		cursor: pointer;
+		display: inline-block;
+		margin: 0 20rpx;
 	}
-	.play-name {
-		margin: 10rpx 0;
-	}
-}
-.nav-item {
-	.text {
-		font-size: 28rpx;
-		margin: auto;
-	}
-	.tips {
-		margin: 20rpx 0 40rpx;
-	}
-}
-.overplay,
-.try-listen {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.try-listen {
-	margin-left: 100rpx;
-}
-.overplay {
-	margin-bottom: 60rpx;
-}
-.icon-luzhi2:before {
-	color: #73B06F !important;
-}
-.play-reprod,
-.play-icon {
-	display: inline-block;
-	margin: 0 20rpx;
-}
 </style>

@@ -18,7 +18,7 @@
 			</view>
 		</view>
 		<u-gap height="120rpx" />
-		</view>
+	</view>
 	<!-- </scroll-view> -->
 </template>
 

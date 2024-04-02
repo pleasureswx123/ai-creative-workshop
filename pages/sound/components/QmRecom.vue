@@ -36,7 +36,8 @@ export default{
 		getVideoTask() {
 			NovelApi.getDub({
 				data:{page:1,
-        			pagesize:20,}
+        			pagesize:40,
+			}
 			}).then(res => {
 				this.audioList = res.list
 			})

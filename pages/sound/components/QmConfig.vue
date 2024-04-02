@@ -8,11 +8,11 @@
 			<view class="title">语速</view>
 			<HuSlider :value.sync="speed" type="speed" :titShow="titShow=false"></HuSlider>
 		</view>
-		<view class="item">
+		<view class="item" :show="wordShow" v-if="wordShow">
 			<view class="title">字幕</view>
 			<u-switch v-model="value" activeColor="#f60652" @change="change" size="35"></u-switch>
 		</view>
-		<view class="item">
+		<view class="item" :show="wordShow" v-if="wordShow">
 			<view class="title">字体</view>
 			<HuCaptions ref="HuCaptions" @changeSwitch="changeSwitch" :homShow="homShow=false" :display="'flex'"></HuCaptions>
 		</view>
@@ -28,7 +28,11 @@ export default{
 		configShow:{
 			type:Boolean,
 			default:true
-		}
+		},
+		wordShow:{
+			type:Boolean,
+			default:true
+		},
 	},
 	data(){
 		return{
@@ -44,6 +48,7 @@ export default{
 			}else{
 				this.show_captions = 0
 			}
+			console.log(this.volume,this.speed)
 		},
 		change(e) {
 			console.log('change', e);

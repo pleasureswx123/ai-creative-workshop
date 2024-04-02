@@ -5,11 +5,11 @@
 				{{item.name}}
 			</view>
 		</view>
-		<view class="nav_item" v-if="isActive==0">
-			<Timbre></Timbre>
+		<view class="nav_item" v-show="isActive==0">
+			<Timbre ref="Timbre"></Timbre>
 		</view>
-		<view class="nav_item" v-if="isActive==1">
-			<QmConfig></QmConfig>
+		<view class="nav_item" v-show="isActive==1">
+			<QmConfig :wordShow="false" ref="QmConfig"></QmConfig>
 		</view>
 	</view>
 </template>
@@ -26,16 +26,14 @@ export default{
 			},{
 				name:'配置'
 			}],
-			isActive:0
+			isActive:0,
+			dub_id:''
 		}
 	},
 	methods:{
 		checked(index){
 			this.isActive = index
 		},
-		onReachBottom(data){
-			// this.$emit('onReachBottom',data)
-		}
 	}
 }
 </script>

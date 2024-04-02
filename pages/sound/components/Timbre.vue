@@ -7,27 +7,29 @@
 			<view class="box-create" @tap="handCreate">
 				<i class="iconfont icon-a-chuangjian_huaban1"></i>创建我的声音
 			</view>
-			<view class="audioList">
-				<view v-for="(item,index) in audioList">
-					<view class="profile" @tap="play(item,index)" :class="{'active':asActive == index}">
-						<i class="iconfont icon-jiqiren"></i>
-						<view class="iconPlay" v-if="asActive == index">
-						  <i class="iconfont icon-zanting1" v-if="dub_id ==item.dub_id"></i>
-						  <i class="iconfont icon-bofang" v-else></i>
+			<scroll-view scroll-y="true" @scrolltolower="loadMore">
+				<view class="audioList">
+					<view v-for="(item,index) in audioList">
+						<view class="profile" @tap="play(item,index)" :class="{'active':asActive == index}">
+							<i class="iconfont icon-jiqiren"></i>
+							<view class="iconPlay" v-if="asActive == index">
+							  <i class="iconfont icon-zanting1" v-if="dub_id ==item.dub_id"></i>
+							  <i class="iconfont icon-bofang" v-else></i>
+							</view>
 						</view>
+						<u--input
+							class="qm-textarea"
+							placeholder="请输入标题"
+							border="bottom"
+							v-model="item.value"
+						  ></u--input>
 					</view>
-					<u--input
-						class="qm-textarea"
-						placeholder="请输入标题"
-						border="bottom"
-						v-model="item.value"
-					  ></u--input>
 				</view>
-			</view>
+			</scroll-view>
 			<CreatePop :show="CreateShow" @close="close"></CreatePop>
 		</view>
 		<view class="nav_item" v-if="isActive==1">
-			<QmRecom></QmRecom>
+			<QmRecom ref="QmRecom"></QmRecom>
 		</view>
 	</view>
 </template>
@@ -59,7 +61,7 @@ export default{
 			innerAudioContext:null,
 			asActive:0,
 			page:1,
-			pagesize:18,
+			pagesize:12,
 		}
 	},
 	mounted() {
@@ -89,9 +91,11 @@ export default{
 				pagesize:this.pagesize
 			}).then(res => {
 				this.audioList =[...this.audioList, ...res.list]
-				// this.lationList = [...this.lationList]
-				this.$emit('onReachBottom',this.audioList)
 			})
+		},
+		loadMore() {
+		    this.page +=1;
+		    this.voiceList();
 		},
 		destroyAudio() {
 		  if(this.innerAudioContext) {
@@ -188,7 +192,7 @@ export default{
 .qm-textarea {
   // background: var(--bg-color2);
   padding:0!important;
-  border-bottom:1px solid var(--txt-color3)!important;
+  border-bottom:none!important;
   margin: 10rpx auto 0;
   width: 80%;
   /deep/ {
@@ -205,6 +209,9 @@ export default{
 	}
   }
 }
+uni-scroll-view{
+	height: 380rpx;
+}
 @media screen and (min-width: 960px){
 	.audioList{
 		grid-template-columns: repeat(8, 1fr);
@@ -214,6 +221,8 @@ export default{
 			height: 200rpx;
 		}
 	}
-	
+	uni-scroll-view{
+		height: 600rpx;
+	}
 }
 </style>

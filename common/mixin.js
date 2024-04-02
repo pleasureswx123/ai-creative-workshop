@@ -13,7 +13,6 @@ export default {
       let result = '';
       const temp = this.userIntegral?.[`${this.taskType}`] || {};
       const {is_show, consume} = temp;
-      console.log(JSON.stringify(temp))
       if(+is_show) {
         const {A_num, A_show} = consume || {};
         result = A_show || '';

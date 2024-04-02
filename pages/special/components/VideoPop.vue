@@ -20,7 +20,7 @@ export default {
 	props: {
 		title: {
 		  type: String,
-		  default: '标题' 
+		  default: '标题'
 		},
 		show: {
 		  type: Boolean,
