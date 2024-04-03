@@ -27,4 +27,40 @@ export default {
       }
     })
   },
+  //录制
+  GetRecognitionStr(params = {}) {
+    return uni.$u.http.post(`/Dub/GetRecognitionStr`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  SubmitRecognitionText(params = {}) {
+    return uni.$u.http.post(`/Dub/SubmitRecognitionText`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  GetRecognitionText(params = {}) {
+    return uni.$u.http.post(`/Dub/GetRecognitionText`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  CreateReproduction(params = {}) {
+    return uni.$u.http.post(`/Dub/CreateReproduction`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
+  MyReproductionList(params = {}) {
+    return uni.$u.http.post(`/Dub/MyReproductionList`, params, {
+      custom: {
+        auth: true,
+      }
+    })
+  },
 }

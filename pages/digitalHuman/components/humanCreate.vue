@@ -1,44 +1,79 @@
 <template>
 	<view class="container">
-		<view class="pictrue-box">
-			<image src="../../../static/images/avatar.jpg" class="createBg" mode="aspectFit"></image>
-			<view class="scaleImg">
-				<movable-area :scale-area="true">
-					<movable-view :x="x" :y="y" direction="all" @change="onChange" :scale="true" @scale="onScale" scale-min="0.5" scale-max="1.5" :scale-value="1">
-						<image src="../../../static/images/code.png" mode="aspectFit" class="image"></image>
-					</movable-view>
-				</movable-area>
+		<humanCropper :show="cropperShow" v-if="cropperShow"></humanCropper>
+		<view class="text-box">
+			<HumanTextarea :show="typeShow" v-if="typeShow"></HumanTextarea>
+			<audioUpload v-else></audioUpload>
+			<view class="changeBtn" @tap="change">{{typeShow?'切换音频':'切换文本'}}</view>
+		</view>
+		<view class="config-box">
+			<HumanTab :list="list" :current="current" @handTab="handTab"></HumanTab>
+			<view :title="title" v-if="title == '数字人'">
+				<humanPeople></humanPeople>
+			</view>
+			<view :title="title" v-if="title ==  '背景'">
+				<humanColor></humanColor>
+			</view>
+			<view :title="title" v-if="title == '音色'">
+				<humanAudio></humanAudio>
+			</view>
+			<view :title="title" v-if="title == '配置'" class="people-box">
+				<QmConfig :configShow="configShow"></QmConfig>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import HumanTextarea from './HumanTextarea.vue';
+import HumanTab from './HumanTab.vue';
+import humanPeople from './humanPeople.vue';
+import humanColor from './humanColor.vue';
+import humanAudio from './humanAudio.vue';
+import audioUpload from './audioUpload.vue';
+import humanCropper from './humanCropper.vue';
+import QmConfig from '@/pages/sound/components/QmConfig.vue';
 export default {
+	components: {
+		HumanTextarea,HumanTab,humanPeople,humanColor,humanAudio,QmConfig,audioUpload,humanCropper
+	},
+	props:{
+		list:{
+			type:Array,
+			default:[{}]
+		},
+		typeShow:{
+			type:Boolean,
+			default:true
+		},
+		title:{
+			type:String,
+			default:'标题'
+		},
+		current:{
+			type:Number,
+			default:0
+		},
+		configShow:{
+			type:Boolean,
+			default:true
+		},
+		cropperShow:{
+			type:Boolean,
+			default:true
+		}
+	},
   data() {
 	return {
-	  x: 0,
-	  y: 0,
-	  old: {
-		  x: 0,
-		  y: 0,
-		  num:1
-	  }
-	};
+	  
+	}
   },
   methods: {
-	// onChange(event) {
-	// 	console.log(event)
-	//   this.x = event.detail.x;
-	//   this.y = event.detail.y;
-	// },
-	onScale(e) {
-		console.log(e)
-	  this.num = e.detail.scale;
+	handTab(data){
+		this.$emit('handTab',data)
 	},
-	onChange: function(e) {
-		this.old.x = e.detail.x
-		this.old.y = e.detail.y
+	change(){
+		this.$emit('change')
 	}
   },
 };
@@ -46,41 +81,25 @@ export default {
 
 <style lang="scss" scoped>
 .container{
-	.pictrue-box{
-		width: 500rpx;
-		height: 700rpx;
-		background: var(--txt-color1);
-		margin:50rpx auto;
-		position: relative;
-		overflow: hidden;
-	}
-	.createBg{
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-	}
-	.createPer{
-		max-width: 100%;
+}
+.people-box{
+	background: #1A1B1E;
+}
+.text-box{
+	display: grid;
+	grid-template-columns: 82% 15%;
+	gap: 3%;
+	.changeBtn{
+		height:180rpx;
+		box-sizing: border-box;
+		padding: 0 10rpx;
+		background: #909399;
+		color: #EDD75A;
+		border-radius: 10rpx;
+		display: flex;
+		align-items: center;
+		text-align: center;
+		cursor: pointer;
 	}
 }
-.scaleImg{
-	width: 100%;
-	height: 100%;
-	uni-movable-area{
-		width: 100%;
-		height: 100%;
-	}
-	uni-movable-view{
-		width: 300rpx;
-		height: 300rpx;
-		.image {
-		  width: 100%;
-		  height: 100%;
-		}
-	}
-}
-
-
 </style>

@@ -5,19 +5,20 @@
 				{{item.name}}
 			</view>
 		</view>
-		<view class="nav_item" v-if="isActive==0">
-			<Timbre></Timbre>
+		<view class="nav_item" v-show="isActive==0">
+			<Timbre ref="Timbre"></Timbre>
 		</view>
-		<view class="nav_item" v-if="isActive==1">
-			
+		<view class="nav_item" v-show="isActive==1">
+			<QmConfig :wordShow="false" ref="QmConfig"></QmConfig>
 		</view>
 	</view>
 </template>
 
 <script>
 import Timbre from './Timbre.vue';
+import QmConfig from './QmConfig.vue';
 export default{
-	components: {Timbre},
+	components: {Timbre,QmConfig},
 	data() {
 		return{
 			tabList:[{
@@ -25,13 +26,14 @@ export default{
 			},{
 				name:'配置'
 			}],
-			isActive:0
+			isActive:0,
+			dub_id:''
 		}
 	},
 	methods:{
 		checked(index){
 			this.isActive = index
-		}
+		},
 	}
 }
 </script>
@@ -56,8 +58,5 @@ export default{
 	.active {
 		border-bottom: 1px solid #9E9E9E;
 	}
-}
-.nav_item{
-	padding: 10rpx 0 0 20rpx;
 }
 </style>

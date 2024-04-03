@@ -162,9 +162,6 @@ export default{
 
 <style lang="scss" scoped>
 .page-container {
-	// position: relative;
-	// padding-left: 20rpx;
-	// padding-right: 20rpx;
 	background: var(--bg-color1);
 	padding-bottom: calc(100rpx + constant(safe-area-inset-bottom));
 	padding-bottom: calc(100rpx + env(safe-area-inset-bottom));

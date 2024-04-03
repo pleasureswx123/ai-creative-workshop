@@ -69,7 +69,7 @@ export default {
     },
     jump() {
       uni.$u.route({
-        url: 'pages/sound/index'
+        url: 'pages/sound/home'
       })
     },
     handlePlayAudio(info) {

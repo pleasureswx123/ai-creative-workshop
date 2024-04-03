@@ -1,6 +1,6 @@
 <template>
-	<view class="upload-box-container" @tap="handleUpload">
-	  <view class="upload-box" v-if="uploadShow">
+	<view class="upload-box-container">
+	  <view class="upload-box" v-if="uploadShow" @tap="handleUpload">
 	    <view class="icon-box">
 	      <i class="iconfont icon-shangchuan_huaban icon-upload"></i>
 	    </view>
@@ -24,17 +24,19 @@
 	    </view>
 	  </view>
 	  <view class="tips">建议5-20秒</view>
-	  <view class="play-reprod">
+	  <view class="play-reprod" @click='handReproduction'>
 	  	<i class="iconfont icon-luzhi1 icon-luzhi2"></i><view>复刻</view>
 	  </view>
 	</view>
 </template>
 
 <script>
+	import {soundApi} from '@/api'
 	export default{
 		data(){
 			return{
-				uploadShow:true
+				uploadShow:true,
+				dub_url:''
 			}
 		},
 		methods:{
@@ -50,19 +52,59 @@
 					  });
 					  uni.uploadFile({
 						name: 'audio',    //文件上传的name值
-						url: 'https://localhost:8099/web.php/upload/audio',    //接口地址
+						url: 'https://192.168.31.168:8099/web.php/upload/audio',    //接口地址
 						header:{},    //头信息
 						formData:{},   //上传额外携带的参数
 						filePath: tempFilePaths[0],//临时路径
 						fileType: "audio",   //文件类型
 						success: (uploadFileRes) => {
 						  uni.hideLoading();
+						  that.uploadShow = false
 						  const ret = JSON.parse(uploadFileRes.data);
-						  console.log(ret)
+						  that.dub_url = ret.data.path
 						},
 					  });
 					},
 				});
+			},
+			handReproduction(){
+				uni.showLoading({
+					title: "音频复刻中",
+				});
+				soundApi.CreateReproduction({
+					dub_url:this.dub_url
+				}).then(res => {
+					uni.hideLoading();
+					uni.$u.toast('音频复刻完成');
+					this.$emit('close')
+					setTimeout(() => {
+					    this.$router.go(0)
+					}, 500)
+				}).catch(res =>{
+					uni.hideLoading();
+				})
+			},
+			del(){
+				this.uploadShow = true
+				if(this.audioContext){
+					this.audioContext.destroy()
+					// this.dub_id = '';
+				}
+			},
+			destroyAudio() {
+			  if(this.audioContext) {
+			    this.audioContext.pause();
+			    this.audioContext.destroy();
+			    this.audioContext = null;
+			  }
+			},
+			playAudio() {
+			  this.destroyAudio();
+			  this.audioContext = uni.createInnerAudioContext();
+			  this.audioContext.src = this.dub_url;
+			  // 设置音量（范围：0 到 1）
+			  this.audioContext.volume = 0.5;
+			  this.audioContext.play();
 			},
 		}
 	}

@@ -7,10 +7,10 @@
 	  </view>
 	  <view class="pop-container">
 		  <view class="nav-item" v-if="isActive==0">
-			  <AudioPlay></AudioPlay>
+			<AudioPlay @close="$emit('close')"></AudioPlay>
 		  </view>
 		  <view class="nav-item" v-if="isActive==1">
-			  <AudioUpload></AudioUpload>
+			  <AudioUpload @close="$emit('close')"></AudioUpload>
 		  </view>
 	  </view>
 	</u-popup>
@@ -34,14 +34,14 @@ export default{
 			},{
 				name:'音频'
 			}],
-			isActive:0
+			isActive:0,
+			voice:[],
 		}
 	},
 	methods:{
 		checked(index){
 			this.isActive = index
-		},
-		
+		}
 	}
 }
 </script>

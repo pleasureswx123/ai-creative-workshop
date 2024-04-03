@@ -69,10 +69,11 @@
 			getRecordingData(e) {
 				this.chunks = [e.data]
 			},
+			
 			saveRecordingData() {
 				const blob = new Blob(this.chunks, { 'type': 'audio/mpeg' }),
-					localUrl = URL.createObjectURL(blob)
-
+				localUrl = URL.createObjectURL(blob)
+				const file = new File([blob], 'example.mp3', { type: blob.type });
 				const endTime = new Date().getTime()
 				let duration = (endTime - this.startTime).toString().split('')
 				duration.splice(duration.length - 2)
@@ -82,7 +83,8 @@
 				const recorder = {
 					data: blob,
 					duration: duration,
-					localUrl: localUrl
+					localUrl: localUrl,
+					file:file
 				}
 				this.$emit('success', recorder)
 			},

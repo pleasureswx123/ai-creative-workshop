@@ -6,7 +6,15 @@
 		</view>
 		<view class="nav_item" v-if="isActive==0">
 			<humanBroadcast v-if="creatShow" @starCreate="starCreate"></humanBroadcast>
-			<humanCreate v-else></humanCreate>
+			<humanCreate :list="creList" :typeShow="typeShow" @change="change" @handTab="handTab" :title="title"  :current="current" :configShow="configShow" v-else></humanCreate>
+		</view>
+		<view class="nav_item" v-if="isActive==1">
+			<view class="pic-box">
+				<view class="picurl">
+					<image src="https://st-cn.chaojiyuyan.cn/upload/user_task/draw/10/10/00600-2732645220.png?image_process=resize,p_40" mode="aspectFit"></image>
+				</view>
+			</view>
+			<humanCreate :picShow="false" :list="list" :typeShow="typeShow" @handTab="handTab" :title="title" :current="current" :cropperShow="false" :configShow="configShow" @change="change"></humanCreate>
 		</view>
 	</view>
 </template>
@@ -26,15 +34,56 @@ export default{
 				name:'数字分身'
 			}],
 			isActive:0,
-			creatShow:true
+			creatShow:true,
+			list:[{
+				name:'数字人'
+			},{
+				name:'音色'
+			},{
+				name:'配置'
+			}],
+			creList:[{
+				name:'数字人'
+			  },{
+				name:'背景'
+			  },{
+				name:'音色'
+			  },{
+				name:'配置'
+			}],
+			typeShow:true,
+			title:'数字人',
+			current:0,
+			configShow:true
 		}
 	},
 	methods:{
 		handChecked(index){
 			this.isActive = index
+			this.typeShow = true
+			this.current = 0
+			this.title = '数字人'
+			this.configShow = true
+			this.creList = [{name:'数字人'},{name:'背景'},{name:'音色'},{name:'配置'}]
 		},
 		starCreate(){
 			this.creatShow = false
+		},
+		change(){
+			this.typeShow = !this.typeShow
+			this.current = 0
+			this.title = '数字人'
+			if(this.typeShow){
+				this.creList = [{name:'数字人'},{name:'背景'},{name:'音色'},{name:'配置'}]
+				this.configShow = true
+			}else{
+				this.creList = [{name:'数字人'},{name:'背景'},{name:'配置'}]
+				this.configShow = false
+			}
+		},
+		handTab(data){
+			this.title = data.name
+			this.current = data.index
 		}
 	}
 }
@@ -42,7 +91,7 @@ export default{
 
 <style lang="scss" scoped>
 .page-container{
-	background: var(--bg-color1);
+	// background: #1A1B1E;
 	padding: 0 30rpx;
 }
 .tab{
@@ -58,6 +107,20 @@ export default{
 			background:#F60652;
 			color: var(--txt-color1);
 		}
+	}
+}
+.pic-box{
+	background: #090909;
+	margin: 30rpx auto;
+	width: 95%;
+}
+.picurl{
+	padding: 20rpx;
+	width: 100%;
+	height: 300rpx;
+	image{
+		width: 100%;
+		height: 100%;
 	}
 }
 </style>

@@ -45,6 +45,7 @@
 
 .icon-bofang:before {
   content: "\e87c";
+  color: #fff;
 }
 
 .icon-bianji:before {
@@ -159,5 +160,10 @@
 .icon-caozuo:before {
   content: "\e60c";
   color: #9E9E9E;
+  font-size: 14px;
+}
+.icon-bianji1:before {
+  content: "\e637";
+  color: #fff;
   font-size: 14px;
 }

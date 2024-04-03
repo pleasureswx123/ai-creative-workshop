@@ -1,6 +1,6 @@
 <template>
   <view class="slider-container">
-    <view>{{tipsInfo.label}}</view>
+    <view :show="titShow" v-if="titShow">{{tipsInfo.label}}</view>
     <view class="slider-box">
       <u-slider
           v-model="currentValue"
@@ -28,7 +28,11 @@ export default {
     labelTxt: {
       type: String,
       default: '标题'
-    }
+    },
+	titShow: {
+	  type: Boolean,
+	  default: true
+	}
   },
   
   computed: {
@@ -66,7 +70,7 @@ export default {
   display: flex;
   align-items: center;
   font-size: 28rpx;
-  width: 90%;
+  width: 100%;
   color: var(--txt-color1);
   margin: 0 auto;
   .slider-box {

@@ -1,8 +1,8 @@
 <template>
 	<view class="caption-container">
-		<view class="title">选择字幕</view>
-		<view class="box-caption">
-			<selectSwitch @change="changeSwitch" />
+		<view class="title" :show="homShow" v-if="homShow">选择字幕</view>
+		<view class="box-caption" :style="{display:display}">
+			<selectSwitch :show="homShow" v-if="homShow" @change="changeSwitch" />
 			<view class="capChoose" @tap="capShow = true">
 				<u-picker :show="capShow" keyName="label" :columns="capColumns" @confirm="capConfirm" @cancel="capShow=false"></u-picker>
 				<u--input v-model="capName"></u--input>
@@ -16,6 +16,16 @@ import selectSwitch from "@/components/xuan-switch/xuan-switch.vue";
 import {HumanApi} from '@/api'
 export default{
 	components: {selectSwitch},
+	props: {
+	  homShow: {
+	    type: Boolean,
+	    default: true
+	  },
+	  display:{
+	  	type: String,
+	  	default: 'grid'
+	  }
+	},
 	data(){
 		return{
 			capShow:false,
