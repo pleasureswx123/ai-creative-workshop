@@ -1,10 +1,11 @@
 <template>
 	<view class="pictrue-box" :show="picShow" v-if="picShow">
 		<image src="../../../static/images/avatar.jpg" class="createBg" mode="aspectFit"></image>
-		<view class="scaleImg" @click="chooseImg">
+		<view class="scaleImg">
 			<movable-area :scale-area="true">
-				<movable-view :x="x" :y="y" direction="all" @change="onChange" :scale="true" @scale="onScale" scale-min="0.5" scale-max="1.5" :scale-value="1">
-					<image :src="imgDataUrl" mode="aspectFit" class="image"></image>
+				<movable-view :x="x" :y="y" direction="all" inertia="true" @change="onChange" 
+				damping="100" :scale="true" @scale="onScale" scale-min="0.5" scale-max="10" :scale-value="1">
+					<image src="https://st-cn.chaojiyuyan.cn/upload/app/draw/Analog film.jpg" mode="aspectFit" class="image"></image>
 				</movable-view>
 			</movable-area>
 		</view>
