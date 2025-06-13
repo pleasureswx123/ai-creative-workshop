@@ -1,0 +1,27 @@
+{
+  "name": "@aigcui/qtabs",
+  "version": "0.0.36",
+  "description": "> TODO: description",
+  "author": "shangwenxue <pleasureswx123@163.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/QTabs.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/commercial-literature/aigcui.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@aigcui/QTabs.test.js"
+  },
+  "gitHead": "546875ee8f54cc6e01708904c1088b79fe2bf046"
+}

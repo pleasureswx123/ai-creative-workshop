@@ -1,0 +1,32 @@
+{
+  "name": "root",
+  "devDependencies": {
+    "lerna": "^8.1.2"
+  },
+  "dependencies": {
+    "@aigcui/describe": "workspace:^",
+    "@aigcui/entrance": "workspace:^",
+    "@aigcui/entrances": "workspace:^",
+    "@aigcui/request": "workspace:^",
+    "@aigcui/hello": "workspace:^",
+    "@aigcui/entry": "workspace:^",
+    "@aigcui/generatebtn": "workspace:^",
+    "@aigcui/membervipdesc": "workspace:^",
+    "@aigcui/ordergoodslist": "workspace:^",
+    "@aigcui/ordergoodstype": "workspace:^",
+    "@aigcui/photomodify": "workspace:^",
+    "@aigcui/producebtn": "workspace:^",
+    "@aigcui/qmaitypemenu": "workspace:^",
+    "@aigcui/qmratio": "workspace:^",
+    "@aigcui/qtabs": "workspace:^",
+    "@aigcui/http": "workspace:^",
+    "@aigcui/statement": "workspace:^",
+    "@aigcui/templateimagestyle": "workspace:^",
+    "@aigcui/templatevideostyle": "workspace:^",
+    "@aigcui/wechatpop": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/commercial-literature/aigcui.git"
+  }
+}

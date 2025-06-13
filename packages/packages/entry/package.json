@@ -1,0 +1,44 @@
+{
+  "name": "@aigcui/entry",
+  "version": "0.0.41",
+  "description": "> TODO: description",
+  "author": "shangwenxue <pleasureswx123@163.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/entry.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/commercial-literature/aigcui.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@aigcui/entry.test.js"
+  },
+  "dependencies": {
+    "@aigcui/describe": "^0.0.36",
+    "@aigcui/generatebtn": "^0.0.36",
+    "@aigcui/membervipdesc": "^0.0.36",
+    "@aigcui/ordergoodslist": "^0.0.36",
+    "@aigcui/ordergoodstype": "^0.0.36",
+    "@aigcui/photomodify": "^0.0.36",
+    "@aigcui/producebtn": "^0.0.36",
+    "@aigcui/qmaitypemenu": "^0.0.36",
+    "@aigcui/qmratio": "^0.0.36",
+    "@aigcui/qtabs": "^0.0.36",
+    "@aigcui/request": "^0.0.41",
+    "@aigcui/statement": "^0.0.36",
+    "@aigcui/templateimagestyle": "^0.0.36",
+    "@aigcui/templatevideostyle": "^0.0.36",
+    "@aigcui/wechatpop": "^0.0.36"
+  },
+  "gitHead": "546875ee8f54cc6e01708904c1088b79fe2bf046"
+}
